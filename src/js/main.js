@@ -5,6 +5,7 @@ import { setupHTEnv } from './lib/utils';
 // Import all of Bootstrap's JS
 // these are made available globally
 import * as bootstrap from 'bootstrap';
+import { Accordion, Details } from './lib/details';
 
 import Quote from './components/Quote.svelte';
 import LoginFormModal from './components/LoginFormModal';
@@ -79,5 +80,7 @@ document.querySelectorAll('[data-hathi-trigger]').forEach((el) => {
     el.component.show();
   });
 });
+
+Accordion.configure('details');
 
 export default apps;
