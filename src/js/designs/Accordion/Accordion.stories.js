@@ -1,5 +1,10 @@
 import Expandables from './index.svelte';
 
+import SingleAccordionArgs from './fixtures/SingleAccordion.js';
+import MultipleIndependentAccordionArgs from './fixtures/MultipleIndependentAccordion.js';
+import SingleOpenAccordionArgs from './fixtures/SingleOpenAccordion.js';
+import ManySingleOpenAccordionsInFixedViewArgs from './fixtures/ManySingleOpenAccordionsInFixedView.js';
+
 export default {
   title: 'Designs/Accordion',
   component: Expandables,
@@ -7,17 +12,17 @@ export default {
 
 
 export const SingleAccordion = {
-  args: (await import('./fixtures/SingleAccordion.js')).default
+  args: SingleAccordionArgs
 };
 
 export const MultipleIndependentAccordion = {
-  args: (await import('./fixtures/MultipleIndependentAccordion.js')).default
+  args: MultipleIndependentAccordionArgs
 };
 
 export const SingleOpenAccordion = {
-  args: (await import('./fixtures/SingleOpenAccordion.js')).default
+  args: SingleOpenAccordionArgs
 };
 
 export const ManySingleOpenAccordionsInFixedView = {
-  args: (await import('./fixtures/ManySingleOpenAccordionsInFixedView.js')).default
+  args: ManySingleOpenAccordionsInFixedViewArgs
 };
