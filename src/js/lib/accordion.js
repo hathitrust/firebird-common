@@ -60,25 +60,33 @@ export class Accordion {
       this.toggle(event);
     })
 
-    this.el.addEventListener('transitionend', (event) => {
-      if (this.el.open) {
-        if (this.el.dataset.ignoreScrollIntoView === 'true') {
-          this.el.dataset.ignoreScrollIntoView = false;
-          return;
+    this.container = this.el.closest('[data-role="accordion"]');
+    this.isOpenCoordinated = ( this.container !== undefined );
+
+    if ( this.isOpenCoordinated ) {
+      this.el.addEventListener('transitionend', (event) => {
+        if (this.el.open) {
+          // ignoreScrollIntoView is used when we're changing the 
+          // SSR open details on page load, but don't want to adjust 
+          // the scroll
+          if (this.el.dataset.ignoreScrollIntoView === 'true') {
+            this.el.dataset.ignoreScrollIntoView = false;
+            return;
+          }
+          this.el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
         }
-        this.el.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
-      }
-    })
+      })
+    }
   }
 
   toggle(event) {
     if (event.target.open) {
       const target = event.target;
-      const container = target.closest('[data-role="accordion"]');
-      if (!container) { return; }
-      container.querySelectorAll('details').forEach((el) => {
-        el.open = (target === el);
-      })
+      if (this.container) {
+        this.container.querySelectorAll('details').forEach((el) => {
+          el.open = (target === el);
+        })
+      }
     }
   }
 }
