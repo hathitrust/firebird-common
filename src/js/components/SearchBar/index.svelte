@@ -13,6 +13,11 @@
   let _select, _searchtype, _root, fieldValue, _input;
   fieldValue = 'Everything';
 
+  const ACCESSIBLE_ITEMS = 'items you can access';
+  const ALL_ITEMS = 'all items';
+  let accessScope = ACCESSIBLE_ITEMS;
+  let isFullView = true;
+
   //updates UI when 'Collection' or 'Website' is selected in search options
   let _updateSelect = function (event) {
     _root.dataset.index = event.target.value;
@@ -22,6 +27,28 @@
   // function toggleSearchModal() {
   //   modalOpen = !modalOpen;
   // }
+
+  function isSiteBabel() {
+    if (
+      location.pathname.match('/cgi/ls') || 
+      location.pathname.match('/cgi/mb') || 
+      location.pathname.match('/cgi/pt')
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  function isSiteCatalog() {
+    if (
+      location.pathname.match('/Record') || 
+      location.pathname.match('/Search/Home') || 
+      location.pathname.match('/Search/Advanced')
+    ) {
+      return true;
+    }
+    return false;
+  }
 
   //updates search hint message when use selects search type
   function _updateSearchType() {
@@ -50,15 +77,17 @@
       submitData.set('field1', 'ocr');
       submitData.set('a', 'srchls');
       submitData.set('ft', 'ft');
-      submitData.set('lmt', 'ft');
+      submitData.set('lmt', isFullView ? 'ft' : 'all');
       submitData.set('skin', 'firebird');
       search_url = `//${SERVICE_DOMAIN}/cgi/ls?${submitData.toString()}`;
     } else if (index == 'library') {
       let submitData = new URLSearchParams();
       submitData.set('lookfor', _input.value);
       submitData.set('searchtype', _searchtype.value);
-      submitData.set('ft', 'ft');
-      submitData.set('setft', 'true');
+      if ( isFullView ) {
+        submitData.set('ft', 'ft');
+        submitData.set('setft', 'true');
+      }
       search_url = `//${CATALOG_DOMAIN}/Search/Home?${submitData.toString()}`;
     } else {
       // website search
@@ -79,39 +108,41 @@
     if ( location && location.href ) {
       let searchParams = new URLSearchParams(location.search.replace(/;/g, '&'));
 
-      switch(location.pathname) {
-        case '/cgi/ls':
-        case '/cgi/mb':
-        case '/cgi/pt':
-          _searchtypeValue = 'everything';
-          _selectValue = 'library';
-          _inputValue = searchParams.get('q1');
-          break;
-        case '/Search/Home':
-        case '/Search/Advanced':
-        case '/Record':
-          _searchtypeValue = searchParams.get('searchtype') || 'all';
-          _selectValue = 'library';
-          _inputValue = searchParams.get('lookfor') || searchParams.get('lookfor[]') || '';
-          break;
-        default:
-          _searchtypeValue = 'everything';
-          if (location.pathname.startsWith('/search/')) {
-            _selectValue = 'website';
-            index = 'website';
-            let tmp = location.pathname.split('/').slice(2);
-            _inputValue = tmp.pop();
-          } else {
-            _selectValue = 'website';
-            index = 'website';
-            _inputValue = searchParams.get('s');
-          }
-          break;
+      if(isSiteBabel()) {
+        _searchtypeValue = 'everything';
+        _selectValue = 'library';
+        _inputValue = searchParams.get('q1');
+        isFullView = !(searchParams.get('lmt') == 'all');
+      } else if ( isSiteCatalog() ) {
+        _searchtypeValue = searchParams.get('searchtype') || 'all';
+        _selectValue = 'library';
+        _inputValue = searchParams.get('lookfor') || searchParams.get('lookfor[]') || '';
+        if ( location.pathname == '/Record' && searchParams.has('ft') ) {
+          // default to isFullView=true if /Record does not have an ft parameter
+          isFullView = ( searchParams.get('ft') == 'ft' );
+        } else if ( location.pathname != '/Record' ) {
+          isFullView = ( searchParams.has('ft') && searchParams.get('ft') == 'ft' );
+        }
+      } else {
+        _searchtypeValue = 'everything';
+        if (location.pathname.startsWith('/search/')) {
+          _selectValue = 'website';
+          index = 'website';
+          let tmp = location.pathname.split('/').slice(2);
+          _inputValue = tmp.pop();
+        } else {
+          _selectValue = 'website';
+          index = 'website';
+          _inputValue = searchParams.get('s');
+        }
       }
     }
+
     _searchtype.value = _searchtypeValue;
     _select.value = _selectValue;
     _input.value = _inputValue;
+    accessScope = isFullView ? ALL_ITEMS : ACCESSIBLE_ITEMS;
+    _updateSearchType();
   })
 </script>
 
@@ -180,7 +211,7 @@
       <span class="search-help"
         ><i class="fa-solid fa-circle-info fa-fw" />
         {#if index == 'library'}
-          You're searching in {fieldValue} for items you can access.
+          You're searching in {fieldValue} for {accessScope}.
         {/if}
         {#if index == 'website'}
           You're searching the information website.
