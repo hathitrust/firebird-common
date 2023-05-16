@@ -141,7 +141,7 @@
     _searchtype.value = _searchtypeValue;
     _select.value = _selectValue;
     _input.value = _inputValue;
-    accessScope = isFullView ? ALL_ITEMS : ACCESSIBLE_ITEMS;
+    accessScope = isFullView ? ACCESSIBLE_ITEMS : ALL_ITEMS;
     _updateSearchType();
   })
 </script>
