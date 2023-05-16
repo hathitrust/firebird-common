@@ -92,7 +92,7 @@
         case '/Record':
           _searchtypeValue = searchParams.get('searchtype') || 'all';
           _selectValue = 'library';
-          _inputValue = searchParams.get('lookfor');
+          _inputValue = searchParams.get('lookfor') || searchParams.get('lookfor[]') || '';
           break;
         default:
           _searchtypeValue = 'everything';
