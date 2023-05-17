@@ -56,11 +56,17 @@
   let bools = new Array(4); bools.fill('AND');
   let anyalls = new Array(4); anyalls.fill('all');
   let isFullView = true;
+  let useFullTextIndex = ( sessionStorage.getItem('useFullTextIndex') == 'true' );
 
   let errors = { 
     lookFors: false,
     yop: false,
   };
+
+  function saveIndexSelection() {
+    console.log("AHOY saveIndexSelection", useFullTextIndex);
+    sessionStorage.setItem('useFullTextIndex', useFullTextIndex);
+  }
 
   function validatePubYear(value) {
     if ( ! value.match(/^\d+$/) ) {
@@ -73,8 +79,7 @@
     errors.lookFors = false; errors.yop = false; errors = errors;
     event.preventDefault();
 
-    console.log("AHOY AHOY", lookFors, types, bools);
-    let target = 'catalog';
+    let target = useFullTextIndex ? 'ls' : 'catalog';
     let url;
     for(let i = 0; i < types.length; i++) {
       if ((types[i] == 'ocr' || types[i] == 'ocronly') && lookFors[i]) {
@@ -85,6 +90,7 @@
     if (target == 'catalog') {
       url = new URL(`https://${HT.catalog_domain}/Search/Home`);
       let searchParams = new URLSearchParams();
+      searchParams.set('adv', 1);
       if (isFullView) {
         searchParams.set('setft', 'true');
         searchParams.set('ft', 'ft');
@@ -141,7 +147,7 @@
           }
         } else if ( yop == 'in' && pubYear.exact ) {
           searchParams.set('yop', yop);
-          searchParams.set('fqor-publishDateTrie', pubYear.exact);
+          searchParams.set('fqor-publishDateTrie[]', pubYear.exact);
           validatePubYear(pubYear.exact);
         }
       }
@@ -258,15 +264,49 @@
 
   onMount(() => {
     let params = new URLSearchParams(location.search.replace(/;/g, '&'));
-    if (params.get('lookfor[]')) {
-      // seed catalog search
+    if ( location.pathname == '/Search/Advanced' ) {
+      // catalog
       params.getAll('lookfor[]').forEach((value, idx) => {
         lookFors[idx] = value;
       });
       params.getAll('type[]').forEach((value, idx) => {
         types[idx] = value;
       });
-    } else if (params.get('q1')) {
+
+      if (params.get('fqor-language[]')) {
+        params.getAll('fqor-language[]').forEach((value) => {
+          lang.push(value);
+        })
+        lang = lang;
+      }
+      if (params.get('fqor-format[]')) {
+        params.getAll('fqor-format[]').forEach((value) => {
+          format.push(value);
+        })
+        format = format;
+      }
+
+      yop = params.get('yop') || 'after';
+      switch(yop) {
+        case 'in':
+          let value = params.get('facet') || '';
+          pubYear.exact = params.get('fqor-publishDateTrie[]');
+          break;
+        case 'after':
+          pubYear.start = params.get('fqrange-start-publishDateTrie-1');
+          break;
+        case 'before':
+          pubYear.end = params.get('fqrange-end-publishDateTrie-1');
+          break;
+        case 'between':
+          pubYear.start = params.get('fqrange-start-publishDateTrie-1');
+          pubYear.end = params.get('fqrange-end-publishDateTrie-1');
+          break;
+      }
+      pubYear = pubYear;      
+
+    } else {
+      // ls
       // full-text search
       lookFors[0] = params.get('q1'); 
       types[0] = params.get('field1') || 'ocr';
@@ -296,7 +336,25 @@
         })
         format = format;
       }
-      console.log("AHOY ON MOUNT", lang, format);
+
+      yop = params.get('yop') || 'after';
+      switch(yop) {
+        case 'in':
+          let value = params.get('facet') || '';
+          pubYear.exact = value.match(/bothPublishDateRange:"(\d+)"/)[1];
+          break;
+        case 'after':
+          pubYear.start = params.get('pdate_start');
+          break;
+        case 'before':
+          pubYear.end = params.get('pdate_end');
+          break;
+        case 'between':
+          pubYear.start = params.get('pdate_start');
+          pubYear.end = params.get('pdate_end');
+          break;
+      }
+      pubYear = pubYear;      
     }
   });
   
@@ -308,10 +366,14 @@
     <div class="search-details d-flex">
       <span class="search-help"
         ><i class="fa-solid fa-circle-info fa-fw" />
-      Search for items you can access.
+      {#if isFullView}
+        Search for items you can access.
+      {:else}
+        Search for all items.
+      {/if}
     </div>
-    <div class="d-flex">
-      <a
+    <div class="d-flex flex-column pe-4">
+      <!-- <a
         href="#"
         on:click|preventDefault={() => {
           modal.show();
@@ -319,7 +381,65 @@
         ><i class="fa-regular fa-circle-question fa-fw" /><span
           >Search Help</span
         ></a
-      >
+      > -->
+
+      <div class="accordion accordion-flush" id="search-help">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="search-ops">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#search-ops-collapse" aria-expanded="false" aria-controls="search-ops-collapse">
+              Search Help
+            </button>
+          </h2>
+          <div id="search-ops-collapse" class="accordion-collapse collapse" aria-labelledby="search-ops-heading" data-bs-parent="#search-ops">
+            <div class="accordion-body">
+              <dl>
+                <dt>All of these words</dt>
+                <dd>
+                  Treats your query as a boolean <code>AND</code> expression: <code>heart cardiac</code> will 
+                  match fields containing <code>heart AND cardiac</code>
+                </dd>
+                <dt>Any of these words</dt>
+                <dd>
+                  Treats your query as a boolean <code>OR</code> expression: <code>heart cardiac</code> will 
+                  match fields containing either <code>heart</code> <strong>or</strong> <code>cardiac</code>.
+                </dd>
+                <dt>This exact phrase</dt>
+                <dd>
+                  Treats your query as a phrase expression: <code>occult fiction</code> will 
+                  match fields containing the phrase <code>"occult fiction"</code>.
+                </dd>
+                <dt>Using wildcards <span class="badge rounded-pill text-bg-secondary">Catalog Index</span></dt>
+                <dd>
+                  
+                  Use <code>*</code> or <code>?</code> to search for alternate forms of a word. Use <code>*</code>
+                  to stand for several characters, and <code>?</code> for a single character: e.g.,
+                  <code>optim*</code> will find optimal, optimize or optimum; 
+                  <code>wom?n</code> will find woman
+                  and women. If you would simply like to browse without entering a
+                  search term you can enter <code>*</code> by itself.
+                </dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="search-index">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#search-index-collapse" aria-expanded="false" aria-controls="search-index-collapse">
+              Using the Full Text Index
+            </button>
+          </h2>
+          <div id="search-index-collapse" class="accordion-collapse collapse" aria-labelledby="search-index-heading" data-bs-parent="#search-ops">
+            <div class="accordion-body">
+              <p>Normally only searching bibliographic metadata 
+                will use the Catalog Index.
+              </p>
+              <p>Check the <strong>Always use the Full Text Index</strong> 
+                option to search bibliographic fields in the Full Text Index.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="twocol-main">
@@ -384,13 +504,30 @@
         </div>
 
         <h2 class="mb-3">Additional Search Options</h2>
-        <fieldset class="mb-4">
-          <legend class="fs-4 fw-bold">View Options</legend>
-          <div class="form-check">
-            <input id="view-options" type="checkbox" class="form-check-input" value="ft" bind:checked={isFullView} />
-            <label class="form-check-label" for="view-options">Full View Only</label>
+
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <fieldset>
+              <legend class="fs-4 fw-bold">View Options</legend>
+              <div class="form-check">
+                <input id="view-options" type="checkbox" class="form-check-input" value="ft" bind:checked={isFullView} />
+                <label class="form-check-label" for="view-options">Full View Only</label>
+              </div>
+            </fieldset>
           </div>
-        </fieldset>
+          <div class="col-md-6">
+            <fieldset>
+              <legend class="fs-4 fw-bold">
+                <i class="fa-solid fa-database" aria-hidden="true"></i>
+                 Index Options</legend>
+              <div class="form-check">
+                <input id="index-options" type="checkbox" class="form-check-input" value="ft" bind:checked={useFullTextIndex} on:change={saveIndexSelection} />
+                <label class="form-check-label" for="index-options">Always use the Full Text Index</label>
+              </div>
+            </fieldset>            
+          </div>
+        </div>
+
 
         <fieldset class="mb-4">
           <legend class="fs-4 fw-bold">Publication Year</legend>
@@ -494,7 +631,7 @@
     </div>
   </div>
 </div>
-<SearchHelpModal bind:this={modal} />
+<!-- <SearchHelpModal bind:this={modal} /> -->
 
 <style lang="scss">
     .search-input {
