@@ -47,16 +47,16 @@ export default defineConfig({
   server: {
     // port: 8080,
     hot: true,
-    // proxy: {
-    //   '^/cgi/ping': {
-    //     target: 'https://babel.hathitrust.org',
-    //     changeOrigin: true
-    //   },
-    //   '^/cgi/ls': {
-    //     target: 'https://dev-3.babel.hathitrust.org',
-    //     changeOrigin: true
-    //   },
-    // },
+    proxy: {
+      '^/cgi/ping': {
+        target: 'https://babel.hathitrust.org',
+        changeOrigin: true,
+      },
+      '^/cgi/ls': {
+        target: 'https://dev-3.babel.hathitrust.org',
+        changeOrigin: true,
+      },
+    },
   },
   css: {
     preprocessorOptions: {

@@ -3,18 +3,16 @@ import cookies from './cookies';
 import { stageLinks } from './staging';
 
 function isObject(item) {
-  return (item && typeof item === 'object' && !Array.isArray(item));
+  return item && typeof item === 'object' && !Array.isArray(item);
 }
 
 function mergeDeep(target, source) {
   let output = Object.assign({}, target);
   if (isObject(target) && isObject(source)) {
-    Object.keys(source).forEach(key => {
+    Object.keys(source).forEach((key) => {
       if (isObject(source[key])) {
-        if (!(key in target))
-          Object.assign(output, { [key]: source[key] });
-        else
-          output[key] = mergeDeep(target[key], source[key]);
+        if (!(key in target)) Object.assign(output, { [key]: source[key] });
+        else output[key] = mergeDeep(target[key], source[key]);
       } else {
         Object.assign(output, { [key]: source[key] });
       }
@@ -29,10 +27,13 @@ function setDomains() {
   HT.www_domain = 'www.hathitrust.org';
   HT.cookies_domain = '.hathitrust.org';
   var hostname = location.hostname;
-  HT.is_dev = (hostname != 'www.hathitrust.org') && (hostname != 'catalog.hathitrust.org') && (hostname != 'babel.hathitrust.org');
+  HT.is_dev =
+    hostname != 'www.hathitrust.org' &&
+    hostname != 'catalog.hathitrust.org' &&
+    hostname != 'babel.hathitrust.org';
   if (HT.is_dev) {
-    var prefix = hostname.split(".")[0];
-    console.log("-- main setting hostname", prefix, hostname);
+    var prefix = hostname.split('.')[0];
+    console.log('-- main setting hostname', prefix, hostname);
     if (prefix == 'localhost') {
       if (location.port) {
         hostname += ':' + location.port;
@@ -41,7 +42,10 @@ function setDomains() {
       HT.catalog_domain = hostname;
       HT.www_domain = hostname;
       HT.cookies_domain = 'localhost';
-    } else if ( hostname.indexOf('phiredevelopment') > -1 ) {
+    } else if (hostname.indexOf('phiredevelopment') > -1) {
+      // shameless green
+      HT.www_domain = hostname;
+    } else if (hostname.indexOf('phire') > -1) {
       // shameless green
       HT.www_domain = hostname;
     } else {
@@ -59,7 +63,7 @@ function setDomains() {
 }
 
 function setupHTEnv() {
-  const HT = window.HT = ( window.HT || {} );
+  const HT = (window.HT = window.HT || {});
   setDomains();
   HT.prefs = {};
   HT.prefs.get = function () {
@@ -68,7 +72,7 @@ function setupHTEnv() {
       prefs = JSON.parse(docCookies.getItem('HT.prefs') || '{}');
     } catch (e) {
       // just null the prefs
-      cookies.removeItem("HT.prefs");
+      cookies.removeItem('HT.prefs');
       prefs = {};
     }
     return prefs;
@@ -80,7 +84,14 @@ function setupHTEnv() {
     try {
       var expires = new Date();
       expires.setDate(expires.getDate() + 90);
-      cookies.setItem('HT.prefs', JSON.stringify(prefs), expires, '/', HT.cookies_domain, true);
+      cookies.setItem(
+        'HT.prefs',
+        JSON.stringify(prefs),
+        expires,
+        '/',
+        HT.cookies_domain,
+        true
+      );
     } catch (e) {
       // noop
       console.log(e);
@@ -89,7 +100,7 @@ function setupHTEnv() {
 
   HT.cookieJar = docCookies;
 
-  if ( HT.is_dev ) {
+  if (HT.is_dev) {
     stageLinks();
   }
 }
