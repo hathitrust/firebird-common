@@ -514,7 +514,7 @@
       .form-select {
         border: none;
         border-right: 0.5px solid var(--color-neutral-500);
-        padding: 0.625em 0.75em;
+        padding: 0.625em 2.25rem 0.626em 0.75em;
         width: 100%;
         border-radius: 0.375rem;
         margin-left: 0;
