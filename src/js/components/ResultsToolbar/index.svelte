@@ -32,8 +32,8 @@
     sortOptions: [
       {value: 'title_a', label: 'Title A-Z'},
       {value: 'title_d', label: 'Title Z-A'},
-      {value: 'author_a', label: 'Author A-Z'},
-      {value: 'author_d', label: 'Author Z-A'},
+      {value: 'auth_a', label: 'Author A-Z'},
+      {value: 'auth_d', label: 'Author Z-A'},
       {value: 'date_d', label: 'Date (newest first)'},
       {value: 'date_a', label: 'Date (oldest first)'},
     ]
