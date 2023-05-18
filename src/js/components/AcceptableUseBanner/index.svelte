@@ -5,7 +5,7 @@
   let xtracking = JSON.parse(cookieJar.getItem('HT.x') || '{}');
 
   const key = 'aup-notice';
-  let isVisible = xtracking[key] != true;
+  let isVisible = HT.login_status.logged_in && xtracking[key] != true;
 
   function confirm() {
     let expires = new Date();
