@@ -307,13 +307,14 @@
           </li>
         {/if}
         <li class="nav-item dropdown">
-          <button
-            type="button"
+          <a
+            href="#"
+            role="button"
             aria-expanded="false"
-            class="nav-link btn-link btn dropdown-toggle text-uppercase d-flex flex-row justify-content-between align-items-center gap-2"
+            class="nav-link dropdown-toggle text-uppercase d-flex flex-row justify-content-between align-items-center gap-2"
             data-bs-toggle="dropdown"
             ><span>Get Help</span>
-          </button>
+          </a>
           <ul class="dropdown-menu dropdown-menu-end">
             <div class="d-flex flex-column gap-4">
               <li class="px-3">
