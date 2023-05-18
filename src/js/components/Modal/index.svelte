@@ -49,7 +49,7 @@
       <div class="modal-content" style:height={height != 'auto' && height}>
         <div class="modal-header">
           <h1 id="{id}-label" class="modal-title">
-            <slot name="modal-title" />
+            <slot name="title" />
           </h1>
           <button
             type="button"
@@ -62,25 +62,27 @@
           >
         </div>
         <div class="modal-body {scrollable ? '' : 'dont-scroll'}">
-          <slot name="modal-body" />
+          <slot name="body" />
         </div>
-        <div class="modal-footer">
-          <slot name="modal-footer">
-            <button
-              type="reset"
-              autofocus
-              class="btn btn-secondary"
-              on:click={() => {
-                hide();
-              }}>Close</button
-            >
-            {#if mode == 'prompt'}
-            <button type="button" class="btn btn-primary">
-              <slot name="modal-action">OK</slot>
-            </button>
-            {/if}
-          </slot>
-        </div>
+        {#if $$slots.footer}
+          <div class="modal-footer">
+            <slot name="footer">
+              <button
+                type="reset"
+                autofocus
+                class="btn btn-secondary"
+                on:click={() => {
+                  hide();
+                }}>Close</button
+              >
+              {#if mode == 'prompt'}
+                <button type="button" class="btn btn-primary">
+                  <slot name="action">OK</slot>
+                </button>
+              {/if}
+            </slot>
+          </div>
+        {/if}
       </div>
     </div>
   </div>

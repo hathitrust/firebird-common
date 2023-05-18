@@ -27,8 +27,8 @@
 
 <div>
   <Modal bind:this={modal} scrollable>
-    <svelte:fragment slot="modal-title">HathiTrust Search Help</svelte:fragment>
-    <svelte:fragment slot="modal-body">
+    <svelte:fragment slot="title">HathiTrust Search Help</svelte:fragment>
+    <svelte:fragment slot="body">
       <h2 class="h3">Primary Catalog Search</h2>
       <ul>
         <li>
@@ -73,15 +73,6 @@
         </li>
       </ul>
     </svelte:fragment>
-    <svelte:fragment slot="modal-footer">
-      <button
-        type="reset"
-        autofocus
-        class="btn btn-secondary"
-        on:click={() => {
-          hide();
-        }}>Close</button
-      >
-    </svelte:fragment>
+    <svelte:fragment slot="footer" />
   </Modal>
 </div>

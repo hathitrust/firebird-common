@@ -32,31 +32,24 @@
 <div>
   {#if form == 'catalog'}
     <Modal bind:this={modal} scrollable>
-      <svelte:fragment slot="modal-title"
-        >Catalog Quality Correction</svelte:fragment
-      >
-      <svelte:fragment slot="modal-body">
+      <svelte:fragment slot="title">Catalog Quality Correction</svelte:fragment>
+      <svelte:fragment slot="body">
         <FeedbackFormCatalog />
       </svelte:fragment>
-      <svelte:fragment slot="modal-footer" />
     </Modal>
   {:else if form == 'content'}
     <Modal bind:this={modal} scrollable>
-      <svelte:fragment slot="modal-title"
-        >Content Quality Correction</svelte:fragment
-      >
-      <svelte:fragment slot="modal-body">
+      <svelte:fragment slot="title">Content Quality Correction</svelte:fragment>
+      <svelte:fragment slot="body">
         <FeedbackFormContent />
       </svelte:fragment>
-      <svelte:fragment slot="modal-footer" />
     </Modal>
   {:else}
     <Modal bind:this={modal} scrollable>
-      <svelte:fragment slot="modal-title">Questions?</svelte:fragment>
-      <svelte:fragment slot="modal-body">
+      <svelte:fragment slot="title">Questions?</svelte:fragment>
+      <svelte:fragment slot="body">
         <FeedbackFormBasic />
       </svelte:fragment>
-      <svelte:fragment slot="modal-footer" />
     </Modal>
   {/if}
 </div>

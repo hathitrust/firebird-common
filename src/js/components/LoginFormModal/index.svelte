@@ -20,11 +20,12 @@
   };
 
   export const show = function () {
-    if ( ! sdrinst ) { filterText = ''; }
-    else { 
-      filterText = HT.login_status.idp_list.find(
-        (item) => item.sdrinst == sdrinst
-      ).name.replace(/&amp;/g, '&');
+    if (!sdrinst) {
+      filterText = '';
+    } else {
+      filterText = HT.login_status.idp_list
+        .find((item) => item.sdrinst == sdrinst)
+        .name.replace(/&amp;/g, '&');
     }
     modal.show();
   };
@@ -68,9 +69,8 @@
 </script>
 
 <Modal bind:this={modal} height="90vh">
-  <svelte:fragment slot="modal-title">Partner Institution Login</svelte:fragment
-  >
-  <svelte:fragment slot="modal-body">
+  <svelte:fragment slot="title">Partner Institution Login</svelte:fragment>
+  <svelte:fragment slot="body">
     <p class="mb-0">
       Log in with your partner institution account to access then largest number
       of volumes and features.
@@ -95,7 +95,7 @@
       {/if}
     </div>
   </svelte:fragment>
-  <svelte:fragment slot="modal-footer">
+  <svelte:fragment slot="footer">
     <div class="m-0 w-100">
       <div class="p-3 px-modal mb-2 d-flex gap-5 justify-content-between">
         <p class="fs-7 m-0">
