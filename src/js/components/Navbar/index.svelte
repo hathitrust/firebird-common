@@ -23,6 +23,7 @@
   export let hasNotification = false;
   export let searchOpen = true;
   export let searchState;
+  export let compact = false;
 
   const switchableRoles = ['enhancedTextProxy', 'totalAccess'];
   const switchableRolesLabels = {};
@@ -31,6 +32,7 @@
 
   function toggleSearch() {
     searchOpen = !searchOpen;
+    console.log("AHOY searchOpen", searchOpen);
   }
 
   function openLogin() {
@@ -88,7 +90,7 @@
 <FeedbackFormModal {form} bind:this={feedbackModal} />
 <nav class="navbar navbar-expand-xl bg-white">
   <div class="container-fluid">
-    <div class="ht-logo">
+    <div class="ht-logo" class:compact={compact}>
       <!-- <img src="../assets/HT-logo-mobile-nav.svg" alt="HathiTrust" class="" /> -->
       <svg
         width="180"
@@ -495,6 +497,12 @@
   }
   .navbar .ht-logo {
     padding-left: 1rem;
+
+    &.compact {
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
+    }
+
     @media (min-width: 1200px) {
       padding-right: 2.5rem;
     }
