@@ -28,7 +28,7 @@
   // when true, shows the success/failure alert message
   export let submitted = false;
 
-  const postForm = async (data) => {
+  export let postForm = async (data) => {
     console.log(data);
     return fetch(
       'https://feedback-testing.macc.kubernetes.hathitrust.org/api',
@@ -56,20 +56,26 @@
   };
 
   // handles front-end reaction to form submission
-  const onSubmit = (event) => {
+  export let onSubmit = (event) => {
+    console.log('clicked!', event);
     // set the submit button spinner spinning
     loading = true;
     //serialize form data
     const data = JSON.stringify(Object.fromEntries(new FormData(event.target)));
     const form = document.querySelector('.needs-validation');
 
+    console.log('data', data);
+
     // check for required fields
     if (!form.checkValidity()) {
+      console.log('validation failed');
       event.stopPropagation();
       loading = false;
+      console.log('loading', loading);
       form.classList.add('was-validated');
     } else {
       // do the post fetch function, passing in the seralized data
+      console.log('validation good');
       postForm(data)
         // if no error, hide form and log new issue ID
         .then((jiraResponseData) => {
@@ -189,8 +195,7 @@
     <input name="formName" id="formName" type="hidden" bind:value={formName} />
 
     <button type="submit" class="btn btn-primary" disabled={loading}>
-      Submit
-      {#if loading}
+      Submit{#if loading}
         <span
           class="spinner-border spinner-border-sm"
           role="status"
