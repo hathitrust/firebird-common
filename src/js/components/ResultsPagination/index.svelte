@@ -19,7 +19,10 @@
   }
 </script>
 
-<nav aria-label="Result navigation" class:sticky-bottom={stickyBottom} class="d-flex flex-column align-items-start justify-content-between flex-sm-row align-items-sm-center gap-3">
+<nav 
+  aria-label="Result navigation" 
+  class:nav-sticky-bottom={stickyBottom} 
+  class="d-flex flex-column align-items-start justify-content-between flex-sm-row align-items-sm-center gap-3 rounded">
   <div>
     <ul class="list-unstyled d-flex gap-2 m-0">
       <li>
@@ -54,16 +57,18 @@
   </form>
 </nav>
 
-<style>
-  .sticky-bottom {
-    position: sticky;
-    padding: 1rem;
-    padding-bottom: 1rem;
-    bottom: 0;
-    background-color: #fff;
-    /* box-shadow: 0px -0.5rem 0.5rem -0.5rem rgba(0,0,0,0.1); */
-    box-shadow: 4px 8px 25px  rgba(0, 0, 0, 0.55);
-    margin-left: -0.5rem;
-    margin-right: -0.5rem;
+<style lang="scss">
+  @media (min-width: 600px) and (min-height: 600px) {
+    .nav-sticky-bottom {
+      position: sticky;
+      padding: 0.5rem;
+      bottom: 0.5rem;
+      background-color: #fff;
+      /* box-shadow: 0px -0.5rem 0.5rem -0.5rem rgba(0,0,0,0.1); */
+      box-shadow: 4px 8px 25px  rgba(0, 0, 0, 0.55);
+      margin-left: -0.5rem;
+      margin-right: -0.5rem;
+      z-index: 5;
+    }
   }
 </style>

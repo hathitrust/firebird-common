@@ -114,23 +114,19 @@
   <span id="results-summary">
     {format(firstRecordNumber)} to {format(lastRecordNumber)} of {format(totalRecords)} {label}
   </span>
-  <div class="d-flex flex-row align-items-start gap-3 xxflex-wrap justify-content-end">
+  <div class="d-flex flex-row align-items-start gap-3 flex-wrap flex-sm-nowrap flex-justify-content-end">
     {#if sortOptions !== false}
-    <div class="row flex-nowrap" style="--bs-gutter-x: 0.5rem">
-      <div class="col-auto">
-        <label class="col-form-label fw-normal" for="sort">Sort by</label>
-      </div>
-      <div class="col-auto">
-        <select class="form-select" id="sort" name="sort" size="1" bind:value={currentSortOption} on:change={onSubmit}>
-          {#each sortOptions as sortOption}
-            <option value={sortOption.value} selected={sortOption.value == currentSortOption}>{sortOption.label}</option>
-          {/each}
-        </select>
-      </div>
+    <div class="d-flex flex-nowrap gap-1">
+      <label class="col-form-label fw-normal text-nowrap" for="sort">Sort by</label>
+      <select class="form-select w-auto" id="sort" name="sort" size="1" bind:value={currentSortOption} on:change={onSubmit}>
+        {#each sortOptions as sortOption}
+          <option value={sortOption.value} selected={sortOption.value == currentSortOption}>{sortOption.label}</option>
+        {/each}
+      </select>
     </div>
     {/if}
     {#if target == 'mb.listcs'}
-      <button class="btn btn-secondary" on:click={openModal}>New List</button>
+      <button type="button" class="btn btn-secondary text-nowrap" on:click={openModal}>New List</button>
     {/if}
     <!-- <div class="row flex-nowrap" style="--bs-gutter-x: 0.5rem">
       <div class="col-auto">

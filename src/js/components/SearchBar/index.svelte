@@ -30,8 +30,8 @@
 
   function isSiteBabel() {
     if (
-      location.pathname.match('/cgi/ls') || 
-      location.pathname.match('/cgi/mb') || 
+      location.pathname.match('/cgi/ls') ||
+      location.pathname.match('/cgi/mb') ||
       location.pathname.match('/cgi/pt')
     ) {
       return true;
@@ -41,8 +41,8 @@
 
   function isSiteCatalog() {
     if (
-      location.pathname.match('/Record') || 
-      location.pathname.match('/Search/Home') || 
+      location.pathname.match('/Record') ||
+      location.pathname.match('/Search/Home') ||
       location.pathname.match('/Search/Advanced')
     ) {
       return true;
@@ -84,7 +84,7 @@
       let submitData = new URLSearchParams();
       submitData.set('lookfor', _input.value);
       submitData.set('searchtype', _searchtype.value);
-      if ( isFullView ) {
+      if (isFullView) {
         submitData.set('ft', 'ft');
         submitData.set('setft', 'true');
       }
@@ -105,23 +105,26 @@
     let _searchtypeValue = 'everything';
     let _selectValue = 'library';
     let _inputValue = '';
-    if ( location && location.href ) {
-      let searchParams = new URLSearchParams(location.search.replace(/;/g, '&'));
+    if (location && location.href) {
+      let searchParams = new URLSearchParams(
+        location.search.replace(/;/g, '&')
+      );
 
-      if(isSiteBabel()) {
+      if (isSiteBabel()) {
         _searchtypeValue = 'everything';
         _selectValue = 'library';
         _inputValue = searchParams.get('q1');
         isFullView = !(searchParams.get('lmt') == 'all');
-      } else if ( isSiteCatalog() ) {
+      } else if (isSiteCatalog()) {
         _searchtypeValue = searchParams.get('searchtype') || 'all';
         _selectValue = 'library';
-        _inputValue = searchParams.get('lookfor') || searchParams.get('lookfor[]') || '';
-        if ( location.pathname == '/Record' && searchParams.has('ft') ) {
+        _inputValue =
+          searchParams.get('lookfor') || searchParams.get('lookfor[]') || '';
+        if (location.pathname == '/Record' && searchParams.has('ft')) {
           // default to isFullView=true if /Record does not have an ft parameter
-          isFullView = ( searchParams.get('ft') == 'ft' );
-        } else if ( location.pathname != '/Record' ) {
-          isFullView = ( searchParams.has('ft') && searchParams.get('ft') == 'ft' );
+          isFullView = searchParams.get('ft') == 'ft';
+        } else if (location.pathname != '/Record') {
+          isFullView = searchParams.has('ft') && searchParams.get('ft') == 'ft';
         }
       } else {
         _searchtypeValue = 'everything';
@@ -143,7 +146,7 @@
     _input.value = _inputValue;
     accessScope = isFullView ? ACCESSIBLE_ITEMS : ALL_ITEMS;
     _updateSearchType();
-  })
+  });
 </script>
 
 <div>
@@ -228,8 +231,7 @@
           ></a
         >
         <a href={`//${SERVICE_DOMAIN}/cgi/ls?a=page&page=advanced`}
-          ><i class="fa-solid fa-toolbox fa-fw" /><span
-            >Advanced Search</span
+          ><i class="fa-solid fa-toolbox fa-fw" /><span>Advanced Search</span
           ></a
         >
       </div>
@@ -260,6 +262,11 @@
       border-top-right-radius: 0 !important;
       border-bottom-right-radius: 0 !important;
       padding: 0.625em 0.75em;
+      &:focus {
+        border-color: #e1aa80;
+        outline: 0;
+        box-shadow: inset 0 1px 2px #00000013, 0 0 0 0.25rem #c3540040;
+      }
     }
     .input-group-text {
       font-size: 1rem;
@@ -272,12 +279,19 @@
         font-size: 14px;
       }
     }
+    .select-container:focus {
+    }
     .form-select {
       border: 0.5px solid var(--color-neutral-500);
       padding: 0.625em 0.75em;
       width: 100%;
       border-radius: 0.375rem;
       margin-left: 0;
+      &:focus {
+        border-color: #e1aa80;
+        outline: 0;
+        box-shadow: inset 0 1px 2px #00000013, 0 0 0 0.25rem #c3540040;
+      }
     }
     button {
       border-radius: 0.375rem;
