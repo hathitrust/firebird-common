@@ -59,26 +59,20 @@
 
   // handles front-end reaction to form submission
   export let onSubmit = (event) => {
-    console.log('clicked!', event);
     // set the submit button spinner spinning
     loading = true;
     //serialize form data
     const data = JSON.stringify(Object.fromEntries(new FormData(event.target)));
 
-    const formValid = document.querySelector(`form#${id}.needs-validation`);
-
-    console.log('data', data);
+    const formValid = document.querySelector(`${form}.needs-validation`);
 
     // check for required fields
     if (!formValid.checkValidity()) {
-      console.log('validation failed');
       event.stopPropagation();
       loading = false;
-      console.log('loading', loading);
       formValid.classList.add('was-validated');
     } else {
       // do the post fetch function, passing in the seralized data
-      console.log('validation good');
       postForm(data)
         // if no error, hide form and log new issue ID
         .then((jiraResponseData) => {
@@ -109,9 +103,9 @@
       `start over clicked, hidden: ${hidden}, submitted: ${submitted}`
     );
     //remove validation styling
-    document.querySelector(`${form}`).classList.remove('was-validated');
+    document.querySelector(form).classList.remove('was-validated');
     //reset form
-    document.querySelector(`${form}`).reset();
+    document.querySelector(form).reset();
   };
 </script>
 
