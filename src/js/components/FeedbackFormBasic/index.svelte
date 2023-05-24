@@ -1,5 +1,7 @@
 <script>
   import { slide } from 'svelte/transition';
+  export let id = `id${new Date().getTime()}`;
+  export let form = `form#${id}`;
   let userURL = location.href;
   let userAgent = navigator.userAgent;
   let formName = 'basic-form';
@@ -62,17 +64,18 @@
     loading = true;
     //serialize form data
     const data = JSON.stringify(Object.fromEntries(new FormData(event.target)));
-    const form = document.querySelector('.needs-validation');
+
+    const formValid = document.querySelector(`form#${id}.needs-validation`);
 
     console.log('data', data);
 
     // check for required fields
-    if (!form.checkValidity()) {
+    if (!formValid.checkValidity()) {
       console.log('validation failed');
       event.stopPropagation();
       loading = false;
       console.log('loading', loading);
-      form.classList.add('was-validated');
+      formValid.classList.add('was-validated');
     } else {
       // do the post fetch function, passing in the seralized data
       console.log('validation good');
@@ -102,7 +105,13 @@
     //unhide the form, hide the submission message, reset the form
     hidden = !hidden;
     submitted = !submitted;
-    document.querySelector('form').reset();
+    console.log(
+      `start over clicked, hidden: ${hidden}, submitted: ${submitted}`
+    );
+    //remove validation styling
+    document.querySelector(`${form}`).classList.remove('was-validated');
+    //reset form
+    document.querySelector(`${form}`).reset();
   };
 </script>
 
@@ -113,6 +122,7 @@
     class="needs-validation mb-3"
     name="feedback"
     novalidate
+    {id}
   >
     <div class="mb-3">
       <label for="name" class="form-label"
