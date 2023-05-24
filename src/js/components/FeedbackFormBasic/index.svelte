@@ -201,7 +201,7 @@
     <button type="submit" class="btn btn-primary" disabled={loading}>
       Submit{#if loading}
         <span
-          class="spinner-border spinner-border-sm"
+          class="spinner-border spinner-border-sm ms-2"
           role="status"
           aria-hidden="true"
         />

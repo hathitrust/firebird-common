@@ -325,10 +325,9 @@
     <input name="formName" id="formName" type="hidden" bind:value={formName} />
 
     <button type="submit" class="btn btn-primary" disabled={loading}>
-      Submit
-      {#if loading}
+      Submit{#if loading}
         <span
-          class="spinner-border spinner-border-sm"
+          class="ms-2 spinner-border spinner-border-sm"
           role="status"
           aria-hidden="true"
         />
