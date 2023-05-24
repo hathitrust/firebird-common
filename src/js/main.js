@@ -15,6 +15,7 @@ import CollectionsToolbar from './components/CollectionsToolbar';
 import Footer from './components/Footer';
 import AdvancedSearchForm from './components/AdvancedSearchForm';
 import AcceptableUseBanner from './components/AcceptableUseBanner';
+import FeedbackFormModal from './components/FeedbackFormModal';
 
 const toCamel = (s) => {
   return s.replace(/([-_][a-z])/gi, ($1) => {
@@ -48,6 +49,7 @@ apps['hathi-collections-toolbar'] = CollectionsToolbar;
 apps['hathi-website-footer'] = Footer;
 apps['hathi-advanced-search-form'] = AdvancedSearchForm;
 apps['hathi-acceptable-use-banner'] = AcceptableUseBanner;
+apps['hathi-feedback-form-modal'] = FeedbackFormModal;
 
 // configure the HT global
 setupHTEnv();
@@ -106,14 +108,16 @@ document.querySelectorAll('[data-hathi-trigger]').forEach((el) => {
 });
 
 let btnToggleFilters = document.querySelector('#action-toggle-filters');
-if ( btnToggleFilters ) {
+if (btnToggleFilters) {
   btnToggleFilters.addEventListener('click', (event) => {
     event.preventDefault();
     event.stopPropagation();
 
-    let isExpanded = ! ( btnToggleFilters.getAttribute('aria-expanded') == 'true' );
-    btnToggleFilters.setAttribute('aria-expanded', isExpanded );
-  })
+    let isExpanded = !(
+      btnToggleFilters.getAttribute('aria-expanded') == 'true'
+    );
+    btnToggleFilters.setAttribute('aria-expanded', isExpanded);
+  });
 }
 
 document.querySelectorAll('[data-action="expand-filter"]').forEach((button) => {
@@ -121,15 +125,14 @@ document.querySelectorAll('[data-action="expand-filter"]').forEach((button) => {
     event.preventDefault();
     event.stopPropagation();
 
-    let isExpanded = ! ( button.getAttribute('aria-expanded') == 'true' );
+    let isExpanded = !(button.getAttribute('aria-expanded') == 'true');
     button.setAttribute('aria-expanded', isExpanded);
     let container = button.closest('.accordion-body');
     container.querySelector('.filter-list').dataset.expanded = isExpanded;
-    if ( ! isExpanded ) {
-      container.closest('.accordion-item').scrollIntoView({behavior: 'auto'});
+    if (!isExpanded) {
+      container.closest('.accordion-item').scrollIntoView({ behavior: 'auto' });
     }
-  })
-})
-
+  });
+});
 
 export default apps;
