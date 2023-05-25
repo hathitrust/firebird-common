@@ -9,6 +9,7 @@
   export let isOpen = false;
 
   export const show = function () {
+    isOpen = true;
     modal.show();
   };
 
@@ -37,11 +38,18 @@
         <FeedbackFormCatalog />
       </svelte:fragment>
     </Modal>
-  {:else if form == 'content'}
+  {:else if form == 'pt'}
     <Modal bind:this={modal} scrollable>
       <svelte:fragment slot="title">Content Quality Correction</svelte:fragment>
       <svelte:fragment slot="body">
         <FeedbackFormContent />
+      </svelte:fragment>
+    </Modal>
+  {:else if form == 'questions'}
+    <Modal bind:this={modal} scrollable>
+      <svelte:fragment slot="title">Questions?</svelte:fragment>
+      <svelte:fragment slot="body">
+        <FeedbackFormBasic />
       </svelte:fragment>
     </Modal>
   {:else}
