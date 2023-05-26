@@ -1,5 +1,7 @@
 <script>
   import { slide } from 'svelte/transition';
+  export let id = `id${new Date().getTime()}`;
+  export let form = `form#${id}`;
   let userURL = location.href;
   let userAgent = navigator.userAgent;
   let formName = 'basic-form';
@@ -28,7 +30,7 @@
   // when true, shows the success/failure alert message
   export let submitted = false;
 
-  const postForm = async (data) => {
+  export let postForm = async (data) => {
     console.log(data);
     return fetch(
       'https://feedback-testing.macc.kubernetes.hathitrust.org/api',
@@ -56,18 +58,19 @@
   };
 
   // handles front-end reaction to form submission
-  const onSubmit = (event) => {
+  export let onSubmit = (event) => {
     // set the submit button spinner spinning
     loading = true;
     //serialize form data
     const data = JSON.stringify(Object.fromEntries(new FormData(event.target)));
-    const form = document.querySelector('.needs-validation');
+
+    const formValid = document.querySelector(`${form}.needs-validation`);
 
     // check for required fields
-    if (!form.checkValidity()) {
+    if (!formValid.checkValidity()) {
       event.stopPropagation();
       loading = false;
-      form.classList.add('was-validated');
+      formValid.classList.add('was-validated');
     } else {
       // do the post fetch function, passing in the seralized data
       postForm(data)
@@ -96,7 +99,13 @@
     //unhide the form, hide the submission message, reset the form
     hidden = !hidden;
     submitted = !submitted;
-    document.querySelector('form').reset();
+    console.log(
+      `start over clicked, hidden: ${hidden}, submitted: ${submitted}`
+    );
+    //remove validation styling
+    document.querySelector(form).classList.remove('was-validated');
+    //reset form
+    document.querySelector(form).reset();
   };
 </script>
 
@@ -107,6 +116,7 @@
     class="needs-validation mb-3"
     name="feedback"
     novalidate
+    {id}
   >
     <div class="mb-3">
       <label for="name" class="form-label"
@@ -189,10 +199,9 @@
     <input name="formName" id="formName" type="hidden" bind:value={formName} />
 
     <button type="submit" class="btn btn-primary" disabled={loading}>
-      Submit
-      {#if loading}
+      Submit{#if loading}
         <span
-          class="spinner-border spinner-border-sm"
+          class="spinner-border spinner-border-sm ms-2"
           role="status"
           aria-hidden="true"
         />

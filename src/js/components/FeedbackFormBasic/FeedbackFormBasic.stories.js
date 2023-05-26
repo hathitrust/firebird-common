@@ -43,10 +43,10 @@ export const DesktopFormFilled = {
       name: 'Short summary (required)',
     });
     const bookDescription = await canvas.getByRole('textbox', {
-      name: 'Description or URL of the book',
+      name: 'If your question is related to a specific book, what is the title or URL? (optional)',
     });
     const description = await canvas.getByRole('textbox', {
-      name: 'Full description of problem or question',
+      name: 'Full description of problem or question (required)',
     });
 
     await userEvent.type(name, 'Caryl Wyatt');
@@ -68,21 +68,16 @@ export const DesktopFormMissingRequiredFields = {
     const canvas = within(canvasElement);
 
     const bookDescription = await canvas.getByRole('textbox', {
-      name: 'Description or URL of the book',
+      name: 'If your question is related to a specific book, what is the title or URL? (optional)',
     });
-    const description = await canvas.getByRole('textbox', {
-      name: 'Full description of problem or question',
-    });
+
     const submitButton = await canvas.getByRole('button', { name: 'Submit' });
 
     await userEvent.type(
       bookDescription,
       "I can't remember the name but the cover was blue."
     );
-    await userEvent.type(
-      description,
-      "I was browsing the collection and found the most amazing book, but not I can't remember what it was called. It was blue?"
-    );
+
     await userEvent.click(submitButton);
   },
 };

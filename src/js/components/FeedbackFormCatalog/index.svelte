@@ -1,5 +1,7 @@
 <script>
   import { slide } from 'svelte/transition';
+  export let id = `id${new Date().getTime()}`;
+  export let form = `form#${id}`;
   let problems = ['None'];
   let access = 'None';
   let userURL = location.href;
@@ -68,13 +70,13 @@
     data.append('problems', problems.join(', '));
     // serialize form data
     data = JSON.stringify(Object.fromEntries(data));
-    const form = document.querySelector('.needs-validation');
+    const formValid = document.querySelector(`${form}.needs-validation`);
 
     // check for required fields
-    if (!form.checkValidity()) {
+    if (!formValid.checkValidity()) {
       event.stopPropagation();
       loading = false;
-      form.classList.add('was-validated');
+      formValid.classList.add('was-validated');
     } else {
       // do the post fetch function, passing in the seralized data
       postForm(data)
@@ -105,7 +107,10 @@
     submitted = !submitted;
     problems = ['None'];
     access = 'None';
-    document.querySelector('form').reset();
+    //remove validation styling
+    document.querySelector(form).classList.remove('was-validated');
+    //clear form fields
+    document.querySelector(form).reset();
   };
 </script>
 
@@ -116,6 +121,7 @@
     class="needs-validation mb-3"
     name="feedback"
     novalidate
+    {id}
   >
     <div class="mb-3">
       <label for="name" class="form-label"
@@ -319,10 +325,9 @@
     <input name="formName" id="formName" type="hidden" bind:value={formName} />
 
     <button type="submit" class="btn btn-primary" disabled={loading}>
-      Submit
-      {#if loading}
+      Submit{#if loading}
         <span
-          class="spinner-border spinner-border-sm"
+          class="ms-2 spinner-border spinner-border-sm"
           role="status"
           aria-hidden="true"
         />

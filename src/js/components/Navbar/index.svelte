@@ -11,8 +11,8 @@
   let HT = window.HT || {};
   let modal;
   let feedbackModal;
-  let form = 'basic';
   let location = document.documentElement.dataset.app;
+  let form = 'basic';
 
   let notificationsModal;
   let notificationsManager = new NotificationsManager({
@@ -44,11 +44,15 @@
     }
   }
 
-  function openFeedback() {
-    if (location === 'catalog') {
+  function openFeedback(formLocation) {
+    if (formLocation === 'catalog') {
       form = 'catalog';
-    } else if (location === 'pt') {
+    } else if (formLocation === 'pt') {
       form = 'content';
+    } else if (formLocation === 'questions') {
+      form = 'basic';
+    } else {
+      form = 'basic';
     }
     feedbackModal.show();
   }
@@ -330,7 +334,7 @@
                 <a
                   href="#"
                   class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
-                  on:click|preventDefault={feedbackModal.show()}
+                  on:click|preventDefault={() => openFeedback('questions')}
                 >
                   <span>Ask a Question</span>
                   <i class="fa-regular fa-circle-question" />
@@ -340,7 +344,7 @@
                 <a
                   href="#"
                   class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
-                  on:click|preventDefault={openFeedback}
+                  on:click|preventDefault={() => openFeedback(location)}
                 >
                   <span>Report a Problem</span>
                   <i class="fa-solid fa-bug" />
