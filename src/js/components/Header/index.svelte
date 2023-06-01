@@ -6,6 +6,8 @@
   import SearchBar from '../SearchBar';
 
   export let searchState = 'default';
+  export let compact = false;
+
   // let searchFormDisplayed = search_state == 'default';
   // let searchFormDisplayed = true;
 
@@ -13,7 +15,7 @@
     if (searchState == 'default') {
       return true;
     } else if (searchState == 'toggle') {
-      return searchFormDisplayed;
+      return searchOpenToggle;
     }
     return false;
   }
@@ -31,7 +33,7 @@
 </script>
 
 <div>
-  <Navbar bind:searchOpen={searchOpenToggle} {searchState}/>
+  <Navbar bind:searchOpen={searchOpenToggle} {searchState} {compact}/>
   {#if searchOpenToggle}
     <div
       out:slide={{ easing: sineOut, duration: 150 }}
@@ -40,7 +42,7 @@
       class:show={searchOpenToggle}
       id="siteSearchDropdown"
     >
-      {#if searchFormDisplayed}
+      {#if displaySearchForm()}
       <SearchBar />
       {/if}
     </div>
