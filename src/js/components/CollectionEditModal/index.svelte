@@ -37,9 +37,9 @@
 </script>
 
 <Modal bind:this={modal} scrollable={true}>
-  <svelte:fragment slot="modal-title">{c == '__NEW__' ? 'New' : 'Edit'} Collection</svelte:fragment
+  <svelte:fragment slot="title">{c == '__NEW__' ? 'New' : 'Edit'} Collection</svelte:fragment
   >
-  <svelte:fragment slot="modal-body">
+  <svelte:fragment slot="body">
     <form>
       <div class="mb-3">
         <label for="cn" class="form-label">Collection Name</label>
@@ -80,7 +80,7 @@
       </div>
     </form>
   </svelte:fragment>
-  <svelte:fragment slot="modal-footer">
+  <svelte:fragment slot="footer">
     {#if userIsAnonymous}
       <div class="alert alert-block alert-danger mx-3">
         <p class="mb-0"><strong>This collection will be temporary.</strong> Log in to create 
