@@ -32,14 +32,14 @@
 
   function toggleSearch() {
     searchOpen = !searchOpen;
-    console.log("AHOY searchOpen", searchOpen);
+    console.log('AHOY searchOpen', searchOpen);
   }
 
   function openLogin() {
     //check viewport size to see if LoginFormModal will fit
     if (window.innerHeight < 700) {
       //if not, redirect user
-      window.location.assign('https://babel.hathitrust.org/cgi/wayf');
+      window.location.assign(`//${HT.service_domain}/cgi/wayf`);
     } else {
       //else, open LoginFormModal
       modal.show();
@@ -90,7 +90,7 @@
 <FeedbackFormModal {form} bind:this={feedbackModal} />
 <nav class="navbar navbar-expand-xl bg-white">
   <div class="container-fluid">
-    <div class="ht-logo" class:compact={compact}>
+    <div class="ht-logo" class:compact>
       <!-- <img src="../assets/HT-logo-mobile-nav.svg" alt="HathiTrust" class="" /> -->
       <svg
         width="180"
@@ -205,7 +205,9 @@
               <div class="d-flex flex-column gap-4">
                 {#each menuData.about as menuItem}
                   <li class="px-3">
-                    <a class="dropdown-item px-0" href={menuItem.link}
+                    <a
+                      class="dropdown-item px-0"
+                      href="//{HT.www_domain}/{menuItem.link}"
                       >{menuItem.title}</a
                     >
                   </li>
@@ -233,9 +235,19 @@
             <div class="d-flex flex-column gap-4">
               {#each menuData.collection as menuItem}
                 <li class="px-3">
-                  <a class="dropdown-item px-0" href={menuItem.link}
-                    >{menuItem.title}</a
-                  >
+                  {#if menuItem.title === 'Featured Collections'}
+                    <a
+                      class="dropdown-item px-0"
+                      href="//{HT.service_domain}/cgi/mb?colltype=featured"
+                      >{menuItem.title}</a
+                    >
+                  {:else}
+                    <a
+                      class="dropdown-item px-0"
+                      href="//{HT.www_domain}/{menuItem.link}"
+                      >{menuItem.title}</a
+                    >
+                  {/if}
                 </li>
               {/each}
             </div>
@@ -260,8 +272,9 @@
             <div class="d-flex flex-column gap-4">
               {#each menuData.memberLibraries as menuItem}
                 <li class="px-3">
-                  <a class="dropdown-item px-0" href={menuItem.link}
-                    >{menuItem.title}</a
+                  <a
+                    class="dropdown-item px-0"
+                    href="//{HT.www_domain}/{menuItem.link}">{menuItem.title}</a
                   >
                 </li>
               {/each}
@@ -290,8 +303,9 @@
             <div class="d-flex flex-column gap-4">
               {#each menuData.newsEvents as menuItem}
                 <li class="px-3">
-                  <a class="dropdown-item px-0" href={menuItem.link}
-                    >{menuItem.title}</a
+                  <a
+                    class="dropdown-item px-0"
+                    href="//{HT.www_domain}/{menuItem.link}">{menuItem.title}</a
                   >
                 </li>
               {/each}

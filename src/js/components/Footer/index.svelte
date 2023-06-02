@@ -1,20 +1,20 @@
 <script>
   const year = new Date().getFullYear();
+  let HT = window.HT || {};
 </script>
 
 <div class="sub-footer">
   <div class="legal">
     <span class="copyright">&#169;{year} HathiTrust</span>
     <div>
-      <a href="#">Privacy Policy</a><span>|</span><a href="#"
-        >Take-Down Policy</a
-      >
+      <a href="//{HT.www_domain}/privacy-policy">Privacy Policy</a><span>|</span
+      ><a href="//{HT.www_domain}/take-down-policy">Take-Down Policy</a>
     </div>
   </div>
   <ul>
-    <li><a href="#">Careers</a></li>
-    <li><a href="#">Accessibility</a></li>
-    <li><a href="#">Contact</a></li>
+    <li><a href="//{HT.www_domain}/careers">Careers</a></li>
+    <li><a href="//{HT.www_domain}/accessibility">Accessibility</a></li>
+    <li><a href="//{HT.www_domain}/contact">Contact</a></li>
   </ul>
 </div>
 
