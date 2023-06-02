@@ -50,6 +50,20 @@
     return false;
   }
 
+  function isWebsiteHome() {
+    if (location.host === HT.www_domain && location.pathname === '/') {
+      return true;
+    }
+    return false;
+  }
+
+  function isWebsiteContent() {
+    if (location.host === HT.www_domain && location.pathname !== '/') {
+      return true;
+    }
+    return false;
+  }
+
   //updates search hint message when use selects search type
   function _updateSearchType() {
     let value = _searchtype.value;
@@ -110,7 +124,7 @@
         location.search.replace(/;/g, '&')
       );
 
-      if (isSiteBabel()) {
+      if (isSiteBabel() || isWebsiteHome()) {
         _searchtypeValue = 'everything';
         _selectValue = 'library';
         _inputValue = searchParams.get('q1');
