@@ -57,13 +57,6 @@
     return false;
   }
 
-  function isWebsiteContent() {
-    if (location.host === HT.www_domain && location.pathname !== '/') {
-      return true;
-    }
-    return false;
-  }
-
   //updates search hint message when use selects search type
   function _updateSearchType() {
     let value = _searchtype.value;
