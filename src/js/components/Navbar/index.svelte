@@ -39,7 +39,7 @@
     //check viewport size to see if LoginFormModal will fit
     if (window.innerHeight < 700) {
       //if not, redirect user
-      window.location.assign('https://babel.hathitrust.org/cgi/wayf');
+      window.location.assign(`//${HT.service_domain}/cgi/wayf`);
     } else {
       //else, open LoginFormModal
       modal.show();
@@ -207,7 +207,7 @@
                   <li class="px-3">
                     <a
                       class="dropdown-item px-0"
-                      href="//{`${HT.www_domain}`}/{menuItem.link}"
+                      href="//{HT.www_domain}/{menuItem.link}"
                       >{menuItem.title}</a
                     >
                   </li>
@@ -238,13 +238,13 @@
                   {#if menuItem.title === 'Featured Collections'}
                     <a
                       class="dropdown-item px-0"
-                      href="//{`${HT.service_domain}/cgi/mb?colltype=featured`}"
+                      href="//{HT.service_domain}/cgi/mb?colltype=featured"
                       >{menuItem.title}</a
                     >
                   {:else}
                     <a
                       class="dropdown-item px-0"
-                      href="//{`${HT.www_domain}`}/{menuItem.link}"
+                      href="//{HT.www_domain}/{menuItem.link}"
                       >{menuItem.title}</a
                     >
                   {/if}
@@ -274,8 +274,7 @@
                 <li class="px-3">
                   <a
                     class="dropdown-item px-0"
-                    href="//{`${HT.www_domain}`}/{menuItem.link}"
-                    >{menuItem.title}</a
+                    href="//{HT.www_domain}/{menuItem.link}">{menuItem.title}</a
                   >
                 </li>
               {/each}
@@ -306,8 +305,7 @@
                 <li class="px-3">
                   <a
                     class="dropdown-item px-0"
-                    href="//{`${HT.www_domain}`}/{menuItem.link}"
-                    >{menuItem.title}</a
+                    href="//{HT.www_domain}/{menuItem.link}">{menuItem.title}</a
                   >
                 </li>
               {/each}
