@@ -139,7 +139,8 @@
           _selectValue = 'website';
           index = 'website';
           let tmp = location.pathname.split('/').slice(2);
-          _inputValue = tmp.pop();
+          tmp = tmp.pop();
+          _inputValue = decodeURI(tmp);
         } else {
           _selectValue = 'website';
           index = 'website';
