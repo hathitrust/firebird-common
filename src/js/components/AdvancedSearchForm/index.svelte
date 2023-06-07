@@ -93,7 +93,7 @@
       }
     }
     if (target == 'catalog') {
-      url = new URL(`http://${HT.catalog_domain}/Search/Home`);
+      url = new URL(`https://${HT.catalog_domain}/Search/Home`);
       let searchParams = new URLSearchParams();
       searchParams.set('adv', 1);
       if (isFullView) {
@@ -171,7 +171,7 @@
 
       url.search = searchParams.toString();
     } else {
-      url = new URL(`http://${HT.service_domain}/cgi/ls`);
+      url = new URL(`https://${HT.service_domain}/cgi/ls`);
       let searchParams = new URLSearchParams();
       if (isFullView) {
         searchParams.set('lmt', 'ft');
