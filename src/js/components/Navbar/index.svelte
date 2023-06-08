@@ -40,7 +40,13 @@
     //check viewport size to see if LoginFormModal will fit
     if (window.innerHeight < 700) {
       //if not, redirect user
-      window.location.assign(`//${HT.service_domain}/cgi/wayf`);
+      //calculate login target
+      let target = window.location.href;
+      if (target.indexOf('babel.hathitrust') < 0) {
+        // not a babel app, need to route through ping/pong
+        target = HT.get_pong_target(target);
+      }
+      window.location.assign(`//${HT.service_domain}/cgi/wayf?target=${encodeURIComponent(target)}`);
     } else {
       //else, open LoginFormModal
       modal.show();
