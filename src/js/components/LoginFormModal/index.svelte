@@ -78,7 +78,7 @@
           >
         </p>
         <p class="p-3 px-modal mb-0 border-top bg-light rounded-bottom">
-          <strong>Not with a memberLibraries institution?</strong>
+          <strong>Not with a member institution?</strong>
           <br />
           <a href="//{HT.service_domain}/cgi/wayf?target={encodeURIComponent(target)}" class="text-dark"
             >See options to log in as a guest</a
