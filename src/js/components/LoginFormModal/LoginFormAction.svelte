@@ -2,7 +2,7 @@
   let HT = window.HT || {};
 
   export let sdrinst;
-  export let target;
+  export let target = '';
 
   export let onSubmit = function (href) {
     setTimeout(() => {
