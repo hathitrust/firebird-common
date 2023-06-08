@@ -8,6 +8,7 @@ import * as bootstrap from 'bootstrap';
 
 import Quote from './components/Quote.svelte';
 import LoginFormModal from './components/LoginFormModal';
+import LoginForm from './components/LoginFormModal/LoginForm';
 import Header from './components/Header';
 import ResultsPagination from './components/ResultsPagination';
 import ResultsToolbar from './components/ResultsToolbar';
@@ -42,6 +43,7 @@ const buildProps = (el) => {
 const apps = {};
 apps['hathi-quote'] = Quote;
 apps['hathi-login-form-modal'] = LoginFormModal;
+apps['hathi-login-form'] = LoginForm;
 apps['hathi-website-header'] = Header;
 apps['hathi-results-pagination'] = ResultsPagination;
 apps['hathi-results-toolbar'] = ResultsToolbar;

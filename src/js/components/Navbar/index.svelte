@@ -24,6 +24,7 @@
   export let searchOpen = true;
   export let searchState;
   export let compact = false;
+  export let userNavigation = true;
 
   const switchableRoles = ['enhancedTextProxy', 'totalAccess'];
   const switchableRolesLabels = {};
@@ -371,99 +372,101 @@
             </div>
           </ul>
         </li>
-        {#if loggedIn}
-          <li id="my-account" class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle text-uppercase d-flex flex-row justify-content-between align-items-center"
-              href="#"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <div class="d-flex justify-content-center align-items-center">
-                <span
-                  class:accountHasNotification={hasNotification}
-                  class="account-icon me-n1 d-flex align-items-center justify-content-center border border-neutral-300 rounded-circle bg-neutral-100"
-                >
-                  {#if hasActivatedRole}
-                    <i class="fa-solid fa-bolt-lightning text-primary-600" />
-                  {:else}
-                    <i class="fa-solid fa-user text-neutral-800" />
+        {#if userNavigation}
+          {#if loggedIn}
+            <li id="my-account" class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle text-uppercase d-flex flex-row justify-content-between align-items-center"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <div class="d-flex justify-content-center align-items-center">
+                  <span
+                    class:accountHasNotification={hasNotification}
+                    class="account-icon me-n1 d-flex align-items-center justify-content-center border border-neutral-300 rounded-circle bg-neutral-100"
+                  >
+                    {#if hasActivatedRole}
+                      <i class="fa-solid fa-bolt-lightning text-primary-600" />
+                    {:else}
+                      <i class="fa-solid fa-user text-neutral-800" />
+                    {/if}
+                  </span>
+                  <span class="account-text ms-3">My Account</span>
+                </div>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <div class="d-flex flex-column gap-4">
+                  <li class="px-3">
+                    <button
+                      class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
+                      on:click={notificationsModal.show()}
+                      ><span class="needs-hover-state"
+                        >Notifications {#if hasNotification}({notificationsManager.count()}){/if}</span
+                      >
+                      <i class="fa-solid fa-bell fa-fw" />
+                    </button>
+                  </li>
+                  {#if hasSwitchableRoles}
+                    <li style="margin-bottom: -1rem">
+                      <h6 class="dropdown-header">
+                        Current Role: {hasActivatedRole ? role : 'Member'}
+                      </h6>
+                    </li>
+                    <li class="px-3">
+                      <a
+                        class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
+                        href="//{HT.service_domain}/cgi/ping/switch"
+                        role="button"
+                        ><span class="needs-hover-state">
+                          {#if hasActivatedRole}
+                            Switch Role: Member
+                          {:else}
+                            Switch Role: {role}
+                          {/if}
+                        </span><i class="fa-solid fa-bolt-lightning fa-fw" /></a
+                      >
+                    </li>
                   {/if}
-                </span>
-                <span class="account-text ms-3">My Account</span>
-              </div>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <div class="d-flex flex-column gap-4">
-                <li class="px-3">
-                  <button
-                    class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
-                    on:click={notificationsModal.show()}
-                    ><span class="needs-hover-state"
-                      >Notifications {#if hasNotification}({notificationsManager.count()}){/if}</span
+                  <li class="px-3">
+                    <a
+                      class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
+                      href="//{`${HT.service_domain}/cgi/mb?a=listcs&colltype=my-collections`}"
+                      role="button"
+                      ><span class="needs-hover-state">My Collections</span><i
+                        class="fa-solid fa-list fa-fw"
+                      /></a
                     >
-                    <i class="fa-solid fa-bell fa-fw" />
-                  </button>
-                </li>
-                {#if hasSwitchableRoles}
-                  <li style="margin-bottom: -1rem">
-                    <h6 class="dropdown-header">
-                      Current Role: {hasActivatedRole ? role : 'Member'}
-                    </h6>
+                  </li>
+                  <li style="margin-top: -1rem; margin-bottom: -1rem;">
+                    <hr class="dropdown-divider" />
                   </li>
                   <li class="px-3">
                     <a
                       class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
-                      href="//{HT.service_domain}/cgi/ping/switch"
+                      href="//{`${HT.service_domain}/cgi/logout`}"
                       role="button"
-                      ><span class="needs-hover-state">
-                        {#if hasActivatedRole}
-                          Switch Role: Member
-                        {:else}
-                          Switch Role: {role}
-                        {/if}
-                      </span><i class="fa-solid fa-bolt-lightning fa-fw" /></a
+                      ><span class="needs-hover-state">Log Out</span><i
+                        class="fa-solid fa-arrow-right-from-bracket fa-fw"
+                      /></a
                     >
                   </li>
-                {/if}
-                <li class="px-3">
-                  <a
-                    class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
-                    href="//{`${HT.service_domain}/cgi/mb?a=listcs&colltype=my-collections`}"
-                    role="button"
-                    ><span class="needs-hover-state">My Collections</span><i
-                      class="fa-solid fa-list fa-fw"
-                    /></a
-                  >
-                </li>
-                <li style="margin-top: -1rem; margin-bottom: -1rem;">
-                  <hr class="dropdown-divider" />
-                </li>
-                <li class="px-3">
-                  <a
-                    class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
-                    href="//{`${HT.service_domain}/cgi/logout`}"
-                    role="button"
-                    ><span class="needs-hover-state">Log Out</span><i
-                      class="fa-solid fa-arrow-right-from-bracket fa-fw"
-                    /></a
-                  >
-                </li>
-              </div>
-            </ul>
-          </li>
-        {:else}
-          <LoginFormModal bind:this={modal} />
-          <li class="nav-item">
-            <a
-              class="nav-link text-uppercase d-flex flex-row justify-content-between align-items-center"
-              href="#"
-              role="button"
-              on:click|preventDefault={openLogin}
-              >Log In<i class="fa-solid fa-user fa-fw" /></a
-            >
-          </li>
+                </div>
+              </ul>
+            </li>
+          {:else}
+            <LoginFormModal bind:this={modal} />
+            <li class="nav-item">
+              <a
+                class="nav-link text-uppercase d-flex flex-row justify-content-between align-items-center"
+                href="#"
+                role="button"
+                on:click|preventDefault={openLogin}
+                >Log In<i class="fa-solid fa-user fa-fw" /></a
+              >
+            </li>
+          {/if}
         {/if}
       </ul>
     </div>

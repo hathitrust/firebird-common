@@ -7,6 +7,7 @@
 
   export let searchState = 'default';
   export let compact = false;
+  export let userNavigation = true;
 
   // let searchFormDisplayed = search_state == 'default';
   // let searchFormDisplayed = true;
@@ -33,7 +34,7 @@
 </script>
 
 <div>
-  <Navbar bind:searchOpen={searchOpenToggle} {searchState} {compact}/>
+  <Navbar bind:searchOpen={searchOpenToggle} {searchState} {compact} {userNavigation} />
   {#if searchOpenToggle}
     <div
       out:slide={{ easing: sineOut, duration: 150 }}
