@@ -1,0 +1,32 @@
+<script>
+  import FilterableSelection from '../FilterableSelection.svelte';
+
+  let HT = window.HT || {};
+  export let sdrinst = HT.prefs ? HT.prefs.get().sdrinst : undefined;
+
+  export let filterText;
+
+</script>
+
+{#if ! HT.login_status}
+<pre>WAITING</pre>
+{:else if HT.login_status.logged_in}
+<div class="alert alert-info">You are currently logged into HathiTrust by way of {HT.login_status.institutionName}.</div>
+<p>
+  <a href="//{HT.service_domain}/cgi/logout" class="btn btn-primary">Log out</a>
+</p>
+{:else}
+  <FilterableSelection
+    --filterable-list-height="14rem"
+    items={HT.login_status.idp_list.map((item) => ({
+      option: item.name.replace(/&amp;/g, '&'),
+      key: item.sdrinst,
+      value: item.sdrinst,
+    }))}
+    label="Member Institution"
+    placeholder="Type something"
+    icon="fa-solid fa-building-columns"
+    bind:filterText
+    bind:value={sdrinst}
+  />
+{/if}
