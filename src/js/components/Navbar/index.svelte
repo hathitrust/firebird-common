@@ -451,7 +451,7 @@
                   <li class="px-3">
                     <a
                       class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
-                      href="//{`${HT.service_domain}/cgi/logout?${encodeURIComponent(location.href)}`}"
+                      href="//{`${HT.service_domain}/cgi/logout?${encodeURIComponent(window.location.href)}`}"
                       role="button"
                       ><span class="needs-hover-state">Log Out</span><i
                         class="fa-solid fa-arrow-right-from-bracket fa-fw"
