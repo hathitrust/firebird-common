@@ -291,7 +291,7 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Join</a>
+          <a class="nav-link" href="//{HT.www_domain}/join/">Join</a>
         </li>
         <li class="nav-item dropdown">
           <a
