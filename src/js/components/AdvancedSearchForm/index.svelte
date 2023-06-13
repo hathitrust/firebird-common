@@ -158,7 +158,8 @@
 
       bools.forEach((value, idx) => {
         if (value && lookFors[idx]) {
-          searchParams.set(`bool-${idx + 1}`, value);
+          searchParams.append('bool[]', value);
+          // searchParams.set(`bool-${idx + 1}`, value);
         }
       });
 
