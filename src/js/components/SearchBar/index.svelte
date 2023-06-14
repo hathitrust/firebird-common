@@ -117,6 +117,8 @@
         location.search.replace(/;/g, '&')
       );
 
+      const isAdvancedSearch = searchParams.get('adv') == '1';
+
       if (isSiteBabel() || isWebsiteHome()) {
         _searchtypeValue = 'everything';
         _selectValue = 'library';
@@ -146,6 +148,11 @@
           index = 'website';
           _inputValue = searchParams.get('s');
         }
+      }
+      if ( searchParams.get('adv') == '1' ) {
+        // if the query was an advanced search do not try to
+        // summarize the query here
+        _inputValue = '';
       }
     }
 

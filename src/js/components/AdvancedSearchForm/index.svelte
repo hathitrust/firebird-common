@@ -102,6 +102,7 @@
       }
 
       let hasSearchTerms = false;
+      let lookForIndex = [];
       lookFors.forEach((value, idx) => {
         if (value) {
           if (anyalls[idx] == 'any') {
@@ -111,6 +112,7 @@
           }
           searchParams.append('lookfor[]', value);
           hasSearchTerms = true;
+          lookForIndex.push(idx);
         }
       });
       types.forEach((value, idx) => {
@@ -157,9 +159,9 @@
       }
 
       bools.forEach((value, idx) => {
-        if (value && lookFors[idx]) {
+        if ( idx === 0 ) { return ; }
+        if (value && lookFors[idx] && lookFors[idx - 1]) {
           searchParams.append('bool[]', value);
-          // searchParams.set(`bool-${idx + 1}`, value);
         }
       });
 
@@ -269,6 +271,9 @@
       });
       params.getAll('type[]').forEach((value, idx) => {
         types[idx] = value;
+      });
+      params.getAll('bool[]').forEach((value, idx) => {
+        bools[idx + 1] = value;
       });
 
       if (params.get('fqor-language[]')) {
@@ -507,6 +512,7 @@
                       class="form-check-input"
                       value={option.value}
                       checked={option.value == bools[idx]}
+                      bind:group={bools[idx]}
                     />
                     <label
                       class="form-check-label text-uppercase"
