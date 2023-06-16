@@ -1,6 +1,7 @@
 // Import our custom CSS
 import '../scss/styles.scss';
 import { setupHTEnv } from './lib/utils';
+import { AnalyticsManager } from './lib/analytics';
 
 // Import all of Bootstrap's JS
 // these are made available globally
@@ -81,6 +82,7 @@ HT.postPingCallback = function () {
   setTimeout(() => {
     document.body.dataset.initialized = true;
   });
+  (new AnalyticsManager(HT)).configure();
 };
 
 let script = document.createElement('script');
