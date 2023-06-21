@@ -404,7 +404,7 @@
         width: 125px;
       }
       #search-what.select-container {
-        width: 215px;
+        width: 265px;
       }
       .form-select {
         border-radius: 0;
