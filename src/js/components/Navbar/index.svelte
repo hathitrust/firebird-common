@@ -348,7 +348,7 @@
             <div class="d-flex flex-column gap-4">
               <li class="px-3">
                 <a
-                  href="#"
+                  href="https://hathitrust.atlassian.net/servicedesk/customer/portals"
                   class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
                 >
                   <span>Find Help</span>
