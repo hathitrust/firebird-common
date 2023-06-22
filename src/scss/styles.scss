@@ -319,7 +319,7 @@ a:not(.btn,.list-group-item):has(i[aria-hidden]) {
 
 .modal-content {
   // height: 90vh;
-  max-height: 45rem !important;
+  max-height: clamp(95dvh, 45rem, 45rem) !important;
 }
 
 .modal-body {
