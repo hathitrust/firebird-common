@@ -46,7 +46,7 @@ export class NotificationsManager {
   }
 
   updateTimestamp() {
-    this.cookieJar.setItem('HT.notice', this.effectiveOn());
+    this.cookieJar.setItem('HT.notice', this.effectiveOn(), null, '/', HT.cookies_domain);
   }
 }
 
