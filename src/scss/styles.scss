@@ -260,6 +260,11 @@ $utilities: map-merge(
   --bs-link-color: var(--color-primary-600);
 }
 
+body[data-initialized='true'] {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
 // Further refine some bootstrap styles
 
 // bootstrap's contrast functions pair black text on our primary background

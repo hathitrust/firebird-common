@@ -9,10 +9,10 @@ body {
 .apps {
   transition: visibility 0s linear 100ms, opacity 150ms;
 
-  &[data-initialized='true'] {
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
+  // &[data-initialized='true'] {
+  //   visibility: visible !important;
+  //   opacity: 1 !important;
+  // }
 
   #root {
     height: 100%;
