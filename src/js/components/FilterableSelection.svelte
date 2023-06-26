@@ -124,7 +124,7 @@
       <button 
         class="btn btn-outline-secondary" 
         aria-label="Clear filter" 
-        on:click={() => { filterText = ''; }}>
+        on:click|preventDefault|stopPropagation={() => { filterText = ''; }}>
         <i class="fa-regular fa-circle-xmark" aria-hidden="true"></i>
       </button>
     </div>

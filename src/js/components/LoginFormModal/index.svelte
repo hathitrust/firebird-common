@@ -64,7 +64,7 @@
       of volumes and features.
     </p>
     <div class="mt-3 pb-3 modal-grid gap-3">
-      <InstitutionList {sdrinst} {filterText}></InstitutionList>
+      <InstitutionList bind:sdrinst {filterText}></InstitutionList>
     </div>
   </svelte:fragment>
   <svelte:fragment slot="footer">
