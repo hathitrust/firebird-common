@@ -16,8 +16,8 @@
   <a href="//{HT.service_domain}/cgi/logout" class="btn btn-primary">Log out</a>
 </p>
 {:else}
+<div class="filterable-grid gap-1 mb-1" style:--filterable-list-height="12rem">
   <FilterableSelection
-    --filterable-list-height="14rem"
     items={HT.login_status.idp_list.map((item) => ({
       option: item.name.replace(/&amp;/g, '&'),
       key: item.sdrinst,
@@ -29,4 +29,14 @@
     bind:filterText
     bind:value={sdrinst}
   />
+</div>
 {/if}
+
+<style>
+  .filterable-grid {
+    display: grid;
+    grid-template-rows: min-content 1fr;
+    min-height: 0;
+    overflow: hidden;
+  }
+</style>

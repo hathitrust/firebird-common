@@ -107,7 +107,7 @@
 
 </style>
 
-  <fieldset class="fieldset-filter mb-3" bind:this={fieldset1} data-wtf={filterText}>
+  <fieldset class="fieldset-filter mb-3" bind:this={fieldset1}>
     <legend class="fs-7">Filter by {label}</legend>
     <div class="input-group">
       {#if icon}
