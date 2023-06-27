@@ -29,8 +29,8 @@
 
 </script>
 
-<div class="m-0 w-100">
-  <div class="p-3 px-modal mb-2 d-flex flex-wrap flex-lg-nowrap gap-3 gap-lg-5 justify-content-between">
+<div class="m-0 w-auto">
+  <div class="py-3 mb-2 d-flex flex-wrap flex-lg-nowrap gap-3 gap-lg-5 justify-content-between">
     <p class="fs-7 m-0">
       By logging into HathiTrust, you agree to follow our
       <a href="https://hathitrust.org/the-collection/access-use-policy/"

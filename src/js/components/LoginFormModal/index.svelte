@@ -66,18 +66,16 @@
     <div class="mt-3 pb-3 modal-grid gap-3">
       <InstitutionList bind:sdrinst {filterText}></InstitutionList>
     </div>
-  </svelte:fragment>
-  <svelte:fragment slot="footer">
     <LoginFormAction {sdrinst} {target}></LoginFormAction>
-    <div class="m-0 p-0 w-100">
+    <div class="m-0 p-0 w-auto modal-full-width">
       <div>
-        <p class="p-3 px-modal mb-0 border-top bg-light">
+        <p class="p-3 mb-0 border-top bg-light">
           <a
             href="https://www.hathitrust.org/help_digital_library#LoginNotListed"
             class="text-dark fw-bold">Why isn't my institution listed?</a
           >
         </p>
-        <p class="p-3 px-modal mb-0 border-top bg-light rounded-bottom">
+        <p class="p-3 mb-0 border-top bg-light rounded-bottom">
           <strong>Not with a member institution?</strong>
           <br />
           <a href="//{HT.service_domain}/cgi/wayf?target={encodeURIComponent(target)}" class="text-dark"
@@ -87,10 +85,14 @@
       </div>
     </div>
   </svelte:fragment>
+  <!-- <svelte:fragment slot="footer">
+  </svelte:fragment> -->
 </Modal>
 
 <style>
-  /* :global(.modal-body) {
-    overflow: hidden !important;
-  } */
+  .modal-full-width {
+    margin-left: -1.75rem !important;
+    margin-right: calc(1.75rem * -1.125) !important;
+    margin-bottom: -1rem !important;
+  }
 </style>
