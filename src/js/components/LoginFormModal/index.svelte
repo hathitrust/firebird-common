@@ -56,7 +56,7 @@
   }
 </script>
 
-<Modal bind:this={modal} height="90vh">
+<Modal bind:this={modal} height="90vh" scrollable={true}>
   <svelte:fragment slot="title">Member Library Login</svelte:fragment>
   <svelte:fragment slot="body">
     <p class="mb-0">
