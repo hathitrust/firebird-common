@@ -38,7 +38,7 @@
 
   function openLogin() {
     //check viewport size to see if LoginFormModal will fit
-    if (window.innerHeight < 625) {
+    if (window.innerHeight < 800) {
       //if not, redirect user
       //calculate login target
       let target = window.location.href;
