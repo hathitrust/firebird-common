@@ -17,6 +17,6 @@
   <a href="//{HT.service_domain}/cgi/logout" class="btn btn-primary">Log out</a>
 </p>
 {:else}
-  <InstitutionList {sdrinst}></InstitutionList>
+  <InstitutionList bind:sdrinst></InstitutionList>
   <LoginFormAction {sdrinst} {target}></LoginFormAction>
 {/if}
