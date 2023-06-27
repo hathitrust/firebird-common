@@ -114,6 +114,7 @@
     pointer-events: none;
     opacity: 0;
     z-index: -1;
+    visibility: hidden;
   }
 
   dialog::backdrop {
