@@ -63,7 +63,7 @@
       Log in with your institution account to access then largest number
       of volumes and features.
     </p>
-    <div class="mt-3 pb-3 modal-grid gap-3">
+    <div class="mt-3" style="display: grid; grid-template-rows: minmax(0, 1fr); min-height: 0;">
       <InstitutionList bind:sdrinst {filterText}></InstitutionList>
     </div>
   </svelte:fragment>
