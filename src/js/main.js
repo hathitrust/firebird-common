@@ -95,6 +95,8 @@ document.head.appendChild(script);
 // look for buttons that trigger the appearance of
 // svelte components
 
+document.documentElement.dataset.suportsInert = document.body.inert !== undefined;
+
 document.querySelectorAll('[data-hathi-trigger]').forEach((el) => {
   let slug = el.dataset.hathiTrigger;
   let props = buildProps(el);

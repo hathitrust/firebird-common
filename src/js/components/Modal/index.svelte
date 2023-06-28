@@ -19,6 +19,9 @@
     }
     isOpen = true;
     dialog.showModal();
+    // setTimeout(() => {
+    //   dialog.querySelector('button').focus();
+    // })
   };
 
   export const hide = function () {
@@ -43,7 +46,7 @@
   <link rel="stylesheet" href="https://unpkg.com/open-props" />
 </svelte:head>
 
-<dialog bind:this={dialog} inert={isOpen ? null : true} aria-hidden={!isOpen}>
+<dialog bind:this={dialog} aria-hidden={!isOpen}>
   <div class="modal show" aria-labelledby="{id}-label" style="display: block;">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
       <div class="modal-content" style:height={height != 'auto' && height}>
@@ -53,7 +56,7 @@
           </h1>
           <button
             type="button"
-            class="btn-close"
+            class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-2 justify-between order-1 ms-auto text-uppercase"
             aria-label="Close Modal"
             data-bs-dismiss="modal"
             on:click={() => {
@@ -88,7 +91,7 @@
   </div>
 </dialog>
 
-<style>
+<style lang="scss">
   :global(html:has(dialog[open])) {
     overflow: hidden;
   }
@@ -110,11 +113,25 @@
     transition: opacity 0.25s var(--ease-3);
   }
 
+  // dialog:not([open]) {
+  //   display: none;
+  // }
+
   dialog:not([open]) {
     pointer-events: none;
     opacity: 0;
-    z-index: -1;
-    visibility: hidden;
+    z-index: -100;
+
+    // for browsers that do not support inert
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
   }
 
   dialog::backdrop {
@@ -150,23 +167,7 @@
     order: 2;
   }
 
-  .btn-close {
-    color: black;
-    text-transform: uppercase;
-    text-decoration: none;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    order: 1;
-    width: auto;
-    height: auto;
-    margin-left: auto;
-    background: none;
-    box-shadow: none;
-  }
-
-  .btn-close i.fa-solid {
+  button[data-bs-dismiss] i.fa-solid {
     color: var(--color-primary-500) !important;
   }
 
