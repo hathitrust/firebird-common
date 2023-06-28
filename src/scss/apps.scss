@@ -266,3 +266,15 @@ body {
     }
   }
 }
+
+span.query-term {
+  font-weight: bold;
+
+  &::before {
+    content: '“';
+  }
+
+  &::after {
+    content: '”';
+  }
+}

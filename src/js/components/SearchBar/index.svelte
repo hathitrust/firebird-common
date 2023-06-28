@@ -200,8 +200,8 @@
               bind:this={_searchtype}
               on:change={_updateSearchType}
             >
-              <option value="everything">Within texts and descriptions</option>
-              <option value="all">Within descriptions of texts</option>
+              <option value="everything">Full Text & All Fields</option>
+              <option value="all">All Fields</option>
               <option value="title">Title</option>
               <option value="author">Author</option>
               <option value="subject">Subject</option>

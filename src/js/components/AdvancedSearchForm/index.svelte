@@ -15,9 +15,9 @@
   // export let useAnyAll = true;
 
   const fieldOptions = [
-    { value: 'ocr', label: 'Within texts and descriptions' },
-    { value: 'ocronly', label: 'Within texts' },
-    { value: 'all', label: 'Within descriptions of texts' },
+    { value: 'ocr', label: 'Full Text & All Fields' },
+    { value: 'ocronly', label: 'Only Full Text' },
+    { value: 'all', label: 'All Fields' },
     { value: 'title', label: 'Title' },
     { value: 'author', label: 'Author' },
     { value: 'subject', label: 'Subject' },
