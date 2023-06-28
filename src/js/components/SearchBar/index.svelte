@@ -30,9 +30,9 @@
 
   function isSiteBabel() {
     if (
-      location.pathname.match('/cgi/ls') ||
-      location.pathname.match('/cgi/mb') ||
-      location.pathname.match('/cgi/pt')
+      location.pathname.match('/cgi/ls') // ||
+      // location.pathname.match('/cgi/mb') ||
+      // location.pathname.match('/cgi/pt')
     ) {
       return true;
     }
