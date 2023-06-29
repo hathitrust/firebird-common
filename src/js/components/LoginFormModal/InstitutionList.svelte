@@ -23,7 +23,7 @@
       key: item.sdrinst,
       value: item.sdrinst,
     }))}
-    label="Member Institution"
+    label="Institution"
     placeholder="Type something"
     icon="fa-solid fa-building-columns"
     bind:filterText

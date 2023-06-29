@@ -56,8 +56,9 @@
   }
 </script>
 
-<Modal bind:this={modal} height="90vh">
-  <svelte:fragment slot="title">Member Library Login</svelte:fragment>
+<!--  height="90vh" ?? -->
+<Modal bind:this={modal} xxheight="45rem">
+  <svelte:fragment slot="title">Log in with Your Institution</svelte:fragment>
   <svelte:fragment slot="body">
     <p class="mb-0">
       Log in with your institution account to access then largest number
@@ -71,15 +72,8 @@
     <LoginFormAction {sdrinst} {target}></LoginFormAction>
     <div class="m-0 p-0 w-100">
       <div>
-        <p class="p-3 px-modal mb-0 border-top bg-light">
-          <a
-            href="https://www.hathitrust.org/help_digital_library#LoginNotListed"
-            class="text-dark fw-bold">Why isn't my institution listed?</a
-          >
-        </p>
         <p class="p-3 px-modal mb-0 border-top bg-light rounded-bottom">
-          <strong>Not with a member institution?</strong>
-          <br />
+          Can't find your university or library? 
           <a href="//{HT.service_domain}/cgi/wayf?target={encodeURIComponent(target)}" class="text-dark"
             >See options to log in as a guest</a
           >

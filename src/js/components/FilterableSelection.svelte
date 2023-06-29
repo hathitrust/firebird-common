@@ -98,7 +98,8 @@
     grid-row: 2/3;
     display: grid;
     grid-template-rows: min-content minmax(0, 1fr);
-    min-height: 0;
+    /* min-height: 0; */
+    min-height: 10rem;
   }
 
   .fieldset-select legend {
@@ -134,7 +135,7 @@
   </fieldset>
 
   <fieldset class="fieldset-select" bind:this={fieldset2}>
-    <legend class="fs-7">Select a {label}</legend>
+    <legend class="fs-7">Select {label}</legend>
     <ul class="px-0 position-relative border border-dark rounded filterable-list" bind:this={list}>
       {#each possibleItems as item, index (item.key)}
         <li class="form-check mt-0 mb-0 px-0">
