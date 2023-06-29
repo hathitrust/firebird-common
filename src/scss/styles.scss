@@ -386,6 +386,32 @@ a {
   }
 }
 
+#skiplinks:focus-within {
+  position: fixed;
+  z-index: 5000;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  padding: 1rem;
+
+  @extend .alert;
+  @extend .alert-dark;
+  @extend .d-flex;
+  @extend .flex-column;
+  @extend .align-items-center;
+  @extend .shadow-lg;
+
+  ul {
+    margin-bottom: 0;
+    list-style-type: none;
+
+    a {
+      @extend .alert-link;
+    }
+  }
+}
+
 // // EVALUATE
 // .accordion-item:not(:last-of-type) {
 //   border-bottom-color: var(--color-neutral-900);
