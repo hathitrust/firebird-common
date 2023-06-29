@@ -30,9 +30,9 @@
 
   function isSiteBabel() {
     if (
-      location.pathname.match('/cgi/ls') // ||
-      // location.pathname.match('/cgi/mb') ||
-      // location.pathname.match('/cgi/pt')
+      location.pathname.match('/cgi/ls') ||
+      location.pathname.match('/cgi/mb') ||
+      location.pathname.match('/cgi/pt')
     ) {
       return true;
     }
@@ -122,8 +122,10 @@
       if (isSiteBabel() || isWebsiteHome()) {
         _searchtypeValue = 'everything';
         _selectValue = 'library';
-        _inputValue = searchParams.get('q1');
-        isFullView = !(searchParams.get('lmt') == 'all');
+        if ( location.pathname.match('/cgi/ls') ) {
+          _inputValue = searchParams.get('q1');
+          isFullView = !(searchParams.get('lmt') == 'all');
+        }
       } else if (isSiteCatalog()) {
         _searchtypeValue = searchParams.get('searchtype') || 'all';
         _selectValue = 'library';
