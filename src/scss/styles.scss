@@ -372,6 +372,20 @@ a:not(.btn,.list-group-item):has(i[aria-hidden]) {
   }
 }
 
+a {
+  // what effect does this have with padding?
+  // padding: 2px 4px;
+  transition: all 0.3s ease;
+  &:focus-visible {
+    outline: none;
+    // box-shadow: 0 0 0 4px rgba(236,114,23,0.5);
+    // box-shadow: 0 0 0 4px rgb(51, 51, 51, 0.4);
+    outline: 4px solid rgb(51, 51, 51, 0.4);
+    border-radius: 4px;
+    z-index: 1;
+  }
+}
+
 // // EVALUATE
 // .accordion-item:not(:last-of-type) {
 //   border-bottom-color: var(--color-neutral-900);
