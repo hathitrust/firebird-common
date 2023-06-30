@@ -110,10 +110,10 @@
 
 </script>
 
-<div class="bg-light rounded-2 p-2 p-3 d-flex flex-sm-row flex-column gap-3 justify-content-between align-items-start align-items-sm-center" role="toolbar" aria-label="Search toolbar" aria-describedby="results-summary">
-  <span id="results-summary">
+<div class="bg-light rounded-2 p-2 px-3 d-flex flex-sm-row flex-column gap-3 justify-content-between align-items-start align-items-sm-center" role="toolbar" aria-label="Search toolbar" aria-describedby="results-summary">
+  <h2 id="results-summary" class="fw-normal fs-4">
     {format(firstRecordNumber)} to {format(lastRecordNumber)} of {format(totalRecords)} {label}
-  </span>
+  </h2>
   <div class="d-flex flex-row align-items-start gap-3 flex-wrap flex-sm-nowrap flex-justify-content-end">
     {#if sortOptions !== false}
     <div class="d-flex flex-nowrap gap-1">

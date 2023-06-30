@@ -209,7 +209,7 @@
 
 </script>
 
-<div bind:this={div} class="bg-secondary rounded-2 p-3 d-flex flex-sm-row flex-column gap-3 justify-content-between align-items-start align-items-sm-center mt-1" role="toolbar" aria-label="Collections toolbar">
+<div bind:this={div} class="bg-secondary rounded-2 p-2 px-3 d-flex flex-sm-row flex-column gap-3 justify-content-between align-items-start align-items-sm-center mt-1" role="toolbar" aria-label="Collections toolbar">
   <button class="btn btn-outline-light d-flex align-items-center gap-2 flex-nowrap" on:click={selectAllItems}>
     {#if allItemsSelected}
     <i class="fa-solid fa-square-check" aria-hidden="true" ></i>
