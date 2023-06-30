@@ -61,8 +61,7 @@
   <svelte:fragment slot="title">Log in with Your Institution</svelte:fragment>
   <svelte:fragment slot="body">
     <p class="mb-0">
-      Log in with your institution account to access then largest number
-      of volumes and features.
+      Log in with your university or library to access the largest number of volumes and features.
     </p>
     <div class="mt-3" style="display: grid; grid-template-rows: minmax(0, 1fr); min-height: 0;">
       <InstitutionList bind:sdrinst {filterText}></InstitutionList>
