@@ -176,7 +176,7 @@
           <input
             type="text"
             class="form-control"
-            aria-label="Text input with dropdown button"
+            aria-label="Keywords"
             placeholder="Search using keywords"
             bind:this={_input}
           />
@@ -187,7 +187,7 @@
         <div class="select-container" id="search-where">
           <select
             class="form-select select-caret"
-            aria-label="Default select example"
+            aria-label="Where do you want to search?"
             bind:this={_select}
             on:change={_updateSelect}
           >
@@ -199,7 +199,7 @@
           <div class="select-container" id="search-what">
             <select
               class="form-select select-caret"
-              aria-label="Default select example"
+              aria-label="Field"
               bind:this={_searchtype}
               on:change={_updateSearchType}
             >

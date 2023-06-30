@@ -3,7 +3,7 @@
   import { fade } from 'svelte/transition';
 
   export let isOpen = false;
-  export let id = `id${new Date().getTime()}`;
+  export let id = `id${new Date().getTime()}-${Math.floor(Math.random() * Date.now())}`;
   export let onClose = function () {};
   export let height = 'auto';
   export let scrollable = false;

@@ -101,13 +101,14 @@
       <!-- <img src="../assets/HT-logo-mobile-nav.svg" alt="HathiTrust" class="" /> -->
       <a href="//{HT.www_domain}/">
         <svg
+          aria-labelledby="ht-logo-title"
           width="180"
           height="47"
           viewBox="0 0 180 47"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <title>HathiTrust logo</title>
+          <title id="ht-logo-title">HathiTrust Home</title>
           <g clip-path="url(#clip0_410_7968)">
             <path
               d="M0 27.8623V26.4217H3.075V11.2123H0V9.7998H8.11875V11.2123H5.40313V17.8623H14.1844V11.2123H11.4969V9.7998H19.6156V11.2123H16.5406V26.4217H19.6156V27.8623H11.4969V26.4217H14.1844V19.1623H5.40313V26.4217H8.11875V27.8623H0V27.8623Z"
