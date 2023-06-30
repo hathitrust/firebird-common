@@ -122,7 +122,8 @@
       if (isSiteBabel() || isWebsiteHome()) {
         _searchtypeValue = 'everything';
         _selectValue = 'library';
-        if ( location.pathname.match('/cgi/ls') ) {
+        // set _inputValue to q1 IF this is ls AND it's not a mondo collection
+        if ( location.pathname.match('/cgi/ls') && ! searchParams.has('c') ) {
           _inputValue = searchParams.get('q1');
           isFullView = !(searchParams.get('lmt') == 'all');
         }
