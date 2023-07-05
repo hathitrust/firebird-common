@@ -1,6 +1,12 @@
 // Import all of Bootstrap's CSS
 @use 'sass:map';
-@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700;800&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700;800&display=swap');
+@import 'fonts';
+@import 'fontawesome/fontawesome';
+@import 'fontawesome/solid';
+@import 'fontawesome/brands';
+@import 'fontawesome/regular';
+
 
 // Toggle global options
 $enable-gradients: false;
