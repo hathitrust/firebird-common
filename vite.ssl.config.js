@@ -20,6 +20,14 @@ const files = glob.sync(path.resolve(__dirname, 'src') + '/**/*.html').reduce((a
   return acc;
 }, {});
 
+const scssOptions = {
+  quietDeps: true,
+};
+if ( process.env.NODE_ENV == 'development' ) {
+  scssOptions.additionalData = `$firebird-font-path: "//localhost:5173"; $fa-font-path: "//localhost:5173/fonts";`;
+}
+console.log(scssOptions);
+
 export default defineConfig({
   plugins: [
     svelte({
@@ -64,11 +72,7 @@ export default defineConfig({
   },
   css: {
     preprocessorOptions: {
-      scss: {
-        //  additionalData: `@import "@/scss/app.scss";`,
-        //additionalData: `@import "src/scss/_variables.scss";`,
-        quietDeps: true,
-      },
+      scss: scssOptions,
     },
   },
 });

@@ -23,6 +23,14 @@ const files = glob
     return acc;
   }, {});
 
+const scssOptions = {
+  quietDeps: true,
+};
+if ( process.env.NODE_ENV == 'development' ) {
+  scssOptions.additionalData(`$firebird-font-path: "//localhost:5173"`);
+}
+console.log(scssOptions); process.exit();
+
 export default defineConfig({
   plugins: [
     svelte({
@@ -31,6 +39,7 @@ export default defineConfig({
     }),
   ],
   root: path.resolve(__dirname, 'src'),
+  publicDir: 'public',
   build: {
     outDir: path.resolve(__dirname, 'dist'),
     emptyOutDir: true,
@@ -60,11 +69,7 @@ export default defineConfig({
   },
   css: {
     preprocessorOptions: {
-      scss: {
-        //  additionalData: `@import "@/scss/app.scss";`,
-        //additionalData: `@import "src/scss/_variables.scss";`,
-        quietDeps: true,
-      },
+      scss: scssOptions,
     },
   },
 });
