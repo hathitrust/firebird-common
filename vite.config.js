@@ -29,7 +29,6 @@ const scssOptions = {
 if ( process.env.NODE_ENV == 'development' ) {
   scssOptions.additionalData(`$firebird-font-path: "//localhost:5173"`);
 }
-console.log(scssOptions); process.exit();
 
 export default defineConfig({
   plugins: [
@@ -41,11 +40,12 @@ export default defineConfig({
   root: path.resolve(__dirname, 'src'),
   publicDir: 'public',
   build: {
+    manifest: true,
     outDir: path.resolve(__dirname, 'dist'),
     emptyOutDir: true,
-    rollupOptions: {
-      input: files,
-    },
+    // rollupOptions: {
+    //   input: files,
+    // },
   },
   resolve: {
     alias: {
