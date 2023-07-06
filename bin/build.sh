@@ -16,7 +16,7 @@ then
   exit $errVal
 fi
 
-npm run buildx
+npm run build
 errVal=$?
 if [ $errVal -ne 0 ]
 then
