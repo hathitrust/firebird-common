@@ -126,7 +126,7 @@
     </div>
     {/if}
     {#if target == 'mb.listcs'}
-      <button type="button" class="btn btn-secondary text-nowrap" on:click={openModal}>New List</button>
+      <button type="button" class="btn btn-secondary text-nowrap" on:click={openModal}>New Collection</button>
     {/if}
     <!-- <div class="row flex-nowrap" style="--bs-gutter-x: 0.5rem">
       <div class="col-auto">

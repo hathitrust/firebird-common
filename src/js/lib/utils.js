@@ -1,6 +1,7 @@
 import docCookies from './cookies';
 import cookies from './cookies';
 import { stageLinks } from './staging';
+import { Live } from './live';
 
 function isObject(item) {
   return item && typeof item === 'object' && !Array.isArray(item);
@@ -99,6 +100,7 @@ function setupHTEnv() {
   };
 
   HT.cookieJar = docCookies;
+  HT.live = new Live(HT.is_dev);
 
   if (HT.is_dev) {
     stageLinks();

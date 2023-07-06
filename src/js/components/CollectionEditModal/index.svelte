@@ -34,6 +34,10 @@
     modal.hide();
   }
 
+  $: if ( cn.length == 100 ) { HT.live.announce('Collection Name has a maximum size of 100'); }
+  $: if ( desc.length == 255 ) { HT.live.announce('Description has a maximum size of 255'); }
+  $: if ( contributorName.length == 255 ) { HT.live.announce('Contributor Name has a maximum size of 255'); }
+
 </script>
 
 <Modal bind:this={modal} scrollable={true}>

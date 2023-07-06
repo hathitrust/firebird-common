@@ -141,4 +141,16 @@ document.querySelectorAll('[data-action="expand-filter"]').forEach((button) => {
   });
 });
 
+window.addEventListener('DOMContentLoaded', (event) => {
+  // did we generate any alerts from the server?
+})
+
+const operationAlertDiv = document.querySelector('.alert-operation');
+if ( operationAlertDiv ) {
+  setTimeout(() => {
+    console.log("-- wtf", operationAlertDiv, operationAlertDiv.textContent.trim());
+    HT.live.assert(operationAlertDiv.textContent.trim());
+  })
+}
+
 export default apps;

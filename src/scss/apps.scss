@@ -140,6 +140,10 @@ body {
     }
   }
 
+  button:not(:disabled) .spinner {
+    display: none;
+  }
+
   article.record {
     .metadata .grid {
       --bs-gap: 0rem;

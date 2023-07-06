@@ -66,6 +66,7 @@
         </div>
         <div class="modal-body {scrollable ? '' : 'dont-scroll'}">
           <slot name="body" />
+          <div class="visually-hidden" role="status" aria-atomic="true" aria-live="polite"></div>
         </div>
         {#if $$slots.footer}
           <div class="modal-footer">
