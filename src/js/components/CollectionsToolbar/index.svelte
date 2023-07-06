@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from 'svelte';
+  import { onMount, tick } from 'svelte';
 
   import CollectionEditModal from '../CollectionEditModal';
 
@@ -27,6 +27,7 @@
 
   let action = 'addc';
   let status = { result: null };
+  let statusEl;
 
   function selectAllItems() {
     allItemsSelected = !allItemsSelected;
@@ -134,11 +135,19 @@
       })
       if (response.ok) {
         parseResponse(await response.text());
-        userCollections.push({
-          value: status.coll_id,
-          label: status.coll_name
-        })
+
+        const found = userCollections.find(item => item.value == status.coll_id);
+        if ( ! found ) {
+          userCollections.push({
+            value: status.coll_id,
+            label: status.coll_name,
+          })
+        }
+
+        c = status.coll_id;     
+
         userCollections = userCollections;
+        console.log("-- collections.toolbar", userCollections);
         clearSelection();
       }
     } else {
@@ -178,6 +187,13 @@
     return `${string}${value == 1 ? '' : 's'}`;
   }
 
+  async function announceStatus() {
+    await tick();
+    HT.live.announce(statusEl.innerText);
+  }
+
+  $: if ( status.class ) { announceStatus(); }
+
   onMount(() => {
     let parentEl = div.parentElement;
     parentEl.querySelectorAll('[data-use="collections"] option').forEach((optionEl) => {
@@ -200,6 +216,42 @@
     let btnEdit = document.querySelector('button[data-action="edit-metadata"]');
     if ( btnEdit ) {
       btnEdit.addEventListener('click', editMetadata);
+    }
+
+    let checkInterval; let isFetching = false;
+    let checkDownloadStatus = function (collid, button) {
+      if ( isFetching ) { 
+        if ( HT && HT.is_dev ) { console.log("-- still checking status"); }
+        return; 
+      }
+      isFetching = true;
+      fetch(`/cgi/mb/download?a=download-status&c=${collid}`)
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          isFetching = false;
+          if ( HT && HT.is_dev ) { console.log("-- download status", data.status); }
+          if (data.status == 'done') {
+            clearInterval(checkInterval);
+            button.disabled = false;
+            button.classList.remove('btn-loading');
+            HT.live.announce("Metadata has been downloaded.");
+          }
+      })
+    }
+
+    let downloadForm = document.querySelector('form[data-action="download-metadata"]');
+    if ( downloadForm ) {
+      downloadForm.addEventListener('submit', (event) => {
+        let button = downloadForm.querySelector('button[type="submit"]');
+        button.disabled = true;
+        button.classList.add('btn-loading');
+        checkInterval = setInterval(() => {
+          checkDownloadStatus(collid, button);
+        }, 1000);
+        HT.live.announce("Download request submitted.");
+      })
     }
 
     return(() => {
@@ -244,7 +296,7 @@
   </div>
 </div>
 {#if status.class}
-<div class="alert mt-1 {status.class} d-flex align-items-center gap-3">
+<div class="alert mt-1 {status.class} d-flex align-items-center gap-3" bind:this={statusEl}>
   {#if status.class == 'alert-danger'}
     <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
   {:else}
