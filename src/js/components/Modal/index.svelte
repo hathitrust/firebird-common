@@ -149,6 +149,11 @@
     backdrop-filter: blur(2px);
   }
 
+  :global(dialog + .backdrop) {
+    transition: backdrop-filter 0.25s ease;
+    backdrop-filter: blur(2px);    
+  }
+
   dialog {
     animation: var(--animation-scale-down) forwards;
     animation-timing-function: var(--ease-squish-3);
