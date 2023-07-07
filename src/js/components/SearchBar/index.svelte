@@ -188,6 +188,7 @@
           <select
             class="form-select select-caret"
             aria-label="Where do you want to search?"
+            aria-describedby="search-bar-help"
             bind:this={_select}
             on:change={_updateSelect}
           >
@@ -200,6 +201,7 @@
             <select
               class="form-select select-caret"
               aria-label="Field"
+              aria-describedby="search-bar-help"
               bind:this={_searchtype}
               on:change={_updateSearchType}
             >
@@ -229,7 +231,7 @@
       </div>
     </form>
     <div class="search-details d-flex">
-      <span class="search-help"
+      <span class="search-help" id="search-bar-help"
         ><i class="fa-solid fa-circle-info fa-fw" />
         {#if index == 'library'}
           You're searching in {fieldValue} for {accessScope}.

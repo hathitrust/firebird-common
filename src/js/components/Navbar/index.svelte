@@ -102,6 +102,7 @@
       <a href="//{HT.www_domain}/">
         <svg
           aria-labelledby="ht-logo-title"
+          role="image"
           width="180"
           height="47"
           viewBox="0 0 180 47"

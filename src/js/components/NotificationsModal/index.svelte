@@ -68,9 +68,4 @@
 {/if}
 
 <style>
-  pre {
-    position: fixed;
-    bottom: 1rem;
-    right: 1rem;
-  }
 </style>
