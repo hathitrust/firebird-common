@@ -152,8 +152,16 @@
   :global(dialog + .backdrop) {
     transition: backdrop-filter 0.25s ease;
     backdrop-filter: blur(2px);    
+    position: fixed;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background: rgba(0,0,0,0.1);
   }
 
+  :global(._dialog_overlay) {
+    position: fixed;
+    top: 0; right: 0; bottom: 0; left: 0;
+  }
+ 
   dialog {
     animation: var(--animation-scale-down) forwards;
     animation-timing-function: var(--ease-squish-3);
