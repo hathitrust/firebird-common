@@ -2,6 +2,8 @@
   import { onMount } from 'svelte';
   import { fade } from 'svelte/transition';
 
+  import dialogPolyfill from 'dialog-polyfill';
+
   export let isOpen = false;
   export let id = `id${new Date().getTime()}-${Math.floor(Math.random() * Date.now())}`;
   export let onClose = function () {};
@@ -25,6 +27,7 @@
   };
 
   export const hide = function () {
+    if ( ! dialog.open ) { return ; }
     dialog.close();
     isOpen = false;
     onClose();
@@ -32,6 +35,12 @@
   };
 
   onMount(() => {
+
+    if ( ! globalThis.HTMLDialogElement ) {
+      console.log('-- polyfilling dialog');
+      dialogPolyfill.registerDialog(dialog);
+    }
+
     if (isOpen) {
       openModal();
     }
@@ -140,6 +149,19 @@
     backdrop-filter: blur(2px);
   }
 
+  :global(dialog + .backdrop) {
+    transition: backdrop-filter 0.25s ease;
+    backdrop-filter: blur(2px);    
+    position: fixed;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background: rgba(0,0,0,0.1);
+  }
+
+  :global(._dialog_overlay) {
+    position: fixed;
+    top: 0; right: 0; bottom: 0; left: 0;
+  }
+ 
   dialog {
     animation: var(--animation-scale-down) forwards;
     animation-timing-function: var(--ease-squish-3);
