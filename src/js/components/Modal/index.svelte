@@ -55,7 +55,7 @@
   <link rel="stylesheet" href="https://unpkg.com/open-props" />
 </svelte:head>
 
-<dialog bind:this={dialog} aria-hidden={!isOpen}>
+<dialog bind:this={dialog} aria-hidden={!isOpen} data-polyfilled={! globalThis.HTMLDialogElement}>
   <div class="modal show" aria-labelledby="{id}-label" style="display: block;">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
       <div class="modal-content" style:height={height != 'auto' && height}>
@@ -121,6 +121,12 @@
     max-block-size: min(80dvb, 100%);
     max-height: none;
     transition: opacity 0.25s var(--ease-3);
+
+    &[data-polyfilled="true"] {
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+    }
   }
 
   dialog:not([open]) {
