@@ -14,16 +14,21 @@ export class CookieJar {
 
 export class NotificationsManager {
   constructor({ notificationData = [], cookieJar = null}) {
-    this.notificationData = notificationData;
+    this.update(notificationData);
     this.cookieJar = cookieJar ? cookieJar : (new CookieJar());
   }
 
   update(notificationData) {
-    this.notificationData = [...notificationData];
+    this.notificationData = notificationData.filter(item => item.slot != 'survey');
+    this.surveyData = notificationData.filter(item => item.slot == 'survey');
   }
 
   hasNotifications() {
     return this.notificationData.length > 0;
+  }
+
+  hasSurveys() {
+    return this.surveyData.length > 0;
   }
 
   count() {

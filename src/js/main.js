@@ -2,6 +2,7 @@
 import '../scss/styles.scss';
 import { setupHTEnv } from './lib/utils';
 import { AnalyticsManager } from './lib/analytics';
+import { HotjarManager } from './lib/hotjar';
 
 // Import all of Bootstrap's JS
 // these are made available globally
@@ -83,6 +84,7 @@ HT.postPingCallback = function () {
     document.body.dataset.initialized = true;
   });
   (new AnalyticsManager(HT)).configure();
+  (new HotjarManager(HT)).configure();
 };
 
 let script = document.createElement('script');
@@ -143,6 +145,7 @@ document.querySelectorAll('[data-action="expand-filter"]').forEach((button) => {
 
 window.addEventListener('DOMContentLoaded', (event) => {
   // did we generate any alerts from the server?
+  console.log("-- common.dom", event);
 })
 
 const operationAlertDiv = document.querySelector('.alert-operation');
