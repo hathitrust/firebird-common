@@ -2,12 +2,8 @@
 <script>
   import { onMount } from 'svelte';
 
-  import SearchHelpModal from '../SearchHelpModal';
   export let index = 'library';
   // export let bootstrapToggleShow;
-
-  let modal;
-  let modalOpen;
 
   //search form bindings
   let _select, _searchtype, _root, fieldValue, _input;
@@ -168,7 +164,6 @@
 </script>
 
 <div>
-  <SearchHelpModal bind:this={modal} />
   <div class="search-form-wrapper" bind:this={_root}>
     <form on:submit|preventDefault={_submitSearch}>
       <div id="searchbar-form" class="input-group d-flex">
@@ -242,10 +237,7 @@
       </span>
       <div class="search-links">
         <a
-          href="#"
-          on:click|preventDefault={() => {
-            modal.show();
-          }}
+          href="//{HT.www_domain}/the-collection/search-access/#hathitrust-search-basics"
           ><i class="fa-regular fa-circle-question fa-fw" /><span
             >Search Help</span
           ></a
