@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { chdir } from 'node:process';
-import { readdirSync, writeFileSync } from 'node:fs';
+import { readdirSync, writeFileSync, linkSync } from 'node:fs';
 import path from 'node:path';
 
 const redirects = [];
@@ -13,6 +13,7 @@ filenames.forEach((filename) => {
     let ext = match[2];
     let basename = match[1];
     redirects.push(`/assets/${basename}.${ext} /assets/${filename} 200`);
+    linkSync(filename, `${basename}.${ext}`);
   }
 })
 

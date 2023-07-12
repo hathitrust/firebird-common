@@ -282,3 +282,28 @@ span.query-term {
     content: '”';
   }
 }
+
+main.error {
+  position: relative;
+}
+
+main.error::before {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.2;
+  --pb: 3.75rem;
+  background-image: url(/common/firebird/dist/bg404desktop.svg);
+  background-position: right center;
+  background-size: auto calc(100% - var(--pb));
+  background-repeat: no-repeat;
+  z-index: -1;
+}
+
+.bg-vaguely-faded {
+  background: rgba(255,255,255,0.75);
+}
