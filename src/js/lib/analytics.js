@@ -1,8 +1,10 @@
 
 export class AnalyticsManager {
   constructor({ analyticsSettings, is_dev=false }) {
-    this.service = is_dev ? analyticsSettings.dev : analyticsSettings.service;
-    this.container = analyticsSettings.container;
+    if ( analyticsSettings ) {
+      this.service = is_dev ? analyticsSettings.dev : analyticsSettings.service;
+      this.container = analyticsSettings.container;
+    }
   }
 
   configure() {
