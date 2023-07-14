@@ -9,6 +9,10 @@ export class AnalyticsManager {
 
   configure() {
     if ( ! this.service ) { return ; }
+    if ( ! document.body.classList.contains('apps') ) {
+      // www does something else
+      return;
+    }
 
     const _mtm = window._mtm = window._mtm || [];
     const _paq = window._paq = window._paq || [];
