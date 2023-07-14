@@ -86,8 +86,6 @@
       params.set('page', 'ajax');
     }
 
-    params.set('skin', 'firebird');
-
     let url = new URL(`${location.protocol}//${HT.service_domain}/cgi/mb?${params.toString()}`);
 
     if (params.get('page') == 'ajax') {

@@ -181,7 +181,6 @@
       }
       searchParams.set('a', 'srchls');
       searchParams.set('adv', 1);
-      searchParams.set('skin', 'firebird');
 
       let hasSearchTerms = false;
       lookFors.forEach((value, idx) => {

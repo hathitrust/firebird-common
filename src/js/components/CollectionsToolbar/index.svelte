@@ -125,8 +125,6 @@
       params.append('id', el.value);
     })
 
-    params.set('skin', 'firebird');
-
     let url = new URL(`${location.protocol}//${HT.service_domain}/cgi/mb?${params.toString()}`);
 
     if (params.get('page') == 'ajax') {
@@ -168,7 +166,7 @@
       message.push('Sorry; there was a problem adding these items to your collection.');
     } else if (status.result == 'ADD_ITEM_SUCCESS') {
       status.class = 'alert-success';
-      let collection_link = `<a href="mb?a=listis;c=${status.coll_id};skin=firebird">${status.coll_name}</a>`;
+      let collection_link = `<a href="mb?a=listis;c=${status.coll_id}">${status.coll_name}</a>`;
       if (status.NumFailed > 0) {
         message.push(`${numFailed} item${numFailed > 1 ? 's' : ''} could not be added to your collection`);
       }
