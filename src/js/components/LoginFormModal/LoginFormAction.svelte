@@ -33,7 +33,7 @@
   <div class="p-3 px-modal mb-2 d-flex flex-wrap flex-lg-nowrap gap-3 gap-lg-5 justify-content-between">
     <p class="fs-7 m-0">
       By logging into HathiTrust, you agree to follow our
-      <a href="https://hathitrust.org/the-collection/access-use-policy/"
+      <a href="//{HT.www_domain}/the-collection/search-access/access-use-policy/"
         >Acceptable Use Policy</a
       >.
     </p>
