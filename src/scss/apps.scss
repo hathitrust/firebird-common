@@ -307,3 +307,7 @@ main.error::before {
 .bg-vaguely-faded {
   background: rgba(255,255,255,0.75);
 }
+
+.alert p:last-child {
+  margin-bottom: 0;
+}

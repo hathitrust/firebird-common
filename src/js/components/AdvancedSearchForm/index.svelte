@@ -11,6 +11,8 @@
   // <hathi-advanced-search-form data-prop-language-data="[&quot;Abkhaz&quot;,&quot;Achinese&quot;,&quot;Acoli&quot;,&quot;Adangme&quot;...
   export let formatData = [];
   export let languageData = [];
+  export let collid = null;
+  export let collectionName = null;
 
   // export let useAnyAll = true;
 
@@ -182,6 +184,10 @@
       searchParams.set('a', 'srchls');
       searchParams.set('adv', 1);
 
+      if ( collid ) {
+        searchParams.set('c', collid);
+      }
+
       let hasSearchTerms = false;
       lookFors.forEach((value, idx) => {
         if (value) {
@@ -212,7 +218,6 @@
         errors.lookFors = true;
       }
 
-      console.log('AHOY PUB YEARS', pubYear);
       if (Object.values(pubYear).find((value) => value != '')) {
         // possibly have pub year
         if (yop == 'before' && pubYear.end) {
@@ -362,7 +367,16 @@
 
 <div class="twocol">
   <div class="twocol-side" id="sidebar">
+    {#if collid}
+    <hgroup role="group" aria-roledescription="Heading group">
     <h1>Advanced Search</h1>
+    <p aria-roledescription="subtitle" class="h2">
+      <a href="/cgi/ls?a=srchls&q1=*&c={collid}">{collectionName}</a>
+    </p>
+    </hgroup>    
+    {:else}
+    <h1>Advanced Search</h1>
+    {/if}
     <div class="search-details d-flex">
       <span class="search-help"
         ><i class="fa-solid fa-circle-info fa-fw" />
