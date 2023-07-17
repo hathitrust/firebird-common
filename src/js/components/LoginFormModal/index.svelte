@@ -57,7 +57,7 @@
 </script>
 
 <!--  height="90vh" ?? -->
-<Modal bind:this={modal} xxheight="45rem">
+<Modal bind:this={modal}>
   <svelte:fragment slot="title">Log in with Your Institution</svelte:fragment>
   <svelte:fragment slot="body">
     <p class="mb-0">
