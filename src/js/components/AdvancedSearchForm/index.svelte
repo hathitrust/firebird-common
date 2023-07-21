@@ -387,17 +387,8 @@
         {/if}
       </span>
     </div>
-    <div class="d-flex flex-column pe-4">
-      <!-- <a
-        href="#"
-        on:click|preventDefault={() => {
-          modal.show();
-        }}
-        ><i class="fa-regular fa-circle-question fa-fw" /><span
-          >Search Help</span
-        ></a
-      > -->
 
+    <div class="d-flex flex-column pe-4">
       <div class="accordion accordion-flush" id="search-help">
         <div class="accordion-item">
           <h2 class="accordion-header" id="search-ops">
@@ -435,17 +426,13 @@
                 </dd>
                 <dt>This exact phrase</dt>
                 <dd>
-                  Treats your query as a phrase expression: <code
-                    >occult fiction</code
-                  >
+                  Treats your query as a phrase expression:
+                  <code>occult fiction</code>
                   will match fields containing the phrase
                   <code>"occult fiction"</code>.
                 </dd>
                 <dt>
-                  Using wildcards <span
-                    class="badge rounded-pill text-bg-secondary"
-                    >Catalog Index</span
-                  >
+                  Using wildcards
                 </dt>
                 <dd>
                   Use <code>*</code> or <code>?</code> to search for alternate
@@ -456,6 +443,12 @@
                   <code>wom?n</code> will find woman and women. If you would
                   simply like to browse without entering a search term you can
                   enter <code>*</code> by itself.
+                  Wildcard search is <strong>not</strong> available in 
+                  <strong>Full Text & All Fields</strong> and 
+                  <strong>Only Full Text</strong> search.
+                </dd>
+                <dd>If you would simply like to browse without entering
+                  a search term you can enter <code>*</code> by itself.
                 </dd>
               </dl>
             </div>
@@ -482,12 +475,9 @@
           >
             <div class="accordion-body">
               <p>
-                Normally only searching bibliographic metadata will use the
-                Catalog Index.
-              </p>
-              <p>
                 Check the <strong>Always use the Full Text Index</strong>
-                option to search bibliographic fields in the Full Text Index.
+                option to display search results at the item level 
+                and to be able to add your search results to a collection.
               </p>
             </div>
           </div>
