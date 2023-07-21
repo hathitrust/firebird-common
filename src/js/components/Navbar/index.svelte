@@ -409,11 +409,13 @@
                   <li class="px-3">
                     <button
                       class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
+                      data-disabled="{!hasNotification}"
+                      disabled={!hasNotification ? true : null}
                       on:click={notificationsModal.show()}
                       ><span class="needs-hover-state"
                         >Notifications {#if hasNotification}({notificationsManager.count()}){/if}</span
                       >
-                      <i class="fa-solid fa-bell fa-fw" />
+                      <i class="fa-solid fa-bell fa-fw" class:opacity-25={!hasNotification} />
                     </button>
                   </li>
                   {#if hasSwitchableRoles}
