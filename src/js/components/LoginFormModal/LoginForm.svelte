@@ -11,10 +11,12 @@
   export let target;
   let filterText;
 
-  if ( sdrinst ) {
-    filterText = HT.login_status.idp_list
-      .find((item) => item.sdrinst == sdrinst)
-      .name.replace(/&amp;/g, '&');
+  if ( ! HT.login_status ) {
+    if ( sdrinst ) {
+      filterText = HT.login_status.idp_list
+        .find((item) => item.sdrinst == sdrinst)
+        .name.replace(/&amp;/g, '&');
+    }
   }
 
 </script>
