@@ -4,16 +4,17 @@
   export let sdrinst;
   export let target = '';
 
+  let loginStatus = HT.loginStatus;
+
   export let onSubmit = function (href) {
     setTimeout(() => {
       window.location.assign(href);
-      console.log(href);
     });
   };
 
   function handleClick() {
 
-    let selected = HT.login_status.idp_list.find(
+    let selected = idpList.find(
       (item) => item.sdrinst == sdrinst
     );
     console.log("-- handleClick", sdrinst, selected);
@@ -26,6 +27,8 @@
       onSubmit(login_href);
     }
   }
+
+  $: idpList = $loginStatus.idp_list;
 
 </script>
 

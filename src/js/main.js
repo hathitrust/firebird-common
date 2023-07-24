@@ -8,6 +8,8 @@ import { HotjarManager } from './lib/hotjar';
 // these are made available globally
 import * as bootstrap from 'bootstrap';
 
+import { writable } from 'svelte/store';
+
 import Quote from './components/Quote.svelte';
 import LoginFormModal from './components/LoginFormModal';
 import LoginForm from './components/LoginFormModal/LoginForm';
@@ -68,11 +70,23 @@ setupHTEnv();
 //   })
 // })
 
-HT.postPingCallback = function () {
+// an empty login status
+let emptyLoginStatus = {
+  logged_in: false,
+  idp_list: [],
+};
+
+HT.loginStatus = writable(emptyLoginStatus);
+HT.login_status = emptyLoginStatus;
+
+HT.postPingCallback = function (login_status) {
   // APPROACH: look for custom elements and instantiate
   // the svelte component inside that element
+  HT.loginStatus.set(login_status);
+
   Object.keys(apps).forEach((slug) => {
     document.querySelectorAll(slug).forEach((el) => {
+      if ( el.component ) { return ; }
       let props = buildProps(el);
       el.component = new apps[slug]({
         target: el,
@@ -92,7 +106,15 @@ script.async = true;
 script.src = `//${
   HT.service_domain
 }/cgi/ping?callback=HT.postPingCallback&_${new Date().getTime()}`;
+script.onerror = function() { 
+  HT.postPingCallback(emptyLoginStatus); 
+}
 document.head.appendChild(script);
+
+setTimeout(() => {
+  if ( document.body.dataset.initialized == 'true' ) { return ; }
+  HT.postPingCallback(emptyLoginStatus)
+}, 500);
 
 // look for buttons that trigger the appearance of
 // svelte components
@@ -143,15 +165,9 @@ document.querySelectorAll('[data-action="expand-filter"]').forEach((button) => {
   });
 });
 
-window.addEventListener('DOMContentLoaded', (event) => {
-  // did we generate any alerts from the server?
-  console.log("-- common.dom", event);
-})
-
 const operationAlertDiv = document.querySelector('.alert-operation');
 if ( operationAlertDiv ) {
   setTimeout(() => {
-    console.log("-- wtf", operationAlertDiv, operationAlertDiv.textContent.trim());
     HT.live.assert(operationAlertDiv.textContent.trim());
   })
 }

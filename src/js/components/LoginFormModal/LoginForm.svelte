@@ -11,20 +11,21 @@
   export let target;
   let filterText;
 
-  if ( ! HT.login_status ) {
-    if ( sdrinst ) {
-      filterText = HT.login_status.idp_list
+  $: loginStatus = HT.loginStatus;
+  $: idpList = $loginStatus.idp_list;
+  $: console.log("-- wut", idpList);
+  $: if ( sdrinst && idpList && idpList.length ) {
+      filterText = idpList
         .find((item) => item.sdrinst == sdrinst)
         .name.replace(/&amp;/g, '&');
-    }
   }
 
 </script>
 
-{#if ! HT.login_status}
+{#if ! $loginStatus}
 <pre>WAITING</pre>
-{:else if HT.login_status.logged_in}
-<div class="alert alert-info">You are currently logged into HathiTrust by way of {HT.login_status.institutionName}.</div>
+{:else if $loginStatus.logged_in}
+<div class="alert alert-info">You are currently logged into HathiTrust by way of {$loginStatus.institutionName}.</div>
 <p>
   <a href="//{HT.service_domain}/cgi/logout" class="btn btn-primary">Log out</a>
 </p>

@@ -19,7 +19,7 @@
     cookieJar: HT.cookieJar,
   });
 
-  export let loggedIn = HT.login_status.logged_in;
+  // export let loggedIn = $loginStatus.logged_in;
   export let hasNotification = false;
   export let searchOpen = true;
   export let searchState;
@@ -38,7 +38,7 @@
 
   function openLogin() {
     //check viewport size to see if LoginFormModal will fit
-    if ( window.innerHeight <= 670 ) {
+    if ( window.innerHeight <= 670 || $loginStatus.idp_list.length == 0 ) {
       //if not, redirect user
       //calculate login target
       let target = window.location.href;
@@ -67,14 +67,14 @@
   }
 
   function checkSwitchableRoles(isLoggedIn) {
-    if (HT.login_status.r) {
+    if ($loginStatus.r) {
       for (const i in switchableRoles) {
         let role = switchableRoles[i];
-        if (HT.login_status.r.hasOwnProperty(role)) {
+        if ($loginStatus.r.hasOwnProperty(role)) {
           return {
             status: true,
             label: switchableRolesLabels[role],
-            activated: HT.login_status.r[role],
+            activated: $loginStatus.r[role],
           };
         }
       }
@@ -82,16 +82,15 @@
     return { status: false };
   }
 
+  $: loginStatus = HT.loginStatus;
+  $: loggedIn = $loginStatus.logged_in;
   $: hasSwitchableRoles = checkSwitchableRoles(loggedIn).status;
   $: hasActivatedRole = checkSwitchableRoles(loggedIn).activated;
   $: role = checkSwitchableRoles(loggedIn).label;
-
-  onMount(() => {
-    if (HT.login_status && HT.login_status.notificationData) {
-      notificationsManager.update(HT.login_status.notificationData);
+  $: if ( $loginStatus && $loginStatus.notificationData ) {
+      notificationsManager.update($loginStatus.notificationData);
       hasNotification = notificationsManager.hasNotifications();
     }
-  });
 </script>
 
 <FeedbackFormModal {form} bind:this={feedbackModal} />

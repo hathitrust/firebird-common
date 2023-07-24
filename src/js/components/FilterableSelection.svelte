@@ -1,6 +1,6 @@
 <script>
-	import { onMount } from 'svelte';
-	import { afterUpdate } from 'svelte';
+  import { onMount } from 'svelte';
+  import { afterUpdate } from 'svelte';
 
   export let items;
   export let placeholder;

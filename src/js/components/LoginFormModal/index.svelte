@@ -31,7 +31,7 @@
     if (!sdrinst) {
       filterText = '';
     } else {
-      filterText = HT.login_status.idp_list
+      filterText = idpList
         .find((item) => item.sdrinst == sdrinst)
         .name.replace(/&amp;/g, '&');
     }
@@ -48,6 +48,8 @@
     }
   });
 
+  $: loginStatus = HT.loginStatus;
+  $: idpList = $loginStatus.idp_list;
   $: if (modal && isOpen) {
     show();
   }
