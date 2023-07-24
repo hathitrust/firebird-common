@@ -114,7 +114,7 @@ document.head.appendChild(script);
 setTimeout(() => {
   if ( document.body.dataset.initialized == 'true' ) { return ; }
   HT.postPingCallback(emptyLoginStatus)
-}, 500);
+}, 1000);
 
 // look for buttons that trigger the appearance of
 // svelte components
