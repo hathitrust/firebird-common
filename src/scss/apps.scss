@@ -274,13 +274,15 @@ body {
 span.query-term {
   font-weight: bold;
 
-  &::before {
-    content: '“';
-  }
+  // this was an idea, but erroneously makes
+  // expressions look quoted when they were not
+  // &::before {
+  //   content: '“';
+  // }
 
-  &::after {
-    content: '”';
-  }
+  // &::after {
+  //   content: '”';
+  // }
 }
 
 main.error {
