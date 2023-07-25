@@ -1,8 +1,11 @@
 export class HotjarManager {
   constructor({ hotjarSettings }) {
-    this.enabled = hotjarSettings.enabled;
-    this.hjid = hotjarSettings.hjid;
-    this.hjsv = hotjarSettings.hjsv;
+    this.enabled = false;
+    if ( hotjarSettings ) {
+      this.enabled = hotjarSettings.enabled;
+      this.hjid = hotjarSettings.hjid;
+      this.hjsv = hotjarSettings.hjsv;
+    }
   }
 
   configure() {

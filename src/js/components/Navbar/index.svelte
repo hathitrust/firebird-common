@@ -19,7 +19,7 @@
     cookieJar: HT.cookieJar,
   });
 
-  export let loggedIn = HT.login_status.logged_in;
+  // export let loggedIn = $loginStatus.logged_in;
   export let hasNotification = false;
   export let searchOpen = true;
   export let searchState;
@@ -38,7 +38,7 @@
 
   function openLogin() {
     //check viewport size to see if LoginFormModal will fit
-    if ( window.innerHeight <= 670 ) {
+    if ( window.innerHeight <= 670 || $loginStatus.idp_list.length == 0 ) {
       //if not, redirect user
       //calculate login target
       let target = window.location.href;
@@ -67,14 +67,14 @@
   }
 
   function checkSwitchableRoles(isLoggedIn) {
-    if (HT.login_status.r) {
+    if ($loginStatus.r) {
       for (const i in switchableRoles) {
         let role = switchableRoles[i];
-        if (HT.login_status.r.hasOwnProperty(role)) {
+        if ($loginStatus.r.hasOwnProperty(role)) {
           return {
             status: true,
             label: switchableRolesLabels[role],
-            activated: HT.login_status.r[role],
+            activated: $loginStatus.r[role],
           };
         }
       }
@@ -82,16 +82,15 @@
     return { status: false };
   }
 
+  $: loginStatus = HT.loginStatus;
+  $: loggedIn = $loginStatus.logged_in;
   $: hasSwitchableRoles = checkSwitchableRoles(loggedIn).status;
   $: hasActivatedRole = checkSwitchableRoles(loggedIn).activated;
   $: role = checkSwitchableRoles(loggedIn).label;
-
-  onMount(() => {
-    if (HT.login_status && HT.login_status.notificationData) {
-      notificationsManager.update(HT.login_status.notificationData);
+  $: if ( $loginStatus && $loginStatus.notificationData ) {
+      notificationsManager.update($loginStatus.notificationData);
       hasNotification = notificationsManager.hasNotifications();
     }
-  });
 </script>
 
 <FeedbackFormModal {form} bind:this={feedbackModal} />
@@ -409,11 +408,13 @@
                   <li class="px-3">
                     <button
                       class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
+                      data-disabled="{!hasNotification}"
+                      disabled={!hasNotification ? true : null}
                       on:click={notificationsModal.show()}
                       ><span class="needs-hover-state"
                         >Notifications {#if hasNotification}({notificationsManager.count()}){/if}</span
                       >
-                      <i class="fa-solid fa-bell fa-fw" />
+                      <i class="fa-solid fa-bell fa-fw" class:opacity-25={!hasNotification} />
                     </button>
                   </li>
                   {#if hasSwitchableRoles}

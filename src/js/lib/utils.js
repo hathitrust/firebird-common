@@ -66,6 +66,11 @@ function setDomains() {
 function setupHTEnv() {
   const HT = (window.HT = window.HT || {});
   setDomains();
+
+  HT.get_pong_target = function(target) {
+    return `https://${HT.service_domain}/cgi/ping/pong?target=` + target;
+  }
+
   HT.prefs = {};
   HT.prefs.get = function () {
     var prefs = {};

@@ -1,11 +1,12 @@
 <script>
 
   let HT = window.HT || {};
+
   export let cookieJar = HT.cookieJar;
   let xtracking = JSON.parse(cookieJar.getItem('HT.x') || '{}');
 
   const key = 'aup-notice';
-  let isVisible = HT.login_status.logged_in && xtracking[key] != true;
+  let isVisible = loggedIn && xtracking[key] != true;
 
   function confirm() {
     let expires = new Date();
@@ -14,6 +15,9 @@
     cookieJar.setItem('HT.x', JSON.stringify(xtracking), expires, '/', HT.cookies_domain, true);
     isVisible = false;
   }
+
+  $: loginStatus = HT.loginStatus;
+  $: loggedIn = $loginStatus.logged_in;
 
 </script>
 

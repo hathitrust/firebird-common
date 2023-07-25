@@ -57,6 +57,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "~bootstrap": path.resolve(__dirname, "node_modules/bootstrap"),
+      "~open-props": path.resolve(__dirname, "node_modules/open-props"),
     },
     extensions: [".mjs", ".js", ".ts", ".json", ".svelte", ".scss"],
   },

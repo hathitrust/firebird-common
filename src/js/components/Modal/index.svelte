@@ -51,9 +51,9 @@
   }
 </script>
 
-<svelte:head>
+<!-- <svelte:head>
   <link rel="stylesheet" href="https://unpkg.com/open-props" />
-</svelte:head>
+</svelte:head> -->
 
 <dialog bind:this={dialog} aria-hidden={!isOpen} data-polyfilled={! globalThis.HTMLDialogElement}>
   <div class="modal show" aria-labelledby="{id}-label" style="display: block;">
@@ -102,6 +102,7 @@
 </dialog>
 
 <style lang="scss">
+
   :global(html:has(dialog[open])) {
     overflow: hidden;
   }

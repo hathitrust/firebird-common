@@ -31,7 +31,7 @@
     if (!sdrinst) {
       filterText = '';
     } else {
-      filterText = HT.login_status.idp_list
+      filterText = idpList
         .find((item) => item.sdrinst == sdrinst)
         .name.replace(/&amp;/g, '&');
     }
@@ -48,6 +48,8 @@
     }
   });
 
+  $: loginStatus = HT.loginStatus;
+  $: idpList = $loginStatus.idp_list;
   $: if (modal && isOpen) {
     show();
   }
@@ -57,7 +59,7 @@
 </script>
 
 <!--  height="90vh" ?? -->
-<Modal bind:this={modal} xxheight="45rem">
+<Modal bind:this={modal}>
   <svelte:fragment slot="title">Log in with Your Institution</svelte:fragment>
   <svelte:fragment slot="body">
     <p class="mb-0">
