@@ -27,7 +27,7 @@ const scssOptions = {
   quietDeps: true,
 };
 if ( process.env.NODE_ENV == 'development' ) {
-  scssOptions.additionalData(`$firebird-font-path: "//localhost:5173"`);
+  scssOptions.additionalData = `$firebird-font-path: "//localhost:5173"; $fa-font-path: "//localhost:5173/fonts";`;
 }
 
 export default defineConfig({
