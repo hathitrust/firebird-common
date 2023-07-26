@@ -127,10 +127,7 @@
         errors.lookFors = true;
       }
 
-      // console.log(searchParams.toString());
-
-      console.log('AHOY PUB YEARS', pubYear);
-      if (Object.values(pubYear).find((value) => value != '')) {
+      if (Object.values(pubYear).find((value) => value != '' && value != null)) {
         // possibly have pub year
         if (yop == 'before' && pubYear.end) {
           searchParams.set('yop', yop);
@@ -218,7 +215,7 @@
         errors.lookFors = true;
       }
 
-      if (Object.values(pubYear).find((value) => value != '')) {
+      if (Object.values(pubYear).find((value) => value != '' && value != null)) {
         // possibly have pub year
         if (yop == 'before' && pubYear.end) {
           searchParams.set('yop', yop);
