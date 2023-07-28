@@ -187,10 +187,22 @@ body {
 
   .list-group a {
     white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
 
     &:has(+ span) {
       border-top-right-radius: var(--bs-list-group-border-radius) !important;
       border-bottom-right-radius: var(--bs-list-group-border-radius) !important;
+    }
+
+    .visited-link {
+      color: var(--bs-list-group-bg);
+      margin-left: auto;
+    }
+
+    &:visited .visited-link {
+      color: var(--bs-list-group-color);
     }
   }
 
