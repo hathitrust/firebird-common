@@ -160,6 +160,12 @@ body {
     }
   }
 
+  // define a visited link color
+  // .filter-list-item ?
+  a:not([class]):visited {
+    color: var(--ht-visited-link-color);
+  }
+
   a:not(.btn).d-inline-flex {
     gap: var(--bs-gutter-x);
     text-decoration: none;

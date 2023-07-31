@@ -265,7 +265,7 @@ $utilities: map-merge(
 
   --bs-font-sans-serif: Mulish, Helvetica, Arial, system-ui;
   --bs-link-color: var(--color-primary-600);
-  --bs-visited-link-color: #006FC3;
+  --ht-visited-link-color: #006FC3;
 }
 
 body[data-initialized='true'] {
@@ -274,12 +274,6 @@ body[data-initialized='true'] {
 }
 
 // Further refine some bootstrap styles
-
-// define a visited link color
-// .filter-list-item ?
-a:not(.list-group-item,.btn):visited {
-  color: var(--bs-visited-link-color);
-}
 
 // bootstrap's contrast functions pair black text on our primary background
 .btn-primary {
