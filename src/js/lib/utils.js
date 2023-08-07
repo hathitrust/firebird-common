@@ -120,9 +120,7 @@ function handleAutomaticLogin() {
     ( location.href.indexOf('signon=') > -1 )        
   ) {
     // try to do the shibboleth dance
-    var tmp = location.href.split('signon=swle:');
-    var entityId = tmp.pop();
-    var target = tmp[0];
+    let [ target, entityId ] = location.href.split('signon=swle:');
     if ( HT.login_status.logged_in ) {
       history.replaceState({}, document.title, target);
     } else {
