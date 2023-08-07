@@ -112,4 +112,28 @@ function setupHTEnv() {
   }
 }
 
-export { mergeDeep, setDomains, setupHTEnv };
+function handleAutomaticLogin() {
+  if ( 
+    ( location.href.indexOf('babel.hathitrust.org') < 0 ) &&
+    ( location.href.indexOf('signon=') > -1 )        
+  ) {
+    // try to do the shibboleth dance
+    var tmp = location.href.split('signon=swle:');
+    var entityId = tmp.pop();
+    var target = tmp[0];
+    if ( HT.login_status.logged_in ) {
+      history.replaceState({}, document.title, target);
+    } else {
+      var pong_target = encodeURIComponent(`https://${HT.service_domain}/cgi/ping/pong?target=${target}`);
+      var redirect_href;
+      if ( entityId == 'wayf' ) {
+          redirect_href = `https://${HT.service_domain}/cgi/wayf?target=${pong_target}`;
+      } else {
+          redirect_href = `https://${HT.service_domain}/Shibboleth.sso/Login?entityID=${entityId}&target=${pong_target}`;
+      }
+      location.href = redirect_href;
+    }
+  }
+}
+
+export { mergeDeep, setDomains, setupHTEnv, handleAutomaticLogin };
