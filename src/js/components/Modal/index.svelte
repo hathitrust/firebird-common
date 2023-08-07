@@ -27,6 +27,7 @@
   };
 
   export const hide = function () {
+    if ( ! dialog ) { return ; } // rare edge case
     if ( ! dialog.open ) { return ; }
     dialog.close();
     isOpen = false;
