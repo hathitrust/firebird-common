@@ -115,12 +115,13 @@ function setupHTEnv() {
 function handleAutomaticLogin() {
   // check for babel.hathitrust.org in NOT the href 
   // but signon= IS
+  const href = decodeURIComponent(location.href);
   if ( 
-    ( location.href.indexOf('babel.hathitrust.org') < 0 ) &&
-    ( location.href.indexOf('signon=') > -1 )        
+    ( href.indexOf('babel.hathitrust.org') < 0 ) &&
+    ( href.indexOf('signon=') > -1 )        
   ) {
     // try to do the shibboleth dance
-    let [ target, entityId ] = location.href.split('signon=swle:');
+    let [ target, entityId ] = href.split('signon=swle:');
     if ( HT.login_status.logged_in ) {
       history.replaceState({}, document.title, target);
     } else {
