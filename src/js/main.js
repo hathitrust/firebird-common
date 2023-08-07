@@ -1,6 +1,6 @@
 // Import our custom CSS
 import '../scss/styles.scss';
-import { setupHTEnv } from './lib/utils';
+import { setupHTEnv, handleAutomaticLogin } from './lib/utils';
 import { AnalyticsManager } from './lib/analytics';
 import { HotjarManager } from './lib/hotjar';
 
@@ -82,6 +82,9 @@ HT.login_status = emptyLoginStatus;
 HT.postPingCallback = function (login_status) {
   // APPROACH: look for custom elements and instantiate
   // the svelte component inside that element
+
+  handleAutomaticLogin();
+
   HT.loginStatus.set(login_status);
 
   Object.keys(apps).forEach((slug) => {
