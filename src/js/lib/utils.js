@@ -113,6 +113,8 @@ function setupHTEnv() {
 }
 
 function handleAutomaticLogin() {
+  // check for babel.hathitrust.org in NOT the href 
+  // but signon= IS
   if ( 
     ( location.href.indexOf('babel.hathitrust.org') < 0 ) &&
     ( location.href.indexOf('signon=') > -1 )        
