@@ -207,9 +207,26 @@ body {
       margin-left: auto;
     }
 
+    &:hover .visited-link,&:focus .visited-link {
+      color: var(--bs-list-group-action-hover-bg);
+    }
+
+    &:active .visited-link {
+      color: var(--bs-list-group-action-active-bg);
+    }
+
     &:visited .visited-link {
       color: var(--bs-list-group-color);
     }
+
+    &.active .visited-link { 
+      color: var(--bs-list-group-active-bg);
+    }
+
+    &.active:visited .visited-link {
+      color: var(--bs-list-group-active-color);
+    }
+
   }
 
   // by default, hide the 10+nth facets

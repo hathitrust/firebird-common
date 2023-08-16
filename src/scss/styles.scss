@@ -383,7 +383,7 @@ a:not(.btn,.list-group-item):has(i[aria-hidden]) {
 a {
   // what effect does this have with padding?
   // padding: 2px 4px;
-  transition: all 0.3s ease;
+  transition: outline 0.3s ease, border-radius 0.3s ease, z-index 0.3s ease;
   &:focus-visible {
     outline: none;
     // box-shadow: 0 0 0 4px rgba(236,114,23,0.5);
