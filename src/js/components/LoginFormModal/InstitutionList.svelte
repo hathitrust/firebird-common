@@ -8,7 +8,7 @@
   export let filterText;
 
   function getItems() {
-    return idpList.map((item) => ({      
+    return idpList.map((item) => ({
       option: item.name.replace(/&amp;/g, '&'),
       key: item.sdrinst,
       value: item.sdrinst,

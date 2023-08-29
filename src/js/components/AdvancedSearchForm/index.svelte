@@ -1,7 +1,6 @@
 <script>
   import { onMount } from 'svelte';
   import FilterableSelection from '../FilterableSelection.svelte';
-  import SearchHelpModal from '../SearchHelpModal';
 
   // CONFIGURING <hathi-advanced-search-form>
   // formatData and languageData are exposed as
@@ -757,8 +756,6 @@
     </div>
   </div>
 </div>
-
-<!-- <SearchHelpModal bind:this={modal} /> -->
 
 <style lang="scss">
   .search-input {

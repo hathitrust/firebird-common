@@ -3,10 +3,11 @@
   let HT = window.HT || {};
 
   export let cookieJar = HT.cookieJar;
+
   let xtracking = JSON.parse(cookieJar.getItem('HT.x') || '{}');
 
   const key = 'aup-notice';
-  let isVisible = loggedIn && xtracking[key] != true;
+  // let isVisible = loggedIn && xtracking[key] != true;
 
   function confirm() {
     let expires = new Date();
@@ -18,6 +19,7 @@
 
   $: loginStatus = HT.loginStatus;
   $: loggedIn = $loginStatus.logged_in;
+  $: isVisible = loggedIn && xtracking[key] != true;
 
 </script>
 

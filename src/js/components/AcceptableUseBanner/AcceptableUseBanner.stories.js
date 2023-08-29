@@ -1,4 +1,5 @@
 import AcceptableUseBanner from './index.svelte';
+import PingCallbackDecorator from '../../decorators/PingCallbackDecorator';
 import { userEvent, within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
@@ -19,6 +20,12 @@ class CookieJar {
 export default {
   title: 'Acceptable Use Banner',
   component: AcceptableUseBanner,
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      props: { loggedIn: true }
+    })
+  ],
   argTypes: { confirm: { action: 'banner confirmed' } },
 };
 
@@ -29,7 +36,7 @@ export const Default = {
     },
   },
   args: {
-    cookieJar: new CookieJar()
+    cookieJar: new CookieJar(),
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

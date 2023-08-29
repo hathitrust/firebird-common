@@ -28,6 +28,7 @@
   export let isOpen = false;
 
   export const show = function () {
+    if (! idpList.length) { return ; }
     if (!sdrinst) {
       filterText = '';
     } else {
@@ -70,7 +71,7 @@
     </div>
   </svelte:fragment>
   <svelte:fragment slot="footer">
-    <LoginFormAction {sdrinst} {target}></LoginFormAction>
+    <LoginFormAction {...$$props} {sdrinst} {target}></LoginFormAction>
     <div class="m-0 p-0 w-100">
       <div>
         <p class="p-3 px-modal mb-0 border-top bg-light rounded-bottom">

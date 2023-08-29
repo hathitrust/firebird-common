@@ -1,4 +1,5 @@
 import NotificationsModal from './index.svelte';
+import PingCallbackDecorator from '../../decorators/PingCallbackDecorator';
 import { userEvent, within, waitFor } from '@storybook/testing-library';
 import { action } from '@storybook/addon-actions';
 
@@ -45,6 +46,12 @@ export const actionsData = {
 export default {
   title: 'Notifications Modal',
   component: NotificationsModal,
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      props: { loggedIn: false, notificationData: null }
+    })
+  ],
   excludeStories: /.*Data$/,
   argTypes: {
     show: { action: 'show' },

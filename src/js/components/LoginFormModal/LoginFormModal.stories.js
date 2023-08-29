@@ -1,4 +1,5 @@
 import LoginFormModal from './index.svelte';
+import PingCallbackDecorator from '../../decorators/PingCallbackDecorator';
 import { userEvent, within } from '@storybook/testing-library';
 import { action } from '@storybook/addon-actions';
 
@@ -13,25 +14,17 @@ export default {
   title: 'Login Form Modal',
   component: LoginFormModal,
   excludeStories: /.*Data$/,
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      props: { loggedIn: false }
+    })
+  ],
   argTypes: {
     show: { action: 'show' },
     hide: { action: 'hide' },
   }
 };
-
-// const Template = ({ show, hide, ...args }) => ({
-//   Component: LoginFormModal,
-//   props: args,
-//   on: {
-//     ...actionsData,
-//   },
-// });
-
-// export const Default = Template.bind({});
-// export const ModalOpen = Template.bind({});
-// ModalOpen.args = {
-//   isOpen: true
-// };
 
 export const ModalOpen = {
   parameters: {
