@@ -1,34 +1,22 @@
 <script>
   import { writable } from 'svelte/store';
   import { getContext } from 'svelte';
+  import { TestCookieJar } from '../lib/cookies';
 
   function fakeIdpUrl(sdrinst) {
     return `https://hathi/Login?entityID=urn:institution:${sdrinst}&target=___TARGET___`;
   }
 
-  class CookieJar {
-    constructor() {
-      this.data = {};
-    }
-
-    getItem(key) {
-      return this.data[key];
-    }
-
-    setItem(key, value) {
-      this.data[key] = value;
-    }
-  }
-
   export let loggedIn = false;
   export let prefs = null;
   export let notificationData = null;
+  export let cookieData = null;
 
-  globalThis.HT = {};
-  globalThis.HT.get_pong_target = function(href ) { return href; }
-  globalThis.HT.login_status = {};
-  globalThis.HT.login_status.logged_in = false;
-  globalThis.HT.prefs = { 
+  const HT = {};
+  HT.get_pong_target = function(href ) { return href; }
+  HT.login_status = {};
+  HT.login_status.logged_in = false;
+  HT.prefs = { 
     set: function() {},
     get: function() { 
       console.log("WUT IS HAPPENING", prefs);
@@ -36,16 +24,18 @@
     }
   };
 
-  globalThis.HT.login_status = {
+  HT.cookieJar = new TestCookieJar(cookieData);
+
+  HT.login_status = {
     logged_in: loggedIn,
     idp_list: [],
   };
 
-  globalThis.HT.login_status.notificationData = notificationData || [];
+  HT.login_status.notificationData = notificationData || [];
 
-  if ( ! globalThis.HT.login_status.logged_in ) {
+  if ( ! loggedIn ) {
 
-    globalThis.HT.login_status.idp_list = [
+    HT.login_status.idp_list = [
       { name: 'University of Moosylvania', sdrinst: 'moos', idp_url: fakeIdpUrl('moos') },
       { name: 'Moosylvania State', sdrinst: 'state', idp_url: fakeIdpUrl('state') },
       { name: 'Central Moosylvania University', sdrinst: 'central', idp_url: fakeIdpUrl('central') },
@@ -53,11 +43,15 @@
     ]
 
   } else {
-    globalThis.HT.login_status.institutionName = 'Moosylvania State';
+    HT.login_status.institutionName = 'Moosylvania State';
+    HT.login_status.institutionCode = 'state';
+    if ( ! prefs ) { prefs = {}; }
+    prefs.sdrinst = 'state';
   }
 
-  // globalThis.HT.cookieJar = new CookieJar();
+  // HT.cookieJar = new CookieJar();
   HT.loginStatus = writable(HT.login_status);
+  globalThis.HT = HT;
 
   $: console.log("LoginStatusDecorator", loggedIn, prefs, notificationData);
 </script>

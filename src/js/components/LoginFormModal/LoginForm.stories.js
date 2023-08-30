@@ -34,9 +34,6 @@ export const AlreadyLoggedIn = {
       Component: PingCallbackDecorator,
       props: { 
         loggedIn: true,
-          prefs: {
-            sdrinst: 'state'
-          }
       }
     })
   ],

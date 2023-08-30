@@ -5,6 +5,7 @@ import { action } from '@storybook/addon-actions';
 
 import { expect } from '@storybook/jest';
 
+import { TestCookieJar } from '../../lib/cookies';
 import NotificationsManager from '../../lib/notifications';
 
 let sampleData = [
@@ -24,19 +25,6 @@ let sampleData = [
   },
 ];
 
-class CookieJar {
-  constructor() {
-    this.data = {};
-  }
-
-  getItem(key) {
-    return this.data[key];
-  }
-
-  setItem(key, value) {
-    this.data[key] = value;
-  }
-}
 
 export const actionsData = {
   show: action('show'),
@@ -60,7 +48,7 @@ export default {
 };
 
 let emptyManager = new NotificationsManager({
-  cookieJar: new CookieJar()
+  cookieJar: new TestCookieJar()
 });
 export const NoNotificationsSoTadaNothing = {
   args: {
@@ -68,13 +56,13 @@ export const NoNotificationsSoTadaNothing = {
   }
 }
 
-let newnotificationData = structuredClone(sampleData);
+let newNotificationData = structuredClone(sampleData);
 // optimistically future enough
-newnotificationData[0].effective_on = "2025-12-31 23:59:59";
-let newCookieJar = new CookieJar();
+newNotificationData[0].effective_on = "2025-12-31 23:59:59";
+let newCookieJar = new TestCookieJar();
 let newManager = new NotificationsManager({
   cookieJar: newCookieJar,
-  notificationData: newnotificationData
+  notificationData: newNotificationData
 })
 export const HasNewNotifications = {
   args: {
@@ -92,11 +80,12 @@ export const HasNewNotifications = {
   }
 }
 
-let previouslySeennotificationData = structuredClone(sampleData);
-let previouslySeenCookieJar = new CookieJar();
+let previouslySeenNotificationData = structuredClone(sampleData);
+let previouslySeenCookieJar = new TestCookieJar();
+previouslySeenCookieJar.setItem('HT.notice', previouslySeenNotificationData[0].effective_on);
 let previouslySeenManager = new NotificationsManager({
   cookieJar: previouslySeenCookieJar,
-  notificationData: previouslySeennotificationData
+  notificationData: previouslySeenNotificationData
 })
 export const PreviouslySeenNotifications = {
   args: {
