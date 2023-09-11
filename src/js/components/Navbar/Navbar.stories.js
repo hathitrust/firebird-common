@@ -1,10 +1,17 @@
 import Navbar from './index.svelte';
+import PingCallbackDecorator from '../../decorators/PingCallbackDecorator';
 import { userEvent, within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
 export default {
   title: 'Navbar',
   component: Navbar,
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      props: { loggedIn: false, notificationData: null }
+    })
+  ],
 };
 
 export const Default = {
@@ -59,6 +66,12 @@ export const DesktopLoggedIn = {
     loggedIn: false,
     isOpen: true,
   },
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      props: { loggedIn: true }
+    })
+  ],
 };
 export const DesktopLoggedInWithNotifications = {
   parameters: { ...Default.parameters },
@@ -66,6 +79,22 @@ export const DesktopLoggedInWithNotifications = {
     loggedIn: true,
     hasNotification: true,
   },
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      props: { 
+        loggedIn: true, 
+        notificationData: [
+          {
+            title: "A navbar story",
+            message: "Once upon a time there was a user with notifications",
+            read_more_label: "Do you want to know more?",
+            read_more_link: "https://umich.edu"
+          }
+        ]  
+      }
+    })
+  ],
 };
 export const Mobile = {
   parameters: {
@@ -103,6 +132,12 @@ export const MobileLoggedIn = {
   args: {
     loggedIn: true,
   },
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      props: { loggedIn: true }
+    })
+  ],
 };
 export const MobileLoggedInWithNotifications = {
   parameters: { ...Mobile.parameters },
@@ -110,10 +145,34 @@ export const MobileLoggedInWithNotifications = {
     loggedIn: true,
     hasNotification: true,
   },
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      props: { 
+        loggedIn: true, 
+        notificationData: [
+          {
+            title: "A navbar story",
+            message: "Once upon a time there was a user with notifications",
+            read_more_label: "Do you want to know more?",
+            read_more_link: "https://umich.edu"
+          }
+        ]  
+      }
+    })
+  ],
 };
 export const MobileLoggedInMyAccountDropdown = {
   parameters: { ...Mobile.parameters },
   args: { ...MobileLoggedInWithNotifications.args },
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      props: { 
+        loggedIn: true, 
+      }
+    })
+  ],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 

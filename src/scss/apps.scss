@@ -160,6 +160,12 @@ body {
     }
   }
 
+  // define a visited link color
+  // .filter-list-item ?
+  a:not([class]):visited {
+    color: var(--ht-visited-link-color);
+  }
+
   a:not(.btn).d-inline-flex {
     gap: var(--bs-gutter-x);
     text-decoration: none;
@@ -187,11 +193,40 @@ body {
 
   .list-group a {
     white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
 
     &:has(+ span) {
       border-top-right-radius: var(--bs-list-group-border-radius) !important;
       border-bottom-right-radius: var(--bs-list-group-border-radius) !important;
     }
+
+    .visited-link {
+      color: var(--bs-list-group-bg);
+      margin-left: auto;
+    }
+
+    &:hover .visited-link,&:focus .visited-link {
+      color: var(--bs-list-group-action-hover-bg);
+    }
+
+    &:active .visited-link {
+      color: var(--bs-list-group-action-active-bg);
+    }
+
+    &:visited .visited-link {
+      color: var(--bs-list-group-color);
+    }
+
+    &.active .visited-link { 
+      color: var(--bs-list-group-active-bg);
+    }
+
+    &.active:visited .visited-link {
+      color: var(--bs-list-group-active-color);
+    }
+
   }
 
   // by default, hide the 10+nth facets
