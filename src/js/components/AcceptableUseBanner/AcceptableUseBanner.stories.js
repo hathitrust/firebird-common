@@ -1,20 +1,7 @@
 import AcceptableUseBanner from './index.svelte';
+import PingCallbackDecorator from '../../decorators/PingCallbackDecorator';
 import { userEvent, within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
-
-class CookieJar {
-  constructor() {
-    this.data = {};
-  }
-
-  getItem(key) {
-    return this.data[key];
-  }
-
-  setItem(key, value) {
-    this.data[key] = value;
-  }
-}
 
 export default {
   title: 'Acceptable Use Banner',
@@ -28,9 +15,12 @@ export const Default = {
       defaultViewport: 'bsLg',
     },
   },
-  args: {
-    cookieJar: new CookieJar()
-  },
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      props: { loggedIn: true }
+    })
+  ],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const submitButton = await canvas.getByRole('button', {
@@ -43,17 +33,18 @@ export const Default = {
   },
 };
 
-let previouslyAcceptedJar = new CookieJar();
-previouslyAcceptedJar.setItem('HT.x', JSON.stringify({ 'aup-notice': true }));
 export const PreviouslyAccepted = {
   parameters: {
   viewport: {
       defaultViewport: 'bsLg',
     },
   },
-  args: {
-    cookieJar: previouslyAcceptedJar
-  },
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      props: { loggedIn: true, cookieData: { 'HT.x': JSON.stringify({ 'aup-notice': true }) } }
+    })
+  ],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     //sanity check

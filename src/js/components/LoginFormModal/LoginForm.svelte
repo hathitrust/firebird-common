@@ -31,5 +31,5 @@
 </p>
 {:else}
   <InstitutionList bind:sdrinst {filterText}></InstitutionList>
-  <LoginFormAction {sdrinst} {target}></LoginFormAction>
+  <LoginFormAction {...$$props} {sdrinst} {target}></LoginFormAction>
 {/if}

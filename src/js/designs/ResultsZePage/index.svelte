@@ -1,7 +1,7 @@
 <script>
   import ResultsList from '../ResultsList';
-  import ResultsPagination from '../ResultsPagination';
-  import ResultsToolbar from '../ResultsToolbar';
+  import ResultsPagination from '../../components/ResultsPagination';
+  import ResultsToolbar from '../../components/ResultsToolbar';
 
 </script>
 

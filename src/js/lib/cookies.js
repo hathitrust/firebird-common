@@ -1,3 +1,18 @@
+export class TestCookieJar {
+  constructor(data) {
+    this.data = data || {};
+  }
+
+  getItem(key) {
+    return this.data[key];
+  }
+
+  setItem(key, value) {
+    this.data[key] = value;
+  }
+}
+
+// ported from unicorn days, waiting for https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/cookies/CookieStore
 const docCookies = {
   getItem: function (sKey) {
     if (!sKey) { return null; }

@@ -79,6 +79,8 @@ $form-label-font-weight: 400;
 @import "~open-props/open-props.min.css";
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';
+// -- will be necessary after upgrading to 5.3
+// @import '~bootstrap/scss/variables-dark';
 
 $font-sizes: map.set($font-sizes, 7, $font-size-base * 0.875);
 
