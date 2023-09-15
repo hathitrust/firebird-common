@@ -270,6 +270,7 @@
 
   onMount(() => {
     let params = new URLSearchParams(location.search.replace(/;/g, '&'));
+    let theUrl = window.location.href;
     if (location.pathname == '/Search/Advanced') {
       // catalog
       params.getAll('lookfor[]').forEach((value, idx) => {
@@ -295,7 +296,7 @@
         format = format;
       }
 
-      if (!params.get('ft')) {
+      if (!params.get('ft') && theUrl.includes('?')) {
         isFullView = false;
       }
 
