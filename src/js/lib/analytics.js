@@ -25,6 +25,12 @@ export class AnalyticsManager {
       _paq.push(['setCustomUrl', customUrl]);
     }
 
+    let customPageTitle;
+    if ((customPageTitle = document.documentElement.dataset.originalTitle)) {
+      // pt has provided an original title
+      _paq.push(['setDocumentTitle', customPageTitle]);
+    }
+
     var d = document,
       g = d.createElement('script'),
       s = d.getElementsByTagName('script')[0];
