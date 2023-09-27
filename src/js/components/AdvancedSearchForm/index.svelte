@@ -126,7 +126,9 @@
         errors.lookFors = true;
       }
 
-      if (Object.values(pubYear).find((value) => value != '' && value != null)) {
+      if (
+        Object.values(pubYear).find((value) => value != '' && value != null)
+      ) {
         // possibly have pub year
         if (yop == 'before' && pubYear.end) {
           searchParams.set('yop', yop);
@@ -157,7 +159,9 @@
       }
 
       bools.forEach((value, idx) => {
-        if ( idx === 0 ) { return ; }
+        if (idx === 0) {
+          return;
+        }
         if (value && lookFors[idx] && lookFors[idx - 1]) {
           searchParams.append('bool[]', value);
         }
@@ -180,7 +184,7 @@
       searchParams.set('a', 'srchls');
       searchParams.set('adv', 1);
 
-      if ( collid ) {
+      if (collid) {
         searchParams.set('c', collid);
       }
 
@@ -214,7 +218,9 @@
         errors.lookFors = true;
       }
 
-      if (Object.values(pubYear).find((value) => value != '' && value != null)) {
+      if (
+        Object.values(pubYear).find((value) => value != '' && value != null)
+      ) {
         // possibly have pub year
         if (yop == 'before' && pubYear.end) {
           searchParams.set('yop', yop);
@@ -287,6 +293,10 @@
           format.push(value);
         });
         format = format;
+      }
+
+      if (!params.get('ft') && window.location.href.includes('?')) {
+        isFullView = false;
       }
 
       yop = params.get('yop') || 'after';
@@ -364,14 +374,14 @@
 <div class="twocol">
   <div class="twocol-side" id="sidebar">
     {#if collid}
-    <hgroup role="group" aria-roledescription="Heading group">
-    <h1>Advanced Search</h1>
-    <p aria-roledescription="subtitle" class="h2">
-      <a href="/cgi/ls?a=srchls&q1=*&c={collid}">{collectionName}</a>
-    </p>
-    </hgroup>    
+      <hgroup role="group" aria-roledescription="Heading group">
+        <h1>Advanced Search</h1>
+        <p aria-roledescription="subtitle" class="h2">
+          <a href="/cgi/ls?a=srchls&q1=*&c={collid}">{collectionName}</a>
+        </p>
+      </hgroup>
     {:else}
-    <h1>Advanced Search</h1>
+      <h1>Advanced Search</h1>
     {/if}
     <div class="search-details d-flex">
       <span class="search-help"
@@ -427,9 +437,7 @@
                   will match fields containing the phrase
                   <code>"occult fiction"</code>.
                 </dd>
-                <dt>
-                  Using wildcards
-                </dt>
+                <dt>Using wildcards</dt>
                 <dd>
                   Use <code>*</code> or <code>?</code> to search for alternate
                   forms of a word. Use <code>*</code>
@@ -438,13 +446,15 @@
                   <code>optim*</code> will find optimal, optimize or optimum;
                   <code>wom?n</code> will find woman and women. If you would
                   simply like to browse without entering a search term you can
-                  enter <code>*</code> by itself.
-                  Wildcard search is <strong>not</strong> available in 
-                  <strong>Full Text & All Fields</strong> and 
+                  enter <code>*</code> by itself. Wildcard search is
+                  <strong>not</strong>
+                  available in
+                  <strong>Full Text & All Fields</strong> and
                   <strong>Only Full Text</strong> search.
                 </dd>
-                <dd>If you would simply like to browse without entering
-                  a search term you can enter <code>*</code> by itself.
+                <dd>
+                  If you would simply like to browse without entering a search
+                  term you can enter <code>*</code> by itself.
                 </dd>
               </dl>
             </div>
@@ -472,8 +482,8 @@
             <div class="accordion-body">
               <p>
                 Check the <strong>Always use the Full Text Index</strong>
-                option to display search results at the item level 
-                and to be able to add your search results to a collection.
+                option to display search results at the item level and to be able
+                to add your search results to a collection.
               </p>
             </div>
           </div>
