@@ -38,7 +38,7 @@
 
   function openLogin() {
     //check viewport size to see if LoginFormModal will fit
-    if ( window.innerHeight <= 670 || $loginStatus.idp_list.length == 0 ) {
+    if (window.innerHeight <= 670 || $loginStatus.idp_list.length == 0) {
       //if not, redirect user
       //calculate login target
       let target = window.location.href;
@@ -46,7 +46,9 @@
         // not a babel app, need to route through ping/pong
         target = HT.get_pong_target(target);
       }
-      window.location.assign(`//${HT.service_domain}/cgi/wayf?target=${encodeURIComponent(target)}`);
+      window.location.assign(
+        `//${HT.service_domain}/cgi/wayf?target=${encodeURIComponent(target)}`
+      );
     } else {
       //else, open LoginFormModal
       modal.show();
@@ -87,10 +89,10 @@
   $: hasSwitchableRoles = checkSwitchableRoles(loggedIn).status;
   $: hasActivatedRole = checkSwitchableRoles(loggedIn).activated;
   $: role = checkSwitchableRoles(loggedIn).label;
-  $: if ( $loginStatus && $loginStatus.notificationData ) {
-      notificationsManager.update($loginStatus.notificationData);
-      hasNotification = notificationsManager.hasNotifications();
-    }
+  $: if ($loginStatus && $loginStatus.notificationData) {
+    notificationsManager.update($loginStatus.notificationData);
+    hasNotification = notificationsManager.hasNotifications();
+  }
 </script>
 
 <FeedbackFormModal {form} bind:this={feedbackModal} />
@@ -408,13 +410,16 @@
                   <li class="px-3">
                     <button
                       class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
-                      data-disabled="{!hasNotification}"
+                      data-disabled={!hasNotification}
                       disabled={!hasNotification ? true : null}
                       on:click={notificationsModal.show()}
                       ><span class="needs-hover-state"
                         >Notifications {#if hasNotification}({notificationsManager.count()}){/if}</span
                       >
-                      <i class="fa-solid fa-bell fa-fw" class:opacity-25={!hasNotification} />
+                      <i
+                        class="fa-solid fa-bell fa-fw"
+                        class:opacity-25={!hasNotification}
+                      />
                     </button>
                   </li>
                   {#if hasSwitchableRoles}
@@ -426,7 +431,11 @@
                     <li class="px-3">
                       <a
                         class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
-                        href="//{HT.service_domain}/cgi/ping/switch"
+                        href="//{`${
+                          HT.service_domain
+                        }/cgi/ping/switch?target=${encodeURIComponent(
+                          window.location.href
+                        )}`}"
                         role="button"
                         ><span class="needs-hover-state">
                           {#if hasActivatedRole}
@@ -454,7 +463,11 @@
                   <li class="px-3">
                     <a
                       class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
-                      href="//{`${HT.service_domain}/cgi/logout?${encodeURIComponent(window.location.href)}`}"
+                      href="//{`${
+                        HT.service_domain
+                      }/cgi/logout?${encodeURIComponent(
+                        window.location.href
+                      )}`}"
                       role="button"
                       ><span class="needs-hover-state">Log Out</span><i
                         class="fa-solid fa-arrow-right-from-bracket fa-fw"
