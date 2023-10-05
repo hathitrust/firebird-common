@@ -12,38 +12,45 @@
 
   function onSubmit(event) {
     event.preventDefault();
-    if ( location === undefined ) { return; }
+    if (location === undefined) {
+      return;
+    }
     let url = new URL(location.href.replace(/;/g, '&'));
     url.searchParams.set(param, value);
     location.href = url.toString();
   }
 </script>
 
-<nav 
-  aria-label="Result navigation" 
-  class:nav-sticky-bottom={stickyBottom} 
-  class="d-flex flex-column align-items-start justify-content-between flex-sm-row align-items-sm-center gap-3 rounded">
+<nav
+  aria-label="Result navigation"
+  class:nav-sticky-bottom={stickyBottom}
+  class="d-flex flex-column align-items-start justify-content-between flex-sm-row align-items-sm-center gap-3 rounded"
+>
   <div>
     <ul class="list-unstyled d-flex gap-2 m-0">
       <li>
-        <a 
-          aria-hidden={!hasPreviousItem} 
+        <a
+          aria-hidden={!hasPreviousItem}
           aria-disabled={!hasPreviousItem}
           role={!hasPreviousItem ? 'link' : undefined}
-          disabled={!hasPreviousItem} 
-          class:disabled={!hasPreviousItem} 
+          disabled={!hasPreviousItem}
+          class:disabled={!hasPreviousItem}
           href={hasPreviousItem ? prevHref : undefined}
-          class="btn btn-outline-secondary d-inline-flex align-items-center gap-1 text-decoration-none"><i aria-hidden="true" class="fa-solid fa-chevron-left"></i><span>Previous</span></a>
+          class="btn btn-outline-secondary d-inline-flex align-items-center gap-1 text-decoration-none"
+          ><i aria-hidden="true" class="fa-solid fa-chevron-left" /><span>Previous</span></a
+        >
       </li>
       <li>
-        <a 
-          aria-hidden={!hasNextItem} 
+        <a
+          aria-hidden={!hasNextItem}
           aria-disabled={!hasNextItem}
           role={!hasNextItem ? 'link' : undefined}
-          disabled={!hasNextItem} 
-          class:disabled={!hasNextItem} 
+          disabled={!hasNextItem}
+          class:disabled={!hasNextItem}
           href={hasNextItem ? nextHref : undefined}
-          class="btn btn-outline-secondary d-inline-flex align-items-center gap-1 text-decoration-none"><span>Next</span><i aria-hidden="true" class="fa-solid fa-chevron-right"></i></a>
+          class="btn btn-outline-secondary d-inline-flex align-items-center gap-1 text-decoration-none"
+          ><span>Next</span><i aria-hidden="true" class="fa-solid fa-chevron-right" /></a
+        >
       </li>
     </ul>
   </div>
@@ -65,7 +72,7 @@
       bottom: 0.5rem;
       background-color: #fff;
       /* box-shadow: 0px -0.5rem 0.5rem -0.5rem rgba(0,0,0,0.1); */
-      box-shadow: 4px 8px 25px  rgba(0, 0, 0, 0.55);
+      box-shadow: 4px 8px 25px rgba(0, 0, 0, 0.55);
       margin-left: -0.5rem;
       margin-right: -0.5rem;
       z-index: 5;

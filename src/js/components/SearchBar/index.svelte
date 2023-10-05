@@ -108,9 +108,7 @@
     let _selectValue = 'library';
     let _inputValue = '';
     if (location && location.href) {
-      let searchParams = new URLSearchParams(
-        location.search.replace(/;/g, '&')
-      );
+      let searchParams = new URLSearchParams(location.search.replace(/;/g, '&'));
 
       const isAdvancedSearch = searchParams.get('adv') == '1';
 
@@ -118,15 +116,14 @@
         _searchtypeValue = 'everything';
         _selectValue = 'library';
         // set _inputValue to q1 IF this is ls AND it's not a mondo collection
-        if ( location.pathname.match('/cgi/ls') && ! searchParams.has('c') ) {
+        if (location.pathname.match('/cgi/ls') && !searchParams.has('c')) {
           _inputValue = searchParams.get('q1');
           isFullView = !(searchParams.get('lmt') == 'all');
         }
       } else if (isSiteCatalog()) {
         _searchtypeValue = searchParams.get('searchtype') || 'all';
         _selectValue = 'library';
-        _inputValue =
-          searchParams.get('lookfor') || searchParams.get('lookfor[]') || '';
+        _inputValue = searchParams.get('lookfor') || searchParams.get('lookfor[]') || '';
         if (location.pathname == '/Record' && searchParams.has('ft')) {
           // default to isFullView=true if /Record does not have an ft parameter
           isFullView = searchParams.get('ft') == 'ft';
@@ -147,7 +144,7 @@
           _inputValue = searchParams.get('s');
         }
       }
-      if ( searchParams.get('adv') == '1' ) {
+      if (searchParams.get('adv') == '1') {
         // if the query was an advanced search do not try to
         // summarize the query here
         _inputValue = '';
@@ -174,9 +171,7 @@
             placeholder="Search using keywords"
             bind:this={_input}
           />
-          <span class="input-group-text" id="search-icon"
-            ><i class="fa-solid fa-magnifying-glass fa-fw" /></span
-          >
+          <span class="input-group-text" id="search-icon"><i class="fa-solid fa-magnifying-glass fa-fw" /></span>
         </div>
         <div class="select-container" id="search-where">
           <select
@@ -210,11 +205,7 @@
             </select>
           </div>
         {/if}
-        <button
-          class="btn btn-primary btn-outline-secondary"
-          type="button"
-          id="button-addon2"
-          on:click={_submitSearch}
+        <button class="btn btn-primary btn-outline-secondary" type="button" id="button-addon2" on:click={_submitSearch}
           >Search
         </button>
         <!-- <button
@@ -235,15 +226,11 @@
         {/if}
       </span>
       <div class="search-links">
-        <a
-          href="//{HT.www_domain}/the-collection/search-access/#hathitrust-search-basics"
-          ><i class="fa-regular fa-circle-question fa-fw" /><span
-            >Search Help</span
-          ></a
+        <a href="//{HT.www_domain}/the-collection/search-access/#hathitrust-search-basics"
+          ><i class="fa-regular fa-circle-question fa-fw" /><span>Search Help</span></a
         >
         <a href={`//${SERVICE_DOMAIN}/cgi/ls?a=page&page=advanced`}
-          ><i class="fa-solid fa-toolbox fa-fw" /><span>Advanced Search</span
-          ></a
+          ><i class="fa-solid fa-toolbox fa-fw" /><span>Advanced Search</span></a
         >
       </div>
     </div>

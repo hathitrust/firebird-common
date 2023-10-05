@@ -99,9 +99,7 @@
     //unhide the form, hide the submission message, reset the form
     hidden = !hidden;
     submitted = !submitted;
-    console.log(
-      `start over clicked, hidden: ${hidden}, submitted: ${submitted}`
-    );
+    console.log(`start over clicked, hidden: ${hidden}, submitted: ${submitted}`);
     //remove validation styling
     document.querySelector(form).classList.remove('was-validated');
     //reset form
@@ -110,107 +108,51 @@
 </script>
 
 <main>
-  <form
-    on:submit|preventDefault={onSubmit}
-    class:hidden
-    class="needs-validation mb-3"
-    name="feedback"
-    novalidate
-    {id}
-  >
+  <form on:submit|preventDefault={onSubmit} class:hidden class="needs-validation mb-3" name="feedback" novalidate {id}>
     <div class="mb-3">
-      <label for="name" class="form-label"
-        >Name <span class="required">(required)</span></label
-      >
+      <label for="name" class="form-label">Name <span class="required">(required)</span></label>
       <input type="name" class="form-control" id="name" name="name" required />
       <div class="invalid-feedback">Please provide your name.</div>
       <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
     </div>
     <div class="mb-3">
-      <label for="email" class="form-label"
-        >Email address <span class="required">(required)</span></label
-      >
-      <input
-        type="email"
-        class="form-control"
-        id="email"
-        name="email"
-        required
-      />
+      <label for="email" class="form-label">Email address <span class="required">(required)</span></label>
+      <input type="email" class="form-control" id="email" name="email" required />
       <div class="invalid-feedback">Please provide an email address.</div>
     </div>
     <div class="mb-3">
-      <label for="summary" class="form-label"
-        >Short summary <span class="required">(required)</span></label
-      >
-      <input
-        type="text"
-        class="form-control"
-        id="summary"
-        name="summary"
-        required
-      />
-      <div class="invalid-feedback">
-        Please provide a title or subject line to summarize your feedback.
-      </div>
+      <label for="summary" class="form-label">Short summary <span class="required">(required)</span></label>
+      <input type="text" class="form-control" id="summary" name="summary" required />
+      <div class="invalid-feedback">Please provide a title or subject line to summarize your feedback.</div>
     </div>
     <div class="mb-3">
       <label for="bookDescription" class="form-label"
-        >If your question is related to a specific book, what is the title or
-        URL? <span class="required">(optional)</span></label
+        >If your question is related to a specific book, what is the title or URL? <span class="required"
+          >(optional)</span
+        ></label
       >
-      <input
-        type="text"
-        class="form-control"
-        id="bookDescription"
-        name="bookDescription"
-      />
+      <input type="text" class="form-control" id="bookDescription" name="bookDescription" />
     </div>
     <div class="mb-3">
       <label for="description" class="form-label"
-        >Full description of problem or question <span class="required"
-          >(required)</span
-        ></label
+        >Full description of problem or question <span class="required">(required)</span></label
       >
-      <textarea
-        class="form-control"
-        id="description"
-        name="description"
-        rows="3"
-        required
-      />
-      <div class="invalid-feedback">
-        Please provide some background or details for your feedback or question.
-      </div>
+      <textarea class="form-control" id="description" name="description" rows="3" required />
+      <div class="invalid-feedback">Please provide some background or details for your feedback or question.</div>
     </div>
     <input name="userURL" id="userURL" type="hidden" bind:value={userURL} />
-    <input
-      name="userAgent"
-      id="userAgent"
-      type="hidden"
-      bind:value={userAgent}
-    />
-    <input
-      name="userAuthStatus"
-      id="userAuthStatus"
-      type="hidden"
-      bind:value={userAuthStatus}
-    />
+    <input name="userAgent" id="userAgent" type="hidden" bind:value={userAgent} />
+    <input name="userAuthStatus" id="userAuthStatus" type="hidden" bind:value={userAuthStatus} />
     <input name="formName" id="formName" type="hidden" bind:value={formName} />
 
     <button type="submit" class="btn btn-primary" disabled={loading}>
       Submit{#if loading}
-        <span
-          class="spinner-border spinner-border-sm ms-2"
-          role="status"
-          aria-hidden="true"
-        />
+        <span class="spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true" />
         <span class="visually-hidden">Loading...</span>
       {/if}
     </button>
     <div id="data-message" class="form-text">
-      By submitting this form, you agree to send your browser details to help
-      our team track down your issue.
+      By submitting this form, you agree to send your browser details to help our team track down your issue.
     </div>
   </form>
 
@@ -223,17 +165,10 @@
             <i class="fa-solid fa-circle-check fa-lg me-2" />
             <div>
               <div class="d-flex flex-column">
-                <strong>Thank you!&nbsp;</strong>Your feedback has been
-                submitted.
+                <strong>Thank you!&nbsp;</strong>Your feedback has been submitted.
               </div>
-              <button
-                type="button"
-                class="btn btn-success"
-                on:click={startOver}
-                on:keypress={startOver}
-                >Start over <i
-                  class="fa-solid fa-arrow-rotate-left fa-lg ms-2"
-                /></button
+              <button type="button" class="btn btn-success" on:click={startOver} on:keypress={startOver}
+                >Start over <i class="fa-solid fa-arrow-rotate-left fa-lg ms-2" /></button
               >
             </div>
           </div>
@@ -243,9 +178,8 @@
           <div class="alert alert-danger submit-message" role="alert">
             <i class="fa-solid fa-triangle-exclamation fa-lg me-2" />
             <div>
-              <strong>Limit reached.&nbsp;</strong>You have reached the maximum
-              amount of submissions for this time period. Please submit your
-              request again another time.
+              <strong>Limit reached.&nbsp;</strong>You have reached the maximum amount of submissions for this time
+              period. Please submit your request again another time.
             </div>
           </div>
         </div>
@@ -254,8 +188,8 @@
           <div class="alert alert-danger submit-message" role="alert">
             <i class="fa-solid fa-triangle-exclamation fa-lg me-2" />
             <div>
-              <strong>Oops!&nbsp;</strong>There was an error submitting the
-              form. Please try again or email us at support@hathitrust.org
+              <strong>Oops!&nbsp;</strong>There was an error submitting the form. Please try again or email us at
+              support@hathitrust.org
             </div>
           </div>
         </div>

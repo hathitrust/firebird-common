@@ -115,66 +115,34 @@
 </script>
 
 <main>
-  <form
-    on:submit|preventDefault={onSubmit}
-    class:hidden
-    class="needs-validation mb-3"
-    name="feedback"
-    novalidate
-    {id}
-  >
+  <form on:submit|preventDefault={onSubmit} class:hidden class="needs-validation mb-3" name="feedback" novalidate {id}>
     <div class="mb-3">
-      <label for="name" class="form-label"
-        >Name <span class="required">(required)</span></label
-      >
+      <label for="name" class="form-label">Name <span class="required">(required)</span></label>
       <input type="name" class="form-control" id="name" name="name" required />
       <div class="invalid-feedback">Please provide your name.</div>
       <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
     </div>
     <div class="mb-3">
-      <label for="email" class="form-label"
-        >Email address <span class="required">(required)</span></label
-      >
-      <input
-        type="email"
-        class="form-control"
-        id="email"
-        name="email"
-        required
-      />
+      <label for="email" class="form-label">Email address <span class="required">(required)</span></label>
+      <input type="email" class="form-control" id="email" name="email" required />
       <div class="invalid-feedback">Please provide an email address.</div>
     </div>
     <div class="mb-3">
-      <label for="summary" class="form-label"
-        >Short summary <span class="required">(required)</span></label
-      >
-      <input
-        type="text"
-        class="form-control"
-        id="summary"
-        name="summary"
-        required
-      />
-      <div class="invalid-feedback">
-        Please provide a title or subject line to summarize your feedback.
-      </div>
+      <label for="summary" class="form-label">Short summary <span class="required">(required)</span></label>
+      <input type="text" class="form-control" id="summary" name="summary" required />
+      <div class="invalid-feedback">Please provide a title or subject line to summarize your feedback.</div>
     </div>
     <div class="mb-3">
       <label for="bookURL" class="form-label"
-        >URL of book that you are reporting a problem with <span
-          class="required">(required)</span
-        ></label
+        >URL of book that you are reporting a problem with <span class="required">(required)</span></label
       >
       <input type="text" class="form-control" id="bookURL" name="bookURL" />
       <div class="invalid-feedback">
-        Please provide the URL of the record from the catalog where you found
-        the issue.
+        Please provide the URL of the record from the catalog where you found the issue.
       </div>
     </div>
     <div class="mb-3">
-      <label for="itemTitle" class="form-label"
-        >Title of the book <span class="required">(optional)</span></label
-      >
+      <label for="itemTitle" class="form-label">Title of the book <span class="required">(optional)</span></label>
       <input type="text" class="form-control" id="itemTitle" name="itemTitle" />
     </div>
 
@@ -183,9 +151,7 @@
         <p>What specific problems are you noticing with the digital scans?</p>
       </div>
       <legend class="mb-3 fs-6">
-        Overall page readability and quality <span class="required"
-          >(required)</span
-        >
+        Overall page readability and quality <span class="required">(required)</span>
       </legend>
       <div class="form-check">
         <input
@@ -196,9 +162,7 @@
           value="Few problems, page is readable"
           bind:group={imageQuality}
         />
-        <label class="form-check-label" for="public-domain">
-          A few problems, entire page is readable
-        </label>
+        <label class="form-check-label" for="public-domain"> A few problems, entire page is readable </label>
       </div>
       <div class="form-check">
         <input
@@ -209,9 +173,7 @@
           bind:group={imageQuality}
           id="fed-document"
         />
-        <label class="form-check-label" for="fed-document">
-          Some problems, but still readable
-        </label>
+        <label class="form-check-label" for="fed-document"> Some problems, but still readable </label>
       </div>
       <div class="form-check">
         <input
@@ -266,9 +228,7 @@
           value="Missing parts of the page"
           bind:group={imageProblems}
         />
-        <label class="form-check-label" for="flexCheckDefault">
-          Missing parts of the page
-        </label>
+        <label class="form-check-label" for="flexCheckDefault"> Missing parts of the page </label>
       </div>
       <div class="form-check">
         <input
@@ -278,9 +238,7 @@
           value="Blurry text"
           bind:group={imageProblems}
         />
-        <label class="form-check-label" for="flexCheckDefault">
-          Blurry text
-        </label>
+        <label class="form-check-label" for="flexCheckDefault"> Blurry text </label>
       </div>
       <div class="form-check">
         <input
@@ -290,21 +248,11 @@
           value="OCR unreadable"
           bind:group={imageProblems}
         />
-        <label class="form-check-label" for="flexCheckDefault">
-          The OCR is unreadable
-        </label>
+        <label class="form-check-label" for="flexCheckDefault"> The OCR is unreadable </label>
       </div>
       <div class="form-check">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          name="imageProblems"
-          value="Other"
-          bind:group={imageProblems}
-        />
-        <label class="form-check-label" for="flexCheckDefault">
-          Other (describe in description box)
-        </label>
+        <input class="form-check-input" type="checkbox" name="imageProblems" value="Other" bind:group={imageProblems} />
+        <label class="form-check-label" for="flexCheckDefault"> Other (describe in description box) </label>
       </div>
       <div class="form-check">
         <input
@@ -315,51 +263,28 @@
           bind:group={imageProblems}
           checked
         />
-        <label class="form-check-label" for="flexCheckChecked">
-          No problems
-        </label>
+        <label class="form-check-label" for="flexCheckChecked"> No problems </label>
       </div>
     </fieldset>
     <div class="mb-3">
       <label for="description" class="form-label"
-        >Other problems or comments? <span class="required">(optional)</span
-        ></label
+        >Other problems or comments? <span class="required">(optional)</span></label
       >
-      <textarea
-        class="form-control"
-        id="description"
-        name="description"
-        rows="3"
-      />
+      <textarea class="form-control" id="description" name="description" rows="3" />
     </div>
     <input name="userURL" id="userURL" type="hidden" bind:value={userURL} />
-    <input
-      name="userAgent"
-      id="userAgent"
-      type="hidden"
-      bind:value={userAgent}
-    />
-    <input
-      name="userAuthStatus"
-      id="userAuthStatus"
-      type="hidden"
-      bind:value={userAuthStatus}
-    />
+    <input name="userAgent" id="userAgent" type="hidden" bind:value={userAgent} />
+    <input name="userAuthStatus" id="userAuthStatus" type="hidden" bind:value={userAuthStatus} />
     <input name="formName" id="formName" type="hidden" bind:value={formName} />
 
     <button type="submit" class="btn btn-primary" disabled={loading}>
       Submit{#if loading}
-        <span
-          class="ms-2 spinner-border spinner-border-sm"
-          role="status"
-          aria-hidden="true"
-        />
+        <span class="ms-2 spinner-border spinner-border-sm" role="status" aria-hidden="true" />
         <span class="visually-hidden">Loading...</span>
       {/if}
     </button>
     <div id="data-message" class="form-text">
-      By submitting this form, you agree to send your browser details to help
-      our team track down your issue.
+      By submitting this form, you agree to send your browser details to help our team track down your issue.
     </div>
   </form>
 
@@ -372,17 +297,10 @@
             <i class="fa-solid fa-circle-check fa-lg me-2" />
             <div>
               <div class="d-flex flex-column">
-                <strong>Thank you!&nbsp;</strong>Your feedback has been
-                submitted.
+                <strong>Thank you!&nbsp;</strong>Your feedback has been submitted.
               </div>
-              <button
-                type="button"
-                class="btn btn-success"
-                on:click={startOver}
-                on:keypress={startOver}
-                >Start over <i
-                  class="fa-solid fa-arrow-rotate-left fa-lg ms-2"
-                /></button
+              <button type="button" class="btn btn-success" on:click={startOver} on:keypress={startOver}
+                >Start over <i class="fa-solid fa-arrow-rotate-left fa-lg ms-2" /></button
               >
             </div>
           </div>
@@ -392,9 +310,8 @@
           <div class="alert alert-danger submit-message" role="alert">
             <i class="fa-solid fa-triangle-exclamation fa-lg me-2" />
             <div>
-              <strong>Limit reached.&nbsp;</strong>You have reached the maximum
-              amount of submissions for this time period. Please submit your
-              request again another time.
+              <strong>Limit reached.&nbsp;</strong>You have reached the maximum amount of submissions for this time
+              period. Please submit your request again another time.
             </div>
           </div>
         </div>
@@ -403,8 +320,8 @@
           <div class="alert alert-danger submit-message" role="alert">
             <i class="fa-solid fa-triangle-exclamation fa-lg me-2" />
             <div>
-              <strong>Oops!&nbsp;</strong>There was an error submitting the
-              form. Please try again or email us at support@hathitrust.org
+              <strong>Oops!&nbsp;</strong>There was an error submitting the form. Please try again or email us at
+              support@hathitrust.org
             </div>
           </div>
         </div>

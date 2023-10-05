@@ -11,4 +11,3 @@
     {attribution}
   </figcaption>
 </figure>
-

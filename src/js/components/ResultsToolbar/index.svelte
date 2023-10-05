@@ -14,75 +14,77 @@
     sortParam: 'sort',
     pageParam: 'page',
     sortOptions: [
-      {value: false, label: 'Relevance'},
-      {value: 'year', label: 'Date (newest first)'},
-      {value: 'yearup', label: 'Date (oldest first)'},
-      {value: 'author', label: 'Author'},
-      {value: 'title', label: 'Title'},
-    ]
+      { value: false, label: 'Relevance' },
+      { value: 'year', label: 'Date (newest first)' },
+      { value: 'yearup', label: 'Date (oldest first)' },
+      { value: 'author', label: 'Author' },
+      { value: 'title', label: 'Title' },
+    ],
   };
   config['ls'] = {
     label: 'results',
-    sortOptions: false
-  };  
+    sortOptions: false,
+  };
   config['mb.listis'] = {
     label: 'items',
     sortParam: 'sort',
     pageParam: 'pn',
     sortOptions: [
-      {value: 'title_a', label: 'Title A-Z'},
-      {value: 'title_d', label: 'Title Z-A'},
-      {value: 'auth_a', label: 'Author A-Z'},
-      {value: 'auth_d', label: 'Author Z-A'},
-      {value: 'date_d', label: 'Date (newest first)'},
-      {value: 'date_a', label: 'Date (oldest first)'},
-    ]
+      { value: 'title_a', label: 'Title A-Z' },
+      { value: 'title_d', label: 'Title Z-A' },
+      { value: 'auth_a', label: 'Author A-Z' },
+      { value: 'auth_d', label: 'Author Z-A' },
+      { value: 'date_d', label: 'Date (newest first)' },
+      { value: 'date_a', label: 'Date (oldest first)' },
+    ],
   };
   config['mb.listsrch'] = {
     ...config['mb.listis'],
-    label: 'results'
+    label: 'results',
   };
   config['mb.listcs'] = {
     label: 'collections',
     sortParam: 'sort',
     pageParam: 'pn',
     sortOptions: [
-      {value: 'cn_a', label: 'Collection Title'},
-      {value: 'updated_d', label: 'Last Updated'},
-      {value: 'num_a', label: 'Items (low to high)'},
-      {value: 'num_d', label: 'Items (high to low)'}
-    ]
-  }
+      { value: 'cn_a', label: 'Collection Title' },
+      { value: 'updated_d', label: 'Last Updated' },
+      { value: 'num_a', label: 'Items (low to high)' },
+      { value: 'num_d', label: 'Items (high to low)' },
+    ],
+  };
 
   $: label = config[target].label;
   $: sortOptions = config[target].sortOptions;
 
-  const format = function(number) {
+  const format = function (number) {
     return number.toLocaleString('en-US');
-  }
+  };
 
-  const onSubmit = function(event) {
-    if ( location === undefined ) { return; }
+  const onSubmit = function (event) {
+    if (location === undefined) {
+      return;
+    }
     let url = new URL(location.href.replace(/;/g, '&'));
     url.searchParams.delete(config[target].pageParam);
     url.searchParams.set(config[target].sortParam, currentSortOption);
     location.href = url.toString();
-  }
+  };
 
-  let modal; 
+  let modal;
   let action = 'addc';
   let status = {};
-  const openModal = function() {
+  const openModal = function () {
     modal.show();
-  }
+  };
 
   async function submitAction(params) {
+    const non_ajax = { movit: true, delit: true, movitnc: true, editc: true, addc: true };
 
-    const non_ajax = { movit : true, delit : true, movitnc : true, editc : true, addc: true };
-
-    status.class = null; status = status;
+    status.class = null;
+    status = status;
     params.set('a', action);
-    if (! non_ajax[action]) {
+    if (!non_ajax[action]) {
       params.set('page', 'ajax');
     }
 
@@ -91,13 +93,13 @@
     if (params.get('page') == 'ajax') {
       let response = await fetch(url, {
         method: 'GET',
-      })
+      });
       if (response.ok) {
         parseResponse(await response.text());
         userCollections.push({
           value: status.coll_id,
-          label: status.coll_name
-        })
+          label: status.coll_name,
+        });
         userCollections = userCollections;
         clearSelection();
       }
@@ -105,23 +107,36 @@
       location.href = url;
     }
   }
-
 </script>
 
-<div class="bg-light rounded-2 p-2 px-3 d-flex flex-sm-row flex-column gap-3 justify-content-between align-items-start align-items-sm-center" role="toolbar" aria-label="Search toolbar" aria-describedby="results-summary">
+<div
+  class="bg-light rounded-2 p-2 px-3 d-flex flex-sm-row flex-column gap-3 justify-content-between align-items-start align-items-sm-center"
+  role="toolbar"
+  aria-label="Search toolbar"
+  aria-describedby="results-summary"
+>
   <h2 id="results-summary" class="fw-normal fs-4">
-    {format(firstRecordNumber)} to {format(lastRecordNumber)} of {format(totalRecords)} {label}
+    {format(firstRecordNumber)} to {format(lastRecordNumber)} of {format(totalRecords)}
+    {label}
   </h2>
   <div class="d-flex flex-row align-items-start gap-3 flex-wrap flex-sm-nowrap flex-justify-content-end">
     {#if sortOptions !== false}
-    <div class="d-flex flex-nowrap gap-1">
-      <label class="col-form-label fw-normal text-nowrap" for="sort">Sort by</label>
-      <select class="form-select w-auto" id="sort" name="sort" size="1" bind:value={currentSortOption} on:change={onSubmit}>
-        {#each sortOptions as sortOption}
-          <option value={sortOption.value} selected={sortOption.value == currentSortOption}>{sortOption.label}</option>
-        {/each}
-      </select>
-    </div>
+      <div class="d-flex flex-nowrap gap-1">
+        <label class="col-form-label fw-normal text-nowrap" for="sort">Sort by</label>
+        <select
+          class="form-select w-auto"
+          id="sort"
+          name="sort"
+          size="1"
+          bind:value={currentSortOption}
+          on:change={onSubmit}
+        >
+          {#each sortOptions as sortOption}
+            <option value={sortOption.value} selected={sortOption.value == currentSortOption}>{sortOption.label}</option
+            >
+          {/each}
+        </select>
+      </div>
     {/if}
     {#if target == 'mb.listcs'}
       <button type="button" class="btn btn-secondary text-nowrap" on:click={openModal}>New Collection</button>
@@ -142,9 +157,8 @@
 </div>
 
 {#if target == 'mb.listcs'}
-<CollectionEditModal bind:this={modal} {submitAction} />
+  <CollectionEditModal bind:this={modal} {submitAction} />
 {/if}
 
 <style>
-
 </style>

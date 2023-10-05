@@ -1,5 +1,5 @@
 export class Live {
-  constructor(debugEnabled=false) {
+  constructor(debugEnabled = false) {
     this.debugEnabled = debugEnabled;
     this.lastMessage = '';
     this.lastMessageTimer = null;
@@ -7,12 +7,14 @@ export class Live {
 
   update(message) {
     let div = this.getRegion();
-    console.log("-- live.update", div, message);
-    if ( ! div ) { return ; }
+    console.log('-- live.update', div, message);
+    if (!div) {
+      return;
+    }
     div.innerText = message;
 
-    if ( this.debugEnabled ) {
-      if ( ! this._debugEl ) {
+    if (this.debugEnabled) {
+      if (!this._debugEl) {
         this._debugEl = document.createElement('div');
         this._debugEl.classList.add('toast-container', 'position-fixed', 'bottom-0', 'start-0', 'p-3');
         this._debugEl.innerHTML = `
@@ -30,23 +32,28 @@ export class Live {
       }
       this._debugEl.querySelector('.toast-body').innerText = message;
       this._debugEl.querySelector('.toast').classList.toggle('show', message != '');
-      console.log("-- live.announce.debug", message, message != '');
+      console.log('-- live.announce.debug', message, message != '');
     }
   }
 
   mode(setting) {
     let div = this.getRegion();
-    if ( ! div ) { return ; }
+    if (!div) {
+      return;
+    }
     div.setAttribute('aria-live', setting);
   }
 
   post(message) {
-    if ( message == '--' ) {
+    if (message == '--') {
       this.lastMessage = message;
       return;
     }
-    if ( this.lastMessage != message ) {
-      if ( this.lastMessageTimer ) { clearTimeout(this.lastMessageTimer); this.lastMessageTimer = null; }
+    if (this.lastMessage != message) {
+      if (this.lastMessageTimer) {
+        clearTimeout(this.lastMessageTimer);
+        this.lastMessageTimer = null;
+      }
       const clearDelay = this.debugEnabled ? 2000 : 500;
       setTimeout(() => {
         this.update(message);

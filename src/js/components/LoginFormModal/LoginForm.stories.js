@@ -17,24 +17,23 @@ export default {
   decorators: [
     () => ({
       Component: PingCallbackDecorator,
-      props: { loggedIn: false }
-    })
+      props: { loggedIn: false },
+    }),
   ],
   argTypes: {
     show: { action: 'show' },
     hide: { action: 'hide' },
-  }
+  },
 };
 
 export const AlreadyLoggedIn = {
-  args: {
-  },
+  args: {},
   decorators: [
     () => ({
       Component: PingCallbackDecorator,
-      props: { 
+      props: {
         loggedIn: true,
-      }
-    })
+      },
+    }),
   ],
 };
