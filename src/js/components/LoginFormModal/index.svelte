@@ -17,7 +17,7 @@
 
   export let target;
 
-  if ( ! target ) {
+  if (!target) {
     target = window.location.href;
     if (target.indexOf('babel.hathitrust') < 0) {
       // not a babel app, need to route through ping/pong
@@ -28,13 +28,13 @@
   export let isOpen = false;
 
   export const show = function () {
-    if (! idpList.length) { return ; }
+    if (!idpList.length) {
+      return;
+    }
     if (!sdrinst) {
       filterText = '';
     } else {
-      filterText = idpList
-        .find((item) => item.sdrinst == sdrinst)
-        .name.replace(/&amp;/g, '&');
+      filterText = idpList.find((item) => item.sdrinst == sdrinst).name.replace(/&amp;/g, '&');
     }
     modal.show();
   };
@@ -63,19 +63,17 @@
 <Modal bind:this={modal}>
   <svelte:fragment slot="title">Log in with Your Institution</svelte:fragment>
   <svelte:fragment slot="body">
-    <p class="mb-0">
-      Log in with your university or library to access the largest number of volumes and features.
-    </p>
+    <p class="mb-0">Log in with your university or library to access the largest number of volumes and features.</p>
     <div class="mt-3" style="display: grid; grid-template-rows: minmax(0, 1fr); min-height: 0;">
-      <InstitutionList bind:sdrinst {filterText}></InstitutionList>
+      <InstitutionList bind:sdrinst {filterText} />
     </div>
   </svelte:fragment>
   <svelte:fragment slot="footer">
-    <LoginFormAction {...$$props} {sdrinst} {target}></LoginFormAction>
+    <LoginFormAction {...$$props} {sdrinst} {target} />
     <div class="m-0 p-0 w-100">
       <div>
         <p class="p-3 px-modal mb-0 border-top bg-light rounded-bottom">
-          Can't find your university or library? 
+          Can't find your university or library?
           <a href="//{HT.service_domain}/cgi/wayf?target={encodeURIComponent(target)}" class="text-dark"
             >See options to log in as a guest</a
           >

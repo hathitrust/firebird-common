@@ -23,17 +23,17 @@ const parameters = {
 export const Desktop = {
   parameters: parameters,
   args: {
-    enableBorder: false
-  }
+    enableBorder: false,
+  },
 };
 
 export const Narrow = {
   parameters: {
     viewport: {
-      defaultViewport: 'bsXs'
-    }
+      defaultViewport: 'bsXs',
+    },
   },
   args: {
-    enableBorder: false
-  }
+    enableBorder: false,
+  },
 };

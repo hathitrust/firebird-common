@@ -1,5 +1,4 @@
 <script>
-
   let HT = window.HT || {};
 
   export let cookieJar = HT.cookieJar;
@@ -20,15 +19,15 @@
   $: loginStatus = HT.loginStatus;
   $: loggedIn = $loginStatus.logged_in;
   $: isVisible = loggedIn && xtracking[key] != true;
-
 </script>
 
 {#if isVisible}
-<div 
-  class="aup-banner alert alert-dark alert-block d-flex gap-4 align-items-center justify-content-center p-4 shadow-lg">
+  <div
+    class="aup-banner alert alert-dark alert-block d-flex gap-4 align-items-center justify-content-center p-4 shadow-lg"
+  >
     <div class="fs-3">
       <p class="mb-0">
-        By logging into HathiTrust, you agree to follow our 
+        By logging into HathiTrust, you agree to follow our
         <a class="alert-link" href="https://www.hathitrust.org/acceptable-use">Acceptable Use Policy.</a>
       </p>
       <!-- <p class="mb-0 mt-3">
@@ -39,7 +38,7 @@
       </p> -->
     </div>
     <button type="button" class="btn btn-dark btn-lg" on:click={confirm}>OK</button>
-</div>
+  </div>
 {/if}
 
 <style>

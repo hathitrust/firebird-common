@@ -89,7 +89,9 @@ HT.postPingCallback = function (login_status) {
 
   Object.keys(apps).forEach((slug) => {
     document.querySelectorAll(slug).forEach((el) => {
-      if ( el.component ) { return ; }
+      if (el.component) {
+        return;
+      }
       let props = buildProps(el);
       el.component = new apps[slug]({
         target: el,
@@ -100,23 +102,23 @@ HT.postPingCallback = function (login_status) {
   setTimeout(() => {
     document.body.dataset.initialized = true;
   });
-  (new AnalyticsManager(HT)).configure();
-  (new HotjarManager(HT)).configure();
+  new AnalyticsManager(HT).configure();
+  new HotjarManager(HT).configure();
 };
 
 let script = document.createElement('script');
 script.async = true;
-script.src = `//${
-  HT.service_domain
-}/cgi/ping?callback=HT.postPingCallback&_${new Date().getTime()}`;
-script.onerror = function() { 
-  HT.postPingCallback(emptyLoginStatus); 
-}
+script.src = `//${HT.service_domain}/cgi/ping?callback=HT.postPingCallback&_${new Date().getTime()}`;
+script.onerror = function () {
+  HT.postPingCallback(emptyLoginStatus);
+};
 document.head.appendChild(script);
 
 setTimeout(() => {
-  if ( document.body.dataset.initialized == 'true' ) { return ; }
-  HT.postPingCallback(emptyLoginStatus)
+  if (document.body.dataset.initialized == 'true') {
+    return;
+  }
+  HT.postPingCallback(emptyLoginStatus);
 }, 1000);
 
 // look for buttons that trigger the appearance of
@@ -146,9 +148,7 @@ if (btnToggleFilters) {
     event.preventDefault();
     event.stopPropagation();
 
-    let isExpanded = !(
-      btnToggleFilters.getAttribute('aria-expanded') == 'true'
-    );
+    let isExpanded = !(btnToggleFilters.getAttribute('aria-expanded') == 'true');
     btnToggleFilters.setAttribute('aria-expanded', isExpanded);
   });
 }
@@ -169,10 +169,10 @@ document.querySelectorAll('[data-action="expand-filter"]').forEach((button) => {
 });
 
 const operationAlertDiv = document.querySelector('.alert-operation');
-if ( operationAlertDiv ) {
+if (operationAlertDiv) {
   setTimeout(() => {
     HT.live.assert(operationAlertDiv.textContent.trim());
-  })
+  });
 }
 
 export default apps;

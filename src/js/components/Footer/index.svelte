@@ -7,8 +7,9 @@
   <div class="legal">
     <span class="copyright">&#169;{year} HathiTrust</span>
     <div>
-      <a href="//{HT.www_domain}/privacy-policy">Privacy Policy</a><span>|</span
-      ><a href="//{HT.www_domain}/takedown-policy">Takedown Policy</a>
+      <a href="//{HT.www_domain}/privacy-policy">Privacy Policy</a><span>|</span><a
+        href="//{HT.www_domain}/takedown-policy">Takedown Policy</a
+      >
     </div>
   </div>
   <ul>

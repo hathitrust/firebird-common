@@ -26,6 +26,6 @@ export const FullText = {
 export const Catalog = {
   parameters: parameters,
   args: {
-    supportsSelection: false
-  }
+    supportsSelection: false,
+  },
 };

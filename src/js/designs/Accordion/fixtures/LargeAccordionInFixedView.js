@@ -1,9 +1,9 @@
 let panelsHTML = '';
 
-for(let i = 1; i <= 10; i++) {
+for (let i = 1; i <= 10; i++) {
   let panelHTML = '';
-  let numLines = ( i % 3 == 0 ) ? 10 : 5;
-  for(let n = 1; n <= numLines; n++) {
+  let numLines = i % 3 == 0 ? 10 : 5;
+  for (let n = 1; n <= numLines; n++) {
     panelHTML += `<p>This is line ${n} in panel ${i}</p>`;
   }
   let detailsHTML = `<div class="accordion-item">
@@ -25,5 +25,5 @@ export default {
   role: 'accordion',
   overflowed: true,
   alert: 'Only one accordion will be open at a time.',
-  example: panelsHTML
-}
+  example: panelsHTML,
+};

@@ -20,24 +20,24 @@ const parameters = {
 };
 
 export const FullView = {
-  parameters: parameters
+  parameters: parameters,
 };
 export const MultipleItems = {
   parameters: parameters,
   args: {
     access: 'multiple-items',
     supportsSelection: false,
-  }
+  },
 };
 export const SearchOnly = {
   parameters: parameters,
   args: {
-    access: 'limited-search-only'
-  }
+    access: 'limited-search-only',
+  },
 };
 export const AccessPermitted = {
   parameters: parameters,
   args: {
-    access: 'limited-access-permitted'
-  }
+    access: 'limited-access-permitted',
+  },
 };

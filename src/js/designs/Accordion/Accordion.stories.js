@@ -10,19 +10,18 @@ export default {
   component: Accordion,
 };
 
-
 export const SingleAccordionPanel = {
-  args: SingleAccordionPanelArgs
+  args: SingleAccordionPanelArgs,
 };
 
 export const IndependentAccordionPanels = {
-  args: IndependentAccordionPanelsArgs
+  args: IndependentAccordionPanelsArgs,
 };
 
 export const MultipleAccordions = {
-  args: MultipleAccordionsArgs
+  args: MultipleAccordionsArgs,
 };
 
 export const LargeAccordionInFixedView = {
-  args: LargeAccordionInFixedViewArgs
+  args: LargeAccordionInFixedViewArgs,
 };

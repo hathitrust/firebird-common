@@ -1,10 +1,5 @@
 <script>
-
 </script>
-
-<style>
-
-</style>
 
 <div class="p-3 rounded shadow">
   <form method="GET" action="#">
@@ -23,3 +18,6 @@
     <input type="hidden" name="lmt" value="ft" />
   </form>
 </div>
+
+<style>
+</style>

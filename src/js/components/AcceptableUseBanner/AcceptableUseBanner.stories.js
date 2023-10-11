@@ -18,8 +18,8 @@ export const Default = {
   decorators: [
     () => ({
       Component: PingCallbackDecorator,
-      props: { loggedIn: true }
-    })
+      props: { loggedIn: true },
+    }),
   ],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -35,19 +35,19 @@ export const Default = {
 
 export const PreviouslyAccepted = {
   parameters: {
-  viewport: {
+    viewport: {
       defaultViewport: 'bsLg',
     },
   },
   decorators: [
     () => ({
       Component: PingCallbackDecorator,
-      props: { loggedIn: true, cookieData: { 'HT.x': JSON.stringify({ 'aup-notice': true }) } }
-    })
+      props: { loggedIn: true, cookieData: { 'HT.x': JSON.stringify({ 'aup-notice': true }) } },
+    }),
   ],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     //sanity check
     expect(canvasElement.querySelector('button')).toBeFalsy();
-  }
-}
+  },
+};

@@ -23,7 +23,8 @@
     {
       htid: 'hvd.32044019639822',
       catalogId: '009720544',
-      title: 'The History of the battle of Agincourt, and of the expedition of Henry the Fifth into France; to which is added, The roll of the men at arms, in the English army By Nicholas Harris Nicolas, esq',
+      title:
+        'The History of the battle of Agincourt, and of the expedition of Henry the Fifth into France; to which is added, The roll of the men at arms, in the English army By Nicholas Harris Nicolas, esq',
       author: 'Nicolas, Nicholas Harris, Sir, 1799-1848.',
       publicationDate: 1827,
       access: 'full-view',
@@ -44,9 +45,9 @@
       publicationDate: 1844,
       access: 'full-view',
     },
-  ]
+  ];
 
-  if ( supportsSelection === false ) {
+  if (supportsSelection === false) {
     items.unshift({
       htid: 'mdp.39015013972271',
       catalogId: '000455846',
@@ -54,12 +55,12 @@
       author: 'Hibbert, Christopher, 1924-2008.',
       publicationDate: 1964,
       access: 'multiple-items',
-    })
+    });
   }
 </script>
 
 <div class="container-fluid">
   {#each items as item}
-    <ResultsItem {...item} {supportsSelection}></ResultsItem>
+    <ResultsItem {...item} {supportsSelection} />
   {/each}
 </div>

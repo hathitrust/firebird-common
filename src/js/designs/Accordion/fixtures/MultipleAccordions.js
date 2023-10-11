@@ -4,7 +4,7 @@ for (let ex = 1; ex <= 3; ex++) {
   let panelsHTML = '';
   for (let i = 1; i <= 5; i++) {
     let panelHTML = '';
-    let numLines = (i % 3 == 0) ? 10 : 5;
+    let numLines = i % 3 == 0 ? 10 : 5;
     for (let n = 1; n <= numLines; n++) {
       panelHTML += `<p>This is line ${n} in panel ${i} of example ${ex}</p>`;
     }
@@ -29,5 +29,5 @@ export default {
   role: 'accordion',
   overflowed: false,
   alert: 'Multiple accordion groups.',
-  example: examples
-}
+  example: examples,
+};

@@ -9,8 +9,8 @@ export default {
   decorators: [
     () => ({
       Component: PingCallbackDecorator,
-      props: { loggedIn: false, notificationData: null }
-    })
+      props: { loggedIn: false, notificationData: null },
+    }),
   ],
 };
 
@@ -69,8 +69,8 @@ export const DesktopLoggedIn = {
   decorators: [
     () => ({
       Component: PingCallbackDecorator,
-      props: { loggedIn: true }
-    })
+      props: { loggedIn: true },
+    }),
   ],
 };
 export const DesktopLoggedInWithNotifications = {
@@ -82,18 +82,18 @@ export const DesktopLoggedInWithNotifications = {
   decorators: [
     () => ({
       Component: PingCallbackDecorator,
-      props: { 
-        loggedIn: true, 
+      props: {
+        loggedIn: true,
         notificationData: [
           {
-            title: "A navbar story",
-            message: "Once upon a time there was a user with notifications",
-            read_more_label: "Do you want to know more?",
-            read_more_link: "https://umich.edu"
-          }
-        ]  
-      }
-    })
+            title: 'A navbar story',
+            message: 'Once upon a time there was a user with notifications',
+            read_more_label: 'Do you want to know more?',
+            read_more_link: 'https://umich.edu',
+          },
+        ],
+      },
+    }),
   ],
 };
 export const Mobile = {
@@ -135,8 +135,8 @@ export const MobileLoggedIn = {
   decorators: [
     () => ({
       Component: PingCallbackDecorator,
-      props: { loggedIn: true }
-    })
+      props: { loggedIn: true },
+    }),
   ],
 };
 export const MobileLoggedInWithNotifications = {
@@ -148,18 +148,18 @@ export const MobileLoggedInWithNotifications = {
   decorators: [
     () => ({
       Component: PingCallbackDecorator,
-      props: { 
-        loggedIn: true, 
+      props: {
+        loggedIn: true,
         notificationData: [
           {
-            title: "A navbar story",
-            message: "Once upon a time there was a user with notifications",
-            read_more_label: "Do you want to know more?",
-            read_more_link: "https://umich.edu"
-          }
-        ]  
-      }
-    })
+            title: 'A navbar story',
+            message: 'Once upon a time there was a user with notifications',
+            read_more_label: 'Do you want to know more?',
+            read_more_link: 'https://umich.edu',
+          },
+        ],
+      },
+    }),
   ],
 };
 export const MobileLoggedInMyAccountDropdown = {
@@ -168,10 +168,10 @@ export const MobileLoggedInMyAccountDropdown = {
   decorators: [
     () => ({
       Component: PingCallbackDecorator,
-      props: { 
-        loggedIn: true, 
-      }
-    })
+      props: {
+        loggedIn: true,
+      },
+    }),
   ],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

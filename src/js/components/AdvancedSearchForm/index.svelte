@@ -126,9 +126,7 @@
         errors.lookFors = true;
       }
 
-      if (
-        Object.values(pubYear).find((value) => value != '' && value != null)
-      ) {
+      if (Object.values(pubYear).find((value) => value != '' && value != null)) {
         // possibly have pub year
         if (yop == 'before' && pubYear.end) {
           searchParams.set('yop', yop);
@@ -197,10 +195,7 @@
       });
       types.forEach((value, idx) => {
         if (value && lookFors[idx]) {
-          searchParams.set(
-            `field${idx + 1}`,
-            value == 'everything' ? 'ocr' : value
-          );
+          searchParams.set(`field${idx + 1}`, value == 'everything' ? 'ocr' : value);
         }
       });
       anyalls.forEach((value, idx) => {
@@ -218,9 +213,7 @@
         errors.lookFors = true;
       }
 
-      if (
-        Object.values(pubYear).find((value) => value != '' && value != null)
-      ) {
+      if (Object.values(pubYear).find((value) => value != '' && value != null)) {
         // possibly have pub year
         if (yop == 'before' && pubYear.end) {
           searchParams.set('yop', yop);
@@ -439,22 +432,18 @@
                 </dd>
                 <dt>Using wildcards</dt>
                 <dd>
-                  Use <code>*</code> or <code>?</code> to search for alternate
-                  forms of a word. Use <code>*</code>
-                  to stand for several characters, and <code>?</code> for a
-                  single character: e.g.,
+                  Use <code>*</code> or <code>?</code> to search for alternate forms of a word. Use <code>*</code>
+                  to stand for several characters, and <code>?</code> for a single character: e.g.,
                   <code>optim*</code> will find optimal, optimize or optimum;
-                  <code>wom?n</code> will find woman and women. If you would
-                  simply like to browse without entering a search term you can
-                  enter <code>*</code> by itself. Wildcard search is
+                  <code>wom?n</code> will find woman and women. If you would simply like to browse without entering a
+                  search term you can enter <code>*</code> by itself. Wildcard search is
                   <strong>not</strong>
                   available in
                   <strong>Full Text & All Fields</strong> and
                   <strong>Only Full Text</strong> search.
                 </dd>
                 <dd>
-                  If you would simply like to browse without entering a search
-                  term you can enter <code>*</code> by itself.
+                  If you would simply like to browse without entering a search term you can enter <code>*</code> by itself.
                 </dd>
               </dl>
             </div>
@@ -482,8 +471,7 @@
             <div class="accordion-body">
               <p>
                 Check the <strong>Always use the Full Text Index</strong>
-                option to display search results at the item level and to be able
-                to add your search results to a collection.
+                option to display search results at the item level and to be able to add your search results to a collection.
               </p>
             </div>
           </div>
@@ -496,9 +484,7 @@
       <form on:submit={submitForm}>
         <h2 class="mb-3">Search by field</h2>
         {#if errors.lookFors}
-          <div
-            class="alert alert-block alert-warning d-flex gap-3 align-items-center"
-          >
+          <div class="alert alert-block alert-warning d-flex gap-3 align-items-center">
             <i class="fa-solid fa-triangle-exclamation" aria-hidden="true" />
             A search term is required to submit an advanced search.
           </div>
@@ -506,12 +492,8 @@
         {#each lookFors as value, idx}
           {#if idx > 0}
             <fieldset class="mb-3">
-              <legend class="visually-hidden"
-                >Boolean operator for field {idx - 1} and field {idx}</legend
-              >
-              <div
-                class="d-flex gap-3 align-items-center justify-content-start"
-              >
+              <legend class="visually-hidden">Boolean operator for field {idx - 1} and field {idx}</legend>
+              <div class="d-flex gap-3 align-items-center justify-content-start">
                 {#each booleanOptions as option, bidx}
                   <div class="form-check">
                     <input
@@ -523,10 +505,7 @@
                       checked={option.value == bools[idx]}
                       bind:group={bools[idx]}
                     />
-                    <label
-                      class="form-check-label text-uppercase"
-                      for="boolean-{bidx}">{option.value}</label
-                    >
+                    <label class="form-check-label text-uppercase" for="boolean-{bidx}">{option.value}</label>
                   </div>
                 {/each}
               </div>
@@ -547,11 +526,7 @@
                 </select>
               </div>
               <div class="select-container border border-0 flex-grow-1">
-                <select
-                  class="form-select rounded-0"
-                  aria-label="Selected match {idx + 1}"
-                  bind:value={anyalls[idx]}
-                >
+                <select class="form-select rounded-0" aria-label="Selected match {idx + 1}" bind:value={anyalls[idx]}>
                   {#each anyallOptions as option}
                     <option value={option.value}>{option.label}</option>
                   {/each}
@@ -591,9 +566,7 @@
                   value="ft"
                   bind:checked={isFullView}
                 />
-                <label class="form-check-label" for="view-options"
-                  >Full View Only</label
-                >
+                <label class="form-check-label" for="view-options">Full View Only</label>
               </div>
             </fieldset>
           </div>
@@ -612,9 +585,7 @@
                   bind:checked={useFullTextIndex}
                   on:change={saveIndexSelection}
                 />
-                <label class="form-check-label" for="index-options"
-                  >Always use the Full Text Index</label
-                >
+                <label class="form-check-label" for="index-options">Always use the Full Text Index</label>
               </div>
             </fieldset>
           </div>
@@ -623,9 +594,7 @@
         <fieldset class="mb-4">
           <legend class="fs-4 fw-bold">Publication Year</legend>
           {#if errors.yop}
-            <div
-              class="alert alert-block alert-warning d-flex gap-3 align-items-center"
-            >
+            <div class="alert alert-block alert-warning d-flex gap-3 align-items-center">
               <i class="fa-solid fa-triangle-exclamation" aria-hidden="true" />
               Publication Year must be between 0-9999.
             </div>
@@ -642,9 +611,7 @@
                   checked={yop == option.value}
                   bind:group={yop}
                 />
-                <label class="form-check-label" for="yop-{yidx}"
-                  >{option.label}</label
-                >
+                <label class="form-check-label" for="yop-{yidx}">{option.label}</label>
               </div>
             {/each}
           </div>
@@ -652,58 +619,26 @@
             {#if yop == 'before'}
               <div>
                 <label for="yop-before" class="form-label fs-7">End Year</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="yop-before"
-                  placeholder="yyyy"
-                  bind:value={pubYear.end}
-                />
+                <input type="text" class="form-control" id="yop-before" placeholder="yyyy" bind:value={pubYear.end} />
               </div>
             {:else if yop == 'after'}
               <div>
-                <label for="yop-after" class="form-label fs-7">Start Year</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="yop-after"
-                  placeholder="yyyy"
-                  bind:value={pubYear.start}
-                />
+                <label for="yop-after" class="form-label fs-7">Start Year</label>
+                <input type="text" class="form-control" id="yop-after" placeholder="yyyy" bind:value={pubYear.start} />
               </div>
             {:else if yop == 'between'}
               <div>
-                <label for="yop-after" class="form-label fs-7">Start Year</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="yop-after"
-                  placeholder="yyyy"
-                  bind:value={pubYear.start}
-                />
+                <label for="yop-after" class="form-label fs-7">Start Year</label>
+                <input type="text" class="form-control" id="yop-after" placeholder="yyyy" bind:value={pubYear.start} />
               </div>
               <div>
                 <label for="yop-before" class="form-label fs-7">End Year</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="yop-before"
-                  placeholder="yyyy"
-                  bind:value={pubYear.end}
-                />
+                <input type="text" class="form-control" id="yop-before" placeholder="yyyy" bind:value={pubYear.end} />
               </div>
             {:else}
               <div>
                 <label for="yop-in" class="form-label fs-7">Year</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="yop-in"
-                  placeholder="yyyy"
-                  bind:value={pubYear.exact}
-                />
+                <input type="text" class="form-control" id="yop-in" placeholder="yyyy" bind:value={pubYear.exact} />
               </div>
             {/if}
           </div>
@@ -731,10 +666,7 @@
         <fieldset class="mb-4">
           <legend class="fs-4 fw-bold">Format</legend>
 
-          <p>
-            Select one or more options to narrow your results to items that
-            match all of your format selections.
-          </p>
+          <p>Select one or more options to narrow your results to items that match all of your format selections.</p>
 
           <div>
             <FilterableSelection

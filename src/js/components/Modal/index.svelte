@@ -27,8 +27,12 @@
   };
 
   export const hide = function () {
-    if ( ! dialog ) { return ; } // rare edge case
-    if ( ! dialog.open ) { return ; }
+    if (!dialog) {
+      return;
+    } // rare edge case
+    if (!dialog.open) {
+      return;
+    }
     dialog.close();
     isOpen = false;
     onClose();
@@ -36,8 +40,7 @@
   };
 
   onMount(() => {
-
-    if ( ! globalThis.HTMLDialogElement ) {
+    if (!globalThis.HTMLDialogElement) {
       console.log('-- polyfilling dialog');
       dialogPolyfill.registerDialog(dialog);
     }
@@ -56,7 +59,7 @@
   <link rel="stylesheet" href="https://unpkg.com/open-props" />
 </svelte:head> -->
 
-<dialog bind:this={dialog} aria-hidden={!isOpen} data-polyfilled={! globalThis.HTMLDialogElement}>
+<dialog bind:this={dialog} aria-hidden={!isOpen} data-polyfilled={!globalThis.HTMLDialogElement}>
   <div class="modal show" aria-labelledby="{id}-label" style="display: block;">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
       <div class="modal-content" style:height={height != 'auto' && height}>
@@ -76,7 +79,7 @@
         </div>
         <div class="modal-body {scrollable ? '' : 'dont-scroll'}">
           <slot name="body" />
-          <div class="visually-hidden" role="status" aria-atomic="true" aria-live="polite"></div>
+          <div class="visually-hidden" role="status" aria-atomic="true" aria-live="polite" />
         </div>
         {#if $$slots.footer}
           <div class="modal-footer">
@@ -103,7 +106,6 @@
 </dialog>
 
 <style lang="scss">
-
   :global(html:has(dialog[open])) {
     overflow: hidden;
   }
@@ -124,7 +126,7 @@
     max-height: none;
     transition: opacity 0.25s var(--ease-3);
 
-    &[data-polyfilled="true"] {
+    &[data-polyfilled='true'] {
       top: 50%;
       left: 50%;
       transform: translateX(-50%) translateY(-50%);
@@ -159,17 +161,23 @@
 
   :global(dialog + .backdrop) {
     transition: backdrop-filter 0.25s ease;
-    backdrop-filter: blur(2px);    
+    backdrop-filter: blur(2px);
     position: fixed;
-    top: 0; right: 0; bottom: 0; left: 0;
-    background: rgba(0,0,0,0.1);
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.1);
   }
 
   :global(._dialog_overlay) {
     position: fixed;
-    top: 0; right: 0; bottom: 0; left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
   }
- 
+
   dialog {
     animation: var(--animation-scale-down) forwards;
     animation-timing-function: var(--ease-squish-3);

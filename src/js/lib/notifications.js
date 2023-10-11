@@ -13,14 +13,14 @@ export class CookieJar {
 }
 
 export class NotificationsManager {
-  constructor({ notificationData = [], cookieJar = null}) {
+  constructor({ notificationData = [], cookieJar = null }) {
     this.update(notificationData);
-    this.cookieJar = cookieJar ? cookieJar : (new CookieJar());
+    this.cookieJar = cookieJar ? cookieJar : new CookieJar();
   }
 
   update(notificationData) {
-    this.notificationData = notificationData.filter(item => item.slot != 'survey');
-    this.surveyData = notificationData.filter(item => item.slot == 'survey');
+    this.notificationData = notificationData.filter((item) => item.slot != 'survey');
+    this.surveyData = notificationData.filter((item) => item.slot == 'survey');
   }
 
   hasNotifications() {
@@ -36,14 +36,14 @@ export class NotificationsManager {
   }
 
   hasNewNotifications() {
-    return (this.timestamp() != this.effectiveOn());
+    return this.timestamp() != this.effectiveOn();
   }
 
   effectiveOn() {
-    if ( this.hasNotifications() ) {
+    if (this.hasNotifications()) {
       return this.notificationData[0].effective_on;
     }
-    return "9999-99-99 23:59:59";
+    return '9999-99-99 23:59:59';
   }
 
   timestamp() {
