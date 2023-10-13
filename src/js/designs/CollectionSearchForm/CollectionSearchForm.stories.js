@@ -20,5 +20,5 @@ const parameters = {
 };
 
 export const SeachForm = {
-  parameters: parameters
+  parameters: parameters,
 };

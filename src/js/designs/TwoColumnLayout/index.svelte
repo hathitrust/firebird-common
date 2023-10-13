@@ -1,5 +1,4 @@
 <script>
-
   import { onMount } from 'svelte';
 
   import ResultsList from '../ResultsList';
@@ -10,14 +9,49 @@
 
   let btnToggleFilters;
   function toggleExpandedFilters() {
-    let isExpanded = ! ( btnToggleFilters.getAttribute('aria-expanded') == 'true' );
+    let isExpanded = !(btnToggleFilters.getAttribute('aria-expanded') == 'true');
     btnToggleFilters.setAttribute('aria-expanded', isExpanded);
   }
-
 </script>
 
-<style lang="scss">
+<main class="main">
+  <div class="twocol" class:border={enableBorder}>
+    <div class="twocol-side">
+      <slot name="side">
+        <!-- this HTML without the svelte properties is handled -->
+        <!-- by main.js and apps.scss -->
+        <button
+          id="action-toggle-filters"
+          class="btn btn-outline-primary"
+          aria-expanded="false"
+          bind:this={btnToggleFilters}
+          on:click={toggleExpandedFilters}
+        >
+          <span>
+            <span class="not-expanded">Show</span>
+            <span class="is-expanded">Hide</span>
+            Search Filters
+          </span>
+        </button>
+        <h2>This are sidebar items</h2>
+        <div class="alert alert-block alert-info">
+          <p>This is a filter.</p>
+        </div>
+      </slot>
+    </div>
+    <div class="twocol-main">
+      <div class="mainplain w-auto position-relative">
+        <slot name="main">
+          <ResultsToolbar />
+          <ResultsList />
+          <ResultsPagination />
+        </slot>
+      </div>
+    </div>
+  </div>
+</main>
 
+<style lang="scss">
   $twocol-breakpoint: 54em;
 
   :global(body) {
@@ -25,9 +59,9 @@
   }
 
   .main {
-    display: grid; 
-    grid-template: auto auto / 1fr; 
-    padding-block: .75rem var(--pb); 
+    display: grid;
+    grid-template: auto auto / 1fr;
+    padding-block: 0.75rem var(--pb);
     --pb: 2.5rem;
 
     @media (min-width: 48em) {
@@ -42,9 +76,9 @@
     gap: 3.125rem;
     align-items: start;
     margin-top: 2.625rem;
-    margin-inline: max(clamp(.938rem, calc(.268rem + 3.348vw), 1.875rem), ((100% - 73.125rem) / 2));
+    margin-inline: max(clamp(0.938rem, calc(0.268rem + 3.348vw), 1.875rem), ((100% - 73.125rem) / 2));
 
-    // Phire is 48em, but that might assume a main 
+    // Phire is 48em, but that might assume a main
     // column that wraps more than HTDL
     @media (min-width: $twocol-breakpoint) {
       flex-wrap: nowrap;
@@ -80,22 +114,21 @@
 
   .twocol-main > * {
     // max-width: 43.75rem;
-    
   }
- 
+
   #action-toggle-filters {
-    &[aria-expanded="false"] .is-expanded {
+    &[aria-expanded='false'] .is-expanded {
       display: none;
     }
 
-    &:is([aria-expanded="true"]) .not-expanded {
+    &:is([aria-expanded='true']) .not-expanded {
       display: none;
     }
 
-    &[aria-expanded="false"] ~ * {
+    &[aria-expanded='false'] ~ * {
       display: none !important;
     }
-    
+
     @media (min-width: 54em) {
       display: none;
 
@@ -103,42 +136,5 @@
         display: initial !important;
       }
     }
-  } 
+  }
 </style>
-
-<main class="main">
-  <div class="twocol" class:border={enableBorder}>
-    <div class="twocol-side">
-      <slot name="side">
-        <!-- this HTML without the svelte properties is handled -->
-        <!-- by main.js and apps.scss -->
-        <button 
-          id="action-toggle-filters" 
-          class="btn btn-outline-primary" 
-          aria-expanded="false"
-          bind:this={btnToggleFilters}
-          on:click={toggleExpandedFilters}>
-          <span>
-            <span class="not-expanded">Show</span>
-            <span class="is-expanded">Hide</span>
-            Search Filters
-          </span>
-        </button>
-        <h2>This are sidebar items</h2>
-        <div class="alert alert-block alert-info">
-          <p>This is a filter.</p>
-        </div>
-      </slot>
-    </div>
-    <div class="twocol-main ">
-      <div class="mainplain w-auto position-relative">
-        <slot name="main">
-          <ResultsToolbar></ResultsToolbar>
-          <ResultsList></ResultsList>
-          <ResultsPagination></ResultsPagination>
-        </slot>
-      </div>
-    </div>
-  </div>
-</main>
-

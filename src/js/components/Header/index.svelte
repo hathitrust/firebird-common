@@ -26,11 +26,10 @@
 
   // let searchOpenToggle = ( searchState == 'default' );
 
-  $: searchOpenToggle = ( searchState == 'default' );
-  $: searchFormDisplayed = ( searchState == 'default' );
-  $: console.log("AHOY search_state", searchState, searchOpenToggle, searchFormDisplayed);
-  $: console.log("AHOY searchOpenToggle changed", searchOpenToggle);
-
+  $: searchOpenToggle = searchState == 'default';
+  $: searchFormDisplayed = searchState == 'default';
+  $: console.log('AHOY search_state', searchState, searchOpenToggle, searchFormDisplayed);
+  $: console.log('AHOY searchOpenToggle changed', searchOpenToggle);
 </script>
 
 <div>
@@ -44,7 +43,7 @@
       id="siteSearchDropdown"
     >
       {#if displaySearchForm()}
-      <SearchBar />
+        <SearchBar />
       {/if}
     </div>
   {/if}

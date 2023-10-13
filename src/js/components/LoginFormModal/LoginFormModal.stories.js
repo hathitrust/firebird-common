@@ -17,13 +17,13 @@ export default {
   decorators: [
     () => ({
       Component: PingCallbackDecorator,
-      props: { loggedIn: false }
-    })
+      props: { loggedIn: false },
+    }),
   ],
   argTypes: {
     show: { action: 'show' },
     hide: { action: 'hide' },
-  }
+  },
 };
 
 export const ModalOpen = {
@@ -31,9 +31,9 @@ export const ModalOpen = {
     title: 'Modal Open',
   },
   args: {
-    isOpen: true
-  }
-}
+    isOpen: true,
+  },
+};
 export const ToggleOpen = {};
 
 export const FindInstitution = {
@@ -46,7 +46,7 @@ export const FindInstitution = {
     await userEvent.click(inputFilter);
     await userEvent.keyboard('state');
     expect(await canvas.getAllByRole('radio').length).toBe(1);
-  }
+  },
 };
 
 export const UnlistedInstitution = {
@@ -59,14 +59,16 @@ export const UnlistedInstitution = {
     await userEvent.click(inputFilter);
     await userEvent.keyboard('winnemac');
     expect(await canvas.queryAllByRole('radio').length).toBe(0);
-  }
+  },
 };
 
 export const SelectInstitution = {
   selected_href: null,
   args: {
     isOpen: true,
-    onSubmit: function (href) { SelectInstitution.selected_href = href; }
+    onSubmit: function (href) {
+      SelectInstitution.selected_href = href;
+    },
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -76,10 +78,10 @@ export const SelectInstitution = {
 
     const selectedInstitution = await canvas.getByRole('radio');
     await userEvent.click(selectedInstitution);
-    
-    const button = await canvas.getByRole('button', { name: 'Continue' } );
+
+    const button = await canvas.getByRole('button', { name: 'Continue' });
     await userEvent.click(button);
 
     // expect(SelectInstitution.selected_href).not.toBeNull();
-  }
+  },
 };

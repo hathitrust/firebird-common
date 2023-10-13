@@ -46,9 +46,7 @@
         // not a babel app, need to route through ping/pong
         target = HT.get_pong_target(target);
       }
-      window.location.assign(
-        `//${HT.service_domain}/cgi/wayf?target=${encodeURIComponent(target)}`
-      );
+      window.location.assign(`//${HT.service_domain}/cgi/wayf?target=${encodeURIComponent(target)}`);
     } else {
       //else, open LoginFormModal
       modal.show();
@@ -156,10 +154,7 @@
               d="M171.95 3.49043L171.591 3.04043L171.016 3.06855C170.944 3.07168 163.934 3.37481 161.116 0.556055L160.562 0.00292969L150.9 4.45606C146.338 6.55918 143.391 11.1623 143.391 16.1873V31.0623C143.313 31.0623 143.234 31.0654 143.159 31.0654C141.594 31.0654 140.075 30.7592 138.644 30.1529L137.609 29.7154L136.734 31.7811L137.769 32.2186C139.475 32.9404 141.288 33.3061 143.156 33.3061C143.234 33.3061 143.313 33.3061 143.388 33.3029V40.7186C143.388 43.9404 145.938 46.6061 149.072 46.6623C149.109 46.6623 149.144 46.6623 149.181 46.6623C150.709 46.6623 152.144 46.0748 153.237 45.0029C154.356 43.9061 154.972 42.4373 154.972 40.8717H152.728C152.728 41.8311 152.35 42.7311 151.666 43.4029C150.981 44.0748 150.078 44.4342 149.113 44.4186C147.194 44.3842 145.631 42.7217 145.631 40.7154V33.0811C147.006 32.8311 148.322 32.3779 149.547 31.7436C148.581 34.2623 148.081 36.9186 148.081 39.6373V40.8842H150.325V39.6373C150.325 35.3592 151.628 31.3873 154.203 27.8029C154.284 27.6967 154.362 27.5873 154.441 27.4811C154.791 27.0092 155.163 26.5467 155.556 26.0904C157.688 23.6248 159.85 22.1248 160.6 21.6404C161.625 22.3561 162.903 22.9654 164.491 23.2936L165.225 23.4436L165.647 22.8248C165.663 22.8029 167.219 20.5248 169.541 18.2561C171.6 16.2436 174.703 13.8186 177.781 13.7061L179.997 13.6248L171.947 3.4873L171.95 3.49043ZM164.25 20.9248C160.284 19.7654 159.094 16.3404 159.044 16.1936L156.909 16.8873C156.947 17.0029 157.466 18.5342 158.869 20.1029C157.781 20.8529 155.853 22.3342 153.916 24.5623C153.441 25.1092 152.994 25.6686 152.572 26.2404C150.881 28.5873 148.406 30.1936 145.634 30.7967V16.1842C145.634 12.0342 148.069 8.22793 151.841 6.49043L160.128 2.66855C163.281 5.16543 168.734 5.33731 170.537 5.31856L175.662 11.7748C170.325 13.1936 165.694 18.9623 164.247 20.9217L164.25 20.9248Z"
               fill="#EC7217"
             />
-            <path
-              d="M151.984 14.8467H149.741V17.3998H151.984V14.8467Z"
-              fill="#EC7217"
-            />
+            <path d="M151.984 14.8467H149.741V17.3998H151.984V14.8467Z" fill="#EC7217" />
           </g>
           <defs>
             <clipPath id="clip0_410_7968">
@@ -196,10 +191,7 @@
         </button>
       {/if}
     </div>
-    <div
-      class="collapse navbar-collapse justify-content-between"
-      id="navbarNavDropdown"
-    >
+    <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
       <ul class="navbar-nav menu-links">
         <li class="nav-item dropdown">
           <a
@@ -217,11 +209,7 @@
               <div class="d-flex flex-column gap-4">
                 {#each menuData.about as menuItem}
                   <li class="px-3">
-                    <a
-                      class="dropdown-item px-0"
-                      href="//{HT.www_domain}/{menuItem.link}"
-                      >{menuItem.title}</a
-                    >
+                    <a class="dropdown-item px-0" href="//{HT.www_domain}/{menuItem.link}">{menuItem.title}</a>
                   </li>
                 {/each}
               </div>
@@ -248,17 +236,11 @@
               {#each menuData.collection as menuItem}
                 <li class="px-3">
                   {#if menuItem.title === 'Featured Collections'}
-                    <a
-                      class="dropdown-item px-0"
-                      href="//{HT.service_domain}/cgi/mb?colltype=featured"
+                    <a class="dropdown-item px-0" href="//{HT.service_domain}/cgi/mb?colltype=featured"
                       >{menuItem.title}</a
                     >
                   {:else}
-                    <a
-                      class="dropdown-item px-0"
-                      href="//{HT.www_domain}/{menuItem.link}"
-                      >{menuItem.title}</a
-                    >
+                    <a class="dropdown-item px-0" href="//{HT.www_domain}/{menuItem.link}">{menuItem.title}</a>
                   {/if}
                 </li>
               {/each}
@@ -284,10 +266,7 @@
             <div class="d-flex flex-column gap-4">
               {#each menuData.memberLibraries as menuItem}
                 <li class="px-3">
-                  <a
-                    class="dropdown-item px-0"
-                    href="//{HT.www_domain}/{menuItem.link}">{menuItem.title}</a
-                  >
+                  <a class="dropdown-item px-0" href="//{HT.www_domain}/{menuItem.link}">{menuItem.title}</a>
                 </li>
               {/each}
             </div>
@@ -315,10 +294,7 @@
             <div class="d-flex flex-column gap-4">
               {#each menuData.newsEvents as menuItem}
                 <li class="px-3">
-                  <a
-                    class="dropdown-item px-0"
-                    href="//{HT.www_domain}/{menuItem.link}">{menuItem.title}</a
-                  >
+                  <a class="dropdown-item px-0" href="//{HT.www_domain}/{menuItem.link}">{menuItem.title}</a>
                 </li>
               {/each}
             </div>
@@ -416,10 +392,7 @@
                       ><span class="needs-hover-state"
                         >Notifications {#if hasNotification}({notificationsManager.count()}){/if}</span
                       >
-                      <i
-                        class="fa-solid fa-bell fa-fw"
-                        class:opacity-25={!hasNotification}
-                      />
+                      <i class="fa-solid fa-bell fa-fw" class:opacity-25={!hasNotification} />
                     </button>
                   </li>
                   {#if hasSwitchableRoles}
@@ -431,9 +404,7 @@
                     <li class="px-3">
                       <a
                         class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
-                        href="//{`${
-                          HT.service_domain
-                        }/cgi/ping/switch?target=${encodeURIComponent(
+                        href="//{`${HT.service_domain}/cgi/ping/switch?target=${encodeURIComponent(
                           window.location.href
                         )}`}"
                         role="button"
@@ -452,9 +423,7 @@
                       class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
                       href="//{`${HT.service_domain}/cgi/mb?a=listcs&colltype=my-collections`}"
                       role="button"
-                      ><span class="needs-hover-state">My Collections</span><i
-                        class="fa-solid fa-list fa-fw"
-                      /></a
+                      ><span class="needs-hover-state">My Collections</span><i class="fa-solid fa-list fa-fw" /></a
                     >
                   </li>
                   <li style="margin-top: -1rem; margin-bottom: -1rem;">
@@ -463,11 +432,7 @@
                   <li class="px-3">
                     <a
                       class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
-                      href="//{`${
-                        HT.service_domain
-                      }/cgi/logout?${encodeURIComponent(
-                        window.location.href
-                      )}`}"
+                      href="//{`${HT.service_domain}/cgi/logout?${encodeURIComponent(window.location.href)}`}"
                       role="button"
                       ><span class="needs-hover-state">Log Out</span><i
                         class="fa-solid fa-arrow-right-from-bracket fa-fw"
@@ -484,8 +449,7 @@
                 class="nav-link text-uppercase d-flex flex-row justify-content-between align-items-center"
                 href="#"
                 role="button"
-                on:click|preventDefault={openLogin}
-                >Log In<i class="fa-solid fa-user fa-fw" /></a
+                on:click|preventDefault={openLogin}>Log In<i class="fa-solid fa-user fa-fw" /></a
               >
             </li>
           {/if}
@@ -495,10 +459,7 @@
   </div>
 </nav>
 {#if hasNotification}
-  <NotificationsModal
-    manager={notificationsManager}
-    bind:this={notificationsModal}
-  />
+  <NotificationsModal manager={notificationsManager} bind:this={notificationsModal} />
 {/if}
 
 <style lang="scss">

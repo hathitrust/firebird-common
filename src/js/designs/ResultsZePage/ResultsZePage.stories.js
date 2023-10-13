@@ -18,7 +18,7 @@ const parameters = {
 };
 
 export const FullText = {
-  parameters: parameters
+  parameters: parameters,
 };
 // export const FullText = {
 //   parameters: parameters,

@@ -10,7 +10,7 @@
   // export let collname = null;
   // export let desc = null;
   // export let shared = 0;
-  
+
   let userCollections = [];
   let div;
 
@@ -33,25 +33,29 @@
     allItemsSelected = !allItemsSelected;
     externItemIdOptions.forEach((el) => {
       el.checked = allItemsSelected;
-    })
+    });
   }
 
   function fetchSelection() {
     let selected = [];
     externItemIdOptions.forEach((el) => {
-      if (el.checked) { selected.push(el); }
-    })
+      if (el.checked) {
+        selected.push(el);
+      }
+    });
     return selected;
   }
 
   function clearSelection() {
     externItemIdOptions.forEach((el) => {
-      if (el.checked) { el.checked = false; }
-    })
+      if (el.checked) {
+        el.checked = false;
+      }
+    });
   }
 
   function checkSelection() {
-    if(fetchSelection().length) {
+    if (fetchSelection().length) {
       return true;
     }
     status.class = 'alert-danger';
@@ -67,7 +71,9 @@
   }
 
   function addItems(event) {
-    if (!checkSelection()) { return ; }
+    if (!checkSelection()) {
+      return;
+    }
     action = 'addits';
     if (c == '__NEW__') {
       action = 'additsnc';
@@ -81,7 +87,9 @@
   }
 
   function moveItems() {
-    if (!checkSelection()) { return ; }
+    if (!checkSelection()) {
+      return;
+    }
     action = 'movit';
     if (c == '__NEW__') {
       openModal();
@@ -94,7 +102,9 @@
   }
 
   function removeItems() {
-    if (!checkSelection()) { return ; }
+    if (!checkSelection()) {
+      return;
+    }
     action = 'delit';
     let params = new URLSearchParams();
     params.set('c', collid);
@@ -112,40 +122,40 @@
   }
 
   async function submitAction(params) {
+    const non_ajax = { movit: true, delit: true, movitnc: true, editc: true, addc: true };
 
-    const non_ajax = { movit : true, delit : true, movitnc : true, editc : true, addc: true };
-
-    status.class = null; status = status;
+    status.class = null;
+    status = status;
     params.set('a', action);
-    if (! non_ajax[action]) {
+    if (!non_ajax[action]) {
       params.set('page', 'ajax');
     }
 
     fetchSelection().forEach((el) => {
       params.append('id', el.value);
-    })
+    });
 
     let url = new URL(`${location.protocol}//${HT.service_domain}/cgi/mb?${params.toString()}`);
 
     if (params.get('page') == 'ajax') {
       let response = await fetch(url, {
         method: 'GET',
-      })
+      });
       if (response.ok) {
         parseResponse(await response.text());
 
-        const found = userCollections.find(item => item.value == status.coll_id);
-        if ( ! found ) {
+        const found = userCollections.find((item) => item.value == status.coll_id);
+        if (!found) {
           userCollections.push({
             value: status.coll_id,
             label: status.coll_name,
-          })
+          });
         }
 
-        c = status.coll_id;     
+        c = status.coll_id;
 
         userCollections = userCollections;
-        console.log("-- collections.toolbar", userCollections);
+        console.log('-- collections.toolbar', userCollections);
         clearSelection();
       }
     } else {
@@ -155,11 +165,11 @@
 
   function parseResponse(line) {
     var kv;
-    var tmp = line.trim().split("|");
+    var tmp = line.trim().split('|');
     let message = [];
-    for(var i = 0; i < tmp.length; i++) {
-        kv = tmp[i].split("=");
-        status[kv[0]] = kv[1];
+    for (var i = 0; i < tmp.length; i++) {
+      kv = tmp[i].split('=');
+      status[kv[0]] = kv[1];
     }
     if (status.result == 'ADD_ITEM_FAILURE') {
       status.class = 'alert-danger';
@@ -171,11 +181,19 @@
         message.push(`${numFailed} item${numFailed > 1 ? 's' : ''} could not be added to your collection`);
       }
       if (status.NumAddedToCollection > 0) {
-        message.push(`${status.NumAddedToCollection} item${status.NumAddedToCollection > 1 ? 's' : ''} ${status.NumAddedToCollection > 1 ? 'were' : 'was'} added to ${collection_link}.`);
+        message.push(
+          `${status.NumAddedToCollection} item${status.NumAddedToCollection > 1 ? 's' : ''} ${
+            status.NumAddedToCollection > 1 ? 'were' : 'was'
+          } added to ${collection_link}.`
+        );
       }
       if (status.NumAlreadyInCollection > 0) {
-        message.push(`${status.NumAlreadyInCollection} item${status.NumAlreadyInCollection > 1 ? 's' : ''} ${status.NumAlreadyInCollection > 1 ? 'were' : 'was'} already in ${collection_link}.`)
-      }      
+        message.push(
+          `${status.NumAlreadyInCollection} item${status.NumAlreadyInCollection > 1 ? 's' : ''} ${
+            status.NumAlreadyInCollection > 1 ? 'were' : 'was'
+          } already in ${collection_link}.`
+        );
+      }
     }
     status.message = message.join(' ');
     status = status;
@@ -190,37 +208,42 @@
     HT.live.announce(statusEl.innerText);
   }
 
-  $: if ( status.class ) { announceStatus(); }
+  $: if (status.class) {
+    announceStatus();
+  }
 
   onMount(() => {
     let parentEl = div.parentElement;
     parentEl.querySelectorAll('[data-use="collections"] option').forEach((optionEl) => {
       userCollections.push({
         value: optionEl.value,
-        label: optionEl.innerText
-      })
-    })
+        label: optionEl.innerText,
+      });
+    });
     userCollections = userCollections;
 
     externItemIdOptions = document.querySelectorAll('input[name="extern_item_id"]');
-    externItemIdOptions.forEach(el => {
+    externItemIdOptions.forEach((el) => {
       el.addEventListener('click', (event) => {
         if (!el.checked && allItemsSelected) {
           allItemsSelected = false;
         }
-      })
-    })
+      });
+    });
 
     let btnEdit = document.querySelector('button[data-action="edit-metadata"]');
-    if ( btnEdit ) {
+    if (btnEdit) {
       btnEdit.addEventListener('click', editMetadata);
     }
 
-    let checkInterval; let isFetching = false;
+    let checkInterval;
+    let isFetching = false;
     let checkDownloadStatus = function (collid, button) {
-      if ( isFetching ) { 
-        if ( HT && HT.is_dev ) { console.log("-- still checking status"); }
-        return; 
+      if (isFetching) {
+        if (HT && HT.is_dev) {
+          console.log('-- still checking status');
+        }
+        return;
       }
       isFetching = true;
       fetch(`/cgi/mb/download?a=download-status&c=${collid}`)
@@ -229,18 +252,20 @@
         })
         .then(function (data) {
           isFetching = false;
-          if ( HT && HT.is_dev ) { console.log("-- download status", data.status); }
+          if (HT && HT.is_dev) {
+            console.log('-- download status', data.status);
+          }
           if (data.status == 'done') {
             clearInterval(checkInterval);
             button.disabled = false;
             button.classList.remove('btn-loading');
-            HT.live.announce("Metadata has been downloaded.");
+            HT.live.announce('Metadata has been downloaded.');
           }
-      })
-    }
+        });
+    };
 
     let downloadForm = document.querySelector('form[data-action="download-metadata"]');
-    if ( downloadForm ) {
+    if (downloadForm) {
       downloadForm.addEventListener('submit', (event) => {
         let button = downloadForm.querySelector('button[type="submit"]');
         button.disabled = true;
@@ -248,23 +273,29 @@
         checkInterval = setInterval(() => {
           checkDownloadStatus(collid, button);
         }, 1000);
-        HT.live.announce("Download request submitted.");
-      })
+        HT.live.announce('Download request submitted.');
+      });
     }
 
-    return(() => {
-      if ( btnEdit ) { btnEdit.removeEventListener('click', editMetdata); }
-    })
-  })
-
+    return () => {
+      if (btnEdit) {
+        btnEdit.removeEventListener('click', editMetdata);
+      }
+    };
+  });
 </script>
 
-<div bind:this={div} class="bg-secondary rounded-2 p-2 px-3 d-flex flex-sm-row flex-column gap-3 justify-content-between align-items-start align-items-sm-center mt-1" role="toolbar" aria-label="Collections toolbar">
+<div
+  bind:this={div}
+  class="bg-secondary rounded-2 p-2 px-3 d-flex flex-sm-row flex-column gap-3 justify-content-between align-items-start align-items-sm-center mt-1"
+  role="toolbar"
+  aria-label="Collections toolbar"
+>
   <button class="btn btn-outline-light d-flex align-items-center gap-2 flex-nowrap" on:click={selectAllItems}>
     {#if allItemsSelected}
-    <i class="fa-solid fa-square-check" aria-hidden="true" ></i>
+      <i class="fa-solid fa-square-check" aria-hidden="true" />
     {:else}
-    <i class="fa-regular fa-square" aria-hidden="true" ></i>
+      <i class="fa-regular fa-square" aria-hidden="true" />
     {/if}
     <span class="text-nowrap">Select all items</span>
   </button>
@@ -278,42 +309,38 @@
     <div class="btn-group">
       <button id="addits" type="button" class="btn btn-outline-light" on:click={addItems}>Add</button>
       {#if editable}
-      <button type="button" class="btn btn-outline-light dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-        <span class="visually-hidden">Toggle Dropdown</span>
-      </button>
-      <ul class="dropdown-menu">
-        <li>
-          <button class="dropdown-item" type="button" on:click={moveItems}>Move</button>
-        </li>
-        <li>
-          <button class="dropdown-item" type="button" on:click={removeItems}>Remove</button>
-        </li>
-      </ul>
+        <button
+          type="button"
+          class="btn btn-outline-light dropdown-toggle dropdown-toggle-split"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <span class="visually-hidden">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu">
+          <li>
+            <button class="dropdown-item" type="button" on:click={moveItems}>Move</button>
+          </li>
+          <li>
+            <button class="dropdown-item" type="button" on:click={removeItems}>Remove</button>
+          </li>
+        </ul>
       {/if}
-    </div>        
+    </div>
   </div>
 </div>
 {#if status.class}
-<div class="alert mt-1 {status.class} d-flex align-items-center gap-3" bind:this={statusEl}>
-  {#if status.class == 'alert-danger'}
-    <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
-  {:else}
-    <i class="fa-regular fa-circle-check" aria-hidden="true"></i>
-  {/if}
-  <span>{@html status.message}</span>
-</div>
+  <div class="alert mt-1 {status.class} d-flex align-items-center gap-3" bind:this={statusEl}>
+    {#if status.class == 'alert-danger'}
+      <i class="fa-solid fa-triangle-exclamation" aria-hidden="true" />
+    {:else}
+      <i class="fa-regular fa-circle-check" aria-hidden="true" />
+    {/if}
+    <span>{@html status.message}</span>
+  </div>
 {/if}
 
-<CollectionEditModal 
-  bind:this={modal} 
-  {userIsAnonymous}
-  {c}
-  {cn}
-  {desc}
-  {contributorName}
-  {shared}
-  {submitAction} />
+<CollectionEditModal bind:this={modal} {userIsAnonymous} {c} {cn} {desc} {contributorName} {shared} {submitAction} />
 
 <style>
-
 </style>

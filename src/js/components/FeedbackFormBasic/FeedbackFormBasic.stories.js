@@ -52,10 +52,7 @@ export const DesktopFormFilled = {
     await userEvent.type(name, 'Caryl Wyatt');
     await userEvent.type(email, 'caryl@umich.edu');
     await userEvent.type(summary, 'Where was that book?');
-    await userEvent.type(
-      bookDescription,
-      "I can't remember the name but the cover was blue."
-    );
+    await userEvent.type(bookDescription, "I can't remember the name but the cover was blue.");
     await userEvent.type(
       description,
       "I was browsing the collection and found the most amazing book, but not I can't remember what it was called. It was blue?"
@@ -73,10 +70,7 @@ export const DesktopFormMissingRequiredFields = {
 
     const submitButton = await canvas.getByRole('button', { name: 'Submit' });
 
-    await userEvent.type(
-      bookDescription,
-      "I can't remember the name but the cover was blue."
-    );
+    await userEvent.type(bookDescription, "I can't remember the name but the cover was blue.");
 
     await userEvent.click(submitButton);
   },
