@@ -98,7 +98,7 @@
         <p class="mb-1">Is this collection visible to others?</p>
         <div class="d-flex">
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="shared" id="shared-0" value="0" checked={shared == 0} />
+            <input class="form-check-input" type="radio" name="shared" id="shared-0" value={0} bind:group={shared} />
             <label class="form-check-label" for="shared-0">
               <i class="fa-solid fa-lock" aria-hidden="true" />
               Private
@@ -106,7 +106,7 @@
           </div>
           {#if !userIsAnonymous}
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="shared" id="shared-1" checked={shared == 1} />
+              <input class="form-check-input" type="radio" name="shared" id="shared-1" value={1} bind:group={shared} />
               <label class="form-check-label" for="shared-1"> Public </label>
             </div>
           {/if}
