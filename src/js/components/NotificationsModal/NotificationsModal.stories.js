@@ -76,7 +76,7 @@ export const HasNewNotifications = {
     });
     closeButton = await canvas.getAllByText(/^Close$/);
     await userEvent.click(closeButton[0]);
-    expect(newCookieJar.getItem('HT.notice')).toBe(newnotificationData[0].effective_on);
+    expect(newCookieJar.getItem('HT.notice')).toBe(newNotificationData[0].effective_on);
   },
 };
 

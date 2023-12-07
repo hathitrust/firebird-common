@@ -23,7 +23,7 @@ export const Default = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     //sanity check
-    expect(await canvas.getByTitle('HathiTrust logo')).toBeInTheDocument();
+    expect(await canvas.getByTitle('HathiTrust Home')).toBeInTheDocument();
   },
 };
 export const DesktopDropdownMenuSelected = {
@@ -43,7 +43,9 @@ export const DesktopLoginModalOpen = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const loginButton = await canvas.getByRole('button', { name: /log in/i });
+    const loginButton = await canvas.getByTestId('login-button');
+    // const loginButton = await canvas.getByRole('button', { name: /log in/i });
+    // const loginButton = await canvas.locator('#navbarNavDropdown:has-text"Log In"');
     await userEvent.click(loginButton);
   },
 };
@@ -107,9 +109,7 @@ export const MobileOpenMenu = {
   parameters: { ...Mobile.parameters },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const mobileMenuButton = await canvas.getByRole('button', {
-      name: 'Toggle navigation',
-    });
+    const mobileMenuButton = await canvas.getByLabelText('Toggle navigation');
     await userEvent.click(mobileMenuButton);
   },
 };
@@ -118,9 +118,7 @@ export const MobileDropdownMenuSelected = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const mobileMenuButton = await canvas.getByRole('button', {
-      name: 'Toggle navigation',
-    });
+    const mobileMenuButton = await canvas.getByLabelText('Toggle navigation');
     const mainMenu = await canvas.getByText(/member libraries/i);
 
     await userEvent.click(mobileMenuButton);
@@ -176,9 +174,7 @@ export const MobileLoggedInMyAccountDropdown = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const mobileMenuButton = await canvas.getByRole('button', {
-      name: 'Toggle navigation',
-    });
+    const mobileMenuButton = await canvas.getByLabelText('Toggle navigation');
     const myAccount = await canvas.getByText(/my account/i);
 
     await userEvent.click(mobileMenuButton);
