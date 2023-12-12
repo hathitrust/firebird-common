@@ -11,7 +11,9 @@
     "build-storybook": "storybook build",
     "build-js": "vite build",
     "build": "vite build && storybook build -o dist/storybook && node ./build-redirects.js",
-    "test-storybook": "test-storybook"
+    "test-storybook": "test-storybook",
+    "chromatic": "chromatic --exit-zero-on-changes",
+    "babel": "vite build --watch"
   },
   "repository": {
     "type": "git",
@@ -34,6 +36,7 @@
     "@storybook/svelte-vite": "^7.0.0-rc.3",
     "@storybook/testing-library": "^0.0.14-next.1",
     "@sveltejs/vite-plugin-svelte": "^2.0.3",
+    "chromatic": "^10.0.0",
     "fast-glob": "^3.2.12",
     "prettier": "2.8.6",
     "react": "^18.2.0",

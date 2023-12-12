@@ -449,6 +449,7 @@
                 class="nav-link text-uppercase d-flex flex-row justify-content-between align-items-center"
                 href="#"
                 role="button"
+                data-testid="login-button"
                 on:click|preventDefault={openLogin}>Log In<i class="fa-solid fa-user fa-fw" /></a
               >
             </li>
