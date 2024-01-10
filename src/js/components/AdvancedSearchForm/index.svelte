@@ -67,6 +67,8 @@
     yop: false,
   };
 
+  let protocol = 'https:' == location.protocol ? 'https:' : 'http:';
+
   function saveIndexSelection() {
     console.log('AHOY saveIndexSelection', useFullTextIndex);
     sessionStorage.setItem('useFullTextIndex', useFullTextIndex);
@@ -94,7 +96,7 @@
       }
     }
     if (target == 'catalog') {
-      url = new URL(`https://${HT.catalog_domain}/Search/Home`);
+      url = new URL(`${protocol}//${HT.catalog_domain}/Search/Home`);
       let searchParams = new URLSearchParams();
       searchParams.set('adv', 1);
       if (isFullView) {
@@ -174,7 +176,7 @@
 
       url.search = searchParams.toString();
     } else {
-      url = new URL(`https://${HT.service_domain}/cgi/ls`);
+      url = new URL(`${protocol}//${HT.service_domain}/cgi/ls`);
       let searchParams = new URLSearchParams();
       if (isFullView) {
         searchParams.set('lmt', 'ft');
