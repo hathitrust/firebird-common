@@ -10,6 +10,8 @@
   export let height = 'auto';
   export let scrollable = false;
   export let mode = 'alert';
+  export let modalLarge = false;
+  export let fullscreenOnMobile = false;
 
   let modalBody;
 
@@ -59,9 +61,14 @@
   <link rel="stylesheet" href="https://unpkg.com/open-props" />
 </svelte:head> -->
 
-<dialog bind:this={dialog} aria-hidden={!isOpen} data-polyfilled={!globalThis.HTMLDialogElement}>
+<dialog
+  bind:this={dialog}
+  aria-hidden={!isOpen}
+  data-polyfilled={!globalThis.HTMLDialogElement}
+  class={fullscreenOnMobile ? 'fullscreen-sm-down' : ''}
+>
   <div class="modal show" aria-labelledby="{id}-label" style="display: block;">
-    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered {modalLarge ? 'modal-lg' : ''} ">
       <div class="modal-content" style:height={height != 'auto' && height}>
         <div class="modal-header">
           <h1 id="{id}-label" class="modal-title">
@@ -130,6 +137,31 @@
       top: 50%;
       left: 50%;
       transform: translateX(-50%) translateY(-50%);
+    }
+    &:has(.modal-lg) {
+      max-inline-size: min(90vw, 70ch);
+      /* this feels redundant with a style below, but safari mobile isn't applying
+      styles in the correct order */
+      @media (max-width: 575.98px) {
+        max-inline-size: 100vw;
+      }
+    }
+  }
+
+  @media (max-width: 575.98px) {
+    dialog.fullscreen-sm-down {
+      width: 100vw;
+      // max-width: none;
+      height: 100%;
+      margin: 0;
+      max-inline-size: 100vw;
+      .modal {
+        --bs-modal-margin: 0;
+        --bs-modal-border-radius: 0;
+      }
+      .modal-content {
+        min-height: 100vh;
+      }
     }
   }
 

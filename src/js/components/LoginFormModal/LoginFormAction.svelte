@@ -1,4 +1,5 @@
 <script>
+  import { preferencesConsent } from '../../lib/store';
   let HT = window.HT || {};
 
   export let sdrinst;
@@ -16,7 +17,9 @@
     let selected = idpList.find((item) => item.sdrinst == sdrinst);
     console.log('-- handleClick', sdrinst, selected);
     if (selected) {
-      HT.prefs.set({ sdrinst: sdrinst });
+      if ($preferencesConsent === 'true') {
+        HT.prefs.set({ sdrinst: sdrinst });
+      }
       let login_href = selected.idp_url.replace('___TARGET___', encodeURIComponent(target));
       onSubmit(login_href);
     }

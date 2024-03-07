@@ -1,15 +1,24 @@
 <script>
+  import { cookieConsentSeen } from '../../lib/store';
+  import CookieSettingsModal from '../CookieSettingsModal';
   const year = new Date().getFullYear();
   let HT = window.HT || {};
+  let settingsModal;
+  function openSettings() {
+    settingsModal.show();
+  }
 </script>
 
+{#if $cookieConsentSeen === 'true'}
+  <CookieSettingsModal bind:this={settingsModal} />
+{/if}
 <div class="sub-footer">
   <div class="legal">
     <span class="copyright">&#169;{year} HathiTrust</span>
     <div>
       <a href="//{HT.www_domain}/privacy-policy">Privacy Policy</a><span>|</span><a
         href="//{HT.www_domain}/takedown-policy">Takedown Policy</a
-      >
+      ><span>|</span><a href="#" role="button" on:click|preventDefault={openSettings}>Cookie Settings</a>
     </div>
   </div>
   <ul>
@@ -32,6 +41,9 @@
     gap: 1.875em;
     a {
       color: #fff;
+      &:focus-visible {
+        outline: 4px solid rgba(255, 255, 255, 0.7);
+      }
     }
     .legal {
       display: flex;

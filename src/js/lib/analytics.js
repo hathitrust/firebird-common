@@ -1,3 +1,4 @@
+import { trackingConsent } from './store'
 export class AnalyticsManager {
   constructor({ analyticsSettings, is_dev = false }) {
     if (analyticsSettings) {
@@ -17,6 +18,15 @@ export class AnalyticsManager {
 
     const _mtm = (window._mtm = window._mtm || []);
     const _paq = (window._paq = window._paq || []);
+
+    trackingConsent.subscribe((value) => {
+      if (value !== 'true') {
+        _paq.push(['requireCookieConsent']);
+      } else {
+        _paq.push(['setCookieConsentGiven']);
+      }
+    })
+
     _mtm.push({ 'mtm.startTime': new Date().getTime(), event: 'mtm.Start' });
 
     let customUrl;
