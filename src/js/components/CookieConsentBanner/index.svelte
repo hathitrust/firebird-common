@@ -52,8 +52,11 @@
             <h1 class="h2 bold" id="cookie-heading">Can we use cookies in your browser?</h1>
             <p>
               HathiTrust uses cookies to ensure you have the best experience on our website. You control which cookies
-              you want to allow. Our <a class="fw-bold" href="https://www.hathitrust.org/privacy">Privacy Policy</a> includes
-              more details on the cookies we use and how we protect your privacy.
+              you want to allow. Our <a
+                class="fw-bold"
+                href="https://www.hathitrust.org/the-collection/terms-conditions/privacy-policy/#cookies-on-our-website"
+                >Privacy Policy</a
+              > includes more details on the cookies we use and how we protect your privacy.
             </p>
             <p class="mb-0">
               By proceeding, you agree to follow our <a class="fw-bold" href="https://www.hathitrust.org/acceptable-use"

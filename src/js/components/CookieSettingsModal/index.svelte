@@ -70,7 +70,8 @@
                 you want to allow. Disabling some cookies may impact your experience on our site and the services we
                 provide. More information about each type of cookie is provided in our <a
                   class="fw-bold"
-                  href="https://www.hathitrust.org/privacy">Privacy Policy</a
+                  href="https://www.hathitrust.org/the-collection/terms-conditions/privacy-policy/#cookies-on-our-website"
+                  >Privacy Policy</a
                 >.
               </p>
               <h3 class="fw-exbold">Manage cookie preferences</h3>
@@ -265,6 +266,9 @@
   .cookie-settings :is(p, h3, button.accordion-button) {
     font-size: var(--ht-text-sm);
   }
+  // .settings-heading {
+  //   border-bottom: 1px solid var(--color-neutral-600);
+  // }
   .settings-heading img {
     height: 2.625rem;
   }
