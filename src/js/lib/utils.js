@@ -2,6 +2,7 @@ import docCookies from './cookies';
 import cookies from './cookies';
 import { stageLinks } from './staging';
 import { Live } from './live';
+import { preferencesConsent } from './store'
 
 function isObject(item) {
   return item && typeof item === 'object' && !Array.isArray(item);
@@ -47,6 +48,7 @@ function setDomains() {
     } else if (hostname.indexOf('phire') > -1) {
       // shameless green
       HT.www_domain = hostname;
+      HT.cookies_domain = hostname;
     } else {
       // make this more robust later
       var babel_prefix = prefix;
@@ -94,7 +96,7 @@ function setupHTEnv() {
       console.log(e);
     }
   };
-
+  
   HT.cookieJar = docCookies;
   HT.live = new Live(HT.is_dev);
 

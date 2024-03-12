@@ -2,7 +2,12 @@
 
 name: "Chromatic"
 
-on: push
+on: 
+  push:
+    branches-ignore:
+      - deployment
+    tags-ignore:
+      - v0.*
 
 jobs:
   chromatic:

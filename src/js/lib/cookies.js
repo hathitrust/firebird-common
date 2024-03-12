@@ -1,3 +1,5 @@
+import { get } from 'svelte/store'
+import { cookieConsentSeen, trackingConsent, marketingConsent, preferencesConsent, allowTracking, allowMarketing, allowPreferences } from './store'
 export class TestCookieJar {
   constructor(data) {
     this.data = data || {};
@@ -13,7 +15,7 @@ export class TestCookieJar {
 }
 
 // ported from unicorn days, waiting for https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/cookies/CookieStore
-const docCookies = {
+export const docCookies = {
   getItem: function (sKey) {
     if (!sKey) {
       return null;
@@ -86,5 +88,110 @@ const docCookies = {
     return aKeys;
   },
 };
+
+let expires = new Date();
+expires.setMonth(expires.getMonth() + 12);
+
+let mainContent;
+let skiplinks;
+if (document.body.classList.contains('apps') ) {
+  //apps
+  mainContent = document.querySelector('#root');
+  skiplinks = document.querySelector('#skiplinks');
+} else {
+  //wordpress
+  mainContent = document.querySelector('#maindocument');
+}
+
+export function setCookieConsentSeen() {
+  docCookies.setItem('HT-cookie-banner-seen', 'true', expires, '/', HT.cookies_domain, true);
+  cookieConsentSeen.set('true');
+ if (mainContent) mainContent.inert = false;
+  if (skiplinks) skiplinks.inert = false;
+}
+export function setTrackingAllowedCookie() {
+  docCookies.setItem('HT-tracking-cookie-consent', 'true', expires, '/', HT.cookies_domain, true);
+  trackingConsent.set('true');
+}
+
+export function setTrackingDisallowedCookie() {
+  docCookies.setItem('HT-tracking-cookie-consent', 'false', expires, '/', HT.cookies_domain, true);
+  trackingConsent.set('false');
+}
+
+export function setMarketingAllowedCookie() {
+  docCookies.setItem('HT-marketing-cookie-consent', 'true', expires, '/', HT.cookies_domain, true);
+  marketingConsent.set('true');
+}
+
+export function setMarketingDisallowedCookie() {
+  docCookies.setItem('HT-marketing-cookie-consent', 'false', expires, '/', HT.cookies_domain, true);
+  marketingConsent.set('false');
+}
+
+export function setPreferencesAllowedCookie() {
+  docCookies.setItem('HT-preferences-cookie-consent', 'true', expires, '/', HT.cookies_domain, true);
+  preferencesConsent.set('true');
+}
+
+export function setPreferencesDisallowedCookie() {
+  docCookies.setItem('HT-preferences-cookie-consent', 'false', expires, '/', HT.cookies_domain, true);
+  preferencesConsent.set('false');
+}
+
+export function setSelectedConsent() {
+  const track = get(allowTracking);
+  const mark = get(allowMarketing);
+  const pref = get(allowPreferences);
+  if (track === false) {
+    setTrackingDisallowedCookie();
+  }
+  if (track === true) {
+    setTrackingAllowedCookie();
+  }
+  if (mark === false) {
+    setMarketingDisallowedCookie();
+  }
+  if (mark === true) {
+    setMarketingAllowedCookie();
+  }
+  if (pref === false) {
+    setPreferencesDisallowedCookie();
+  }
+  if (pref === true) {
+    setPreferencesAllowedCookie();
+  }
+}
+
+export function allowAll() {
+  setCookieConsentSeen();
+  setTrackingAllowedCookie();
+  setMarketingAllowedCookie();
+  setPreferencesAllowedCookie();
+}
+
+export function allowSelected() {
+  setSelectedConsent();
+  setCookieConsentSeen();
+}
+
+export function denyAll() {
+  setCookieConsentSeen();
+  setTrackingDisallowedCookie();
+  setMarketingDisallowedCookie();
+  setPreferencesDisallowedCookie();
+}
+
+export function resetCookieBanner() {
+  docCookies.removeItem('HT-cookie-banner-seen');
+  docCookies.removeItem('HT-tracking-cookie-consent');
+  docCookies.removeItem('HT-marketing-cookie-consent');
+  docCookies.removeItem('HT-preferences-cookie-consent');
+  cookieConsentSeen.set('false');
+  trackingConsent.set('false');
+  marketingConsent.set('false');
+  preferencesConsent.set('false');
+}
+
 
 export default docCookies;

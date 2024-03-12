@@ -71,8 +71,9 @@ $h6-font-size: $font-size-base * 1;
 $ht-text-sm: $font-size-base * 0.875;
 $ht-text-lg: $font-size-base;
 
+$body-font-weight: 500;
 $headings-font-weight: 700;
-$btn-font-weight: 700;
+$btn-font-weight: 800;
 $form-label-font-weight: 400;
 
 // Required
@@ -157,6 +158,19 @@ $utilities: map-merge(
             'reset': inherit,
           )
         ),
+    ),
+    "font-weight": (
+      property: font-weight,
+      class: fw,
+      values: (
+        light: $font-weight-light,
+        lighter: $font-weight-lighter,
+        normal: $font-weight-normal,
+        bold: $font-weight-bold,
+        semibold: $font-weight-semibold,
+        bolder: $font-weight-bolder,
+        exbold: 800,
+      )
     ),
     'background-color': (
       property: background-color,
@@ -266,6 +280,7 @@ $utilities: map-merge(
   --btn-font-weight: #{$btn-font-weight};
 
   --bs-font-sans-serif: Mulish, Helvetica, Arial, system-ui;
+  --bs-body-font-weight: #{$body-font-weight};
   --bs-link-color: var(--color-primary-600);
   --ht-visited-link-color: #006FC3;
 }
@@ -277,6 +292,9 @@ body[data-initialized='true'] {
 
 // Further refine some bootstrap styles
 
+.btn {
+  letter-spacing: -0.01rem;
+}
 // bootstrap's contrast functions pair black text on our primary background
 .btn-primary {
   --bs-btn-color: #fff;
@@ -288,6 +306,22 @@ body[data-initialized='true'] {
   &:active {
     --bs-btn-hover-color: #fff;
     background-color: var(--color-primary-700);
+  }
+}
+
+//bootstrap doesn't have a "tertiary" button, but we do
+.btn-tertiary {
+  --bs-btn-color: var(--color-neutral-900);
+  --bs-btn-bg: var(--color-shades-0);
+  --bs-btn-border-color: var(--color-neutral-600);
+  --bs-btn-hover-color: var(--color-shades-100);
+  --bs-btn-hover-bg: var(--color-neutral-100);
+  --bs-btn-hover-border-color: var(--color-neutral-700);
+  --bs-btn-active-color: var(--bs-btn-hover-color);
+  --bs-btn-active-bg: var(--bs-btn-hover-bg);
+  --bs-btn-active-border-color: var(--bs-btn-hover-border-color);
+  &:focus-visible {
+    outline: 4px solid rgba(51, 51, 51, .4);
   }
 }
 
@@ -354,6 +388,9 @@ a:not(.btn,.list-group-item):has(i[aria-hidden]) {
   min-height: 0;
   height: 100%;
   overflow: hidden;
+}
+.cookie-settings dialog {
+   max-inline-size: min(90vw,70ch);
 }
 
 .px-modal {
