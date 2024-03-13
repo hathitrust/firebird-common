@@ -177,7 +177,7 @@
                         <p id="statistics-description">
                           Statistics cookies help us improve our website through feedback surveys or by analyzing usage
                           by people like you. We anonymize and combine this data with other user data so that it can't
-                          identify you.You can block these cookies without any impact to your usage of the site.
+                          identify you. You can block these cookies without any impact to your usage of the site.
                         </p>
                       </div>
                     </div>
