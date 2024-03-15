@@ -6,16 +6,16 @@
 
   let HT = window.HT || {};
 
-  let mainContent;
-  let skiplinks;
-  if (document.body.classList.contains('apps')) {
-    //apps
-    mainContent = document.querySelector('#root');
-    skiplinks = document.querySelector('#skiplinks');
-  } else {
-    //wordpress
-    mainContent = document.querySelector('#maindocument');
-  }
+  // let mainContent;
+  // let skiplinks;
+  // if (document.body.classList.contains('apps')) {
+  //   //apps
+  //   mainContent = document.querySelector('#root');
+  //   skiplinks = document.querySelector('#skiplinks');
+  // } else {
+  //   //wordpress
+  //   mainContent = document.querySelector('#maindocument');
+  // }
 
   let lgSrc = '/common/firebird/dist/hathitrust-logo-stacked-orange-gray.png';
   let smSrc = '/common/firebird/dist/hathitrust-logo-horizontal-orange-gray.png';
@@ -31,16 +31,16 @@
     $trackingConsent = cookieJar.getItem('HT-tracking-cookie-consent') || 'false';
     $marketingConsent = cookieJar.getItem('HT-marketing-cookie-consent') || 'false';
     $preferencesConsent = cookieJar.getItem('HT-preferences-cookie-consent') || 'false';
-    if ($cookieConsentSeen === 'false') {
-      if (mainContent) mainContent.inert = true;
-      if (skiplinks) skiplinks.inert = true;
-    }
+    // if ($cookieConsentSeen === 'false') {
+    //   if (mainContent) mainContent.inert = true;
+    //   if (skiplinks) skiplinks.inert = true;
+    // }
   });
 </script>
 
 {#if $cookieConsentSeen === 'false'}
   <CookieSettingsModal bind:this={settingsModal} />
-  <section aria-labelledby="cookie-heading" class="banner-blur">
+  <section aria-labelledby="cookie-heading">
     <div class="cookie-banner alert alert-dark alert-block p-4 mb-0 shadow-lg rounded-bottom-0">
       <div class="banner-container d-flex gap-4 justify-content-between">
         <div class="banner-content d-flex gap-3">
@@ -92,14 +92,6 @@
 
 <style lang="scss">
   //general and mobile styles
-  .banner-blur {
-    position: fixed;
-    z-index: 999999;
-    height: 100%;
-    width: 100%;
-    backdrop-filter: blur(2px);
-    background: rgba(0, 0, 0, 0.6);
-  }
   .cookie-banner {
     position: fixed;
     bottom: 0;
