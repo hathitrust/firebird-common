@@ -36,8 +36,8 @@
   <Navbar bind:searchOpen={searchOpenToggle} {searchState} {compact} {userNavigation} />
   {#if searchOpenToggle}
     <div
-      out:slide={{ easing: sineOut, duration: 150 }}
-      in:slide={{ easing: sineIn, duration: 150 }}
+      out:slide|global={{ easing: sineOut, duration: 150 }}
+      in:slide|global={{ easing: sineIn, duration: 150 }}
       class="collapse"
       class:show={searchOpenToggle}
       id="siteSearchDropdown"
