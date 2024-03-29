@@ -17,13 +17,17 @@ body {
   #root {
     height: 100%;
     display: grid;
-    grid-template-rows: min-content 1fr min-content;
+    grid-template-rows: min-content min-content 1fr min-content;
     grid-template-columns: 1fr;
-    grid-template-areas: 'header' 'main' 'footer';
+    grid-template-areas: 'header' 'banner' 'main' 'footer';
   }
 
   hathi-website-header {
     grid-area: header;
+  }
+
+  hathi-alert-banner {
+    grid-area: banner;
   }
 
   hathi-website-footer {
