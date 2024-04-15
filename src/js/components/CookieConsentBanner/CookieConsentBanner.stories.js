@@ -7,6 +7,10 @@ export default {
   title: 'Cookie Consent Banner',
   component: CookieConsentBanner,
   argTypes: { confirm: { action: 'banner confirmed' } },
+  args: {
+    lgSrc: '/src/public/hathitrust-logo-stacked-orange-gray.png',
+    smSrc: '/src/public/hathitrust-icon-orange.png'
+  }
 };
 
 export const Default = {
