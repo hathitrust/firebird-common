@@ -6,19 +6,38 @@
 
   let HT = window.HT || {};
 
-  // let mainContent;
-  // let skiplinks;
-  // if (document.body.classList.contains('apps')) {
-  //   //apps
-  //   mainContent = document.querySelector('#root');
-  //   skiplinks = document.querySelector('#skiplinks');
-  // } else {
-  //   //wordpress
-  //   mainContent = document.querySelector('#maindocument');
-  // }
+  export function trapFocus() {
+    var element = document.querySelector('.cookie-banner');
+    var focusableEls = element.querySelectorAll(
+      'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])'
+    );
+    var firstFocusableEl = focusableEls[0];
+    var lastFocusableEl = focusableEls[focusableEls.length - 1];
+    var KEYCODE_TAB = 9;
 
-  let lgSrc = '/common/firebird/dist/hathitrust-logo-stacked-orange-gray.png';
-  let smSrc = '/common/firebird/dist/hathitrust-logo-horizontal-orange-gray.png';
+    element.addEventListener('keydown', function (e) {
+      var isTabPressed = e.key === 'Tab' || e.keyCode === KEYCODE_TAB;
+
+      if (!isTabPressed) {
+        return;
+      }
+
+      if (e.shiftKey) {
+        /* shift + tab */ if (document.activeElement === firstFocusableEl) {
+          lastFocusableEl.focus();
+          e.preventDefault();
+        }
+      } /* tab */ else {
+        if (document.activeElement === lastFocusableEl) {
+          firstFocusableEl.focus();
+          e.preventDefault();
+        }
+      }
+    });
+  }
+
+  export let lgSrc = '/common/firebird/dist/hathitrust-logo-stacked-orange-gray.png';
+  export let smSrc = '/common/firebird/dist/hathitrust-icon-orange.png';
 
   let settingsModal;
   function openSettings() {
@@ -26,68 +45,88 @@
   }
   export let cookieJar = HT.cookieJar;
 
+  setTimeout(() => {
+    if (!document.querySelector('.cookie-banner')) {
+      return;
+    }
+    trapFocus();
+  }, 1000);
+
   onMount(() => {
     $cookieConsentSeen = cookieJar.getItem('HT-cookie-banner-seen') || 'false';
     $trackingConsent = cookieJar.getItem('HT-tracking-cookie-consent') || 'false';
     $marketingConsent = cookieJar.getItem('HT-marketing-cookie-consent') || 'false';
     $preferencesConsent = cookieJar.getItem('HT-preferences-cookie-consent') || 'false';
-    // if ($cookieConsentSeen === 'false') {
-    //   if (mainContent) mainContent.inert = true;
-    //   if (skiplinks) skiplinks.inert = true;
-    // }
   });
 </script>
 
 {#if $cookieConsentSeen === 'false'}
   <CookieSettingsModal bind:this={settingsModal} />
-  <section aria-labelledby="cookie-heading">
-    <div class="cookie-banner alert alert-dark alert-block p-4 mb-0 shadow-lg rounded-bottom-0">
-      <div class="banner-container d-flex gap-4 justify-content-between">
-        <div class="banner-content d-flex gap-3">
-          <div class="image-wrapper align-items-center d-flex justify-content-center">
-            <img src={lgSrc} class="d-none d-lg-block" alt="" role="presentation" />
-            <img src={smSrc} class="d-lg-none" alt="" role="presentation" />
-          </div>
-          <div class="">
-            <h1 class="h2 bold" id="cookie-heading">Can we use cookies in your browser?</h1>
+  <div aria-labelledby="cookie-heading" aria-describedby="cookie-description" role="dialog" aria-modal="false">
+    <div class="cookie-banner alert alert-dark alert-block mb-0 shadow-lg rounded-bottom-0">
+      <div class="banner-container">
+        <div class="banner-image align-items-center d-none d-xl-flex justify-content-center">
+          <img src={lgSrc} class="" alt="" role="presentation" />
+        </div>
+        <!-- <div class="banner-content d-flex gap-3"> -->
+        <div class="banner-header">
+          <!-- <div class="banner-image d-xl-none"> -->
+          <img src={smSrc} class="banner-image d-xl-none" alt="" role="presentation" />
+          <!-- </div> -->
+          <h2 class="h2 bold" id="cookie-heading">Can we use cookies in your browser?</h2>
+          <button
+            type="button"
+            class="close"
+            aria-label="Close banner"
+            on:click={() => {
+              denyAll();
+            }}
+            ><i class="fa-solid fa-xmark" aria-hidden="true"></i><span class="visually-hidden">Close banner</span
+            ></button
+          >
+        </div>
+        <div class="banner-body">
+          <div id="cookie-description">
             <p>
-              HathiTrust uses cookies to ensure you have the best experience on our website. You control which cookies
-              you want to allow. Our <a
+              HathiTrust uses cookies to ensure you have the best experience on our website. <span class="fw-bold"
+                >You control which cookies you want to allow.</span
+              >
+            </p>
+            <p class="mb-0">
+              Our <a
                 class="fw-bold"
                 href="https://www.hathitrust.org/the-collection/terms-conditions/privacy-policy/#cookies-on-our-website"
                 >Privacy Policy</a
-              > includes more details on the cookies we use and how we protect your privacy.
-            </p>
-            <p class="mb-0">
-              By proceeding, you agree to follow our <a class="fw-bold" href="https://www.hathitrust.org/acceptable-use"
-                >Acceptable Use Policy</a
-              >.
+              >
+              includes more details on the cookies we use and how we protect your privacy. By proceeding, you agree to follow
+              our <a class="fw-bold" href="https://www.hathitrust.org/acceptable-use">Acceptable Use Policy</a>.
             </p>
           </div>
-        </div>
-        <div class="banner-buttons d-flex gap-2">
-          <button
-            type="button"
-            class="btn btn-primary"
-            on:click={() => {
-              allowAll();
-            }}>Allow all cookies</button
-          >
-          <button
-            type="button"
-            class="btn btn-primary"
-            on:click={() => {
-              denyAll();
-            }}>Allow necessary cookies only</button
-          >
+          <div class="banner-buttons d-flex gap-2">
+            <button
+              type="button"
+              class="btn btn-primary"
+              on:click={() => {
+                allowAll();
+              }}>Allow all cookies</button
+            >
+            <button
+              type="button"
+              class="btn btn-primary"
+              on:click={() => {
+                denyAll();
+              }}>Allow necessary cookies only</button
+            >
 
-          <button type="button" class="btn btn-tertiary" on:click={openSettings}
-            >Customize cookies<i class="fa-solid fa-fw fa-sm fa-chevron-right"></i></button
-          >
+            <button type="button" class="btn btn-tertiary" on:click={openSettings}
+              >Customize cookies<i class="fa-solid fa-fw fa-sm fa-chevron-right"></i></button
+            >
+          </div>
         </div>
+        <!-- </div> -->
       </div>
     </div>
-  </section>
+  </div>
 {/if}
 
 <style lang="scss">
@@ -103,7 +142,15 @@
     border-end-end-radius: 0;
     border-end-start-radius: 0;
     background: var(--color-primary-200);
+    padding: 1.25rem 1rem;
 
+    .h2 {
+      font-size: 1.25rem;
+      line-height: 120%; /* 1.5rem */
+      letter-spacing: -0.0125rem;
+      color: var(--color-neutral-900);
+      margin: 0;
+    }
     .btn {
       display: flex;
       justify-content: center;
@@ -112,69 +159,154 @@
     .btn-tertiary {
       gap: 0.75rem;
     }
-    p a {
-      color: var(--color-primary-600);
+    p {
+      font-size: 0.875rem;
+      line-height: 1.125rem; /* 128.571% */
+      letter-spacing: -0.00875rem;
+      padding: 0;
+      margin: 0;
+      color: var(--color-neutral-900);
+      a {
+        color: var(--color-primary-600);
+      }
     }
-  }
-  .banner-container {
-    flex-direction: column;
-    align-items: start;
-  }
-  .image-wrapper {
-    padding: 0;
-  }
-  img {
-    max-inline-size: 11.25rem;
-  }
-  .banner-content {
-    flex-direction: column;
-    align-items: start;
-  }
-  .banner-buttons {
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-  }
-  @media (min-width: 48em) {
-    /* 768px, bootstrap "medium" and up */
-    .banner-content {
-      align-items: start;
+    img.banner-image {
+      max-inline-size: 1.875rem;
+      grid-area: icon;
+      align-self: center;
+    }
+    .banner-header {
+      grid-area: header;
+      display: grid;
+      grid-template-columns: auto;
+      grid-template-rows: auto;
+      grid-template-areas:
+        'icon . close'
+        'heading heading heading';
+    }
+    .banner-body {
+      grid-area: body;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    #cookie-heading {
+      grid-area: heading;
+    }
+    #cookie-description {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
     }
     .banner-buttons {
-      flex-direction: row;
-      width: 100%;
+      display: flex;
+      flex-direction: column;
       button {
-        display: flex !important;
-        flex: 1 0 0;
-        justify-content: center;
+        line-height: 1.3125rem; /* 131.25% */
+        letter-spacing: -0.01rem;
+      }
+    }
+    .banner-container {
+      display: grid;
+      gap: 0.5rem;
+      grid-template-columns: auto;
+      grid-template-rows: auto;
+      grid-template-areas:
+        'header header header'
+        'body body body';
+    }
+    button.close {
+      grid-area: close;
+      width: 2.75rem;
+      height: 2.75rem;
+      background: inherit;
+      border: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+      justify-self: end;
+      border-radius: 0.375rem;
+      &:focus-visible {
+        outline: 4px solid rgba(51, 51, 51, 0.4);
+      }
+    }
+    .close i {
+      color: var(--color-neutral-600);
+    }
+    @media (min-width: 40em) {
+      /* 640px, bootstrap "small" and up */
+      /* .cookie-banner */
+      padding: 1.25rem 2rem;
+      .h2 {
+        font-size: 1.5rem;
+        line-height: 2.125rem; /* 141.667% */
+        letter-spacing: -0.015rem;
+      }
+      .banner-header {
+        display: flex;
         align-items: center;
-        padding: 0.5rem 1rem;
+        gap: 0.5rem;
+      }
+      #cookie-heading {
+        flex-grow: 1;
+      }
+      p {
+        font-size: 1rem;
+        line-height: 1.3125rem; /* 131.25% */
+        letter-spacing: -0.01rem;
+        padding-inline-end: 1.25rem;
+      }
+    }
+    @media (min-width: 48em) {
+      /* 768px, bootstrap "medium" and up */
+      .banner-buttons {
+        flex-direction: row;
+        button {
+          display: flex;
+          height: 2.75rem;
+          padding: 0.5rem 1rem;
+          justify-content: center;
+          align-items: center;
+          gap: 0.75rem;
+          &:nth-child(odd) {
+            flex: 1 0 0;
+          }
+        }
+      }
+    }
+    @media (min-width: 75em) {
+      /* 992px, bootstrap "xl" and up */
+      .banner-image {
+        grid-column: 1;
+        grid-row: 1 / 3;
+        padding: 0.6875rem 1.375rem;
+        width: 10.3125rem;
+        height: 10.3125rem;
+        img {
+          max-inline-size: 6.875rem;
+        }
+      }
+      .banner-container {
+        grid-template-areas:
+          'icon header header'
+          '. body body';
+        align-items: center;
+        column-gap: 1rem;
+      }
+      .banner-body {
+        flex-direction: row;
+      }
+      #cookie-description {
+        gap: 1rem;
+      }
+      .banner-buttons {
+        flex-direction: column;
+        width: 55%;
+        align-self: stretch;
       }
     }
   }
-  @media (min-width: 62em) {
-    /* 992px, bootstrap "large" and up */
-    .banner-container {
-      flex-direction: row;
-    }
-    .banner-content {
-      flex-direction: row;
-      align-items: center;
-      flex-basis: 70%;
-    }
-    .image-wrapper {
-      padding-inline: 1rem;
-    }
-    img {
-      max-inline-size: 5.625rem;
-    }
-    .banner-buttons {
-      width: auto;
-      flex-direction: column;
-      align-self: stretch;
-    }
-  }
-
   @media (min-width: 82rem) {
     .banner-container {
       margin-inline: max(clamp(0.938rem, calc(0.268rem + 3.348vw), 1.875rem), ((100% - 73.125rem) / 2));
