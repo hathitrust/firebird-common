@@ -73,4 +73,10 @@ export default defineConfig({
       scss: scssOptions,
     },
   },
+  test: {
+    // coverage: {
+    //   enabled: true,
+    //   provider: 'istanbul',
+    // }
+  },
 });
