@@ -47,6 +47,12 @@ export const MobileDefault = {
       defaultViewport: 'bsXs',
     },
   },
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      // props: { loggedIn: true },
+    }),
+  ],
 };
 
 // export const PreviouslyAccepted = {

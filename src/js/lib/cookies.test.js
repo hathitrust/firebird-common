@@ -1,14 +1,23 @@
 import { afterEach, describe, it, expect, test, vi } from 'vitest'
-import { TestCookieJar, docCookies } from './cookies'
-import { cookieConsentSeen } from './store'
+import { TestCookieJar, docCookies, setCookieConsentSeen } from './cookies'
+import { cookieConsentSeen, marketingConsent } from './store'
+import { get } from 'svelte/store';
 
 let expires = new Date();
 expires.setMonth(expires.getMonth() + 12);
-let HT = window.HT || {}
+const HT = (window.HT = window.HT || {});
 HT.cookies_domain = '.hathitrust.org'
+
+//need to set these in order to set cookies in this "browser"
+window.location.host = "www.hathitrust.org"
+window.location.protocol = "https:"
+
 
 // @vitest-environment happy-dom
 // happy-dom gives us browser stuff like window and document functions
+
+const getItemSpy = vi.spyOn(docCookies, 'getItem')
+const setItemSpy = vi.spyOn(docCookies, 'setItem')
 
 describe('Document is available', () => {
 it('should not be undefined', () => {
@@ -17,27 +26,24 @@ it('should not be undefined', () => {
 })
 describe('TestCookieJar', () => {
     const mockCookie = {'COOKIE': 'true'}
-    const mockCookieJar = new TestCookieJar(mockCookie) 
+    const cookieJar = new TestCookieJar(mockCookie) 
 
     describe('getItem', () => {
         it('should return the value of the cookie', () => {
-            const trueCookie = mockCookieJar.getItem('COOKIE')
+            const trueCookie = cookieJar.getItem('COOKIE')
             expect(trueCookie).toBe('true')
             expect(trueCookie).not.toBe(true)
         })
     })
     describe('setItem', () => { 
         it('should set the cookie value', () => {
-            mockCookieJar.setItem('COOKIE', 'false')            
-            expect(mockCookieJar.data.COOKIE).toBe('false')
-            expect(mockCookieJar.data.COOKIE).not.toBe(false)
+            cookieJar.setItem('COOKIE', 'false')            
+            expect(cookieJar.data.COOKIE).toBe('false')
+            expect(cookieJar.data.COOKIE).not.toBe(false)
         })
     })
 })
 describe('docCookies', () => {
-    const mockCookieJar = docCookies; 
-    const getItemSpy = vi.spyOn(mockCookieJar, 'getItem')
-    const setItemSpy = vi.spyOn(mockCookieJar, 'setItem')
     afterEach(() => {
         document.cookie = "COOKIE=true;expires=Thu, 01 Jan 1970 00:00:00 GMT"
         document.cookie = "COOKIE=cookie;expires=Thu, 01 Jan 1970 00:00:00 GMT"
@@ -46,30 +52,39 @@ describe('docCookies', () => {
         document.cookie="COOKIE=true"
 
         test('gets value of cookie from document.cookie', () => {
-            expect(mockCookieJar.getItem('COOKIE')).toStrictEqual('true');
+            expect(docCookies.getItem('COOKIE')).toStrictEqual('true');
             expect(getItemSpy).toHaveBeenCalled()
         }) 
         test('returns null if cookie key does not exist', () => {
-            expect(mockCookieJar.getItem('NOCOOKIE')).toBe(null);
+            expect(docCookies.getItem('NOCOOKIE')).toBe(null);
             expect(getItemSpy).toHaveBeenCalled()
         })
     })
     describe('setItem', () => {
         test('sets cookie with key and value', () => {
-            expect(mockCookieJar.setItem('COOKIE', 'cookie')).toBe(true)
-            expect(document.cookie.split(";").some((item) => item.includes("COOKIE=cookie"))).toBe(true)
+            // expect(docCookies.setItem('COOKIE', 'cookie')).toBe(true)
+            expect(docCookies.setItem('COOKIE', 'cookie', '', '', '')).toBe(true)
+            expect(document.cookie).toBeTruthy()
+            expect(document.cookie).toContain("COOKIE=cookie")
             expect(setItemSpy).toHaveBeenCalled()
         })
     })
 })
 describe('setCookieConsentSeen', () => {
-    const mockCookieJar = docCookies; 
-    const setItemSpy = vi.spyOn(mockCookieJar, 'setItem')
-
-    it('should set HT-cookie-consent-seen to true', () => {
-        expect(mockCookieJar.setItem('HT-cookie-banner-seen', 'true', expires, '/', HT.cookies_domain, 'true')).toBe(true)
-        expect(setItemSpy).toHaveBeenCalled()
-        // expect(document.cookie.split(";").some((item) => item.includes("HT-cookie-banner-seen=true"))).toBe(true)
+    test('cookieConsentSeen should be undefined', () => {
+        expect(get(cookieConsentSeen)).toBeUndefined()
     })
-    it.todo('should set cookieConsentSeen store variable to true')
+
+    it('sets HT-cookie-banner-seen cookie', () => {
+    
+        setCookieConsentSeen()
+        expect(setItemSpy).toHaveBeenCalled()
+        expect(document.cookie).not.toEqual('')
+        expect(document.cookie).toContain("HT-cookie-banner-seen=true")
+
+    })
+    it('sets cookieConsentSeen store variable to true', () => {
+        expect(get(cookieConsentSeen)).toBe('true')
+    })
+    
 })

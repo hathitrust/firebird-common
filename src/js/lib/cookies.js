@@ -92,22 +92,9 @@ export const docCookies = {
 let expires = new Date();
 expires.setMonth(expires.getMonth() + 12);
 
-// let mainContent;
-// let skiplinks;
-// if (document.body.classList.contains('apps') ) {
-//   //apps
-//   mainContent = document.querySelector('#root');
-//   skiplinks = document.querySelector('#skiplinks');
-// } else {
-//   //wordpress
-//   mainContent = document.querySelector('#maindocument');
-// }
-
 export function setCookieConsentSeen() {
   docCookies.setItem('HT-cookie-banner-seen', 'true', expires, '/', HT.cookies_domain, true);
   cookieConsentSeen.set('true');
-//  if (mainContent) mainContent.inert = false;
-//   if (skiplinks) skiplinks.inert = false;
 }
 export function setTrackingAllowedCookie() {
   docCookies.setItem('HT-tracking-cookie-consent', 'true', expires, '/', HT.cookies_domain, true);
