@@ -1,6 +1,6 @@
 import { afterEach, describe, it, expect, test, vi } from 'vitest'
-import { TestCookieJar, docCookies, setCookieConsentSeen } from './cookies'
-import { cookieConsentSeen, marketingConsent } from './store'
+import { TestCookieJar, docCookies, setCookieConsentSeen, setMarketingAllowedCookie, setTrackingAllowedCookie, setTrackingDisallowedCookie, setMarketingDisallowedCookie, setPreferencesAllowedCookie, setPreferencesDisallowedCookie} from './cookies'
+import { cookieConsentSeen, trackingConsent, marketingConsent, preferencesConsent } from './store'
 import { get } from 'svelte/store';
 
 let expires = new Date();
@@ -87,4 +87,51 @@ describe('setCookieConsentSeen', () => {
         expect(get(cookieConsentSeen)).toBe('true')
     })
     
+})
+describe('setTrackingAllowedCookie', () => {
+    test('trackingConsent should be false', () => {
+        expect(get(trackingConsent)).toBe('false')
+    })
+    it('sets trackingConsent to true', () => {
+        setTrackingAllowedCookie()
+        expect(get(trackingConsent)).toBe('true')
+    })
+})
+
+describe('setTrackingDisallowedCookie', () => {
+    it('sets trackingConsent to false', () => {
+        setTrackingDisallowedCookie()
+        expect(get(trackingConsent)).toBe('false')
+    })
+})
+
+describe('setMarketingAllowedCookie', () => {
+    test('marketingConsent should be false', () => {
+        expect(get(marketingConsent)).toBe('false')
+    })
+    it('sets marketingConsent to true', () => {
+        setMarketingAllowedCookie()
+        expect(get(marketingConsent)).toBe('true')
+    })
+})
+describe('setMarketingDisallowedCookie', () => {
+    it('sets marketingConsent to false', () => {
+        setMarketingDisallowedCookie()
+        expect(get(marketingConsent)).toBe('false')
+    })
+})
+describe('setPreferencesAllowedCookie', () => {
+    test('preferencesConsent should be false', () => {
+        expect(get(preferencesConsent)).toBe('false')
+    })
+    it('sets preferenecsConsent to true', () => {
+        setPreferencesAllowedCookie()
+        expect(get(preferencesConsent)).toBe('true')
+    })
+})
+describe('setPreferencesDisallowedCookie', () => {
+    it('sets preferenecsConsent to false', () => {
+        setPreferencesDisallowedCookie()
+        expect(get(preferencesConsent)).toBe('false')
+    })
 })
