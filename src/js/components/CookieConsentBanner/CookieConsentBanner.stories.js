@@ -41,6 +41,13 @@ export const Default = {
     expect(consentButton.classList).toContain('btn-primary');
   },
 };
+export const MobileDefault = {
+  parameters: {
+    viewport: {
+      defaultViewport: 'bsXs',
+    },
+  },
+};
 
 // export const PreviouslyAccepted = {
 //   parameters: {
