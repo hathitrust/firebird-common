@@ -1,7 +1,10 @@
-import { afterEach, describe, it, expect, test, vi } from 'vitest'
-import { TestCookieJar, docCookies, setCookieConsentSeen, setMarketingAllowedCookie, setTrackingAllowedCookie, setTrackingDisallowedCookie, setMarketingDisallowedCookie, setPreferencesAllowedCookie, setPreferencesDisallowedCookie} from './cookies'
-import { cookieConsentSeen, trackingConsent, marketingConsent, preferencesConsent } from './store'
-import { get } from 'svelte/store';
+import { afterEach, afterAll, describe, it, expect, test, vi } from 'vitest'
+import { TestCookieJar, docCookies, setCookieConsentSeen, setMarketingAllowedCookie, setTrackingAllowedCookie, setTrackingDisallowedCookie, setMarketingDisallowedCookie, setPreferencesAllowedCookie, setPreferencesDisallowedCookie, setSelectedConsent} from './cookies'
+import { cookieConsentSeen, trackingConsent, marketingConsent, preferencesConsent, allowTracking } from './store'
+import { writable, get } from 'svelte/store';
+
+// @vitest-environment happy-dom
+// happy-dom gives us browser stuff like window and document functions
 
 let expires = new Date();
 expires.setMonth(expires.getMonth() + 12);
@@ -13,11 +16,9 @@ window.location.host = "www.hathitrust.org"
 window.location.protocol = "https:"
 
 
-// @vitest-environment happy-dom
-// happy-dom gives us browser stuff like window and document functions
-
 const getItemSpy = vi.spyOn(docCookies, 'getItem')
 const setItemSpy = vi.spyOn(docCookies, 'setItem')
+const remoteItemSpy = vi.spyOn(docCookies, 'removeItem')
 
 describe('Document is available', () => {
 it('should not be undefined', () => {
@@ -69,8 +70,24 @@ describe('docCookies', () => {
             expect(setItemSpy).toHaveBeenCalled()
         })
     })
+    describe('removeItem', () => {
+        test('removes cookie with given name/key', () => {
+            //set up a cookie
+            expect(document.cookie).toEqual('')
+            document.cookie = "COOKIE=cookie"
+            expect(document.cookie).toContain("COOKIE=cookie")
+
+            //now test removeItem
+            expect(docCookies.removeItem('COOKIE')).toBe(true)
+            expect(document.cookie).toEqual('')
+            expect(remoteItemSpy).toHaveBeenCalled()
+        })
+    })
 })
 describe('setCookieConsentSeen', () => {
+    afterAll(() => {
+        docCookies.removeItem('HT-cookie-banner-seen');
+    }) 
     test('cookieConsentSeen should be undefined', () => {
         expect(get(cookieConsentSeen)).toBeUndefined()
     })
@@ -89,6 +106,9 @@ describe('setCookieConsentSeen', () => {
     
 })
 describe('setTrackingAllowedCookie', () => {
+    afterAll(() => {
+        docCookies.removeItem('HT-tracking-cookie-consent');
+    }) 
     test('trackingConsent should be false', () => {
         expect(get(trackingConsent)).toBe('false')
     })
@@ -134,4 +154,23 @@ describe('setPreferencesDisallowedCookie', () => {
         setPreferencesDisallowedCookie()
         expect(get(preferencesConsent)).toBe('false')
     })
+})
+describe('setSelectedConsent', () => {
+    afterAll(() => {
+        docCookies.removeItem('HT-tracking-cookie-consent')
+    })
+    it.skip('should use setTrackingAllowedCookie', () => {
+        // const mockSetTrackingAllowedCookie = vi.fn().mockImplementation('setTrackingAllowedCookie')
+        //not sure how to find out if it used this function
+        // setSelectedConsent()
+
+    }) 
+    it('should set HT-tracking-consent to true', () => {
+        allowTracking.set(true);
+        setSelectedConsent()
+
+        expect(get(allowTracking)).toBe(true)
+        expect(document.cookie).toContain('HT-tracking-cookie-consent=true')
+    })
+
 })

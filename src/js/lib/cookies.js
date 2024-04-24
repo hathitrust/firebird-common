@@ -99,6 +99,7 @@ export function setCookieConsentSeen() {
 export function setTrackingAllowedCookie() {
   docCookies.setItem('HT-tracking-cookie-consent', 'true', expires, '/', HT.cookies_domain, true);
   trackingConsent.set('true');
+  return true;
 }
 
 export function setTrackingDisallowedCookie() {

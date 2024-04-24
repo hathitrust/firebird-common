@@ -7,7 +7,7 @@ export class AnalyticsManager {
     }
   }
 
-  configure() {
+  configure(testing = false) {
     if (!this.service) {
       return;
     }
@@ -22,7 +22,7 @@ export class AnalyticsManager {
     trackingConsent.subscribe((value) => {
       if (value !== 'true') {
         _paq.push(['requireCookieConsent']);
-      } else {
+        } else {
         _paq.push(['setCookieConsentGiven']);
       }
     })
@@ -41,12 +41,14 @@ export class AnalyticsManager {
       _paq.push(['setDocumentTitle', customPageTitle]);
     }
 
-    var d = document,
-      g = d.createElement('script'),
-      s = d.getElementsByTagName('script')[0];
-    g.async = true;
-    g.src = `https://${this.service}/js/container_${this.container}.js`;
-    s.parentNode.insertBefore(g, s);
+    if (!testing) {
+      var d = document,
+        g = d.createElement('script'),
+        s = d.getElementsByTagName('script')[0];
+      g.async = true;
+      g.src = `https://${this.service}/js/container_${this.container}.js`;
+      s.parentNode.insertBefore(g, s);
+    }
   }
 }
 
