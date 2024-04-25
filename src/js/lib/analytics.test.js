@@ -11,7 +11,7 @@ import { get } from 'svelte/store'
 const HT = (window.HT = window.HT || {});
 HT.cookies_domain = '.hathitrust.org'
 // HT.analyticsSettings = {service: 'testing.matomo.hathitrust.org', container:'SnfE6ZC0'}
-HT.analyticsSettings = {service: 'fake.service', container:'SnfE6ZC0'}
+HT.analyticsSettings = {service: 'fake.service', container:'test'}
 
 //need to set these in order to set cookies in this "browser"
 window.location.host = "www.hathitrust.org"
@@ -55,6 +55,7 @@ describe('AnalyticsManager', () => {
                 expect(trackingConsent).toBeDefined()
             })
 
+
             // these tests are useless.
             // do I need to mock matomo cookie functions
             // in order to actually test the trackingConsent subscription?
@@ -67,6 +68,10 @@ describe('AnalyticsManager', () => {
             //     //default value to trackingConsent is false
             //     expect(get(trackingConsent)).toBe('false')
             // })
+            const mockSetCookieConsentGiven = vi.fn().mockImplementation(() => document.cookie="HT-tracking-cookie-consent=true" )
+            it('should have a true cookie when trackingConsent is true', () => {
+                
+            })
         })
 
     })
