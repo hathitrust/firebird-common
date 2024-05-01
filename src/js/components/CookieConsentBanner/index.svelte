@@ -285,6 +285,7 @@
         height: 10.3125rem;
         img {
           max-inline-size: 6.875rem;
+          max-block-size: 8.34181rem;
         }
       }
       .banner-container {
