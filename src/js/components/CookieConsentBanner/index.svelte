@@ -178,7 +178,7 @@
     }
     img.banner-image {
       max-inline-size: 1.875rem;
-      grid-area: icon;
+      grid-area: logo;
       align-self: center;
     }
     .banner-header {
@@ -187,7 +187,7 @@
       grid-template-columns: auto;
       grid-template-rows: auto;
       grid-template-areas:
-        'icon . close'
+        'logo . close'
         'heading heading heading';
     }
     .banner-body {
@@ -210,6 +210,7 @@
       button {
         line-height: 1.3125rem; /* 131.25% */
         letter-spacing: -0.01rem;
+        height: 2.75rem;
       }
     }
     .banner-container {
@@ -308,10 +309,15 @@
           justify-content: center;
           align-items: center;
           gap: 0.75rem;
-          &:nth-child(odd) {
-            flex: 1 0 0;
-          }
+          // &:nth-child(odd) {
+          //   flex: 1 0 0;
+          // }
         }
+      }
+    }
+    @media (max-width: 75em) and (min-width: 48em) {
+      .banner-buttons button:nth-child(odd) {
+        flex: 1 0 0;
       }
     }
     @media (min-width: 75em) {
@@ -329,20 +335,23 @@
       }
       .banner-container {
         grid-template-areas:
-          'icon header header'
-          '. body body';
+          'logo header header'
+          'logo body body';
         align-items: center;
         column-gap: 1rem;
+        grid-template-columns: auto 1fr;
       }
       .banner-body {
         flex-direction: row;
+        justify-content: space-between;
       }
       #cookie-description {
         gap: 1rem;
+        max-inline-size: 34.25rem;
       }
       .banner-buttons {
         flex-direction: column;
-        width: 55%;
+        width: 22.5rem;
         align-self: stretch;
       }
     }
