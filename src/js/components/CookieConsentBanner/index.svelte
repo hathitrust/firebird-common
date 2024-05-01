@@ -36,7 +36,8 @@
     });
   }
 
-  export let lgSrc = '/common/firebird/dist/hathitrust-logo-stacked-orange-gray.png';
+  // export let lgSrc = '/common/firebird/dist/hathitrust-logo-stacked-orange-gray.png';
+  export let lgSrc = '/common/firebird/dist/hathitrust-logo-stacked_300x225.png';
   export let smSrc = '/common/firebird/dist/hathitrust-icon-orange.png';
 
   let settingsModal;
