@@ -36,7 +36,8 @@
     });
   }
 
-  export let lgSrc = '/common/firebird/dist/hathitrust-logo-stacked-orange-gray.png';
+  // export let lgSrc = '/common/firebird/dist/hathitrust-logo-stacked-orange-gray.png';
+  export let lgSrc = '/common/firebird/dist/hathitrust-logo-stacked_300x225.png';
   export let smSrc = '/common/firebird/dist/hathitrust-icon-orange.png';
 
   let settingsModal;
@@ -65,13 +66,13 @@
   <div aria-labelledby="cookie-heading" aria-describedby="cookie-description" role="dialog" aria-modal="false">
     <div class="cookie-banner alert alert-dark alert-block mb-0 shadow-lg rounded-bottom-0">
       <div class="banner-container">
-        <div class="banner-image align-items-center d-none d-xl-flex justify-content-center">
-          <img src={lgSrc} class="" alt="" role="presentation" />
+        <div class="banner-image align-items-center justify-content-center logo-large">
+          <img src={lgSrc} height="133" width="100" class="" alt="" role="presentation" />
         </div>
         <!-- <div class="banner-content d-flex gap-3"> -->
         <div class="banner-header">
           <!-- <div class="banner-image d-xl-none"> -->
-          <img src={smSrc} class="banner-image d-xl-none" alt="" role="presentation" />
+          <img src={smSrc} class="banner-image logo-small" alt="" role="presentation" />
           <!-- </div> -->
           <h2 class="h2 bold" id="cookie-heading">Can we use cookies in your browser?</h2>
           <button
@@ -81,8 +82,14 @@
             on:click={() => {
               denyAll();
             }}
-            ><i class="fa-solid fa-xmark" aria-hidden="true"></i><span class="visually-hidden">Close banner</span
-            ></button
+            ><span class="close-icon">
+              <i class="fa-solid fa-xmark icon-default" aria-hidden="true"></i><span class="fa-sr-only"
+                >Close banner</span
+              >
+              <i class="fa-solid fa-circle-xmark fa-2x icon-hover" aria-hidden="true"></i><span class="fa-sr-only"
+                >Close banner</span
+              >
+            </span></button
           >
         </div>
         <div class="banner-body">
@@ -143,6 +150,7 @@
     border-end-start-radius: 0;
     background: var(--color-primary-200);
     padding: 1.25rem 1rem;
+    max-height: 34rem;
 
     .h2 {
       font-size: 1.25rem;
@@ -170,10 +178,23 @@
         color: var(--color-primary-600);
       }
     }
+
     img.banner-image {
       max-inline-size: 1.875rem;
-      grid-area: icon;
+      grid-area: logo;
       align-self: center;
+    }
+    .banner-image.logo-small {
+      display: flex;
+      @media (min-width: 75em) {
+        display: none;
+      }
+    }
+    .banner-image.logo-large {
+      display: none;
+      @media (min-width: 75em) {
+        display: flex;
+      }
     }
     .banner-header {
       grid-area: header;
@@ -181,7 +202,7 @@
       grid-template-columns: auto;
       grid-template-rows: auto;
       grid-template-areas:
-        'icon . close'
+        'logo . close'
         'heading heading heading';
     }
     .banner-body {
@@ -204,6 +225,7 @@
       button {
         line-height: 1.3125rem; /* 131.25% */
         letter-spacing: -0.01rem;
+        height: 2.75rem;
       }
     }
     .banner-container {
@@ -227,8 +249,41 @@
       padding: 0;
       justify-self: end;
       border-radius: 0.375rem;
+      span.close-icon {
+        padding: 0.625rem;
+        border-radius: 50%;
+        width: 2rem;
+        height: 2rem;
+        //trying to animate these icons
+        display: block;
+        position: relative;
+        i {
+          color: var(--color-neutral-600);
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          transition: opacity 0.25s ease-out;
+        }
+      }
+      .close-icon .icon-default {
+        opacity: 1;
+      }
+      .close-icon .icon-hover {
+        opacity: 0;
+      }
+      .close-icon:hover .icon-default,
+      .close-icon:focus .icon-default {
+        opacity: 0;
+        color: transparent;
+      }
+      .close-icon:hover .icon-hover,
+      .close-icon:focus .icon-hover {
+        opacity: 1;
+      }
       &:focus-visible {
         outline: 4px solid rgba(51, 51, 51, 0.4);
+        border-radius: 50%;
       }
     }
     .close i {
@@ -269,14 +324,19 @@
           justify-content: center;
           align-items: center;
           gap: 0.75rem;
-          &:nth-child(odd) {
-            flex: 1 0 0;
-          }
+          // &:nth-child(odd) {
+          //   flex: 1 0 0;
+          // }
         }
       }
     }
+    @media (max-width: 75em) and (min-width: 48em) {
+      .banner-buttons button:nth-child(odd) {
+        flex: 1 0 0;
+      }
+    }
     @media (min-width: 75em) {
-      /* 992px, bootstrap "xl" and up */
+      /* 1200px, bootstrap "xl" and up */
       .banner-image {
         grid-column: 1;
         grid-row: 1 / 3;
@@ -285,29 +345,34 @@
         height: 10.3125rem;
         img {
           max-inline-size: 6.875rem;
+          max-block-size: 8.34181rem;
         }
       }
       .banner-container {
         grid-template-areas:
-          'icon header header'
-          '. body body';
+          'logo header header'
+          'logo body body';
         align-items: center;
         column-gap: 1rem;
+        grid-template-columns: auto 1fr;
       }
       .banner-body {
         flex-direction: row;
+        justify-content: space-between;
       }
       #cookie-description {
         gap: 1rem;
+        max-inline-size: 34.25rem;
       }
       .banner-buttons {
         flex-direction: column;
-        width: 55%;
+        width: 22.5rem;
         align-self: stretch;
       }
     }
   }
   @media (min-width: 82rem) {
+    /* 1312 px */
     .banner-container {
       margin-inline: max(clamp(0.938rem, calc(0.268rem + 3.348vw), 1.875rem), ((100% - 73.125rem) / 2));
     }
