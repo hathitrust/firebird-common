@@ -66,7 +66,7 @@
     <div class="cookie-banner alert alert-dark alert-block mb-0 shadow-lg rounded-bottom-0">
       <div class="banner-container">
         <div class="banner-image align-items-center d-none d-xl-flex justify-content-center">
-          <img src={lgSrc} class="" alt="" role="presentation" />
+          <img src={lgSrc} height="133" width="100" class="" alt="" role="presentation" />
         </div>
         <!-- <div class="banner-content d-flex gap-3"> -->
         <div class="banner-header">
