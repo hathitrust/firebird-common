@@ -66,13 +66,13 @@
   <div aria-labelledby="cookie-heading" aria-describedby="cookie-description" role="dialog" aria-modal="false">
     <div class="cookie-banner alert alert-dark alert-block mb-0 shadow-lg rounded-bottom-0">
       <div class="banner-container">
-        <div class="banner-image align-items-center d-none d-xl-flex justify-content-center">
+        <div class="banner-image align-items-center justify-content-center logo-large">
           <img src={lgSrc} height="133" width="100" class="" alt="" role="presentation" />
         </div>
         <!-- <div class="banner-content d-flex gap-3"> -->
         <div class="banner-header">
           <!-- <div class="banner-image d-xl-none"> -->
-          <img src={smSrc} class="banner-image d-xl-none" alt="" role="presentation" />
+          <img src={smSrc} class="banner-image logo-small" alt="" role="presentation" />
           <!-- </div> -->
           <h2 class="h2 bold" id="cookie-heading">Can we use cookies in your browser?</h2>
           <button
@@ -178,10 +178,23 @@
         color: var(--color-primary-600);
       }
     }
+
     img.banner-image {
       max-inline-size: 1.875rem;
       grid-area: logo;
       align-self: center;
+    }
+    .banner-image.logo-small {
+      display: flex;
+      @media (min-width: 75em) {
+        display: none;
+      }
+    }
+    .banner-image.logo-large {
+      display: none;
+      @media (min-width: 75em) {
+        display: flex;
+      }
     }
     .banner-header {
       grid-area: header;
@@ -323,7 +336,7 @@
       }
     }
     @media (min-width: 75em) {
-      /* 992px, bootstrap "xl" and up */
+      /* 1200px, bootstrap "xl" and up */
       .banner-image {
         grid-column: 1;
         grid-row: 1 / 3;
