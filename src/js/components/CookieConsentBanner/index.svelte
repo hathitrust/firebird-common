@@ -81,8 +81,14 @@
             on:click={() => {
               denyAll();
             }}
-            ><i class="fa-solid fa-xmark" aria-hidden="true"></i><span class="visually-hidden">Close banner</span
-            ></button
+            ><span class="close-icon">
+              <i class="fa-solid fa-xmark icon-default" aria-hidden="true"></i><span class="fa-sr-only"
+                >Close banner</span
+              >
+              <i class="fa-solid fa-circle-xmark fa-2x icon-hover" aria-hidden="true"></i><span class="fa-sr-only"
+                >Close banner</span
+              >
+            </span></button
           >
         </div>
         <div class="banner-body">
@@ -227,8 +233,41 @@
       padding: 0;
       justify-self: end;
       border-radius: 0.375rem;
+      span.close-icon {
+        padding: 0.625rem;
+        border-radius: 50%;
+        width: 2rem;
+        height: 2rem;
+        //trying to animate these icons
+        display: block;
+        position: relative;
+        i {
+          color: var(--color-neutral-600);
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          transition: opacity 0.25s ease-out;
+        }
+      }
+      .close-icon .icon-default {
+        opacity: 1;
+      }
+      .close-icon .icon-hover {
+        opacity: 0;
+      }
+      .close-icon:hover .icon-default,
+      .close-icon:focus .icon-default {
+        opacity: 0;
+        color: transparent;
+      }
+      .close-icon:hover .icon-hover,
+      .close-icon:focus .icon-hover {
+        opacity: 1;
+      }
       &:focus-visible {
         outline: 4px solid rgba(51, 51, 51, 0.4);
+        border-radius: 50%;
       }
     }
     .close i {
@@ -309,6 +348,7 @@
     }
   }
   @media (min-width: 82rem) {
+    /* 1312 px */
     .banner-container {
       margin-inline: max(clamp(0.938rem, calc(0.268rem + 3.348vw), 1.875rem), ((100% - 73.125rem) / 2));
     }
