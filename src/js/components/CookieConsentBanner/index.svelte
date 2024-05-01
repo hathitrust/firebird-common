@@ -149,6 +149,7 @@
     border-end-start-radius: 0;
     background: var(--color-primary-200);
     padding: 1.25rem 1rem;
+    max-height: 34rem;
 
     .h2 {
       font-size: 1.25rem;
