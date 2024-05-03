@@ -38,7 +38,7 @@ describe('AnalyticsManager', () => {
             expect(document.body.classList).toContain('apps')
         })
         it('should configure analytics', () => {
-            analyticsManager.configure(true)
+            analyticsManager.configure(() => { })
             expect(configureSpy).toHaveBeenCalled()
         })
         it('should have _mtm variable defined', () => {

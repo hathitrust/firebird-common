@@ -7,7 +7,7 @@ export class AnalyticsManager {
     }
   }
 
-  configure(testing = false) {
+  configure(addMatomoScript = this.addMatomoScript) {
     if (!this.service) {
       return;
     }
@@ -40,8 +40,11 @@ export class AnalyticsManager {
       // pt has provided an original title
       _paq.push(['setDocumentTitle', customPageTitle]);
     }
+    addMatomoScript()
+    
+  }
 
-    if (!testing) {
+  addMatomoScript() {
       var d = document,
         g = d.createElement('script'),
         s = d.getElementsByTagName('script')[0];
@@ -49,7 +52,7 @@ export class AnalyticsManager {
       g.src = `https://${this.service}/js/container_${this.container}.js`;
       s.parentNode.insertBefore(g, s);
     }
-  }
 }
+
 
 export default AnalyticsManager;
