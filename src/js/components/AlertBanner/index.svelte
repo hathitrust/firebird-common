@@ -8,8 +8,9 @@
       title: 'Outage: Incomplete search results',
       message: 'Users searching within the full text of all volumes will receive incomplete search results.',
       link: 'https://www.hathitrust.org/press-post/outage-incomplete-search-results/',
-      linkText: 'More information',
+      linkText: 'See updates here',
       type: 'warning',
+      //ID should increment with each new alert
       id: 1,
     },
   ];
@@ -111,40 +112,7 @@
       padding: 0rem 1rem;
       justify-content: center;
       align-items: center;
-      // gap: 0.625rem;
-      border-radius: 0.25rem;
       margin-top: 0.25rem;
-      .close-icon {
-        padding: 0.625rem;
-        border-radius: 50%;
-        width: 2rem;
-        height: 2rem;
-        display: block;
-        position: relative;
-        i {
-          color: var(--color-neutral-600);
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          transition: opacity 0.25s ease-out;
-        }
-      }
-      .close-icon .icon-default {
-        opacity: 1;
-      }
-      .close-icon .icon-hover {
-        opacity: 0;
-      }
-      .close-icon:hover .icon-default,
-      .close-icon:focus .icon-default {
-        opacity: 0;
-        color: transparent;
-      }
-      .close-icon:hover .icon-hover,
-      .close-icon:focus .icon-hover {
-        opacity: 1;
-      }
     }
   }
   @media (min-width: 48em) {
