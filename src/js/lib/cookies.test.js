@@ -1,6 +1,6 @@
 import { afterEach, afterAll, describe, it, expect, test, vi } from 'vitest'
 import { docCookies, setSelectedConsent} from './cookies'
-import { cookieConsentSeen, trackingConsent, marketingConsent, preferencesConsent, allowTracking } from './store'
+import { cookieConsentSeen, trackingConsent, marketingConsent, preferencesConsent, allowTracking, allowMarketing } from './store'
 import { get } from 'svelte/store';
 
 // @vitest-environment happy-dom
@@ -138,6 +138,7 @@ describe('docCookies', () => {
 describe('setSelectedConsent', () => {
     afterAll(() => {
         docCookies.removeItem('HT-tracking-cookie-consent')
+        docCookies.removeItem('HT-marketing-cookie-consent')
     })
     // it.skip('should use setTrackingAllowedCookie', () => {
         // const mockSetTrackingAllowedCookie = vi.fn().mockImplementation('setTrackingAllowedCookie')
@@ -151,6 +152,13 @@ describe('setSelectedConsent', () => {
 
         expect(get(allowTracking)).toBe(true)
         expect(document.cookie).toContain('HT-tracking-cookie-consent=true')
+    })
+    it('should set HT-marketing-consent to false', () => {
+        allowMarketing.set(false);
+        setSelectedConsent()
+
+        expect(get(allowMarketing)).toBe(false)
+        expect(document.cookie).toContain('HT-marketing-cookie-consent=false')
     })
 
 })
