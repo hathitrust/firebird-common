@@ -1,24 +1,66 @@
 <script>
-  export let alertType = 'warning';
+  import { preferencesConsent } from '../../lib/store';
+  let HT = window.HT || {};
+  let cookieJar = HT.cookieJar;
+
+  const alertData = [
+    {
+      title: 'Outage: Incomplete search results',
+      message: 'Users searching within the full text of all volumes will receive incomplete search results.',
+      link: 'https://www.hathitrust.org/press-post/outage-incomplete-search-results/',
+      linkText: 'See updates here',
+      type: 'warning',
+      //ID should increment with each new alert
+      id: 1,
+    },
+  ];
+
+  let isVisible = true;
+
+  function closeAlert() {
+    //if user has functional/preference cookies enabled, set a 14-day cookie to remember dismissed preference
+    if ($preferencesConsent === 'true') {
+      let expires = new Date();
+      expires.setDate(expires.getDate() + 14);
+      cookieJar.setItem(`HT-alert-${alertData[0].id}`, 'dismissed', expires, '/', HT.cookies_domain, true);
+      isVisible = false;
+    }
+    //reset focus to the main element once the banner is removed from the DOM
+    if (document.querySelector('main')) {
+      document.querySelector('main').focus();
+    }
+  }
+
+  if (cookieJar.getItem(`HT-alert-${alertData[0].id}`) === 'dismissed') {
+    isVisible = false;
+  }
 </script>
 
-<div
-  class="alert d-flex mx-3 gap-2 {alertType === 'warning'
-    ? 'alert-warning'
-    : alertType === 'danger'
-      ? 'alert-danger'
-      : 'alert-info'}"
-  role="alert"
->
-  <i class="alert-icon fa-solid fa-triangle-exclamation"></i>
-  <div class="d-flex flex-column gap-2 py-3">
-    <p class="alert-heading">Outage: Incomplete search results</p>
-    <p>Users searching within the full text of all volumes will receive incomplete search results.</p>
-    <a class="alert-link" href="https://www.hathitrust.org/press-post/outage-incomplete-search-results/"
-      >More information</a
-    >
-  </div>
-</div>
+{#if isVisible}
+  {#each alertData as alert}
+    <div class="alert alert-dismissible d-flex mx-3 justify-content-between fade show alert-{alert.type}" role="alert">
+      <div class="d-flex gap-2">
+        <i class="alert-icon fa-solid fa-triangle-exclamation"></i>
+        <div class="d-flex flex-column gap-2 py-3">
+          <p class="alert-heading">{alert.title}</p>
+          <p>{alert.message}</p>
+          <a class="alert-link" href={alert.link}>{alert.linkText}</a>
+        </div>
+      </div>
+      <div class="close-wrapper">
+        <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close" on:click={closeAlert}>
+          <span class="close-icon">
+            <i class="fa-solid fa-xmark icon-default" aria-hidden="true"></i><span class="fa-sr-only">Close banner</span
+            >
+            <i class="fa-solid fa-circle-xmark fa-2x icon-hover" aria-hidden="true"></i><span class="fa-sr-only"
+              >Close banner</span
+            >
+          </span>
+        </button>
+      </div>
+    </div>
+  {/each}
+{/if}
 
 <style lang="scss">
   .alert-warning {
@@ -35,7 +77,7 @@
     padding: 0;
     border-radius: 0.25rem;
     box-shadow: 0px 4px 8px 0px rgba(25, 11, 1, 0.04);
-    i {
+    i.alert-icon {
       color: var(--bs-alert-border-color);
       display: flex;
       width: 1.5rem;
@@ -57,6 +99,24 @@
       font-weight: 500;
       color: var(--bs-alert-color);
     }
+    .close-wrapper {
+      display: flex;
+      align-items: flex-start;
+    }
+    button {
+      background: var(--bs-alert-bg);
+      border: none;
+      display: flex;
+      width: 2.75rem;
+      height: 2.75rem;
+      padding: 0rem 1rem;
+      justify-content: center;
+      align-items: center;
+      margin-top: 0.25rem;
+    }
+  }
+  @media (min-width: 48em) {
+    /* 768px, bootstrap "medium" and up */
   }
   .alert-heading {
     font-weight: 700;
