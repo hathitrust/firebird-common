@@ -41,6 +41,19 @@ export const Default = {
     expect(consentButton.classList).toContain('btn-primary');
   },
 };
+export const MobileDefault = {
+  parameters: {
+    viewport: {
+      defaultViewport: 'bsXs',
+    },
+  },
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      // props: { loggedIn: true },
+    }),
+  ],
+};
 
 // export const PreviouslyAccepted = {
 //   parameters: {

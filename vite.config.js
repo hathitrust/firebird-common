@@ -73,4 +73,9 @@ export default defineConfig({
       scss: scssOptions,
     },
   },
+  test: {
+    coverage: {
+      reporter: 'lcov'
+    },
+  },
 });
