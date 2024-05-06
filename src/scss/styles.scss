@@ -393,6 +393,54 @@ a:not(.btn,.list-group-item):has(i[aria-hidden]) {
    max-inline-size: min(90vw,70ch);
 }
 
+//close icon
+button.close {
+  &:focus-visible {
+    outline: 4px solid rgba(51, 51, 51, 0.4);
+    border-radius: 50%; 
+    .close-icon .icon-default {
+     opacity:0;
+      color:transparent; 
+    }
+    .close-icon .icon-hover {
+      opacity: 1;
+    }
+  }
+  .close-icon {
+  padding: 0.625rem;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  display: block;
+  position: relative;
+    i {
+      color: var(--color-neutral-600);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.25s ease-out;
+    }
+    .icon-default {
+      opacity: 1;
+    }
+    .icon-hover {
+      opacity: 0;
+    }
+    &:hover .icon-default,
+    &:focus .icon-default {
+      opacity:0;
+      color:transparent;
+    }
+    &:hover .icon-hover,
+    &:focus .icon-hover {
+      opacity: 1;
+    }
+  
+  }
+  
+}
+
 .px-modal {
   padding-left: var(--bs-modal-padding-width) !important;
   padding-right: var(--bs-modal-padding-width) !important;

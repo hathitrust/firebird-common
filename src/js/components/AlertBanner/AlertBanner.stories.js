@@ -1,4 +1,5 @@
 import AlertBanner from './index.svelte'
+import PingCallbackDecorator from '../../decorators/PingCallbackDecorator';
 
 export default {
     title: 'Alert Banner',
@@ -11,4 +12,10 @@ export const Default = {
       defaultViewport: 'bsLg',
     },
   }, 
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      // props: { loggedIn: true },
+    }),
+  ],
 }
