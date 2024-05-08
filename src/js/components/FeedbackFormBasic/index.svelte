@@ -5,6 +5,11 @@
   let userURL = location.href;
   let userAgent = navigator.userAgent;
   let formName = 'basic-form';
+  let errorMessage,
+    nameError,
+    emailError,
+    summaryError,
+    descriptionError = false;
 
   //takes long string output of document.cookie and splits it into a usable javascript object
   let cookies = document.cookie
@@ -71,14 +76,32 @@
       event.stopPropagation();
       loading = false;
       formValid.classList.add('was-validated');
+      if (formValid.querySelector('#name.form-control:invalid')) {
+        nameError = true;
+      }
+      if (formValid.querySelector('#email.form-control:invalid')) {
+        emailError = true;
+      }
+      if (formValid.querySelector('#summary.form-control:invalid')) {
+        summaryError = true;
+      }
+      if (formValid.querySelector('#description.form-control:invalid')) {
+        descriptionError = true;
+      }
+      errorMessage = true;
     } else {
       // do the post fetch function, passing in the seralized data
       postForm(data)
-        // if no error, hide form and log new issue ID
+        // if no error, hide form, reset all the error messages, and log new issue ID
         .then((jiraResponseData) => {
           loading = false;
           submitted = true;
           hidden = true;
+          nameError = false;
+          emailError = false;
+          summaryError = false;
+          descriptionError = false;
+          errorMessage = false;
 
           console.log(
             `request created in service desk ${jiraResponseData.serviceDeskId}: ${jiraResponseData.issueKey}`
@@ -110,40 +133,68 @@
 <main>
   <form on:submit|preventDefault={onSubmit} class:hidden class="needs-validation mb-3" name="feedback" novalidate {id}>
     <div class="mb-3">
-      <label for="name" class="form-label">Name <span class="required">(required)</span></label>
-      <input type="name" class="form-control" id="name" name="name" required />
-      <div class="invalid-feedback">Please provide your name.</div>
-      <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+      <label for="name" class="form-label">Name <span class="required" aria-hidden="true">(required)</span> </label>
+      <input aria-describedby="name-error" type="name" class="form-control" id="name" name="name" required />
+      <div class="invalid-feedback" id="name-error">
+        {#if nameError}
+          <span>Error: Please provide your name.</span>
+        {/if}
+      </div>
     </div>
     <div class="mb-3">
-      <label for="email" class="form-label">Email address <span class="required">(required)</span></label>
-      <input type="email" class="form-control" id="email" name="email" required />
-      <div class="invalid-feedback">Please provide an email address.</div>
+      <label for="email" class="form-label"
+        >Email address <span class="required" aria-hidden="true">(required)</span></label
+      >
+      <input type="email" class="form-control" id="email" name="email" aria-describedby="email-error" required />
+      <div class="invalid-feedback" id="email-error">
+        {#if emailError}<span>Error: Please provide an email address.</span>{/if}
+      </div>
     </div>
     <div class="mb-3">
-      <label for="summary" class="form-label">Short summary <span class="required">(required)</span></label>
-      <input type="text" class="form-control" id="summary" name="summary" required />
-      <div class="invalid-feedback">Please provide a title or subject line to summarize your feedback.</div>
+      <label for="summary" class="form-label"
+        >Short summary <span class="required" aria-hidden="true">(required)</span></label
+      >
+      <input type="text" class="form-control" id="summary" name="summary" aria-describedby="summary-error" required />
+      <div class="invalid-feedback" id="summary-error">
+        {#if summaryError}<span>Error: Please provide a title or subject line to summarize your feedback.</span>{/if}
+      </div>
     </div>
     <div class="mb-3">
       <label for="bookDescription" class="form-label"
-        >If your question is related to a specific book, what is the title or URL? <span class="required"
-          >(optional)</span
+        >If your question is related to a specific book, what is the title or URL? <span
+          class="required"
+          aria-hidden="true">(optional)</span
         ></label
       >
       <input type="text" class="form-control" id="bookDescription" name="bookDescription" />
     </div>
     <div class="mb-3">
       <label for="description" class="form-label"
-        >Full description of problem or question <span class="required">(required)</span></label
+        >Full description of problem or question <span class="required" aria-hidden="true">(required)</span></label
       >
-      <textarea class="form-control" id="description" name="description" rows="3" required />
-      <div class="invalid-feedback">Please provide some background or details for your feedback or question.</div>
+      <textarea
+        class="form-control"
+        aria-describedby="description-error"
+        id="description"
+        name="description"
+        rows="3"
+        required
+      />
+      <div class="invalid-feedback" id="description-error">
+        {#if descriptionError}<span
+            >Error: Please provide some background or details for your feedback or question.</span
+          >{/if}
+      </div>
     </div>
     <input name="userURL" id="userURL" type="hidden" bind:value={userURL} />
     <input name="userAgent" id="userAgent" type="hidden" bind:value={userAgent} />
     <input name="userAuthStatus" id="userAuthStatus" type="hidden" bind:value={userAuthStatus} />
     <input name="formName" id="formName" type="hidden" bind:value={formName} />
+    {#if errorMessage}
+      <div role="alert" class="mb-3">
+        The form did not submit due to errors in the fields. Please review error messages and resubmit the form.
+      </div>
+    {/if}
 
     <button type="submit" class="btn btn-primary" disabled={loading}>
       Submit{#if loading}

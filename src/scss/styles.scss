@@ -341,6 +341,20 @@ textarea.form-control {
   border-bottom-left-radius: var(--bs-border-radius) !important;
 }
 
+.was-validated .form-control:valid, .form-control.is-valid {
+  border-color:  rgba(0, 0, 0, .25);
+  background-image: none;
+}
+.was-validated .form-check-input:valid~.form-check-label, .form-check-input.is-valid~.form-check-label {
+  color: inherit;
+}
+.was-validated .form-check-input:valid, .form-check-input.is-valid {
+  border-color: rgba(0, 0, 0, .25);
+}
+.was-validated .form-check-input:valid:checked, .form-check-input.is-valid:checked, .was-validated .form-check-input:valid:checked, .form-check-input.is-valid:checked {
+  background-color: var(--color-primary-600);
+}
+
 a:not(.btn,.list-group-item):has(i[aria-hidden]) {
   display: inline-flex;
   gap: 0.25rem;
