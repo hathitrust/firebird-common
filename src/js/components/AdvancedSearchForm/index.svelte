@@ -649,7 +649,7 @@
         <fieldset class="mb-4">
           <legend class="fs-4 fw-bold">Language</legend>
 
-          <div>
+          <div class="advanced-search-list">
             <FilterableSelection
               --filterable-list-height="15rem"
               items={languageData.map((item) => ({
@@ -670,7 +670,7 @@
 
           <p>Select one or more options to narrow your results to items that match all of your format selections.</p>
 
-          <div>
+          <div class="advanced-search-list">
             <FilterableSelection
               --filterable-list-height="15rem"
               items={formatData.map((item) => ({
