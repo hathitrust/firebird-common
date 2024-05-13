@@ -35,18 +35,15 @@ export const DesktopFormFilled = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const name = await canvas.getByRole('textbox', { name: 'Name (required)' });
-    const email = await canvas.getByRole('textbox', {
-      name: 'Email address (required)',
+    // const name = await canvas.getByRole('textbox', { name: 'Name ' });
+    const name = await canvas.getByLabelText('Name (required)', {selector: 'input'});
+    const email = await canvas.getByLabelText('Email address (required)', {selector: 'input'});
+    const summary = await canvas.getByLabelText('Short summary (required)', {selector: 'input'});
+    const bookDescription = await canvas.getByLabelText('If your question is related to a specific book, what is the title or URL? (optional)', {
+      selector: 'input'
     });
-    const summary = await canvas.getByRole('textbox', {
-      name: 'Short summary (required)',
-    });
-    const bookDescription = await canvas.getByRole('textbox', {
-      name: 'If your question is related to a specific book, what is the title or URL? (optional)',
-    });
-    const description = await canvas.getByRole('textbox', {
-      name: 'Full description of problem or question (required)',
+    const description = await canvas.getByLabelText('Full description of problem or question (required)', {
+      selector: 'textarea'
     });
 
     await userEvent.type(name, 'Caryl Wyatt');
@@ -64,8 +61,8 @@ export const DesktopFormMissingRequiredFields = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const bookDescription = await canvas.getByRole('textbox', {
-      name: 'If your question is related to a specific book, what is the title or URL? (optional)',
+    const bookDescription = await canvas.getByLabelText('If your question is related to a specific book, what is the title or URL? (optional)', {
+      selector: 'input'
     });
 
     const submitButton = await canvas.getByRole('button', { name: 'Submit' });

@@ -7,6 +7,11 @@
   let userURL = location.href;
   let userAgent = navigator.userAgent;
   let formName = 'content-correction';
+  let errorMessage,
+    nameError,
+    emailError,
+    summaryError,
+    urlError = false;
 
   //takes long string output of document.cookie and splits it into a usable javascript object
   let cookies = document.cookie
@@ -77,6 +82,19 @@
       event.stopPropagation();
       loading = false;
       formValid.classList.add('was-validated');
+      if (formValid.querySelector('#name.form-control:invalid')) {
+        nameError = true;
+      }
+      if (formValid.querySelector('#email.form-control:invalid')) {
+        emailError = true;
+      }
+      if (formValid.querySelector('#summary.form-control:invalid')) {
+        summaryError = true;
+      }
+      if (formValid.querySelector('#bookURL.form-control:invalid')) {
+        descriptionError = true;
+      }
+      errorMessage = true;
     } else {
       // do the post fetch function, passing in the seralized data
       postForm(data)
@@ -85,6 +103,11 @@
           loading = false;
           submitted = true;
           hidden = true;
+          nameError = false;
+          emailError = false;
+          summaryError = false;
+          urlError = false;
+          errorMessage = false;
 
           console.log(
             `request created in service desk ${jiraResponseData.serviceDeskId}: ${jiraResponseData.issueKey}`
@@ -117,32 +140,45 @@
 <main>
   <form on:submit|preventDefault={onSubmit} class:hidden class="needs-validation mb-3" name="feedback" novalidate {id}>
     <div class="mb-3">
-      <label for="name" class="form-label">Name <span class="required">(required)</span></label>
-      <input type="name" class="form-control" id="name" name="name" required />
-      <div class="invalid-feedback">Please provide your name.</div>
+      <label for="name" class="form-label">Name <span class="required" aria-hidden="true">(required)</span></label>
+      <input aria-describedby="name-error" type="name" class="form-control" id="name" name="name" required />
+      <div class="invalid-feedback" id="name-error">
+        {#if nameError}<span>Error: Please provide your name.</span>{/if}
+      </div>
       <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
     </div>
     <div class="mb-3">
-      <label for="email" class="form-label">Email address <span class="required">(required)</span></label>
-      <input type="email" class="form-control" id="email" name="email" required />
-      <div class="invalid-feedback">Please provide an email address.</div>
-    </div>
-    <div class="mb-3">
-      <label for="summary" class="form-label">Short summary <span class="required">(required)</span></label>
-      <input type="text" class="form-control" id="summary" name="summary" required />
-      <div class="invalid-feedback">Please provide a title or subject line to summarize your feedback.</div>
-    </div>
-    <div class="mb-3">
-      <label for="bookURL" class="form-label"
-        >URL of book that you are reporting a problem with <span class="required">(required)</span></label
+      <label for="email" class="form-label"
+        >Email address <span class="required" aria-hidden="true">(required)</span></label
       >
-      <input type="text" class="form-control" id="bookURL" name="bookURL" />
-      <div class="invalid-feedback">
-        Please provide the URL of the record from the catalog where you found the issue.
+      <input type="email" aria-describedby="email-error" class="form-control" id="email" name="email" required />
+      <div class="invalid-feedback" id="email-error">
+        {#if emailError}<span>Error: Please provide an email address.</span>{/if}
       </div>
     </div>
     <div class="mb-3">
-      <label for="itemTitle" class="form-label">Title of the book <span class="required">(optional)</span></label>
+      <label for="summary" class="form-label"
+        >Short summary <span class="required" aria-hidden="true">(required)</span></label
+      >
+      <input type="text" class="form-control" aria-describedby="summary-error" id="summary" name="summary" required />
+      <div class="invalid-feedback" id="summary-error">
+        {#if summaryError}<span>Error: Please provide a title or subject line to summarize your feedback.</span>{/if}
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="bookURL" class="form-label"
+        >URL of book that you are reporting a problem with <span class="required" aria-hidden="true">(required)</span
+        ></label
+      >
+      <input type="text" class="form-control" aria-describedby="url-error" id="bookURL" name="bookURL" />
+      <div class="invalid-feedback" id="url-error">
+        {#if urlError}<span>Please provide the URL of the record from the catalog where you found the issue.</span>{/if}
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="itemTitle" class="form-label"
+        >Title of the book <span class="required" aria-hidden="true">(optional)</span></label
+      >
       <input type="text" class="form-control" id="itemTitle" name="itemTitle" />
     </div>
 
@@ -151,7 +187,7 @@
         <p>What specific problems are you noticing with the digital scans?</p>
       </div>
       <legend class="mb-3 fs-6">
-        Overall page readability and quality <span class="required">(required)</span>
+        Overall page readability and quality <span class="required" aria-hidden="true">(required)</span>
       </legend>
       <div class="form-check">
         <input
@@ -218,7 +254,7 @@
     <fieldset class="mb-3">
       <legend class="mb-3 fs-6">
         Specific page image problems?
-        <span class="required">(required)</span>
+        <span class="required" aria-hidden="true">(required)</span>
       </legend>
       <div class="form-check">
         <input
@@ -226,9 +262,10 @@
           type="checkbox"
           name="imageProblems"
           value="Missing parts of the page"
+          id="c1"
           bind:group={imageProblems}
         />
-        <label class="form-check-label" for="flexCheckDefault"> Missing parts of the page </label>
+        <label class="form-check-label" for="c1"> Missing parts of the page </label>
       </div>
       <div class="form-check">
         <input
@@ -236,9 +273,10 @@
           type="checkbox"
           name="imageProblems"
           value="Blurry text"
+          id="c2"
           bind:group={imageProblems}
         />
-        <label class="form-check-label" for="flexCheckDefault"> Blurry text </label>
+        <label class="form-check-label" for="c2"> Blurry text </label>
       </div>
       <div class="form-check">
         <input
@@ -246,13 +284,21 @@
           type="checkbox"
           name="imageProblems"
           value="OCR unreadable"
+          id="c3"
           bind:group={imageProblems}
         />
-        <label class="form-check-label" for="flexCheckDefault"> The OCR is unreadable </label>
+        <label class="form-check-label" for="c3"> The OCR is unreadable </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="imageProblems" value="Other" bind:group={imageProblems} />
-        <label class="form-check-label" for="flexCheckDefault"> Other (describe in description box) </label>
+        <input
+          class="form-check-input"
+          type="checkbox"
+          name="imageProblems"
+          value="Other"
+          id="c4"
+          bind:group={imageProblems}
+        />
+        <label class="form-check-label" for="c4"> Other (describe in description box) </label>
       </div>
       <div class="form-check">
         <input
@@ -260,15 +306,16 @@
           type="checkbox"
           name="imageProblems"
           value="No problems"
+          id="c5"
           bind:group={imageProblems}
           checked
         />
-        <label class="form-check-label" for="flexCheckChecked"> No problems </label>
+        <label class="form-check-label" for="c5"> No problems </label>
       </div>
     </fieldset>
     <div class="mb-3">
       <label for="description" class="form-label"
-        >Other problems or comments? <span class="required">(optional)</span></label
+        >Other problems or comments? <span class="required" aria-hidden="true">(optional)</span></label
       >
       <textarea class="form-control" id="description" name="description" rows="3" />
     </div>
@@ -276,6 +323,12 @@
     <input name="userAgent" id="userAgent" type="hidden" bind:value={userAgent} />
     <input name="userAuthStatus" id="userAuthStatus" type="hidden" bind:value={userAuthStatus} />
     <input name="formName" id="formName" type="hidden" bind:value={formName} />
+
+    {#if errorMessage}
+      <div role="alert" class="mb-3">
+        The form did not submit due to errors in the fields. Please review error messages and resubmit the form.
+      </div>
+    {/if}
 
     <button type="submit" class="btn btn-primary" disabled={loading}>
       Submit{#if loading}
