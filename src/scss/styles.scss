@@ -369,6 +369,7 @@ textarea.form-control {
 }
 .was-validated .form-check-input:valid:focus, .form-check-input.is-valid:focus {
   box-shadow: var(--ht-focus-box-shadow);
+}
 .advanced-search-list li.form-check:focus-within {
     border: 2px solid var(--color-primary-600);
 }
