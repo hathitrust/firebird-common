@@ -142,7 +142,7 @@
   }
 
   input:checked + label {
-    background: var(--color-primary-500, '#000') !important;
+    background: var(--color-primary-600, '#000') !important;
     color: white !important;
   }
 
