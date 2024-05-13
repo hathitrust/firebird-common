@@ -193,7 +193,6 @@
         <input
           class="form-check-input"
           type="checkbox"
-          role="checkbox"
           name="problems"
           value="Book doesn't match description"
           id="c1"
@@ -205,7 +204,6 @@
         <input
           class="form-check-input"
           type="checkbox"
-          role="checkbox"
           name="problems"
           value="Typo in metadata"
           id="c2"
@@ -214,22 +212,13 @@
         <label class="form-check-label" for="c2"> There is a typo in the metadata </label>
       </div>
       <div class="form-check">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          role="checkbox"
-          name="problems"
-          value="Other"
-          id="c3"
-          bind:group={problems}
-        />
+        <input class="form-check-input" type="checkbox" name="problems" value="Other" id="c3" bind:group={problems} />
         <label class="form-check-label" for="c3"> Other (describe in description box) </label>
       </div>
       <div class="form-check">
         <input
           class="form-check-input"
           type="checkbox"
-          role="checkbox"
           name="problems"
           value="None"
           id="c4"
