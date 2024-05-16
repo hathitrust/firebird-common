@@ -44,7 +44,8 @@ export class AnalyticsManager {
     
   }
 
-  addMatomoScript() {
+  //need the arrow function syntax for 'this' to be defined
+  addMatomoScript = () => {
       var d = document,
         g = d.createElement('script'),
         s = d.getElementsByTagName('script')[0];
