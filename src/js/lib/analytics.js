@@ -7,7 +7,7 @@ export class AnalyticsManager {
     }
   }
 
-  configure() {
+  configure(addMatomoScript = this.addMatomoScript) {
     if (!this.service) {
       return;
     }
@@ -22,7 +22,7 @@ export class AnalyticsManager {
     trackingConsent.subscribe((value) => {
       if (value !== 'true') {
         _paq.push(['requireCookieConsent']);
-      } else {
+        } else {
         _paq.push(['setCookieConsentGiven']);
       }
     })
@@ -40,14 +40,20 @@ export class AnalyticsManager {
       // pt has provided an original title
       _paq.push(['setDocumentTitle', customPageTitle]);
     }
-
-    var d = document,
-      g = d.createElement('script'),
-      s = d.getElementsByTagName('script')[0];
-    g.async = true;
-    g.src = `https://${this.service}/js/container_${this.container}.js`;
-    s.parentNode.insertBefore(g, s);
+    addMatomoScript()
+    
   }
+
+  //need the arrow function syntax for 'this' to be defined
+  addMatomoScript = () => {
+      var d = document,
+        g = d.createElement('script'),
+        s = d.getElementsByTagName('script')[0];
+      g.async = true;
+      g.src = `https://${this.service}/js/container_${this.container}.js`;
+      s.parentNode.insertBefore(g, s);
+    }
 }
+
 
 export default AnalyticsManager;

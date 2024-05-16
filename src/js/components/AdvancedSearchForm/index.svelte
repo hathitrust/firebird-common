@@ -494,20 +494,20 @@
         {#each lookFors as value, idx}
           {#if idx > 0}
             <fieldset class="mb-3">
-              <legend class="visually-hidden">Boolean operator for field {idx - 1} and field {idx}</legend>
+              <legend class="visually-hidden">Boolean operator for field {idx} and field {idx + 1}</legend>
               <div class="d-flex gap-3 align-items-center justify-content-start">
                 {#each booleanOptions as option, bidx}
                   <div class="form-check">
                     <input
                       name="boolean-{idx}"
-                      id="boolean-{bidx}"
+                      id="boolean-{idx}_{bidx}"
                       type="radio"
                       class="form-check-input"
                       value={option.value}
                       checked={option.value == bools[idx]}
                       bind:group={bools[idx]}
                     />
-                    <label class="form-check-label text-uppercase" for="boolean-{bidx}">{option.value}</label>
+                    <label class="form-check-label text-uppercase" for="boolean-{idx}_{bidx}">{option.value}</label>
                   </div>
                 {/each}
               </div>
@@ -649,7 +649,7 @@
         <fieldset class="mb-4">
           <legend class="fs-4 fw-bold">Language</legend>
 
-          <div>
+          <div class="advanced-search-list">
             <FilterableSelection
               --filterable-list-height="15rem"
               items={languageData.map((item) => ({
@@ -670,7 +670,7 @@
 
           <p>Select one or more options to narrow your results to items that match all of your format selections.</p>
 
-          <div>
+          <div class="advanced-search-list">
             <FilterableSelection
               --filterable-list-height="15rem"
               items={formatData.map((item) => ({

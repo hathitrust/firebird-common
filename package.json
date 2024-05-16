@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest",
+    "coverage": "vitest run --coverage.enabled --coverage.provider=istanbul",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "build-js": "vite build",
@@ -38,6 +39,7 @@
     "@storybook/test-runner": "^0.16.0",
     "@storybook/testing-library": "^0.0.14-next.1",
     "@sveltejs/vite-plugin-svelte": "^2.0.3",
+    "@vitest/coverage-istanbul": "^1.5.0",
     "chromatic": "^10.0.0",
     "fast-glob": "^3.2.12",
     "prettier": "2.8.6",
@@ -45,7 +47,8 @@
     "react-dom": "^18.2.0",
     "sass": "^1.58.3",
     "storybook": "^7.6.16",
-    "vite": "^4.1.4"
+    "vite": "^4.1.4",
+    "vitest": "^1.5.0"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.6",

@@ -92,49 +92,37 @@ export const docCookies = {
 let expires = new Date();
 expires.setMonth(expires.getMonth() + 12);
 
-// let mainContent;
-// let skiplinks;
-// if (document.body.classList.contains('apps') ) {
-//   //apps
-//   mainContent = document.querySelector('#root');
-//   skiplinks = document.querySelector('#skiplinks');
-// } else {
-//   //wordpress
-//   mainContent = document.querySelector('#maindocument');
-// }
-
-export function setCookieConsentSeen() {
+function setCookieConsentSeen() {
   docCookies.setItem('HT-cookie-banner-seen', 'true', expires, '/', HT.cookies_domain, true);
   cookieConsentSeen.set('true');
-//  if (mainContent) mainContent.inert = false;
-//   if (skiplinks) skiplinks.inert = false;
 }
-export function setTrackingAllowedCookie() {
+function setTrackingAllowedCookie() {
   docCookies.setItem('HT-tracking-cookie-consent', 'true', expires, '/', HT.cookies_domain, true);
   trackingConsent.set('true');
+  return true;
 }
 
-export function setTrackingDisallowedCookie() {
+function setTrackingDisallowedCookie() {
   docCookies.setItem('HT-tracking-cookie-consent', 'false', expires, '/', HT.cookies_domain, true);
   trackingConsent.set('false');
 }
 
-export function setMarketingAllowedCookie() {
+function setMarketingAllowedCookie() {
   docCookies.setItem('HT-marketing-cookie-consent', 'true', expires, '/', HT.cookies_domain, true);
   marketingConsent.set('true');
 }
 
-export function setMarketingDisallowedCookie() {
+function setMarketingDisallowedCookie() {
   docCookies.setItem('HT-marketing-cookie-consent', 'false', expires, '/', HT.cookies_domain, true);
   marketingConsent.set('false');
 }
 
-export function setPreferencesAllowedCookie() {
+function setPreferencesAllowedCookie() {
   docCookies.setItem('HT-preferences-cookie-consent', 'true', expires, '/', HT.cookies_domain, true);
   preferencesConsent.set('true');
 }
 
-export function setPreferencesDisallowedCookie() {
+function setPreferencesDisallowedCookie() {
   docCookies.setItem('HT-preferences-cookie-consent', 'false', expires, '/', HT.cookies_domain, true);
   preferencesConsent.set('false');
 }

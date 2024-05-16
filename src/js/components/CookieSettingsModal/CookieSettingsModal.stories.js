@@ -1,4 +1,5 @@
 import CookieSettingsModal from './index.svelte';
+import { userEvent, within } from '@storybook/testing-library';
 
 export default {
   title: 'Cookie Settings Modal',
@@ -20,3 +21,51 @@ export const Default = {
     
   },
 };
+
+export const MobileDefault = {
+  parameters: {
+    viewport: {
+      defaultViewport: 'bsXs',
+    },
+  },
+  args: {
+    isOpen: true,
+    
+  },
+};
+
+export const AccordionOpen = {
+ parameters: { ...Default.parameters },
+  args: {
+   isOpen: true,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const firstAccordion = await canvas.getAllByRole('button', {name: 'Necessary cookies' })[0]
+    await userEvent.click(firstAccordion);
+  },
+}
+
+export const MarketingSelected = {
+ parameters: { ...Default.parameters },
+  args: {
+   isOpen: true,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const marketing = await canvas.getAllByRole('checkbox')[2]
+    await userEvent.click(marketing);
+  },
+}
+
+export const CloseSettingsModal = {
+ parameters: { ...Default.parameters },
+  args: {
+   isOpen: true,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const closeButton = await canvas.getByLabelText('Close Modal')
+    await userEvent.click(closeButton);
+  },
+}

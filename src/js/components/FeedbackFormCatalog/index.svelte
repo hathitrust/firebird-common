@@ -7,6 +7,10 @@
   let userURL = location.href;
   let userAgent = navigator.userAgent;
   let formName = 'catalog-correction';
+  let errorMessage,
+    nameError,
+    emailError,
+    summaryError = false;
 
   //takes long string output of document.cookie and splits it into a usable javascript object
   let cookies = document.cookie
@@ -77,6 +81,16 @@
       event.stopPropagation();
       loading = false;
       formValid.classList.add('was-validated');
+      if (formValid.querySelector('#name.form-control:invalid')) {
+        nameError = true;
+      }
+      if (formValid.querySelector('#email.form-control:invalid')) {
+        emailError = true;
+      }
+      if (formValid.querySelector('#summary.form-control:invalid')) {
+        summaryError = true;
+      }
+      errorMessage = true;
     } else {
       // do the post fetch function, passing in the seralized data
       postForm(data)
@@ -85,6 +99,10 @@
           loading = false;
           submitted = true;
           hidden = true;
+          nameError = false;
+          emailError = false;
+          summaryError = false;
+          errorMessage = false;
 
           console.log(
             `request created in service desk ${jiraResponseData.serviceDeskId}: ${jiraResponseData.issueKey}`
@@ -117,23 +135,37 @@
 <main>
   <form on:submit|preventDefault={onSubmit} class:hidden class="needs-validation mb-3" name="feedback" novalidate {id}>
     <div class="mb-3">
-      <label for="name" class="form-label">Name <span class="required">(required)</span></label>
+      <label for="name" class="form-label">Name <span class="required" aria-hidden="true">(required)</span></label>
       <input type="name" class="form-control" id="name" name="name" required />
-      <div class="invalid-feedback">Please provide your name.</div>
+      <div class="invalid-feedback">
+        {#if nameError}
+          <span>Error: Please provide your name.</span>
+        {/if}
+      </div>
       <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
     </div>
     <div class="mb-3">
-      <label for="email" class="form-label">Email address <span class="required">(required)</span></label>
+      <label for="email" class="form-label"
+        >Email address <span class="required" aria-hidden="true">(required)</span></label
+      >
       <input type="email" class="form-control" id="email" name="email" required />
-      <div class="invalid-feedback">Please provide an email address.</div>
+      <div class="invalid-feedback">
+        {#if emailError}<span>Error: Please provide an email address.</span>{/if}
+      </div>
     </div>
     <div class="mb-3">
-      <label for="summary" class="form-label">Short summary <span class="required">(required)</span></label>
+      <label for="summary" class="form-label"
+        >Short summary <span class="required" aria-hidden="true">(required)</span></label
+      >
       <input type="text" class="form-control" id="summary" name="summary" required />
-      <div class="invalid-feedback">Please provide a title or subject line to summarize your feedback.</div>
+      <div class="invalid-feedback">
+        {#if summaryError}<span>Error: Please provide a title or subject line to summarize your feedback.</span>{/if}
+      </div>
     </div>
     <div class="mb-3">
-      <label for="recordURL" class="form-label">URL of catalog record <span class="required">(required)</span></label>
+      <label for="recordURL" class="form-label"
+        >URL of catalog record <span class="required" aria-hidden="true">(optional)</span></label
+      >
       <input type="text" class="form-control" id="recordURL" name="recordURL" />
       <div class="invalid-feedback">
         Please provide the URL of the record from the catalog where you found the issue.
@@ -141,18 +173,21 @@
     </div>
     <div class="mb-3">
       <label for="itemURL" class="form-label"
-        >URL of specific item within record related to issue <span class="required">(optional)</span></label
+        >URL of specific item within record related to issue <span class="required" aria-hidden="true">(optional)</span
+        ></label
       >
       <input type="text" class="form-control" id="itemURL" name="itemURL" />
     </div>
     <div class="mb-3">
-      <label for="itemTitle" class="form-label">Title of the book <span class="required">(optional)</span></label>
+      <label for="itemTitle" class="form-label"
+        >Title of the book <span class="required" aria-hidden="true">(optional)</span></label
+      >
       <input type="text" class="form-control" id="itemTitle" name="itemTitle" />
     </div>
     <fieldset class="mb-3">
       <legend class="mb-3 fs-6">
         What specific problems are you noticing with the catalog record?
-        <span class="required">(required)</span>
+        <span class="required" aria-hidden="true">(required)</span>
       </legend>
       <div class="form-check">
         <input
@@ -160,11 +195,10 @@
           type="checkbox"
           name="problems"
           value="Book doesn't match description"
+          id="c1"
           bind:group={problems}
         />
-        <label class="form-check-label" for="flexCheckDefault">
-          The book doesn't match the description in its catalog record
-        </label>
+        <label class="form-check-label" for="c1"> The book doesn't match the description in its catalog record </label>
       </div>
       <div class="form-check">
         <input
@@ -172,17 +206,26 @@
           type="checkbox"
           name="problems"
           value="Typo in metadata"
+          id="c2"
           bind:group={problems}
         />
-        <label class="form-check-label" for="flexCheckDefault"> There is a typo in the metadata </label>
+        <label class="form-check-label" for="c2"> There is a typo in the metadata </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="problems" value="Other" bind:group={problems} />
-        <label class="form-check-label" for="flexCheckDefault"> Other (describe in description box) </label>
+        <input class="form-check-input" type="checkbox" name="problems" value="Other" id="c3" bind:group={problems} />
+        <label class="form-check-label" for="c3"> Other (describe in description box) </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="problems" value="None" bind:group={problems} checked />
-        <label class="form-check-label" for="flexCheckChecked"> No problems </label>
+        <input
+          class="form-check-input"
+          type="checkbox"
+          name="problems"
+          value="None"
+          id="c4"
+          bind:group={problems}
+          checked
+        />
+        <label class="form-check-label" for="c4"> No problems </label>
       </div>
     </fieldset>
     <fieldset class="mb-3">
@@ -235,7 +278,7 @@
     </fieldset>
     <div class="mb-3">
       <label for="description" class="form-label"
-        >Other problems or comments? <span class="optional">(required)</span></label
+        >Other problems or comments? <span class="required" aria-hidden="true">(optional)</span></label
       >
       <textarea class="form-control" id="description" name="description" rows="3" />
     </div>
@@ -243,6 +286,12 @@
     <input name="userAgent" id="userAgent" type="hidden" bind:value={userAgent} />
     <input name="userAuthStatus" id="userAuthStatus" type="hidden" bind:value={userAuthStatus} />
     <input name="formName" id="formName" type="hidden" bind:value={formName} />
+
+    {#if errorMessage}
+      <div role="alert" class="mb-3">
+        The form did not submit due to errors in the fields. Please review error messages and resubmit the form.
+      </div>
+    {/if}
 
     <button type="submit" class="btn btn-primary" disabled={loading}>
       Submit{#if loading}

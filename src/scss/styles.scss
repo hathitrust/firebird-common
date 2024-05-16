@@ -76,6 +76,10 @@ $headings-font-weight: 700;
 $btn-font-weight: 800;
 $form-label-font-weight: 400;
 
+$ht-focus-border-color: #e1aa80;
+$ht-focus-box-shadow: inset 0 1px 2px #00000013,0 0 0 .25rem #c3540040;
+$ht-focus-outline: 0;
+
 // Required
 @import "~open-props/open-props.min.css";
 @import '~bootstrap/scss/functions';
@@ -283,6 +287,10 @@ $utilities: map-merge(
   --bs-body-font-weight: #{$body-font-weight};
   --bs-link-color: var(--color-primary-600);
   --ht-visited-link-color: #006FC3;
+
+  --ht-focus-border-color: #{$ht-focus-border-color};
+  --ht-focus-box-shadow: #{$ht-focus-box-shadow};
+  --ht-focus-outline: #${$ht-focus-outline};
 }
 
 body[data-initialized='true'] {
@@ -339,6 +347,34 @@ textarea.form-control {
 .input-group-text {
   border-top-left-radius: var(--bs-border-radius) !important;
   border-bottom-left-radius: var(--bs-border-radius) !important;
+}
+
+.was-validated .form-control:valid, .form-control.is-valid {
+  border-color:  rgba(0, 0, 0, .25);
+  background-image: none;
+}
+.was-validated .form-check-input:valid~.form-check-label, .form-check-input.is-valid~.form-check-label {
+  color: inherit;
+}
+.was-validated .form-check-input:valid, .form-check-input.is-valid {
+  border-color: rgba(0, 0, 0, .25);
+}
+.was-validated .form-check-input:valid:checked, .form-check-input.is-valid:checked, .was-validated .form-check-input:valid:checked, .form-check-input.is-valid:checked {
+  background-color: var(--color-primary-600);
+}
+.was-validated .form-control:valid:focus, .form-control.is-valid:focus {
+    border-color: var(--ht-focus-border);
+    box-shadow: var(--ht-focus-box-shadow);
+    outline: var(--ht-focus-outline);
+}
+.was-validated .form-check-input:valid:focus, .form-check-input.is-valid:focus {
+  box-shadow: var(--ht-focus-box-shadow);
+}
+.advanced-search-list li.form-check:focus-within {
+    border: 2px solid var(--color-primary-600);
+}
+.advanced-search-list li.form-check:has(input:checked):focus-within {
+  border: 2px solid var(--color-neutral-800);
 }
 
 a:not(.btn,.list-group-item):has(i[aria-hidden]) {
