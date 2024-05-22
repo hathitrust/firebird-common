@@ -384,7 +384,7 @@ body[data-initialized='true'] {
 }
 
 // FOCUS STYLES
-.btn, .accordion .accordion-button, select.form-select {
+.btn, .accordion .accordion-button, select.form-select, input.form-ccontrol {
   &:focus-visible {
       border-radius: 6px !important;
       outline: 3px solid #086AB4 !important;
@@ -392,14 +392,14 @@ body[data-initialized='true'] {
       box-shadow: 0 0 0 6px white;
       z-index: 2;
     }
-    &:focus:not(:focus-visible) {
-      z-index: 3;
-      border-color: var(--bs-accordion-btn-focus-border-color);
-      outline: 0;
-      box-shadow: var(--bs-accordion-btn-focus-box-shadow);
-    }
+    // &:focus:not(:focus-visible) {
+    //   z-index: 3;
+    //   border-color: var(--bs-accordion-btn-focus-border-color);
+    //   outline: 0;
+    //   box-shadow: var(--bs-accordion-btn-focus-box-shadow);
+    // }
     &:focus {
-      outline: 0.25rem solid transparent;
+      outline: 3px solid transparent;
     }
 }
 

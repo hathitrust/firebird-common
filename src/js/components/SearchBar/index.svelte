@@ -263,7 +263,10 @@
       &:focus {
         border-color: #e1aa80;
         outline: 0;
-        box-shadow: inset 0 1px 2px #00000013, 0 0 0 0.25rem #c3540040;
+        box-shadow:
+          inset 0 1px 2px #00000013,
+          0 0 0 0.25rem #c3540040;
+        // outline: 3px solid transparent;
       }
     }
     .input-group-text {
@@ -277,8 +280,6 @@
         font-size: 14px;
       }
     }
-    .select-container:focus {
-    }
     .form-select {
       border: 0.5px solid var(--color-neutral-500);
       padding: 0.625em 0.75em;
@@ -286,9 +287,10 @@
       border-radius: 0.375rem;
       margin-left: 0;
       &:focus {
-        border-color: #e1aa80;
-        outline: 0;
-        box-shadow: inset 0 1px 2px #00000013, 0 0 0 0.25rem #c3540040;
+        // border-color: #e1aa80;
+        // outline: 0;
+        // box-shadow: inset 0 1px 2px #00000013, 0 0 0 0.25rem #c3540040;
+        outline: 3px solid transparent;
       }
     }
     button {
