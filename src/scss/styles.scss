@@ -75,10 +75,53 @@ $body-font-weight: 500;
 $headings-font-weight: 700;
 $btn-font-weight: 800;
 $form-label-font-weight: 400;
+ 
 
-$ht-focus-border-color: #e1aa80;
+$ht-focus-border-color: #086AB4;
+
+// bootstrap focus style variables
+// but these change :focus not :focus-visible
+// $input-btn-focus-width:         3px; //firebird
+// $input-btn-focus-color-opacity: 1; //firebird
+// $input-btn-focus-color:         rgba($ht-focus-border-color, $input-btn-focus-color-opacity) !default;
+// $input-btn-focus-blur:          0 !default;
+// $input-btn-focus-box-shadow:    0 0 $input-btn-focus-blur $input-btn-focus-width $input-btn-focus-color !default;
+// $btn-focus-width:             $input-btn-focus-width !default;
+// $btn-focus-box-shadow:        $input-btn-focus-box-shadow !default;
+
+// $input-focus-bg:                        $input-bg !default;
+// $input-focus-border-color:              $ht-focus-border-color;
+// $input-focus-color:                     $input-color !default;
+// $input-focus-width:                     $input-btn-focus-width !default;
+// $input-focus-box-shadow:                $input-btn-focus-box-shadow !default;
+// $form-check-input-focus-border:           $input-focus-border-color !default;
+// $form-check-input-focus-box-shadow:       $input-btn-focus-box-shadow !default;
+// $form-switch-focus-color:         $input-focus-border-color !default;
+// $form-switch-focus-bg-image:      url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$form-switch-focus-color}'/></svg>") !default;
+// $form-select-focus-border-color:  $input-focus-border-color !default;
+// $form-select-focus-width:         $input-focus-width !default;
+// $form-select-focus-box-shadow:    0 0 0 $form-select-focus-width $input-btn-focus-color !default;
+// $form-range-thumb-focus-box-shadow:        0 0 0 1px $body-bg, $input-focus-box-shadow !default;
+// $form-range-thumb-focus-box-shadow-width:  $input-focus-width !default; // For focus box shadow issue in Edge
+// $pagination-focus-color:            var(--#{$prefix}link-hover-color) !default;
+// $pagination-focus-bg:               $gray-200 !default;
+// $pagination-focus-box-shadow:       $input-btn-focus-box-shadow !default;
+// $pagination-focus-outline:          0 !default;
+// $accordion-button-focus-border-color:     $input-focus-border-color !default;
+// $accordion-button-focus-box-shadow:       $btn-focus-box-shadow !default;
+// $btn-close-focus-shadow:     $input-btn-focus-box-shadow !default;
+// $btn-close-focus-opacity:    1 !default;
+
 $ht-focus-box-shadow: inset 0 1px 2px #00000013,0 0 0 .25rem #c3540040;
 $ht-focus-outline: 0;
+
+:focus-visible {
+  border-radius: 6px !important;
+  outline: 3px solid #086AB4 !important;
+  box-shadow: 0 0 0 6px white;
+  outline-offset: 4px;
+  z-index: 3;
+}
 
 // Required
 @import "~open-props/open-props.min.css";
@@ -302,6 +345,7 @@ body[data-initialized='true'] {
 
 .btn {
   letter-spacing: -0.01rem;
+  
 }
 // bootstrap's contrast functions pair black text on our primary background
 .btn-primary {
@@ -316,6 +360,12 @@ body[data-initialized='true'] {
     background-color: var(--color-primary-700);
   }
 }
+// button:focus-visible {
+//   border-radius: 6px;
+//   border: 3px solid #086AB4;
+//   outline-offset: 4px;
+//   z-index:5;
+// }
 
 //bootstrap doesn't have a "tertiary" button, but we do
 .btn-tertiary {
@@ -328,9 +378,29 @@ body[data-initialized='true'] {
   --bs-btn-active-color: var(--bs-btn-hover-color);
   --bs-btn-active-bg: var(--bs-btn-hover-bg);
   --bs-btn-active-border-color: var(--bs-btn-hover-border-color);
+  // &:focus-visible {
+  //   outline: 4px solid rgba(51, 51, 51, .4);
+  // }
+}
+
+// FOCUS STYLES
+.btn, .accordion .accordion-button, select.form-select {
   &:focus-visible {
-    outline: 4px solid rgba(51, 51, 51, .4);
-  }
+      border-radius: 6px !important;
+      outline: 3px solid #086AB4 !important;
+      outline-offset: 4px;
+      box-shadow: 0 0 0 6px white;
+      z-index: 2;
+    }
+    &:focus:not(:focus-visible) {
+      z-index: 3;
+      border-color: var(--bs-accordion-btn-focus-border-color);
+      outline: 0;
+      box-shadow: var(--bs-accordion-btn-focus-box-shadow);
+    }
+    &:focus {
+      outline: 0.25rem solid transparent;
+    }
 }
 
 input.form-control[type],
@@ -348,6 +418,7 @@ textarea.form-control {
   border-top-left-radius: var(--bs-border-radius) !important;
   border-bottom-left-radius: var(--bs-border-radius) !important;
 }
+
 
 .was-validated .form-control:valid, .form-control.is-valid {
   border-color:  rgba(0, 0, 0, .25);
@@ -482,6 +553,7 @@ button.close {
   padding-right: var(--bs-modal-padding-width) !important;
 }
 
+
 .accordion {
   --bs-accordion-active-bg: transparent;
   --bs-accordion-active-color: var(--color-neutral-700);
@@ -507,14 +579,15 @@ a {
   // what effect does this have with padding?
   // padding: 2px 4px;
   transition: outline 0.3s ease, border-radius 0.3s ease, z-index 0.3s ease;
-  &:focus-visible {
-    outline: none;
+  // &:focus-visible {
+    // outline: 0.25rem solid transparent;
     // box-shadow: 0 0 0 4px rgba(236,114,23,0.5);
     // box-shadow: 0 0 0 4px rgb(51, 51, 51, 0.4);
-    outline: 4px solid rgb(51, 51, 51, 0.4);
-    border-radius: 4px;
-    z-index: 1;
-  }
+    // outline: 3px solid #086AB4;
+    // border-radius: 6px;
+    // outline-offset: 4px;
+    // z-index: 1;
+  // }
 }
 
 #skiplinks:focus-within {
