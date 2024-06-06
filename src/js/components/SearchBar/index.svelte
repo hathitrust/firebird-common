@@ -261,12 +261,13 @@
       border-bottom-right-radius: 0 !important;
       padding: 0.625em 0.75em;
       &:focus {
-        border-color: #e1aa80;
-        outline: 0;
-        box-shadow:
-          inset 0 1px 2px #00000013,
-          0 0 0 0.25rem #c3540040;
-        // outline: 3px solid transparent;
+        outline: 3px solid transparent;
+      }
+      &:focus-visible {
+        outline: 3px solid #086ab4 !important;
+        outline-offset: 4px;
+        z-index: 3;
+        border-radius: 6px !important;
       }
     }
     .input-group-text {
@@ -287,9 +288,6 @@
       border-radius: 0.375rem;
       margin-left: 0;
       &:focus {
-        // border-color: #e1aa80;
-        // outline: 0;
-        // box-shadow: inset 0 1px 2px #00000013, 0 0 0 0.25rem #c3540040;
         outline: 3px solid transparent;
       }
     }
@@ -399,6 +397,7 @@
         border-width: 0px 1px;
         border-style: solid;
         border-color: var(--color-neutral-100);
+        position: relative;
       }
       button {
         margin-left: -1px;
