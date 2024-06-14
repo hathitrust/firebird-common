@@ -406,16 +406,16 @@ textarea.form-control {
 .was-validated .form-check-input:valid:focus, .form-check-input.is-valid:focus {
   box-shadow: none;
 }
+
 .advanced-search-list li.form-check:focus-within {
-    // border-left: 12px solid black;
     border: 4px dashed var(--ht-focus-border-color);
-    // & > label {
-    //   text-decoration: underline;
-    // }
+    & > label {
+      border:4px solid #fff;
+    }
 }
 .advanced-search-list li.form-check:not(:focus-within) > label {
-   padding: 12px 20px !important;
-   //padding-left: 28px !important;
+   padding: 16px 24px !important;
+   border:none !important;
 }
 
 a:not(.btn,.list-group-item):has(i[aria-hidden]) {
