@@ -725,4 +725,10 @@
       margin-left: 0;
     }
   }
+  @media (max-width: 25rem) {
+    .form-select,
+    .form-control {
+      font-size: 0.875rem;
+    }
+  }
 </style>
