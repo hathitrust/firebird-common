@@ -309,6 +309,7 @@
               class:search-active={searchOpen}
               href="#"
               role="button"
+              aria-expanded={searchOpen}
               on:click|preventDefault|stopPropagation={toggleSearch}
               >Search <i class="fa-solid fa-magnifying-glass fa-fw" /></a
             >
