@@ -13,6 +13,7 @@
   let feedbackModal;
   let location = document.documentElement.dataset.app;
   let form = 'basic';
+  let dropdownLinkTrigger;
 
   let notificationsModal;
   let notificationsManager = new NotificationsManager({
@@ -53,7 +54,16 @@
     }
   }
 
-  function openFeedback(formLocation) {
+  function feedbackModalFocusHandler(e) {
+    //e.detail of 0 is a keyobard "click"
+    if (e.detail === 0) {
+      document.querySelector('#get-help + ul').classList.add('d-block');
+      document.querySelector('#get-help + ul').setAttribute('data-bs-popper', 'static');
+      dropdownLinkTrigger = e.target;
+    }
+  }
+
+  function openFeedback(e, formLocation) {
     if (formLocation === 'catalog') {
       form = 'catalog';
     } else if (formLocation === 'pt') {
@@ -64,6 +74,7 @@
       form = 'basic';
     }
     feedbackModal.show();
+    feedbackModalFocusHandler(e);
   }
 
   function checkSwitchableRoles(isLoggedIn) {
@@ -93,7 +104,7 @@
   }
 </script>
 
-<FeedbackFormModal {form} bind:this={feedbackModal} />
+<FeedbackFormModal {form} {dropdownLinkTrigger} bind:this={feedbackModal} />
 <nav class="navbar navbar-expand-xl bg-white">
   <div class="container-fluid">
     <div class="ht-logo" class:compact>
@@ -319,6 +330,7 @@
           <a
             href="#"
             role="button"
+            id="get-help"
             aria-expanded="false"
             class="nav-link dropdown-toggle text-uppercase d-flex flex-row justify-content-between align-items-center gap-2"
             data-bs-toggle="dropdown"
@@ -338,8 +350,9 @@
               <li class="px-3">
                 <a
                   href="#"
+                  id="ask-a-question"
                   class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
-                  on:click|preventDefault={() => openFeedback('questions')}
+                  on:click|preventDefault={(e) => openFeedback(e, 'questions')}
                 >
                   <span>Ask a Question</span>
                   <i class="fa-regular fa-circle-question" />
@@ -348,8 +361,9 @@
               <li class="px-3">
                 <a
                   href="#"
+                  id="report-a-problem"
                   class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
-                  on:click|preventDefault={() => openFeedback(location)}
+                  on:click|preventDefault={(e) => openFeedback(e, location)}
                 >
                   <span>Report a Problem</span>
                   <i class="fa-solid fa-bug" />
@@ -621,6 +635,7 @@
     --bs-dropdown-link-color: var(--color-neutral-800);
     --bs-dropdown-link-hover-color: var(--color-netural-800);
     --bs-dropdown-link-hover-bg: var(--color-neutral-50);
+
     div {
       padding-top: 0.5rem;
       @media (min-width: 1200px) {

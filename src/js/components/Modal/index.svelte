@@ -12,6 +12,8 @@
   export let mode = 'alert';
   export let modalLarge = false;
   export let fullscreenOnMobile = false;
+  export let openHelpDropdownOnModalClose = false;
+  export let dropdownLinkTrigger;
 
   let modalBody;
 
@@ -28,7 +30,15 @@
     // })
   };
 
-  export const hide = function () {
+  function showHelpDropdown() {
+    document.querySelector('#get-help').classList.add('show');
+    document.querySelector('#get-help + ul').classList.add('show');
+    document.querySelector('#get-help + ul').classList.remove('d-block');
+    document.querySelector('#get-help + ul').setAttribute('data-bs-popper', 'static');
+    dropdownLinkTrigger.focus();
+  }
+
+  export const hide = function (e) {
     if (!dialog) {
       return;
     } // rare edge case
@@ -39,6 +49,12 @@
     isOpen = false;
     onClose();
     console.log('-- dialog is closed');
+
+    if (openHelpDropdownOnModalClose) {
+      if (e.detail === 0) {
+        setTimeout(showHelpDropdown);
+      }
+    }
   };
 
   onMount(() => {
@@ -79,8 +95,8 @@
             class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-2 justify-between order-1 ms-auto text-uppercase"
             aria-label="Close Modal"
             data-bs-dismiss="modal"
-            on:click={() => {
-              hide();
+            on:click={(e) => {
+              hide(e);
             }}>Close <i class="fa-solid fa-xmark" aria-hidden="true" /></button
           >
         </div>
