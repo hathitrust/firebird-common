@@ -12,6 +12,7 @@
   export let mode = 'alert';
   export let modalLarge = false;
   export let fullscreenOnMobile = false;
+  export let focusHelpOnClose = false;
 
   let modalBody;
 
@@ -23,9 +24,6 @@
     }
     isOpen = true;
     dialog.showModal();
-    // setTimeout(() => {
-    //   dialog.querySelector('button').focus();
-    // })
   };
 
   export const hide = function () {
@@ -39,6 +37,10 @@
     isOpen = false;
     onClose();
     console.log('-- dialog is closed');
+
+    if (focusHelpOnClose) {
+      document.getElementById('get-help').focus();
+    }
   };
 
   onMount(() => {

@@ -319,6 +319,7 @@
           <a
             href="#"
             role="button"
+            id="get-help"
             aria-expanded="false"
             class="nav-link dropdown-toggle text-uppercase d-flex flex-row justify-content-between align-items-center gap-2"
             data-bs-toggle="dropdown"
@@ -338,6 +339,7 @@
               <li class="px-3">
                 <a
                   href="#"
+                  id="ask-a-question"
                   class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
                   on:click|preventDefault={() => openFeedback('questions')}
                 >
@@ -348,6 +350,7 @@
               <li class="px-3">
                 <a
                   href="#"
+                  id="report-a-problem"
                   class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
                   on:click|preventDefault={() => openFeedback(location)}
                 >
@@ -621,6 +624,7 @@
     --bs-dropdown-link-color: var(--color-neutral-800);
     --bs-dropdown-link-hover-color: var(--color-netural-800);
     --bs-dropdown-link-hover-bg: var(--color-neutral-50);
+
     div {
       padding-top: 0.5rem;
       @media (min-width: 1200px) {
