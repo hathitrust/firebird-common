@@ -18,12 +18,23 @@
 
   let dialog;
 
+  function logKeys(e) {
+    console.log(`Key "${e.key}" was pressed`);
+    if (e.key === 'Escape') {
+      hide();
+      window.removeEventListener('keydown', logKeys);
+    }
+  }
+
   export const show = function () {
     if (dialog.open) {
       return;
     }
     isOpen = true;
     dialog.showModal();
+    if (focusHelpOnClose) {
+      window.addEventListener('keydown', logKeys);
+    }
   };
 
   export const hide = function () {
@@ -36,6 +47,7 @@
     dialog.close();
     isOpen = false;
     onClose();
+    window.removeEventListener('keydown', logKeys);
     console.log('-- dialog is closed');
 
     if (focusHelpOnClose) {
@@ -70,7 +82,7 @@
   class={fullscreenOnMobile ? 'fullscreen-sm-down' : ''}
 >
   <div class="modal show" aria-labelledby="{id}-label" style="display: block;">
-    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered {modalLarge ? 'modal-lg' : ''} ">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered {modalLarge ? 'modal-lg' : ''}">
       <div class="modal-content" style:height={height != 'auto' && height}>
         <div class="modal-header">
           <h1 id="{id}-label" class="modal-title">
