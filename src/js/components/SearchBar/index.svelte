@@ -252,6 +252,11 @@
       display: flex;
       border: 0.5px solid var(--color-neutral-500);
       border-radius: 0.375em;
+      &:focus-within {
+        outline: 2px solid var(--ht-focus-border-color) !important;
+        z-index: 3;
+        border-radius: 6px 0 0 6px !important;
+      }
     }
     input {
       width: 100%;
@@ -264,10 +269,8 @@
         outline: 3px solid transparent;
       }
       &:focus-visible {
-        outline: 3px solid #086ab4 !important;
-        outline-offset: 4px;
-        z-index: 3;
-        border-radius: 6px !important;
+        outline: 3px solid transparent !important;
+        outline-offset: 0;
       }
     }
     .input-group-text {
@@ -290,6 +293,10 @@
       &:focus {
         outline: 3px solid transparent;
       }
+      &:focus-visible {
+        outline: 2px solid var(--ht-focus-border-color) !important;
+        outline-offset: 0;
+      }
     }
     button {
       border-radius: 0.375rem;
@@ -298,6 +305,11 @@
       font-weight: var(--btn-font-weight);
       letter-spacing: -0.01em;
       padding: 0.5em 0.75em;
+      &:focus-visible {
+        outline: 2px solid var(--ht-focus-border-color) !important;
+        outline-offset: 0;
+        box-shadow: inset 0 0 0 2px white !important;
+      }
     }
   }
   .search-details {
@@ -368,6 +380,7 @@
         @media (min-width: 992px) {
           flex-grow: 3;
         }
+
         .input-group-text {
           order: -1;
           border-top-left-radius: 0.375em !important;
