@@ -305,6 +305,7 @@
       font-weight: var(--btn-font-weight);
       letter-spacing: -0.01em;
       padding: 0.5em 0.75em;
+      transition-duration: 0s;
       &:focus-visible {
         outline: 2px solid var(--ht-focus-border-color) !important;
         outline-offset: 0;
