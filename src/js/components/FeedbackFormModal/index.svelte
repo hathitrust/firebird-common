@@ -13,9 +13,6 @@
     modal.show();
   };
 
-  export const hide = function () {
-    modal.hide();
-  };
   onMount(() => {
     if (isOpen && modal) {
       modal.show();
@@ -24,9 +21,6 @@
 
   $: if (modal && isOpen) {
     show();
-  }
-  $: if (modal && !isOpen) {
-    hide();
   }
 
   let today = new Date();
@@ -50,7 +44,7 @@
 
 <div>
   {#if form == 'catalog'}
-    <Modal bind:this={modal} scrollable>
+    <Modal bind:this={modal} focusHelpOnClose scrollable>
       <svelte:fragment slot="title">Catalog Quality Correction</svelte:fragment>
       <svelte:fragment slot="body">
         {#if winterBreak}<p>{@html message}</p>{/if}
@@ -58,7 +52,7 @@
       </svelte:fragment>
     </Modal>
   {:else if form == 'content'}
-    <Modal bind:this={modal} scrollable>
+    <Modal bind:this={modal} focusHelpOnClose scrollable>
       <svelte:fragment slot="title">Content Quality Correction</svelte:fragment>
       <svelte:fragment slot="body">
         {#if winterBreak}<p>{@html message}</p>{/if}
@@ -66,7 +60,7 @@
       </svelte:fragment>
     </Modal>
   {:else if form == 'basic'}
-    <Modal bind:this={modal} scrollable>
+    <Modal bind:this={modal} focusHelpOnClose scrollable>
       <svelte:fragment slot="title">Questions?</svelte:fragment>
       <svelte:fragment slot="body">
         {#if winterBreak}<p>{@html message}</p>{/if}
@@ -74,7 +68,7 @@
       </svelte:fragment>
     </Modal>
   {:else}
-    <Modal bind:this={modal} scrollable>
+    <Modal bind:this={modal} focusHelpOnClose scrollable>
       <svelte:fragment slot="title">Questions?</svelte:fragment>
       <svelte:fragment slot="body">
         {#if winterBreak}<p>{@html message}</p>{/if}

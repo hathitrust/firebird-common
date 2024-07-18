@@ -136,7 +136,7 @@
   <form on:submit|preventDefault={onSubmit} class:hidden class="needs-validation mb-3" name="feedback" novalidate {id}>
     <div class="mb-3">
       <label for="name" class="form-label">Name <span class="required" aria-hidden="true">(required)</span></label>
-      <input type="name" class="form-control" id="name" name="name" required />
+      <input type="name" class="form-control" id="name" autocomplete="name" name="name" required />
       <div class="invalid-feedback">
         {#if nameError}
           <span>Error: Please provide your name.</span>
@@ -148,7 +148,7 @@
       <label for="email" class="form-label"
         >Email address <span class="required" aria-hidden="true">(required)</span></label
       >
-      <input type="email" class="form-control" id="email" name="email" required />
+      <input type="email" class="form-control" id="email" autocomplete="email" name="email" required />
       <div class="invalid-feedback">
         {#if emailError}<span>Error: Please provide an email address.</span>{/if}
       </div>

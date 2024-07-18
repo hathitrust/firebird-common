@@ -95,22 +95,31 @@
         </div>
       </div>
       <div class="mb-0">
-        <p class="mb-1">Is this collection visible to others?</p>
-        <div class="d-flex">
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="shared" id="shared-0" value={0} bind:group={shared} />
-            <label class="form-check-label" for="shared-0">
-              <i class="fa-solid fa-lock" aria-hidden="true" />
-              Private
-            </label>
-          </div>
-          {#if !userIsAnonymous}
+        <fieldset>
+          <legend class="fs-4 mb-1">Is this collection visible to others?</legend>
+          <div class="d-flex">
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="shared" id="shared-1" value={1} bind:group={shared} />
-              <label class="form-check-label" for="shared-1"> Public </label>
+              <input class="form-check-input" type="radio" name="shared" id="shared-0" value={0} bind:group={shared} />
+              <label class="form-check-label" for="shared-0">
+                <i class="fa-solid fa-lock" aria-hidden="true" />
+                Private
+              </label>
             </div>
-          {/if}
-        </div>
+            {#if !userIsAnonymous}
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="shared"
+                  id="shared-1"
+                  value={1}
+                  bind:group={shared}
+                />
+                <label class="form-check-label" for="shared-1"> Public </label>
+              </div>
+            {/if}
+          </div>
+        </fieldset>
       </div>
     </form>
   </svelte:fragment>

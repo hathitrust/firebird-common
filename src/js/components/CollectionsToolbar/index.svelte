@@ -291,7 +291,11 @@
   role="toolbar"
   aria-label="Collections toolbar"
 >
-  <button class="btn btn-outline-light d-flex align-items-center gap-2 flex-nowrap" on:click={selectAllItems}>
+  <button
+    class="btn btn-outline-light d-flex align-items-center gap-2 flex-nowrap"
+    aria-pressed={allItemsSelected}
+    on:click={selectAllItems}
+  >
     {#if allItemsSelected}
       <i class="fa-solid fa-square-check" aria-hidden="true" />
     {:else}
