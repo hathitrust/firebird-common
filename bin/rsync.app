@@ -3,7 +3,7 @@
 DEST_PREFIX=$1
 shift
 
-DEPLOY_DEST=${DEST_PREFIX}babel
+DEPLOY_DEST=${DEST_PREFIX}babel/firebird-common
 DEPLOY_SRC=/htapps/test.babel/firebird-common
 
 INCLUDE=$(cat <<EOT
