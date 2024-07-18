@@ -646,45 +646,47 @@
           </div>
         </fieldset>
 
-        <fieldset class="mb-4">
-          <legend class="fs-4 fw-bold">Language</legend>
+        <div>
+          <fieldset class="mb-4">
+            <legend class="fs-4 fw-bold">Language</legend>
 
-          <div class="advanced-search-list">
-            <FilterableSelection
-              --filterable-list-height="15rem"
-              items={languageData.map((item) => ({
-                option: item,
-                key: item,
-                value: item,
-              }))}
-              label="Language"
-              placeholder="Filter by language"
-              multiple={true}
-              bind:value={lang}
-            />
-          </div>
-        </fieldset>
+            <div class="advanced-search-list">
+              <FilterableSelection
+                --filterable-list-height="15rem"
+                items={languageData.map((item) => ({
+                  option: item,
+                  key: item,
+                  value: item,
+                }))}
+                label="Language"
+                placeholder="Filter by language"
+                multiple={true}
+                bind:value={lang}
+              />
+            </div>
+          </fieldset>
 
-        <fieldset class="mb-4">
-          <legend class="fs-4 fw-bold">Format</legend>
+          <fieldset class="mb-4">
+            <legend class="fs-4 fw-bold">Format</legend>
 
-          <p>Select one or more options to narrow your results to items that match all of your format selections.</p>
+            <p>Select one or more options to narrow your results to items that match all of your format selections.</p>
 
-          <div class="advanced-search-list">
-            <FilterableSelection
-              --filterable-list-height="15rem"
-              items={formatData.map((item) => ({
-                option: item,
-                key: item,
-                value: item,
-              }))}
-              label="Format"
-              placeholder="Filter by format"
-              multiple={true}
-              bind:value={format}
-            />
-          </div>
-        </fieldset>
+            <div class="advanced-search-list">
+              <FilterableSelection
+                --filterable-list-height="15rem"
+                items={formatData.map((item) => ({
+                  option: item,
+                  key: item,
+                  value: item,
+                }))}
+                label="Format"
+                placeholder="Filter by format"
+                multiple={true}
+                bind:value={format}
+              />
+            </div>
+          </fieldset>
+        </div>
 
         <div class="d-flex gap-3 mb-3 justify-content-end">
           <button class="btn btn-secondary" type="reset">

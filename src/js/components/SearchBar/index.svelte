@@ -252,6 +252,11 @@
       display: flex;
       border: 0.5px solid var(--color-neutral-500);
       border-radius: 0.375em;
+      &:focus-within {
+        outline: 2px solid var(--ht-focus-border-color) !important;
+        z-index: 3;
+        border-radius: 6px 0 0 6px !important;
+      }
     }
     input {
       width: 100%;
@@ -261,9 +266,11 @@
       border-bottom-right-radius: 0 !important;
       padding: 0.625em 0.75em;
       &:focus {
-        border-color: #e1aa80;
-        outline: 0;
-        box-shadow: inset 0 1px 2px #00000013, 0 0 0 0.25rem #c3540040;
+        outline: 3px solid transparent;
+      }
+      &:focus-visible {
+        outline: 3px solid transparent !important;
+        outline-offset: 0;
       }
     }
     .input-group-text {
@@ -277,8 +284,6 @@
         font-size: 14px;
       }
     }
-    .select-container:focus {
-    }
     .form-select {
       border: 0.5px solid var(--color-neutral-500);
       padding: 0.625em 0.75em;
@@ -286,9 +291,11 @@
       border-radius: 0.375rem;
       margin-left: 0;
       &:focus {
-        border-color: #e1aa80;
-        outline: 0;
-        box-shadow: inset 0 1px 2px #00000013, 0 0 0 0.25rem #c3540040;
+        outline: 3px solid transparent;
+      }
+      &:focus-visible {
+        outline: 2px solid var(--ht-focus-border-color) !important;
+        outline-offset: 0;
       }
     }
     button {
@@ -298,6 +305,12 @@
       font-weight: var(--btn-font-weight);
       letter-spacing: -0.01em;
       padding: 0.5em 0.75em;
+      transition-duration: 0s;
+      &:focus-visible {
+        outline: 2px solid var(--ht-focus-border-color) !important;
+        outline-offset: 0;
+        box-shadow: inset 0 0 0 2px white !important;
+      }
     }
   }
   .search-details {
@@ -368,6 +381,7 @@
         @media (min-width: 992px) {
           flex-grow: 3;
         }
+
         .input-group-text {
           order: -1;
           border-top-left-radius: 0.375em !important;
@@ -397,6 +411,7 @@
         border-width: 0px 1px;
         border-style: solid;
         border-color: var(--color-neutral-100);
+        position: relative;
       }
       button {
         margin-left: -1px;

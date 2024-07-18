@@ -151,7 +151,6 @@
     background: var(--color-primary-200);
     padding: 1.25rem 1rem;
     max-height: 34rem;
-
     .h2 {
       font-size: 1.25rem;
       line-height: 120%; /* 1.5rem */
@@ -175,7 +174,7 @@
       margin: 0;
       color: var(--color-neutral-900);
       a {
-        color: var(--color-primary-600);
+        color: var(--color-neutral-900);
       }
     }
 
