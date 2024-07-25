@@ -88,6 +88,7 @@ $ht-focus-box-shadow: 0 0 0 6px #fff;
   box-shadow: 0 0 0 6px #fff;
   outline-offset: 4px;
   z-index: 3;
+  transition: unset;
 }
 
 // Required
@@ -351,12 +352,13 @@ body[data-initialized='true'] {
 }
 
 // FOCUS STYLES
-.btn, .btn.active, .accordion .accordion-button, select.form-select, input.form-control, textarea.form-control, input.form-check-input, :is(.was-validated) :is(.form-control, .form-select, .form-check-input) {
+.btn, .btn.active, .nav-link, .accordion .accordion-button, select.form-select, input.form-control, textarea.form-control, input.form-check-input, :is(.was-validated) :is(.form-control, .form-select, .form-check-input) {
   &:focus-visible {
       outline: 3px solid #086AB4 !important;
       outline-offset: 4px;
       box-shadow: 0 0 0 6px white;
       z-index: 3;
+      transition: unset;
     }
     &:focus {
       outline: 3px solid transparent;
