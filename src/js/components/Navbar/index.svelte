@@ -54,6 +54,7 @@
   }
 
   function openFeedback(formLocation) {
+    if (document.activeElement !== document.getElementById('get-help')) document.getElementById('get-help').focus();
     if (formLocation === 'catalog') {
       form = 'catalog';
     } else if (formLocation === 'pt') {
