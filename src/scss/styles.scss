@@ -351,7 +351,7 @@ body[data-initialized='true'] {
 }
 
 // FOCUS STYLES
-.btn, .accordion .accordion-button, select.form-select, input.form-control, textarea.form-control, input.form-check-input, :is(.was-validated) :is(.form-control, .form-select, .form-check-input) {
+.btn, .btn.active, .accordion .accordion-button, select.form-select, input.form-control, textarea.form-control, input.form-check-input, :is(.was-validated) :is(.form-control, .form-select, .form-check-input) {
   &:focus-visible {
       outline: 3px solid #086AB4 !important;
       outline-offset: 4px;
