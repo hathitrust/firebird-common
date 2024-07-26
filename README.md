@@ -1,35 +1,23 @@
-# NEW
-
-<br/>
-  <p align="center">
-    Quick and Easy General Template
-    <br/>
-    <br/>
-    <a href="https://github.com/Ronster/SuperAwesomeProject/issues">Report Bug</a>
-    -
-    <a href="https://github.com/Ronster/SuperAwesomeProject/issues">Request Feature</a>
-  </p>
-
-
+# firebird-common
 
 ## Table Of Contents
 
-* [About the Project](#about-the-project)
+* [About](#about)
 * [Built With](#built-with)
-* [Phases](#phases)
 * [Project Set Up](#project-set-up)
   * [Prerequisites](#prerequisites)
   * [Installation](#installation)
   * [Creating A Pull Request](#creating-a-pull-request)
 * [Content Structure](#content-structure)
   * [Project Structure](#project-structure)
-  * [Site Maps](#site-maps)
 * [Design](#design)
 * [Functionality](#functionality)
-* [Usage](#usage)
-* [Tests](#tests)
-* [Hosting](#hosting)
-* [Resources](#resources)
+* [Usage](#usage---in-progress)
+* [Tests](#tests---todo)
+* [Hosting](#hosting---todo)
+* [Resources](#resources---todo)
+* [Configuration](#configuration)
+* [`ping`](#on-accessing-ping)
 
 ## About
 
@@ -152,40 +140,7 @@ or something like that.
 ## Resources - TODO
 - This section should be used to keep track of any 3rd party resources used to help aid in the creation of this project.
 
-# PREVIOUS - TO MERGE
-
-## So far
-
-Working towards replacing https://github.com/hathitrust/common
-
-- [x] include bootstrap as a dependency
-- [-] include Mulish
-  - [ ] as local dependency
-- [x] collect color properties from Phire Design
-- [-] collect typography properties
-  - [x] headings
-  - [ ] paragraphs
-- [x] forms (in progress)
-
-## Using
-
-To run:
-
-```
-npm install
-npm run start
-```
-
-Icons currently are included via a `<script>` call, due to [this issue](https://github.com/FortAwesome/Font-Awesome/issues/19535).
-
-```
-<script src="https://kit.fontawesome.com/1c6c3b2b35.js" crossorigin="anonymous"></script>
-```
-
-## On `setupHTEnv`
-
-`lib/utils.js` starts pointing some `common` functionality to this new 
-environment. The *how* is subject to change as this project evolves.
+## Configuration
 
 * `HT.prefs.set` and `HT.prefs.get`
 * configuring the various domains:
@@ -193,7 +148,6 @@ environment. The *how* is subject to change as this project evolves.
   * `HT.catalog_domain`
   * `HT.www_domain`
   * `HT.cookies_domain`
-
 
 ## On accessing `ping`
 
