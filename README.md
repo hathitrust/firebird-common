@@ -1,35 +1,146 @@
-## So far
+# firebird-common
 
-Working towards replacing https://github.com/hathitrust/common
+## Table Of Contents
 
-- [x] include bootstrap as a dependency
-- [-] include Mulish
-  - [ ] as local dependency
-- [x] collect color properties from Phire Design
-- [-] collect typography properties
-  - [x] headings
-  - [ ] paragraphs
-- [x] forms (in progress)
+* [About](#about)
+* [Built With](#built-with)
+* [Project Set Up](#project-set-up)
+  * [Prerequisites](#prerequisites)
+  * [Installation](#installation)
+  * [Creating A Pull Request](#creating-a-pull-request)
+* [Content Structure](#content-structure)
+  * [Project Structure](#project-structure)
+* [Design](#design)
+* [Functionality](#functionality)
+* [Usage](#usage---in-progress)
+* [Tests](#tests---todo)
+* [Hosting](#hosting---todo)
+* [Resources](#resources---todo)
+* [Configuration](#configuration)
+* [`ping`](#on-accessing-ping)
 
-## Using
+## About
 
-To run:
+🔥🐦: Shared front-end components and utilities library for HathiTrust applications and web site.
+## Built With
+* Svelte
+* Bootstrap
+* Storybook
+* Chromatic
+* Vite
+## Project Set Up
 
-```
+### Prerequisites
+* For running storybook in this repository: node > 18
+* For running in the babel repo: Docker or compatible container runtime
+### Installation
+
+Running just with storybook:
+```bash
+git clone https://github.com/hathitrust/firebird-common
+cd firebird-common
 npm install
-npm run start
+npm run storybook
 ```
 
-Icons currently are included via a `<script>` call, due to [this issue](https://github.com/FortAwesome/Font-Awesome/issues/19535).
+That will let you develop and work on the components, but in order to see them in the context of the applications you will need to use https://github.com/hathitrust/babel. Setting up that repository will also check out and build firebird.
 
+```bash
+git clone https://github.com:hathitrust/babel
+cd babel
+./setup.sh
 ```
-<script src="https://kit.fontawesome.com/1c6c3b2b35.js" crossorigin="anonymous"></script>
+
+You can then start a container that will automatically rebuild the firebird components when they change:
+
+```bash
+docker compose up -d firebird
+```
+### Creating A Pull Request
+
+1. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+2. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+3. Push to the Branch (`git push origin feature/AmazingFeature`)
+4. Open a Pull Request
+
+* TBD: review process with Chromatic
+## Content Structure
+This is where you explain the content structure, otherwise known as the Information Architecture (IA). There are a few parts to this, depending on how complicated and broad the project. Try to include relationships between files and services.
+
+### Project Structure
+```markdown
+.
+├── bin // Build and deployment support
+└── src
+    ├── assets // Static assets (for use at build time?)
+    ├── js
+    │   ├── components // Subdirectories for individual components and their tests
+    │   ├── decorators // Support for specific storybook stories
+    │   ├── designs    // Also components, but more for storybook - designs that get reused in HTML templates rather than as svelte components currently.
+    │   └── lib        // Various utilities and functions used by the components
+    ├── public         // fonts and images used by components
+    └── scss           // Style sheet (SCSS) sources
+        └── fontawesome // Vendored copy of fontawesome
+```
+## Design
+* Examples already in storybook (this will eventually be our design system)
+* Link to drive with all the logos and things?
+* Figma file that's locked down?
+* ???
+* Probably it should just all be in storybook, this is the eventual design system...
+## Functionality
+
+Components for firebird are built with Svelte!
+
+You can look at the components with Storybook! (see above)
+See below for using the components in our applications ... 
+
+
+You can start building a component by creating a directory in `src/js/components`  called e.g. `ComponentName` containing an `index.svelte` and `ComponentName.stories.js`. 
+
+The `index.svelte` contains the component itself; see the [Svelte documentation](https://svelte.dev/docs/svelte-components) on how components are written.
+
+Storybook allows showing the component in isolation in different states and scenarios as you develop it; see the [Storybook documentation](https://storybook.js.org/docs/writing-stories) on writing stories.
+
+To see the storybook locally, run `npm run storybook` inside the repository and then go to `http://localhost:6006`. (Using storybook alongside babel is future work.)
+
+The storybook is also the primary place for viewing and documenting use cases for the components.
+
+### Styles
+
+* `styles.scss` are styles used by anything that will use firebird: the web sites and applications rely on styles and variables set here.
+* `apps.scss` has styles used only by the applications: catalog, mb, ls all use this via an `apps` class in their `body` tag.
+
+## Usage - IN PROGRESS
+
+This section describes how to use components.
+
+In the HTML generated by an application, it should include:
+
+```html
+<script src="..."/>
 ```
 
-## On `setupHTEnv`
+* via `skeleton.xsl` for the babel apps (https://github.com/hathitrust/babel/blob/main/mdp-web/skeleton.xsl)
+* Via ... something else ... for the catalog
 
-`lib/utils.js` starts pointing some `common` functionality to this new 
-environment. The *how* is subject to change as this project evolves.
+See cookie consent banner work log for how you initailize the component in a svelte js file somewhere so it's available as a web component and then you can just do
+
+```html
+<hathi-website-header/>
+```
+
+or something like that.
+## Tests - TODO
+- This section will clearly state the test use cases that are being coverd.
+- [X] Hello World
+- [ ] Something Serious
+## Hosting - TODO
+- This section should outline the ideal environemt for hosting this application and it's intention.
+## Resources - TODO
+- This section should be used to keep track of any 3rd party resources used to help aid in the creation of this project.
+
+## Configuration
 
 * `HT.prefs.set` and `HT.prefs.get`
 * configuring the various domains:
@@ -37,7 +148,6 @@ environment. The *how* is subject to change as this project evolves.
   * `HT.catalog_domain`
   * `HT.www_domain`
   * `HT.cookies_domain`
-
 
 ## On accessing `ping`
 
