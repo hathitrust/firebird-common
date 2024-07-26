@@ -54,6 +54,7 @@
   }
 
   function openFeedback(formLocation) {
+    if (document.activeElement !== document.getElementById('get-help')) document.getElementById('get-help').focus();
     if (formLocation === 'catalog') {
       form = 'catalog';
     } else if (formLocation === 'pt') {
@@ -98,7 +99,7 @@
   <div class="container-fluid">
     <div class="ht-logo" class:compact>
       <!-- <img src="../assets/HT-logo-mobile-nav.svg" alt="HathiTrust" class="" /> -->
-      <a href="//{HT.www_domain}/">
+      <a href="//{HT.www_domain}/" class="d-block">
         <svg
           aria-labelledby="ht-logo-title"
           role="img"
