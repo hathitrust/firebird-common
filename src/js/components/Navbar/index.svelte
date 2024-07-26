@@ -99,7 +99,7 @@
   <div class="container-fluid">
     <div class="ht-logo" class:compact>
       <!-- <img src="../assets/HT-logo-mobile-nav.svg" alt="HathiTrust" class="" /> -->
-      <a href="//{HT.www_domain}/">
+      <a href="//{HT.www_domain}/" class="d-block">
         <svg
           aria-labelledby="ht-logo-title"
           role="img"
