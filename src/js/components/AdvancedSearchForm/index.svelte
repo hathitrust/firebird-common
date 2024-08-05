@@ -495,7 +495,7 @@
           {#if idx > 0}
             <fieldset class="mb-3">
               <legend class="visually-hidden">Boolean operator for field {idx} and field {idx + 1}</legend>
-              <div class="d-flex gap-3 align-items-center justify-content-start">
+              <div class="d-flex gap-3 align-items-center justify-content-center justify-content-sm-start">
                 {#each booleanOptions as option, bidx}
                   <div class="form-check">
                     <input
@@ -513,9 +513,9 @@
               </div>
             </fieldset>
           {/if}
-          <fieldset class="search-clause mb-3 border border-dark rounded">
-            <div class="d-flex">
-              <legend class="visually-hidden">Search Field {idx + 1}</legend>
+          <fieldset class="search-clause mb-3">
+            <legend class="visually-hidden">Search field {idx + 1}:</legend>
+            <div class="field-container d-flex search-field border border-dark rounded">
               <div class="select-container border border-0 flex-grow-1">
                 <select
                   class="form-select rounded-0 rounded-start"
@@ -601,7 +601,7 @@
               Publication Year must be between 0-9999.
             </div>
           {/if}
-          <div class="d-flex gap-3 mb-1">
+          <div class="d-flex gap-3 mb-1 flex-wrap">
             {#each yopOptions as option, yidx}
               <div class="form-check">
                 <input
@@ -727,10 +727,21 @@
       margin-left: 0;
     }
   }
-  @media (max-width: 25rem) {
-    .form-select,
-    .form-control {
-      font-size: 0.875rem;
+  @media (max-width: 36rem) {
+    .field-container {
+      border:none !important;
+    }
+    .search-field {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .select-container select {
+      border: 1px solid var(--color-neutral-500) !important;
+      border-radius: 0.375rem !important;
+    }
+    .search-input .form-control {
+      border: 1px solid var(--color-neutral-500) !important;
+      border-radius: 0.375rem !important;
     }
   }
 </style>
