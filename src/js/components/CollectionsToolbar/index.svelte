@@ -347,4 +347,7 @@
 <CollectionEditModal bind:this={modal} {userIsAnonymous} {c} {cn} {desc} {contributorName} {shared} {submitAction} />
 
 <style>
+  .bg-secondary button:not(.dropdown-item):focus-visible, .bg-secondary .form-select:focus-visible {
+    outline-offset:0;
+  }
 </style>
