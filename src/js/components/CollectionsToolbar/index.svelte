@@ -350,4 +350,7 @@
   .bg-secondary button:not(.dropdown-item):focus-visible, .bg-secondary .form-select:focus-visible {
     outline-offset:0;
   }
+  .form-select:focus {
+    border-color: transparent;
+  }
 </style>
