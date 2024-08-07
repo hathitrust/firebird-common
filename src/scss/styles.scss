@@ -371,13 +371,12 @@ a:focus-visible {
 .bg-secondary button:not(.dropdown-item):focus-visible, .bg-secondary .form-select:focus-visible, .bg-dark .form-control:focus-visible {
   outline-offset:0;
 }
-.form-select:focus, .form-control:focus {
-  border-color: transparent;
-}
 
 
 .form-check-input, .form-control, .form-select {
+  &:focus {
   border: 1px solid var(--color-neutral-500);
+  }
 }
 input.form-control[type],
 textarea.form-control {
