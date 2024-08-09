@@ -150,7 +150,10 @@
     border-end-start-radius: 0;
     background: var(--color-primary-200);
     padding: 1.25rem 1rem;
-    max-height: 34rem;
+    // max-height: 34rem;
+    max-height: 80vh;
+    overflow-y: scroll;
+
     .h2 {
       font-size: 1.25rem;
       line-height: 120%; /* 1.5rem */
