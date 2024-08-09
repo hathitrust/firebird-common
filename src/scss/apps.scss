@@ -312,6 +312,9 @@ body {
       border-bottom-right-radius: 0.375rem;
     }
   }
+  #toolbar-seq.form-control:focus {
+    border-color: #fff;
+  }
 }
 
 span.query-term {
