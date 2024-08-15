@@ -357,7 +357,7 @@ body[data-initialized='true'] {
       outline: 3px solid #086AB4 !important;
       outline-offset: 4px;
       box-shadow: 0 0 0 6px white;
-      z-index: 3;
+      z-index: 3 !important;
       transition: unset;
     }
     &:focus {
