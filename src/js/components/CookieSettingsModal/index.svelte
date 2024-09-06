@@ -212,7 +212,7 @@
                     <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="heading4">
                       <div class="accordion-body">
                         <p id="marketing-description">
-                          Our website enables limited YouTube and Google marketing cookies.
+                          Our website enables limited Google marketing cookies.
                         </p>
                       </div>
                     </div>
