@@ -1,7 +1,7 @@
 import CookieConsentBanner from './index.svelte';
 import PingCallbackDecorator from '../../decorators/PingCallbackDecorator';
-import { userEvent, within } from '@storybook/testing-library';
-import { expect } from '@storybook/jest';
+import { userEvent, within } from "@storybook/test";
+import { expect } from "@storybook/test";
 
 export default {
   title: 'Cookie Consent Banner',

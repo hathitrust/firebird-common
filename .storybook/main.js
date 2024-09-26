@@ -5,7 +5,7 @@ const config = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
-    '@storybook/addon-designs',
+    // '@storybook/addon-designs',
   ],
   framework: {
     name: '@storybook/svelte-vite',
@@ -14,9 +14,7 @@ const config = {
   features: {
     interactionsDebugger: true,
   },
-  docs: {
-    autodocs: 'tag',
-  },
+  docs: {},
   staticDirs: ['../src/public'],
 };
 export default config;

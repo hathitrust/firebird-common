@@ -1,9 +1,9 @@
 import LoginFormModal from './index.svelte';
 import PingCallbackDecorator from '../../decorators/PingCallbackDecorator';
-import { userEvent, within } from '@storybook/testing-library';
+import { userEvent, within } from "@storybook/test";
 import { action } from '@storybook/addon-actions';
 
-import { expect } from '@storybook/jest';
+import { expect } from "@storybook/test";
 
 export const actionsData = {
   show: action('show'),

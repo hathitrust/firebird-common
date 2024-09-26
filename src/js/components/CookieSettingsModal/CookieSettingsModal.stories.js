@@ -1,5 +1,5 @@
 import CookieSettingsModal from './index.svelte';
-import { userEvent, within } from '@storybook/testing-library';
+import { userEvent, within } from "@storybook/test";
 
 export default {
   title: 'Cookie Settings Modal',
