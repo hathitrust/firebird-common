@@ -105,6 +105,7 @@
         {#if $$slots.footer}
           <div class="modal-footer">
             <slot name="footer">
+                  <!-- svelte-ignore a11y-autofocus -->
               <button
                 type="reset"
                 autofocus
