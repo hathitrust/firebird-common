@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/hathitrust/firebird-common#readme",
   "devDependencies": {
+    "@storybook/addon-designs": "^8.0.3",
     "@storybook/addon-essentials": "^8.3.3",
     "@storybook/addon-interactions": "^8.3.3",
     "@storybook/addon-links": "^8.3.3",

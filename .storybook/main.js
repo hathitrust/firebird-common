@@ -5,7 +5,7 @@ const config = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
-    // '@storybook/addon-designs',
+    '@storybook/addon-designs',
   ],
   framework: {
     name: '@storybook/svelte-vite',
