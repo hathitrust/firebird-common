@@ -10,6 +10,7 @@
   // <hathi-advanced-search-form data-prop-language-data="[&quot;Abkhaz&quot;,&quot;Achinese&quot;,&quot;Acoli&quot;,&quot;Adangme&quot;...
   export let formatData = [];
   export let languageData = [];
+  export let locationData = [];
   export let collid = null;
   export let collectionName = null;
 
@@ -50,6 +51,7 @@
   let pubYear = {};
   let lang = [];
   let format = [];
+  let originalLocation;
   let modal;
   // let types = new Array(4); types.fill('ocr');
   let types = ['ocr', 'all', 'title', 'author'];
@@ -166,15 +168,19 @@
           searchParams.append('bool[]', value);
         }
       });
-
       lang.forEach((value) => {
         searchParams.append('fqor-language[]', value);
       });
       format.forEach((value) => {
         searchParams.append('fqor-format[]', value);
       });
+      if (originalLocation) {
+        searchParams.append('filter[]', `htsource:${originalLocation}`)
+      }
 
-      url.search = searchParams.toString();
+      let preSearch = searchParams.toString()
+      // note: searchParams.toString() turns the : after htsource into a %3A and I don't want that
+      url.search = preSearch.replace(/htsource%3A/g, 'htsource:'); 
     } else {
       url = new URL(`${protocol}//${HT.service_domain}/cgi/ls`);
       let searchParams = new URLSearchParams();
@@ -251,6 +257,9 @@
       format.forEach((value) => {
         searchParams.append('facet_format', `format:${value}`);
       });
+      if (originalLocation) {
+        searchParams.append('facet', `htsource:"${originalLocation}"`)
+      }
 
       url.search = searchParams.toString();
     }
@@ -288,6 +297,14 @@
           format.push(value);
         });
         format = format;
+      }
+      if (params.get('filter[]')?.includes('htsource')) {
+        params.getAll('filter[]').forEach((value) => {
+          if (value.includes('htsource')) {
+            originalLocation = value.replace('htsource:', '');
+          }
+        });
+        originalLocation = originalLocation;
       }
 
       if (!params.get('ft') && window.location.href.includes('?')) {
@@ -342,6 +359,14 @@
           format.push(value.replace('format:', ''));
         });
         format = format;
+      }
+      if (params.get('facet')?.includes('htsource')) {
+        params.getAll('facet').forEach((value) => {
+          if (value.includes('htsource')) {
+            originalLocation = value.replace('htsource:', '').replaceAll('"', '');
+          }
+        });
+        originalLocation = originalLocation;
       }
 
       yop = params.get('yop') || 'after';
@@ -683,6 +708,25 @@
                 placeholder="Filter by format"
                 multiple={true}
                 bind:value={format}
+              />
+            </div>
+          </fieldset>
+
+          <fieldset class="mb-4">
+            <legend class="fs-4 fw-bold">Original Location</legend>
+
+            <div class="advanced-search-list">
+              <FilterableSelection
+                --filterable-list-height="15rem"
+                items={locationData.map((item) => ({
+                  option: item,
+                  key: item,
+                  value: item,
+                }))}
+                label="Original location"
+                placeholder="Filter by original location"
+                multiple={false}
+                bind:value={originalLocation}
               />
             </div>
           </fieldset>
