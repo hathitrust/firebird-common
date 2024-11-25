@@ -3,6 +3,7 @@
   import { onMount } from 'svelte';
 
   export let index = 'library';
+
   // export let bootstrapToggleShow;
 
   //search form bindings
@@ -226,7 +227,7 @@
         {/if}
       </span>
       <div class="search-links">
-        <a href="//{HT.www_domain}/the-collection/search-access/#hathitrust-search-basics"
+        <a href="//{window.HT.www_domain}/the-collection/search-access/#hathitrust-search-basics"
           ><i class="fa-regular fa-circle-question fa-fw" /><span>Search Help</span></a
         >
         <a href={`//${SERVICE_DOMAIN}/cgi/ls?a=page&page=advanced`}
