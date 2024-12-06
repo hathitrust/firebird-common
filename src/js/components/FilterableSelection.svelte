@@ -123,7 +123,7 @@
             on:focus={(event) => updateValue(event, true)}
           />
         {/if}
-        <label class="form-check-label p-2 px-3" for="item{index}-{guid}">{item.option}</label>
+        <label class="form-check-label p-2 px-3" for="item{index}-{guid}">{@html item.option}</label>
       </li>
     {/each}
   </ul>
