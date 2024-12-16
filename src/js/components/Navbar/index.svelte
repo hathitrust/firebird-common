@@ -192,6 +192,7 @@
         </button>
       {/if}
     </div>
+    <!-- svelte-ignore a11y-invalid-attribute -->
     <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
       <ul class="navbar-nav menu-links">
         <li class="nav-item dropdown">
@@ -550,8 +551,7 @@
         border-radius: 0;
       }
     }
-    a.nav-link,
-    button.nav-link {
+    a.nav-link {
       font-weight: 800;
       &.search-active {
         color: var(--color-primary-600);

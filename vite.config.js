@@ -43,9 +43,12 @@ export default defineConfig({
     manifest: true,
     outDir: path.resolve(__dirname, 'dist'),
     emptyOutDir: true,
-    // rollupOptions: {
-    //   input: files,
-    // },
+    rollupOptions: {
+      external: [
+        /^..\/fonts/,
+        /^\/common\/firebird/
+      ]
+    },
   },
   resolve: {
     alias: {

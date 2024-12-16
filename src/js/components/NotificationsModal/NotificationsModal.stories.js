@@ -1,9 +1,9 @@
 import NotificationsModal from './index.svelte';
 import PingCallbackDecorator from '../../decorators/PingCallbackDecorator';
-import { userEvent, within, waitFor } from '@storybook/testing-library';
+import { userEvent, within, waitFor } from "@storybook/test";
 import { action } from '@storybook/addon-actions';
 
-import { expect } from '@storybook/jest';
+import { expect } from "@storybook/test";
 
 import { TestCookieJar } from '../../lib/cookies';
 import NotificationsManager from '../../lib/notifications';
