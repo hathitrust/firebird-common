@@ -1,6 +1,6 @@
 import FeedbackFormContent from './index.svelte';
-import { userEvent, within } from '@storybook/testing-library';
-import { expect } from '@storybook/jest';
+import { userEvent, within } from "@storybook/test";
+import { expect } from "@storybook/test";
 
 export default {
   title: 'Feedback Form - Content Correction',

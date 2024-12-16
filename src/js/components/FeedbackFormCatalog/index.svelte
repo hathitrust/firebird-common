@@ -308,7 +308,7 @@
   {#if submitted}
     <section>
       {#if postResponseStatusCode === 200}
-        <div transition:slide>
+        <div transition:slide|global>
           <div class="alert alert-success submit-message" role="alert">
             <i class="fa-solid fa-circle-check fa-lg me-2" />
             <div>
@@ -322,7 +322,7 @@
           </div>
         </div>
       {:else if postResponseStatusCode === 429}
-        <div transition:slide>
+        <div transition:slide|global>
           <div class="alert alert-danger submit-message" role="alert">
             <i class="fa-solid fa-triangle-exclamation fa-lg me-2" />
             <div>
@@ -332,7 +332,7 @@
           </div>
         </div>
       {:else}
-        <div transition:slide={{ duration: 300 }}>
+        <div transition:slide|global={{ duration: 300 }}>
           <div class="alert alert-danger submit-message" role="alert">
             <i class="fa-solid fa-triangle-exclamation fa-lg me-2" />
             <div>

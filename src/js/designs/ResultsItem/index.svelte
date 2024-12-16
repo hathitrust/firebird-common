@@ -102,16 +102,6 @@
     }
   }
 
-  a.d-inline-flex {
-    gap: var(--bs-gutter-x);
-    text-decoration: none;
-    padding: 0.25rem;
-
-    & > * {
-      text-decoration: underline;
-    }
-  }
-
   a i[aria-hidden] {
     text-decoration: none;
   }

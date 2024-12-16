@@ -48,12 +48,12 @@
             {#if datum.message.indexOf('<p>') > -1}
               {@html datum.message}
               <p>
-                <a href={datum.read_more_link} target="_blank">{datum.read_more_label}</a>
+                <a href={datum.read_more_link} target="_blank" rel="noreferrer">{datum.read_more_label}</a>
               </p>
             {:else}
               <p>
                 {datum.message}
-                <a href={datum.read_more_link} target="_blank">{datum.read_more_label}</a>
+                <a href={datum.read_more_link} target="_blank" rel="noreferrer">{datum.read_more_label}</a>
               </p>
             {/if}
           </li>

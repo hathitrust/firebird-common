@@ -12,6 +12,7 @@
 {#if $cookieConsentSeen === 'true'}
   <CookieSettingsModal bind:this={settingsModal} />
 {/if}
+<!-- svelte-ignore a11y-invalid-attribute -->
 <div class="sub-footer">
   <div class="legal">
     <span class="copyright">&#169;{year} HathiTrust</span>

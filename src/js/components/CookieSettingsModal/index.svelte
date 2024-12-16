@@ -294,10 +294,6 @@
     .accordion-button:not(.collapsed)::before {
       transform: rotate(0deg);
     }
-
-    &.accordion label {
-      pointer-events: none;
-    }
     &.accordion input.form-check-input {
       width: 1.25rem;
       height: 1.25rem;

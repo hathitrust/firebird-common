@@ -1,6 +1,6 @@
 import SearchBar from './index.svelte';
 import PingCallbackDecorator from '../../decorators/PingCallbackDecorator';
-import { userEvent, within } from '@storybook/testing-library';
+import { userEvent, within } from "@storybook/test";
 
 export default {
   title: 'Search Bar',

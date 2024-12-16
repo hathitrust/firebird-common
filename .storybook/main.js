@@ -14,9 +14,28 @@ const config = {
   features: {
     interactionsDebugger: true,
   },
-  docs: {
-    autodocs: 'tag',
-  },
+  docs: {},
   staticDirs: ['../src/public'],
+  async viteFinal(config, { configType }) {
+    const { mergeConfig } = await import('vite');
+ 
+    if (configType === 'DEVELOPMENT') {
+      // Your development configuration goes here
+    }
+    if (configType === 'PRODUCTION') {
+      // Your production configuration goes here.
+    }
+    return mergeConfig(config, {
+      // Your environment configuration here
+      build: {
+        rollupOptions: {
+          external: [
+            /^..\/fonts/,
+            /^\/common\/firebird/
+          ]
+        },
+      },
+    });
+  },
 };
 export default config;
