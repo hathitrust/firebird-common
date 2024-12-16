@@ -28,8 +28,8 @@
   export let winterBreak = false;
 
   if (
-    (today.getFullYear() == 2023 && today.getMonth() == 11 && today.getDate() >= 22) ||
-    (today.getFullYear() == 2024 && today.getMonth() == 0 && today.getDate() <= 2)
+    (today.getFullYear() == 2024 && today.getMonth() == 11 && today.getDate() >= 22) ||
+    (today.getFullYear() == 2025 && today.getMonth() == 0 && today.getDate() <= 2)
   ) {
     // if today is a date in 2023, in the month of december, on or after the 22nd
     // OR today is a date in 2024, in the month of january, on or before the 2nd

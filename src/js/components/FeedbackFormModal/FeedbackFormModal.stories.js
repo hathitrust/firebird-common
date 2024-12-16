@@ -36,3 +36,15 @@ export const WinterBreak = {
     winterBreak: true
   } 
 };
+
+export const WinterBreakMobile = {
+  args: {
+    isOpen: true,
+    winterBreak: true
+  },
+  parameters: {
+    viewport: {
+      defaultViewport: 'bsXs',
+    },
+  }
+};
