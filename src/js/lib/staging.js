@@ -13,11 +13,12 @@ function mungeLink(href) {
     var tmp = href.split('?');
     href = tmp[0].replace('//hdl.handle.net/2027/', '//' + HT.service_domain + '/cgi/pt?id=');
     if (tmp[1]) {
-      var tmp2 = tmp[1].split('=');
-      if (tmp2[1].includes('%3B')) {
-        let tmp3 = tmp2[1].split('%3B');
-        href += ';' + tmp3[1] + '=' + tmp2[2];
+      if (tmp[1].includes('urlappend=')) {
+        let querystring = tmp[1].replaceAll('%3B', ';')
+        querystring = querystring.replace('urlappend=', '')
+        href += querystring
       } else {
+        var tmp2 = tmp[1].split('=');
         href += ';seq=' + tmp2[2];
       }
     }
