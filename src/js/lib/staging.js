@@ -14,7 +14,12 @@ function mungeLink(href) {
     href = tmp[0].replace('//hdl.handle.net/2027/', '//' + HT.service_domain + '/cgi/pt?id=');
     if (tmp[1]) {
       var tmp2 = tmp[1].split('=');
-      href += ';seq=' + tmp2[2];
+      if (tmp2[1].includes('%3B')) {
+        let tmp3 = tmp2[1].split('%3B');
+        href += ';' + tmp3[1] + '=' + tmp2[2];
+      } else {
+        href += ';seq=' + tmp2[2];
+      }
     }
   }
   return href.replace('https:', location.protocol);
