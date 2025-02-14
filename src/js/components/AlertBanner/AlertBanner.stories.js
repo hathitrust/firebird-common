@@ -27,6 +27,21 @@ export const Warning = {
   ],
 }
 
+export const Brand = {
+  parameters: parameters, 
+  args: {
+    type: 'brand',
+    title: `Update: Thanks for being awesome!`,
+    message: `We're having problems with our website and applications right now. Please be patient while we fix it. Thanks!`
+  },
+  decorators: [
+    () => ({
+      //ping here for cookie handling
+      Component: PingCallbackDecorator,
+    }),
+  ],
+}
+
 export const Danger = {
   parameters: parameters, 
   args: {
