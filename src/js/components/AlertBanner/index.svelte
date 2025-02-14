@@ -1,28 +1,25 @@
 <script>
-  import { preferencesConsent } from '../../lib/store';
   let HT = window.HT || {};
   let cookieJar = HT.cookieJar;
+  import { preferencesConsent } from '../../lib/store';
 
-  const alertData = [
-    {
-      title: 'Outage: Incomplete search results',
-      message: 'Users searching within the full text of all volumes will receive incomplete search results.',
-      link: 'https://www.hathitrust.org/press-post/outage-incomplete-search-results/',
-      linkText: 'See updates here',
-      type: 'warning',
-      //ID should increment with each new alert
-      id: 1,
-    },
-  ];
+  export let title = 'Outage: Incomplete search results';
+  // let title = '';
+  export let message = 'Users searching within the full text of all volumes will receive incomplete search results.';
+  export let link = 'https://www.hathitrust.org/press-post/outage-incomplete-search-results/';
+  export let linkText = 'See updates here';
+  export let type = 'warning';
+  //ID should increment with each new alert
+  export let id = 1;
 
   let isVisible = true;
 
-  function closeAlert() {
+  export function closeAlert() {
     //if user has functional/preference cookies enabled, set a 14-day cookie to remember dismissed preference
     if ($preferencesConsent === 'true') {
       let expires = new Date();
       expires.setDate(expires.getDate() + 14);
-      cookieJar.setItem(`HT-alert-${alertData[0].id}`, 'dismissed', expires, '/', HT.cookies_domain, true);
+      cookieJar.setItem(`HT-alert-${id}`, 'dismissed', expires, '/', HT.cookies_domain, true);
       isVisible = false;
     }
     //reset focus to the main element once the banner is removed from the DOM
@@ -31,35 +28,43 @@
     }
   }
 
-  if (cookieJar.getItem(`HT-alert-${alertData[0].id}`) === 'dismissed') {
+  if (cookieJar.getItem(`HT-alert-${id}`) === 'dismissed') {
     isVisible = false;
   }
 </script>
 
 {#if isVisible}
-  {#each alertData as alert}
-    <div class="alert alert-dismissible d-flex mx-3 justify-content-between fade show alert-{alert.type}" role="alert">
-      <div class="d-flex gap-2">
-        <i class="alert-icon fa-solid fa-triangle-exclamation"></i>
-        <div class="d-flex flex-column gap-2 py-3">
-          <p class="alert-heading">{alert.title}</p>
-          <p>{alert.message}</p>
-          <a class="alert-link" href={alert.link}>{alert.linkText}</a>
-        </div>
-      </div>
-      <div class="close-wrapper">
-        <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close" on:click={closeAlert}>
-          <span class="close-icon">
-            <i class="fa-solid fa-xmark icon-default" aria-hidden="true"></i><span class="fa-sr-only">Close banner</span
-            >
-            <i class="fa-solid fa-circle-xmark fa-2x icon-hover" aria-hidden="true"></i><span class="fa-sr-only"
-              >Close banner</span
-            >
-          </span>
-        </button>
+  <div
+    class="alert alert-dismissible d-flex mx-3 justify-content-between fade show alert-{type}"
+    id="alert-{id}"
+    role="alert"
+  >
+    <div class="d-flex gap-2">
+      <i
+        class="alert-icon fa-solid"
+        class:fa-circle-xmark={type === 'danger'}
+        class:fa-triangle-exclamation={type === 'warning'}
+        class:fa-bell={type === 'brand'}
+      ></i>
+      <div class="py-3 {title.length > 0 ? 'd-flex flex-column gap-2' : ''}">
+        {#if title}
+          <p class="alert-heading">{title}</p>
+        {/if}
+        <p class="message">{message}</p>
+        <a class="alert-link" href={link}>{linkText}</a>
       </div>
     </div>
-  {/each}
+    <div class="close-wrapper">
+      <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close" on:click={closeAlert}>
+        <span class="close-icon">
+          <i class="fa-solid fa-xmark icon-default" aria-hidden="true"></i><span class="fa-sr-only">Close banner</span>
+          <i class="fa-solid fa-circle-xmark fa-2x icon-hover" aria-hidden="true"></i><span class="fa-sr-only"
+            >Close banner</span
+          >
+        </span>
+      </button>
+    </div>
+  </div>
 {/if}
 
 <style lang="scss">
@@ -71,7 +76,13 @@
     --bs-alert-color: var(--color-neutral-800);
     --bs-alert-border-color: #b02a37;
   }
+  .alert-brand {
+    --bs-alert-color: var(--color-neutral-800);
+    --bs-alert-border-color: var(--color-primary-700);
+    --bs-alert-bg: var(--color-primary-100);
+  }
   .alert {
+    container-type: inline-size;
     border: none;
     border-inline-start: 0.25rem solid var(--bs-alert-border-color);
     padding: 0;
@@ -117,6 +128,17 @@
   }
   @media (min-width: 48em) {
     /* 768px, bootstrap "medium" and up */
+  }
+
+  @container (min-width: 35rem) {
+    p.message {
+      display: inline;
+    }
+  }
+  @container (width < 35rem) {
+    p.message {
+      margin-block-end: 0.5rem;
+    }
   }
   .alert-heading {
     font-weight: 700;
