@@ -154,7 +154,7 @@ or something like that.
 
 a.k.a. Outage Notifications
 
-This is the data for outage notification alert banners. We will update the adjacent `alert.json` file when a notification should be deployed site-wide. This file will typically be empty, but will include the data (as shown in the exmample below) when a notification is needed.
+This is the data for outage notification alert banners. We will update `/alerts/alert.json` when a notification should be deployed site-wide. This file will typically be empty, but will include the data (as shown in the exmample below) when a notification is needed.
 
 ## Alert types
 
