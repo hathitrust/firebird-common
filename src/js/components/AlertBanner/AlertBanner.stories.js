@@ -1,9 +1,9 @@
-import AlertBanner from './index.svelte'
+import BannerMessage from './BannerMessage.svelte'
 import PingCallbackDecorator from '../../decorators/PingCallbackDecorator';
 
 export default {
     title: 'Alert Banner',
-    component: AlertBanner,
+    component: BannerMessage,
 }
 
 const parameters = {

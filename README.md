@@ -17,6 +17,7 @@
 * [Hosting](#hosting---todo)
 * [Resources](#resources---todo)
 * [Configuration](#configuration)
+* [Alerts](#alerts)
 * [`ping`](#on-accessing-ping)
 
 ## About
@@ -148,6 +149,37 @@ or something like that.
   * `HT.catalog_domain`
   * `HT.www_domain`
   * `HT.cookies_domain`
+
+## Alerts
+
+a.k.a. Outage Notifications
+
+This is the data for outage notification alert banners. We will update the adjacent `alert.json` file when a notification should be deployed site-wide. This file will typically be empty, but will include the data (as shown in the exmample below) when a notification is needed.
+
+## Alert types
+
+### Default alert
+
+This alert includes a title and all other details.
+
+### Simple alert
+
+This alert does not include a title. It should still include a 'type' and 'link'/'linkText'. The title should be an empty string, e.g. `"title": "",`
+
+## Example
+
+**Note:** The `id` should be unique to each alert because a cookie with the related ID is created when the banner is dismissed.
+
+```json
+{
+    "title": "Outage: Incomplete search results",
+    "message": "Users searching within the full text of all volumes will receive incomplete search results.",
+    "link": "https://www.hathitrust.org/press-post/outage-incomplete-search-results/",
+    "linkText": "See updates here",
+    "type": "danger",
+    "id": 20250219,
+}
+```
 
 ## On accessing `ping`
 
