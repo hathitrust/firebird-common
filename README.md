@@ -177,7 +177,7 @@ This alert does not include a title. It should still include a 'type' and 'link'
     "link": "https://www.hathitrust.org/press-post/outage-incomplete-search-results/",
     "linkText": "See updates here",
     "type": "danger",
-    "id": 20250219,
+    "id": 20250219
 }
 ```
 
