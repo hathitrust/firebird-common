@@ -57,7 +57,7 @@
       {/if}
       <div class="py-3 {title.length > 0 ? 'd-flex flex-column gap-2' : ''}">
         {#if title}
-          <h2 class="h3 alert-heading">{title}</h2>
+          <h2 class="h4 alert-heading mb-0">{title}</h2>
         {/if}
         <p class="message">{message}</p>
         <a class="alert-link" href={link}>{linkText}</a>
