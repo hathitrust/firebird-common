@@ -1,126 +1,22 @@
 <script>
-  import { preferencesConsent } from '../../lib/store';
-  let HT = window.HT || {};
-  let cookieJar = HT.cookieJar;
+  import BannerMessage from './BannerMessage.svelte';
 
-  const alertData = [
-    {
-      title: 'Outage: Incomplete search results',
-      message: 'Users searching within the full text of all volumes will receive incomplete search results.',
-      link: 'https://www.hathitrust.org/press-post/outage-incomplete-search-results/',
-      linkText: 'See updates here',
-      type: 'warning',
-      //ID should increment with each new alert
-      id: 1,
-    },
-  ];
+  let alert;
+  let alertEmpty = true;
 
-  let isVisible = true;
-
-  function closeAlert() {
-    //if user has functional/preference cookies enabled, set a 14-day cookie to remember dismissed preference
-    if ($preferencesConsent === 'true') {
-      let expires = new Date();
-      expires.setDate(expires.getDate() + 14);
-      cookieJar.setItem(`HT-alert-${alertData[0].id}`, 'dismissed', expires, '/', HT.cookies_domain, true);
-      isVisible = false;
+  const request = async () => {
+    try {
+      const response = await fetch(`/common/firebird/alerts/alert.json`);
+      const data = await response.json();
+      alert = data;
+      alertEmpty = false;
+    } catch (error) {
+      console.log('catch: no alert');
     }
-    //reset focus to the main element once the banner is removed from the DOM
-    if (document.querySelector('main')) {
-      document.querySelector('main').focus();
-    }
-  }
-
-  if (cookieJar.getItem(`HT-alert-${alertData[0].id}`) === 'dismissed') {
-    isVisible = false;
-  }
+  };
+  request();
 </script>
 
-{#if isVisible}
-  {#each alertData as alert}
-    <div class="alert alert-dismissible d-flex mx-3 justify-content-between fade show alert-{alert.type}" role="alert">
-      <div class="d-flex gap-2">
-        <i class="alert-icon fa-solid fa-triangle-exclamation"></i>
-        <div class="d-flex flex-column gap-2 py-3">
-          <p class="alert-heading">{alert.title}</p>
-          <p>{alert.message}</p>
-          <a class="alert-link" href={alert.link}>{alert.linkText}</a>
-        </div>
-      </div>
-      <div class="close-wrapper">
-        <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close" on:click={closeAlert}>
-          <span class="close-icon">
-            <i class="fa-solid fa-xmark icon-default" aria-hidden="true"></i><span class="fa-sr-only">Close banner</span
-            >
-            <i class="fa-solid fa-circle-xmark fa-2x icon-hover" aria-hidden="true"></i><span class="fa-sr-only"
-              >Close banner</span
-            >
-          </span>
-        </button>
-      </div>
-    </div>
-  {/each}
+{#if !alertEmpty}
+  <BannerMessage {...alert}></BannerMessage>
 {/if}
-
-<style lang="scss">
-  .alert-warning {
-    --bs-alert-color: var(--color-neutral-800);
-    --bs-alert-border-color: #997404;
-  }
-  .alert-danger {
-    --bs-alert-color: var(--color-neutral-800);
-    --bs-alert-border-color: #b02a37;
-  }
-  .alert {
-    border: none;
-    border-inline-start: 0.25rem solid var(--bs-alert-border-color);
-    padding: 0;
-    border-radius: 0.25rem;
-    box-shadow: 0px 4px 8px 0px rgba(25, 11, 1, 0.04);
-    i.alert-icon {
-      color: var(--bs-alert-border-color);
-      display: flex;
-      width: 1.5rem;
-      padding-block-start: 1rem;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
-      align-self: stretch;
-      margin-inline-start: 0.5rem;
-      line-height: 1.3125rem;
-    }
-    p,
-    a {
-      line-height: 1.3125rem;
-      letter-spacing: -0.01rem;
-      margin-block-end: 0;
-    }
-    a.alert-link {
-      font-weight: 500;
-      color: var(--bs-alert-color);
-    }
-    .close-wrapper {
-      display: flex;
-      align-items: flex-start;
-    }
-    button {
-      background: var(--bs-alert-bg);
-      border: none;
-      display: flex;
-      width: 2.75rem;
-      height: 2.75rem;
-      padding: 0rem 1rem;
-      justify-content: center;
-      align-items: center;
-      margin-top: 0.25rem;
-    }
-  }
-  @media (min-width: 48em) {
-    /* 768px, bootstrap "medium" and up */
-  }
-  .alert-heading {
-    font-weight: 700;
-    line-height: 1.3125rem; /* 131.25% */
-    letter-spacing: -0.01rem;
-  }
-</style>
