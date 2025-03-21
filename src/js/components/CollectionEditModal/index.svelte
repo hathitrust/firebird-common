@@ -10,6 +10,10 @@
   export let shared = 0;
   export let userIsAnonymous = true;
 
+  if (HT.login_status.logged_in) {
+    userIsAnonymous = false;
+  }
+
   export let submitAction = function () {};
 
   export function show() {
@@ -43,6 +47,8 @@
   $: if (contributorName.length == 255) {
     HT.live.announce('Contributor Name has a maximum size of 255');
   }
+
+  $: console.log('user anonymous?', userIsAnonymous);
 </script>
 
 <Modal bind:this={modal} scrollable={true}>
