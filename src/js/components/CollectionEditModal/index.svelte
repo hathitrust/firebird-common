@@ -30,7 +30,6 @@
     const formValid = document.querySelector('form#edit-collection.needs-validation');
     //check for required field
     if (!formValid.checkValidity()) {
-      // event.stopPropogation();
       formValid.classList.add('was-validated');
       if (formValid.querySelector('#cn.form-control:invalid')) {
         nameError = true;
@@ -60,14 +59,12 @@
   $: if (contributorName.length == 255) {
     HT.live.announce('Contributor Name has a maximum size of 255');
   }
-
-  $: console.log('user anonymous?', userIsAnonymous);
 </script>
 
 <Modal bind:this={modal} scrollable={true}>
   <svelte:fragment slot="title">{c == '__NEW__' ? 'New' : 'Edit'} Collection</svelte:fragment>
   <svelte:fragment slot="body">
-    <form id="edit-collection" class="needs-validation">
+    <form id="edit-collection" class="needs-validation" novalidate>
       <div class="mb-3">
         <label for="cn" class="form-label"
           >Collection Name <span class="required" aria-hidden="true">(required)</span>
@@ -82,13 +79,10 @@
           bind:value={cn}
           required
         />
-        <div id="cn-help" class="form-text">
-          Collection names can be 100 characters long ({100 - cn.length} characters remaining).
-        </div>
-        <div class="invalid-feedback" id="name-error">
+        <div id="cn-help" class="form-text" class:text-danger={nameError}>
           {#if nameError}
             <span>Error: Please provide a collection name.</span>
-          {/if}
+          {/if} Collection names can be 100 characters long ({100 - cn.length} characters remaining).
         </div>
       </div>
       <div class="mb-3">
