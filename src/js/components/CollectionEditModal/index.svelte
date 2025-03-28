@@ -154,7 +154,7 @@
     {/if}
     {#if errorMessage}
       <div role="alert" class="alert alert-block alert-danger mx-3">
-        The form did not submit. Please add a collection name and resubmit the form.
+        The collection could not be saved. Please add a collection name and try again.
       </div>
     {/if}
     <button class="btn btn-secondary" type="button" on:click={() => modal.hide()}>Close</button>
