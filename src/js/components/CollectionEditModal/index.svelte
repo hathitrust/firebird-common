@@ -2,6 +2,8 @@
   import Modal from '../Modal';
 
   let modal;
+  let errorMessage,
+    nameError = false;
 
   export let c = '__NEW__';
   export let cn = '';
@@ -9,6 +11,10 @@
   export let contributorName = '';
   export let shared = 0;
   export let userIsAnonymous = true;
+
+  if (HT.login_status.logged_in) {
+    userIsAnonymous = false;
+  }
 
   export let submitAction = function () {};
 
@@ -21,17 +27,27 @@
   }
 
   function saveChanges(event) {
-    let params = new URLSearchParams();
-    if (c != '__NEW__') {
-      params.set('c', c);
-    }
-    params.set('cn', cn.trim());
-    params.set('desc', desc.trim());
-    params.set('contributor_name', contributorName.trim());
-    params.set('shrd', shared);
+    const formValid = document.querySelector('form#edit-collection.needs-validation');
+    //check for required field
+    if (!formValid.checkValidity()) {
+      formValid.classList.add('was-validated');
+      if (formValid.querySelector('#cn.form-control:invalid')) {
+        nameError = true;
+        errorMessage = true;
+      }
+    } else {
+      let params = new URLSearchParams();
+      if (c != '__NEW__') {
+        params.set('c', c);
+      }
+      params.set('cn', cn.trim());
+      params.set('desc', desc.trim());
+      params.set('contributor_name', contributorName.trim());
+      params.set('shrd', shared);
 
-    submitAction(params);
-    modal.hide();
+      submitAction(params);
+      modal.hide();
+    }
   }
 
   $: if (cn.length == 100) {
@@ -48,9 +64,11 @@
 <Modal bind:this={modal} scrollable={true}>
   <svelte:fragment slot="title">{c == '__NEW__' ? 'New' : 'Edit'} Collection</svelte:fragment>
   <svelte:fragment slot="body">
-    <form>
+    <form id="edit-collection" class="needs-validation" novalidate>
       <div class="mb-3">
-        <label for="cn" class="form-label">Collection Name</label>
+        <label for="cn" class="form-label"
+          >Collection Name <span class="required" aria-hidden="true">(required)</span>
+        </label>
         <input
           type="text"
           class="form-control"
@@ -59,9 +77,12 @@
           aria-describedby="cn-help"
           maxlength="100"
           bind:value={cn}
+          required
         />
-        <div id="cn-help" class="form-text">
-          Collection names can be 100 characters long ({100 - cn.length} characters remaining).
+        <div id="cn-help" class="form-text" class:text-danger={nameError}>
+          {#if nameError}
+            <span>Error: Please provide a collection name.</span>
+          {/if} Collection names can be 100 characters long ({100 - cn.length} characters remaining).
         </div>
       </div>
       <div class="mb-3">
@@ -129,6 +150,11 @@
         <p class="mb-0">
           <strong>This collection will be temporary.</strong> Log in to create permanent and public collections.
         </p>
+      </div>
+    {/if}
+    {#if errorMessage}
+      <div role="alert" class="alert alert-block alert-danger mx-3">
+        The collection could not be saved. Please add a collection name and try again.
       </div>
     {/if}
     <button class="btn btn-secondary" type="button" on:click={() => modal.hide()}>Close</button>
