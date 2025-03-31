@@ -4,12 +4,7 @@
   import CollectionEditModal from '../CollectionEditModal';
 
   export let editable = false;
-  export let userIsAnonymous = true;
-  export let colldata = null;
   export let collid = null;
-  // export let collname = null;
-  // export let desc = null;
-  // export let shared = 0;
 
   let userCollections = [];
   let div;
@@ -344,7 +339,7 @@
   </div>
 {/if}
 
-<CollectionEditModal bind:this={modal} {userIsAnonymous} {c} {cn} {desc} {contributorName} {shared} {submitAction} />
+<CollectionEditModal bind:this={modal} {c} {cn} {desc} {contributorName} {shared} {submitAction} />
 
 <style>
 </style>
