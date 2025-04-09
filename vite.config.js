@@ -5,6 +5,7 @@ import pkg from 'svelte-preprocess';
 const { scss } = pkg;
 import path from 'node:path';
 import glob from 'fast-glob';
+import fs from 'fs';
 
 // Find all HTML files and build an object of names and paths to work from
 const files = glob
@@ -36,14 +37,37 @@ export default defineConfig({
       /* plugin options */
       preprocess: [scss({})],
     }),
+    {
+      name: 'postbuild-commands',
+      closeBundle: () => {
+        const path = './dist/manifest.json';
+        const manifest = JSON.parse(fs.readFileSync(path).toString());
+        if (manifest['style.css']) {
+          const newKey = 'index.css';
+          manifest[newKey] = manifest['style.css'];
+          manifest['index.css'].file = manifest['index.css'].file.replace('style', 'index');
+          delete manifest['style.css'];
+          fs.writeFileSync(path, JSON.stringify(manifest, null, 2));
+        }
+      }
+    },
   ],
   root: path.resolve(__dirname, 'src'),
   publicDir: 'public',
   build: {
-    manifest: true,
+    manifest: 'manifest.json',
     outDir: path.resolve(__dirname, 'dist'),
     emptyOutDir: true,
+    cssCodeSplit: false,
     rollupOptions: {
+      output: {
+        assetFileNames: (assetInfo) => {
+         if (assetInfo.name == 'style.css') {
+          return `assets/index-[hash].[ext]`
+         }
+        return assetInfo;
+        },
+      },
       external: [
         /^..\/fonts/,
         /^\/common\/firebird/

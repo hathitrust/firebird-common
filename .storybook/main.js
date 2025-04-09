@@ -24,6 +24,9 @@ const config = {
     }
     if (configType === 'PRODUCTION') {
       // Your production configuration goes here.
+      config.plugins = config.plugins.filter(plugin => {
+        return plugin.name != 'postbuild-commands'
+      })
     }
     return mergeConfig(config, {
       // Your environment configuration here
