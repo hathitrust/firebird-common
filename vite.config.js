@@ -37,6 +37,8 @@ export default defineConfig({
       /* plugin options */
       preprocess: [scss({})],
     }),
+    //custom vite plugin to rewrite the name of the CSS file in manifest.json
+    //hopefully temporary workaround until we can upgrade to svelte 5/vite 6
     {
       name: 'postbuild-commands',
       closeBundle: () => {
@@ -59,6 +61,8 @@ export default defineConfig({
     outDir: path.resolve(__dirname, 'dist'),
     emptyOutDir: true,
     cssCodeSplit: false,
+    //renames the style asset file to index
+    //hopefully temporary workaround until we can upgrade to svelte 5/vite 6
     rollupOptions: {
       output: {
         assetFileNames: (assetInfo) => {
