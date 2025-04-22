@@ -34,7 +34,7 @@ function setDomains() {
   if (HT.is_dev) {
     var prefix = hostname.split('.')[0];
     console.log('-- main setting hostname', prefix, hostname);
-    if (prefix == 'localhost') {
+    if (prefix == 'localhost' || prefix == 'apache-test') {
       if (location.port) {
         hostname += ':' + location.port;
       }
