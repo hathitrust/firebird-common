@@ -5,12 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Error - Blocked from HathiTrust</title>
     <style>
+        @font-face {
+            font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+            font-family: 'Mulish';
+            font-style: normal;
+            font-weight: 400;
+            src: url('../dist/fonts/mulish-v12-cyrillic_cyrillic-ext_latin_latin-ext_vietnamese-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+        }
         body {
             height: 100vh;
             width: 100vw;
+            padding-inline-start:1rem;
+            font-family: 'Mulish', sans-serif;
         }
         img {
-            height: 10vh;
+            height: 4.5rem;
             width: auto; 
             padding-block-start: 1em;
         }
