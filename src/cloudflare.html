@@ -18,10 +18,34 @@
             padding-inline-start:1rem;
             font-family: 'Mulish', sans-serif;
         }
+        h1 {
+            font-size: 2rem;
+            line-height: 1.19
+        }
+        h2 {
+            font-size: 1.75rem;
+            line-height: 1.21
+        }
+        h3 {
+            font-size: 1.125rem;
+            line-height: 1.31
+        }
         img {
             height: 4.5rem;
             width: auto; 
             padding-block-start: 1em;
+        }
+        .col {
+            max-width: 600px;
+            margin-inline-end: 2rem;
+            margin-top: 1.5rem;
+            /* padding:.5rem 1rem 1rem 1rem;
+            border: 1px solid #e4e4e4;
+            border-radius: .5rem;
+            background: #f8f8f8; */
+        }
+        p {
+            text-wrap: balance;
         }
     </style>
   </head>
@@ -29,10 +53,17 @@
     <img src="https://babel.hathitrust.org/common/firebird/dist/hathitrust-logo-horizontal-orange-gray.svg" />
     <h1>Sorry, you have been blocked</h1>
     <h2>::CLOUDFLARE_ERROR_500S_BOX::</h2>
-    <p>If you have questions about why you've been blocked, please contact HathiTrust at <a href="mailto:support@hathitrust.org">support@hathitrust.org</a> and provide these details:<p>
+    <div class="col">
+        <h3>Why have I been blocked?</h3>
+        <p>This website is using a security service to protect itself from online attacks. The action you just performed triggered the security solution. There are several actions that could trigger this block including submitting a certain word or phrase, a SQL command or malformed data.</p>
+    </div>
+    <div class="col">
+        <h3>What can I do to resolve this?</h3>
+        <p>You can e-mail HathiTrust Support at <a href="mailto:support@hathitrust.org">support@hathitrust.org</a>. Please include what you were doing when this page came up and provide these details:<p>
         <ul>
             <li>IP address: ::CLIENT_IP::</li>
             <li>Cloudflare Ray ID: ::RAY_ID::</li>
         </ul>
+    </div>
   </body>
 </html>
