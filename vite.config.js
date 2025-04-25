@@ -18,12 +18,11 @@ const files = glob
       .replace('/', '-');
 
     // let name = path.basename(cur, '.html');
-    console.log(name, '->', cur);
+    // console.log(name, '->', cur);
 
     acc[name] = cur;
     return acc;
   }, {});
-  console.log(files)
 
 const scssOptions = {
   quietDeps: true,
