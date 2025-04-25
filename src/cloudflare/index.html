@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Error - Blocked from HathiTrust</title>
+    <style>
+        @font-face {
+            font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+            font-family: 'Mulish';
+            font-style: normal;
+            font-weight: 400;
+            src: url('/common/firebird/dist/fonts/mulish-v12-cyrillic_cyrillic-ext_latin_latin-ext_vietnamese-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+        }
+        body {
+            height: 100vh;
+            width: 100vw;
+            padding-inline-start:1rem;
+            font-family: 'Mulish', sans-serif;
+        }
+        h1 {
+            font-size: 2rem;
+            line-height: 1.19
+        }
+        h2 {
+            font-size: 1.75rem;
+            line-height: 1.21
+        }
+        h3 {
+            font-size: 1.125rem;
+            line-height: 1.31
+        }
+        img {
+            height: 4.5rem;
+            width: auto; 
+            padding-block-start: 1em;
+        }
+        .col {
+            max-width: 600px;
+            margin-inline-end: 2rem;
+            margin-top: 1.5rem;
+            /* padding:.5rem 1rem 1rem 1rem;
+            border: 1px solid #e4e4e4;
+            border-radius: .5rem;
+            background: #f8f8f8; */
+        }
+        p {
+            text-wrap: balance;
+        }
+    </style>
+  </head>
+  <body>
+    <img src="https://babel.hathitrust.org/common/firebird/dist/hathitrust-logo-horizontal-orange-gray.svg" />
+    <h1>Sorry, you have been blocked</h1>
+    <h2>You are unable to access hathitrust.org</h2>
+    <div class="col">
+        <h3>Why have I been blocked?</h3>
+        <p>This website is using a security service to protect itself from online attacks. The action you just performed triggered the security solution. There are several actions that could trigger this block including submitting a certain word or phrase, a SQL command or malformed data.</p>
+    </div>
+    <div class="col">
+        <h3>What can I do to resolve this?</h3>
+        <p>You can e-mail HathiTrust Support at <a href="mailto:support@hathitrust.org">support@hathitrust.org</a>. Please include what you were doing when this page came up and provide these details:<p>
+        <ul>
+            <li>IP address: ::CLIENT_IP::</li>
+            <li>Cloudflare Ray ID: ::RAY_ID::</li>
+        </ul>
+    </div>
+  </body>
+</html>
