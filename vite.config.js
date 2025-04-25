@@ -9,7 +9,7 @@ import fs from 'fs';
 
 // Find all HTML files and build an object of names and paths to work from
 const files = glob
-  .sync(path.resolve(__dirname, 'src') + '/**/*.html')
+  .sync(path.resolve(__dirname, 'src') + '/**/*.html', { ignore: [(path.resolve(__dirname, 'src') + '/coverage')] })
   .reduce((acc, cur) => {
     // we want to keep the path
     let name = cur
@@ -18,7 +18,7 @@ const files = glob
       .replace('/', '-');
 
     // let name = path.basename(cur, '.html');
-    console.log(name, '->', cur);
+    // console.log(name, '->', cur);
 
     acc[name] = cur;
     return acc;
@@ -31,6 +31,17 @@ const scssOptions = {
 //   scssOptions.additionalData = `$firebird-font-path: "//localhost:5173"; $fa-font-path: "//localhost:5173/fonts";`;
 // }
 
+const removeStylesheet = () => {
+  return {
+    name: 'remove-stylesheet',
+    enforce: 'post',
+    apply: 'build',
+    transformIndexHtml(html) {
+      return html.replaceAll(/<link\s+rel="stylesheet"(\s.*\s)href="(.*)\.css">/gi, "");
+    },
+  }
+}
+
 export default defineConfig({
   plugins: [
     svelte({
@@ -42,7 +53,7 @@ export default defineConfig({
     {
       name: 'postbuild-commands',
       closeBundle: () => {
-        const path = './dist/manifest.json';
+        const path = 'dist/manifest.json';
         const manifest = JSON.parse(fs.readFileSync(path).toString());
         if (manifest['style.css']) {
           const newKey = 'index.css';
@@ -53,6 +64,7 @@ export default defineConfig({
         }
       }
     },
+   removeStylesheet()
   ],
   root: path.resolve(__dirname, 'src'),
   publicDir: 'public',
@@ -64,6 +76,10 @@ export default defineConfig({
     //renames the style asset file to index
     //hopefully temporary workaround until we can upgrade to svelte 5/vite 6
     rollupOptions: {
+      input: {
+        index: path.resolve(__dirname, 'src/index.html'),
+        cloudflare: path.resolve(__dirname, 'src/cloudflare/index.html'),
+      },
       output: {
         assetFileNames: (assetInfo) => {
          if (assetInfo.name == 'style.css') {
