@@ -31,6 +31,17 @@ const scssOptions = {
 //   scssOptions.additionalData = `$firebird-font-path: "//localhost:5173"; $fa-font-path: "//localhost:5173/fonts";`;
 // }
 
+const removeStylesheet = () => {
+  return {
+    name: 'remove-stylesheet',
+    enforce: 'post',
+    apply: 'build',
+    transformIndexHtml(html) {
+      return html.replaceAll(/<link\s+rel="stylesheet"(\s.*\s)href="(.*)\.css">/gi, "");
+    },
+  }
+}
+
 export default defineConfig({
   plugins: [
     svelte({
@@ -53,6 +64,7 @@ export default defineConfig({
         }
       }
     },
+   removeStylesheet()
   ],
   root: path.resolve(__dirname, 'src'),
   publicDir: 'public',
