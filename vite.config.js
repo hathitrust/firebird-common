@@ -41,8 +41,7 @@ export default defineConfig({
     //hopefully temporary workaround until we can upgrade to svelte 5/vite 6
     {
       name: 'postbuild-commands',
-      // enforce: 'post',
-      writeBundle: () => {
+      closeBundle: () => {
         const path = 'dist/manifest.json';
         const manifest = JSON.parse(fs.readFileSync(path).toString());
         if (manifest['style.css']) {
@@ -66,7 +65,7 @@ export default defineConfig({
     //hopefully temporary workaround until we can upgrade to svelte 5/vite 6
     rollupOptions: {
       input: {
-        main: path.resolve(__dirname, 'src/index.html'),
+        index: path.resolve(__dirname, 'src/index.html'),
         cloudflare: path.resolve(__dirname, 'src/cloudflare/index.html'),
       },
       output: {
