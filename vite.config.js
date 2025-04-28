@@ -78,7 +78,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         index: path.resolve(__dirname, 'src/index.html'),
-        cloudflare: path.resolve(__dirname, 'src/cloudflare/index.html'),
+        cloudflare: path.resolve(__dirname, 'src/cloudflare/cloudflare.html'),
       },
       output: {
         assetFileNames: (assetInfo) => {
