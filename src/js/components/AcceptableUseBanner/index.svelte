@@ -23,7 +23,7 @@
 
 {#if isVisible}
   <div
-    class="aup-banner alert alert-dark alert-block d-flex gap-4 align-items-center justify-content-center p-4 shadow-lg"
+    class="aup-banner alert alert-secondary alert-block d-flex gap-4 align-items-center justify-content-center p-4 shadow-lg"
   >
     <div class="fs-3">
       <p class="mb-0">
