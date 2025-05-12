@@ -64,7 +64,7 @@
 {#if $cookieConsentSeen === 'false'}
   <CookieSettingsModal bind:this={settingsModal} />
   <div aria-labelledby="cookie-heading" aria-describedby="cookie-description" role="dialog" aria-modal="false">
-    <div class="cookie-banner alert alert-dark alert-block mb-0 shadow-lg rounded-bottom-0">
+    <div class="cookie-banner alert alert-block mb-0 shadow-lg rounded-bottom-0">
       <div class="banner-container">
         <div class="banner-image align-items-center justify-content-center logo-large">
           <img src={lgSrc} height="133" width="100" class="" alt="" role="presentation" />
