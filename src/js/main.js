@@ -9,6 +9,7 @@ import { HotjarManager } from './lib/hotjar';
 import * as bootstrap from 'bootstrap';
 
 import { writable } from 'svelte/store';
+import { mount } from 'svelte'
 
 import Quote from './components/Quote.svelte';
 import LoginFormModal from './components/LoginFormModal';
@@ -97,7 +98,7 @@ HT.postPingCallback = function (login_status) {
         return;
       }
       let props = buildProps(el);
-      el.component = new apps[slug]({
+      el.component = mount(apps[slug],{
         target: el,
         props: props,
       });
