@@ -17,8 +17,14 @@
     return cookie;
   }
 
-  let modal;
-  export let isOpen = false;
+  let modal = $state();
+  /**
+   * @typedef {Object} Props
+   * @property {boolean} [isOpen]
+   */
+
+  /** @type {Props} */
+  let { isOpen = $bindable(false) } = $props();
 
   export const show = function () {
     isOpen = true;
@@ -43,24 +49,28 @@
     }
   });
 
-  $: if (modal && isOpen) {
-    show();
-  }
-  $: if (modal && !isOpen) {
-    hide();
-  }
+  $effect(() => {
+    if (modal && isOpen) {
+      show();
+    }
+  });
+  $effect(() => {
+    if (modal && !isOpen) {
+      hide();
+    }
+  });
 </script>
 
 <div class="cookie-settings">
   <Modal bind:this={modal} scrollable modalLarge fullscreenOnMobile>
-    <svelte:fragment slot="title">
+    {#snippet title()}
       <div class="align-items-center d-flex gap-2 py-2 settings-heading">
         <img src="/common/firebird/dist/hathitrust-icon-orange.svg" alt="" role="presentation" />
         <!-- <img src="/firebird-common/dist/hathitrust-icon-orange.svg" alt="" role="presentation" /> -->
         <h2 class="text-uppercase fs-3 mb-0">HathiTrust cookie settings</h2>
       </div>
-    </svelte:fragment>
-    <svelte:fragment slot="body">
+    {/snippet}
+    {#snippet body()}
       <div>
         <div class="d-flex gap-4 h-100">
           <form class="w-100 h-100 d-flex flex-column justify-content-between">
@@ -211,9 +221,7 @@
                     </div>
                     <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="heading4">
                       <div class="accordion-body">
-                        <p id="marketing-description">
-                          Our website enables limited Google marketing cookies.
-                        </p>
+                        <p id="marketing-description">Our website enables limited Google marketing cookies.</p>
                       </div>
                     </div>
                   </div>
@@ -227,7 +235,7 @@
                 type="button"
                 class="btn btn-primary"
                 id="deny-all"
-                on:click={() => {
+                onclick={() => {
                   $allowMarketing = false;
                   $allowPreferences = false;
                   $allowTracking = false;
@@ -239,7 +247,7 @@
                 type="button"
                 class="btn btn-primary"
                 id="allow-selected"
-                on:click={() => {
+                onclick={() => {
                   allowSelected();
                   hide();
                 }}>Confirm my choices</button
@@ -248,7 +256,7 @@
           </form>
         </div>
       </div>
-    </svelte:fragment>
+    {/snippet}
   </Modal>
 </div>
 
@@ -263,7 +271,7 @@
       }
     }
   }
-  .cookie-settings :is(p, h3, button.accordion-button) {
+  .cookie-settings :is(:global(p, h3, button.accordion-button)) {
     font-size: var(--ht-text-sm);
   }
   // .settings-heading {
@@ -323,7 +331,7 @@
   }
   @media (min-width: 48em) {
     /* 768px, bootstrap "medium" and up */
-    .cookie-settings :is(p, h3, button.accordion-button) {
+    .cookie-settings :is(:global(p, h3, button.accordion-button)) {
       font-size: 1rem;
     }
     .always-active {

@@ -51,7 +51,7 @@
   let pubYear = {};
   let lang = [];
   let format = [];
-  let originalLocation;
+  let originalLocation = '';
   let modal;
   // let types = new Array(4); types.fill('ocr');
   let types = ['ocr', 'all', 'title', 'author'];
@@ -175,12 +175,12 @@
         searchParams.append('fqor-format[]', value);
       });
       if (originalLocation) {
-        searchParams.append('filter[]', `htsource:${originalLocation}`)
+        searchParams.append('filter[]', `htsource:${originalLocation}`);
       }
 
-      let preSearch = searchParams.toString()
+      let preSearch = searchParams.toString();
       // note: searchParams.toString() turns the : after htsource into a %3A and I don't want that
-      url.search = preSearch.replace(/htsource%3A/g, 'htsource:'); 
+      url.search = preSearch.replace(/htsource%3A/g, 'htsource:');
     } else {
       url = new URL(`${protocol}//${HT.service_domain}/cgi/ls`);
       let searchParams = new URLSearchParams();
@@ -258,7 +258,7 @@
         searchParams.append('facet_format', `format:${value}`);
       });
       if (originalLocation) {
-        searchParams.append('facet', `htsource:"${originalLocation}"`)
+        searchParams.append('facet', `htsource:"${originalLocation}"`);
       }
 
       url.search = searchParams.toString();
@@ -773,7 +773,7 @@
   }
   @media (max-width: 36rem) {
     .field-container {
-      border:none !important;
+      border: none !important;
     }
     .search-field {
       flex-direction: column;

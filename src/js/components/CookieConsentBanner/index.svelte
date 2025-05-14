@@ -36,15 +36,23 @@
     });
   }
 
-  // export let lgSrc = '/common/firebird/dist/hathitrust-logo-stacked-orange-gray.png';
-  export let lgSrc = '/common/firebird/dist/hathitrust-logo-stacked_300x225.png';
-  export let smSrc = '/common/firebird/dist/hathitrust-icon-orange.png';
-
-  let settingsModal;
+  let settingsModal = $state();
   function openSettings() {
     settingsModal.show();
   }
-  export let cookieJar = HT.cookieJar;
+  /**
+   * @typedef {Object} Props
+   * @property {string} [lgSrc] - export let lgSrc = '/common/firebird/dist/hathitrust-logo-stacked-orange-gray.png';
+   * @property {string} [smSrc]
+   * @property {any} [cookieJar]
+   */
+
+  /** @type {Props} */
+  let {
+    lgSrc = '/common/firebird/dist/hathitrust-logo-stacked_300x225.png',
+    smSrc = '/common/firebird/dist/hathitrust-icon-orange.png',
+    cookieJar = HT.cookieJar,
+  } = $props();
 
   setTimeout(() => {
     if (!document.querySelector('.cookie-banner')) {
@@ -79,7 +87,7 @@
             type="button"
             class="close"
             aria-label="Close banner"
-            on:click={() => {
+            onclick={() => {
               denyAll();
             }}
             ><span class="close-icon">
@@ -113,19 +121,19 @@
             <button
               type="button"
               class="btn btn-primary"
-              on:click={() => {
+              onclick={() => {
                 allowAll();
               }}>Allow all cookies</button
             >
             <button
               type="button"
               class="btn btn-primary"
-              on:click={() => {
+              onclick={() => {
                 denyAll();
               }}>Allow necessary cookies only</button
             >
 
-            <button type="button" class="btn btn-tertiary" on:click={openSettings}
+            <button type="button" class="btn btn-tertiary" onclick={openSettings}
               >Customize cookies<i class="fa-solid fa-fw fa-sm fa-chevron-right"></i></button
             >
           </div>
