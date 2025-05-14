@@ -1,23 +1,32 @@
 <script>
-  import { preferencesConsent } from '../../lib/store';
+  import { consent } from '../../lib/store.svelte';
   let HT = window.HT || {};
-
-  export let sdrinst;
-  export let target = '';
 
   let loginStatus = HT.loginStatus;
 
-  export let onSubmit = function (href) {
-    setTimeout(() => {
-      window.location.assign(href);
-    });
-  };
+  /**
+   * @typedef {Object} Props
+   * @property {any} sdrinst
+   * @property {string} [target]
+   * @property {any} [onSubmit]
+   */
+
+  /** @type {Props} */
+  let {
+    sdrinst,
+    target = '',
+    onSubmit = function (href) {
+      setTimeout(() => {
+        window.location.assign(href);
+      });
+    },
+  } = $props();
 
   function handleClick() {
     let selected = idpList.find((item) => item.sdrinst == sdrinst);
     console.log('-- handleClick', sdrinst, selected);
     if (selected) {
-      if ($preferencesConsent === 'true') {
+      if (consent.preferencesConsent === 'true') {
         HT.prefs.set({ sdrinst: sdrinst });
       }
       let login_href = selected.idp_url.replace('___TARGET___', encodeURIComponent(target));
@@ -25,7 +34,7 @@
     }
   }
 
-  $: idpList = $loginStatus.idp_list;
+  let idpList = $derived(loginStatus.idp_list);
 </script>
 
 <div class="m-0 w-100">
@@ -34,8 +43,7 @@
       By logging into HathiTrust, you agree to follow our
       <a href="//{HT.www_domain}/the-collection/search-access/access-use-policy/">Acceptable Use Policy</a>.
     </p>
-    <button type="submit" name="submit" class="btn btn-primary align-self-center" on:click={handleClick}
-      >Continue</button
+    <button type="submit" name="submit" class="btn btn-primary align-self-center" onclick={handleClick}>Continue</button
     >
   </div>
 </div>

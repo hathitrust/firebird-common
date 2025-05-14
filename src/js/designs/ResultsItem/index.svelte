@@ -53,9 +53,8 @@
           <a
             class="list-group-item list-group-item-action w-sm-50"
             href="http://catalog.hathitrust.org/Record/{catalogId}#viewability"
-            ><i class="fa-solid fa-layer-group" aria-hidden="true" /> <span>Multiple Items</span></a
+            ><i class="fa-solid fa-layer-group" aria-hidden="true"></i> <span>Multiple Items</span></a
           >
-          <!-- <span class="list-group-item w-sm-50 border-0 bg-transparent fs-7">Use the Catalog Record to view multiple volumes</span> -->
         {:else if access == 'limited-search-only'}
           <a class="list-group-item list-group-item-action w-sm-50" href="https://babel.hathitrust.org/cgi/pt?id={htid}"
             ><i aria-hidden="true" class="fa-solid fa-lock" /> <span>Limited (search-only)</span>{#if visited}<i

@@ -1,22 +1,35 @@
 <script>
   let HT = window.HT || {};
   let cookieJar = HT.cookieJar;
-  import { preferencesConsent } from '../../lib/store';
+  import { consent } from '../../lib/store.svelte.js';
 
-  //   export let title = 'Outage: Website is down';
-  export let title = '';
-  export let message = `We're experiencing technical difficulties with our site and applications. Thank you for your patience!`;
-  export let link = 'https://www.hathitrust.org/press-post/outage-incomplete-search-results/';
-  export let linkText = 'See updates here';
-  export let type = 'warning';
-  //ID should increment with each new alert
-  export let id = 1;
+  /**
+   * @typedef {Object} Props
+   * @property {string} [title] - export let title = 'Outage: Website is down';
+   * @property {any} [message]
+   * @property {string} [link]
+   * @property {string} [linkText]
+   * @property {string} [type]
+   * @property {number} [id] - ID should increment with each new alert
+   */
 
-  let isVisible = true;
+  /** @type {Props} */
+  let {
+    title = '',
+    message = `We're experiencing technical difficulties with our site and applications. Thank you for your patience!`,
+    link = 'https://www.hathitrust.org/press-post/outage-incomplete-search-results/',
+    linkText = 'See updates here',
+    type = 'warning',
+    id = 1,
+  } = $props();
+
+  let isVisible = $state(true);
 
   export function closeAlert() {
     //if user has functional/preference cookies enabled, set a 14-day cookie to remember dismissed preference
-    if ($preferencesConsent === 'true') {
+    if (consent.preferencesConsent === 'true') {
+      let expires = new Date();
+      expires.setDate(expires.getDate() + 14);
       cookieJar.setItem(`HT-alert-${id}`, 'dismissed', 14);
       isVisible = false;
     }
@@ -62,7 +75,7 @@
       </div>
     </div>
     <div class="close-wrapper">
-      <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close" on:click={closeAlert}>
+      <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close" onclick={closeAlert}>
         <span class="close-icon">
           <i class="fa-solid fa-xmark icon-default" aria-hidden="true"></i><span class="fa-sr-only">Close banner</span>
           <i class="fa-solid fa-circle-xmark fa-2x icon-hover" aria-hidden="true"></i><span class="fa-sr-only"

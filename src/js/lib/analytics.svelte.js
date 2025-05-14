@@ -1,4 +1,4 @@
-import { trackingConsent } from './store'
+import { consent } from './store.svelte';
 export class AnalyticsManager {
   constructor({ analyticsSettings, is_dev = false }) {
     if (analyticsSettings) {
@@ -19,13 +19,11 @@ export class AnalyticsManager {
     const _mtm = (window._mtm = window._mtm || []);
     const _paq = (window._paq = window._paq || []);
 
-    trackingConsent.subscribe((value) => {
-      if (value !== 'true') {
-        _paq.push(['requireCookieConsent']);
-        } else {
-        _paq.push(['setCookieConsentGiven']);
-      }
-    })
+    if (consent.trackingConsent !== 'true') {
+      _paq.push(['requireCookieConsent']);
+    } else {
+      _paq.push(['setCookieConsentGiven']);
+    }
 
     _mtm.push({ 'mtm.startTime': new Date().getTime(), event: 'mtm.Start' });
 
@@ -40,20 +38,18 @@ export class AnalyticsManager {
       // pt has provided an original title
       _paq.push(['setDocumentTitle', customPageTitle]);
     }
-    addMatomoScript()
-    
+    addMatomoScript();
   }
 
   //need the arrow function syntax for 'this' to be defined
   addMatomoScript = () => {
-      var d = document,
-        g = d.createElement('script'),
-        s = d.getElementsByTagName('script')[0];
-      g.async = true;
-      g.src = `https://${this.service}/js/container_${this.container}.js`;
-      s.parentNode.insertBefore(g, s);
-    }
+    var d = document,
+      g = d.createElement('script'),
+      s = d.getElementsByTagName('script')[0];
+    g.async = true;
+    g.src = `https://${this.service}/js/container_${this.container}.js`;
+    s.parentNode.insertBefore(g, s);
+  };
 }
-
 
 export default AnalyticsManager;

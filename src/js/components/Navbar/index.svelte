@@ -21,7 +21,6 @@
     cookieJar: HT.cookieJar,
   });
 
-  // export let loggedIn = $loginStatus.logged_in;
   export let hasNotification = false;
   export let searchOpen = true;
   export let searchState;
@@ -41,7 +40,7 @@
 
   function openLogin() {
     //check viewport size to see if LoginFormModal will fit
-    if (window.innerHeight <= 670 || $loginStatus.idp_list.length == 0) {
+    if (window.innerHeight <= 670 || loginStatus.idp_list.length == 0) {
       //if not, redirect user
       //calculate login target
       let target = window.location.href;
@@ -71,14 +70,14 @@
   }
 
   function checkSwitchableRoles(isLoggedIn) {
-    if ($loginStatus.r) {
+    if (loginStatus.r) {
       for (const i in switchableRoles) {
         let role = switchableRoles[i];
-        if ($loginStatus.r.hasOwnProperty(role)) {
+        if (loginStatus.r.hasOwnProperty(role)) {
           return {
             status: true,
             label: switchableRolesLabels[role],
-            activated: $loginStatus.r[role],
+            activated: loginStatus.r[role],
           };
         }
       }
@@ -87,12 +86,12 @@
   }
 
   $: loginStatus = HT.loginStatus;
-  $: loggedIn = $loginStatus.logged_in;
+  $: loggedIn = loginStatus.logged_in;
   $: hasSwitchableRoles = checkSwitchableRoles(loggedIn).status;
   $: hasActivatedRole = checkSwitchableRoles(loggedIn).activated;
   $: role = checkSwitchableRoles(loggedIn).label;
-  $: if ($loginStatus && $loginStatus.notificationData) {
-    notificationsManager.update($loginStatus.notificationData);
+  $: if (loginStatus && loginStatus.notificationData) {
+    notificationsManager.update(loginStatus.notificationData);
     hasNotification = notificationsManager.hasNotifications();
   }
 </script>
@@ -181,7 +180,7 @@
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
-        <span><i class:hasNotification class="fa-solid fa-bars fa-fw" /></span>
+        <span><i class:hasNotification class="fa-solid fa-bars fa-fw"></i></span>
       </button>
       {#if searchState != 'none'}
         <button
@@ -194,7 +193,7 @@
           aria-label="Toggle search bar"
           on:click|stopPropagation={toggleSearch}
         >
-          <span><i class="fa-solid fa-magnifying-glass fa-fw" /></span>
+          <span><i class="fa-solid fa-magnifying-glass fa-fw"></i></span>
         </button>
       {/if}
     </div>
@@ -319,7 +318,7 @@
               role="button"
               aria-expanded={searchOpen}
               on:click|preventDefault|stopPropagation={toggleSearch}
-              >Search <i class="fa-solid fa-magnifying-glass fa-fw" /></a
+              >Search <i class="fa-solid fa-magnifying-glass fa-fw"></i></a
             >
           </li>
         {/if}
@@ -340,7 +339,7 @@
                   href="https://hathitrust.atlassian.net/servicedesk/customer/portals"
                   class="dropdown-item d-flex flex-row align-items-center gap-2"
                 >
-                  <i class="fa-solid fa-square-arrow-up-right fa-fw text-neutral-500" aria-hidden="true" /><span
+                  <i class="fa-solid fa-square-arrow-up-right fa-fw text-neutral-500" aria-hidden="true"></i><span
                     >Find Help</span
                   >
                 </a>
@@ -352,7 +351,7 @@
                   class="dropdown-item d-flex flex-row align-items-center gap-2"
                   on:click|preventDefault={() => openFeedback('questions')}
                 >
-                  <i class="fa-solid fa-circle-question fa-fw text-neutral-500" aria-hidden="true" /><span
+                  <i class="fa-solid fa-circle-question fa-fw text-neutral-500" aria-hidden="true"></i><span
                     >Ask a Question</span
                   >
                 </a>
@@ -364,7 +363,7 @@
                   class="dropdown-item d-flex flex-row align-items-center gap-2"
                   on:click|preventDefault={() => openFeedback(location)}
                 >
-                  <i class="fa-solid fa-bug fa-fw text-neutral-500" aria-hidden="true" /><span>Report a Problem</span>
+                  <i class="fa-solid fa-bug fa-fw text-neutral-500" aria-hidden="true"></i><span>Report a Problem</span>
                 </a>
               </li>
             </div>
@@ -387,9 +386,9 @@
                     class="account-icon me-n1 d-flex align-items-center justify-content-center border border-neutral-300 rounded-circle bg-neutral-100"
                   >
                     {#if hasActivatedRole}
-                      <i class="fa-solid fa-user-plus text-primary-600" />
+                      <i class="fa-solid fa-user-plus text-primary-600"></i>
                     {:else}
-                      <i class="fa-solid fa-user text-neutral-800" />
+                      <i class="fa-solid fa-user text-neutral-800"></i>
                     {/if}
                   </span>
                   <span id="my-account-label"
@@ -407,9 +406,9 @@
                         class="account-icon d-flex align-items-center justify-content-center border border-neutral-300 rounded-circle bg-neutral-100"
                       >
                         {#if hasActivatedRole}
-                          <i class="fa-solid fa-user-plus text-primary-600" aria-hidden="true" />
+                          <i class="fa-solid fa-user-plus text-primary-600" aria-hidden="true"></i>
                         {:else}
-                          <i class="fa-solid fa-user text-neutral-800" aria-hidden="true" />
+                          <i class="fa-solid fa-user text-neutral-800" aria-hidden="true"></i>
                         {/if}
                       </span>
                       <div class="role d-flex flex-column align-items-start">
@@ -425,11 +424,8 @@
                         data-disabled={!hasNotification}
                         disabled={!hasNotification ? true : null}
                         on:click={notificationsModal.show()}
-                        ><i
-                          class="fa-solid fa-bell fa-fw"
-                          aria-hidden="true"
-                          class:opacity-25={!hasNotification}
-                        /><span class="needs-hover-state"
+                        ><i class="fa-solid fa-bell fa-fw" aria-hidden="true" class:opacity-25={!hasNotification}
+                        ></i><span class="needs-hover-state"
                           >Notifications {#if hasNotification}({notificationsManager.count()}){/if}</span
                         >
                       </button>
@@ -439,7 +435,7 @@
                         class="dropdown-item d-flex flex-row gap-2 align-items-center"
                         href="//{`${HT.service_domain}/cgi/mb?a=listcs&colltype=my-collections`}"
                         role="button"
-                        ><i class="fa-solid fa-list fa-fw" aria-hidden="true" /><span class="needs-hover-state"
+                        ><i class="fa-solid fa-list fa-fw" aria-hidden="true"></i><span class="needs-hover-state"
                           >My Collections</span
                         ></a
                       >
@@ -454,7 +450,9 @@
                           role="button"
                           id="switch"
                           on:click={roleSwitchModal.show()}
-                          ><i class="fa-solid fa-user-group fa-fw" aria-hidden="true" /><span class="needs-hover-state">
+                          ><i class="fa-solid fa-user-group fa-fw" aria-hidden="true"></i><span
+                            class="needs-hover-state"
+                          >
                             Switch Role
                           </span></a
                         >
@@ -465,7 +463,7 @@
                         class="dropdown-item d-flex flex-row gap-2 align-items-center"
                         href="//{`${HT.service_domain}/cgi/logout?${encodeURIComponent(window.location.href)}`}"
                         role="button"
-                        ><i class="fa-solid fa-arrow-right-from-bracket fa-fw" aria-hidden="true" /><span
+                        ><i class="fa-solid fa-arrow-right-from-bracket fa-fw" aria-hidden="true"></i><span
                           class="needs-hover-state">Log Out</span
                         ></a
                       >
@@ -483,7 +481,7 @@
                 href="#"
                 role="button"
                 data-testid="login-button"
-                on:click|preventDefault={openLogin}><i class="fa-solid fa-user fa-fw" aria-hidden="true" /> Log In</a
+                on:click|preventDefault={openLogin}><i class="fa-solid fa-user fa-fw" aria-hidden="true"></i>Log In</a
               >
             </li>
           {/if}

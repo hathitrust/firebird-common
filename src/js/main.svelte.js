@@ -1,17 +1,15 @@
 // Import our custom CSS
 import '../scss/styles.scss';
-import { setupHTEnv, handleAutomaticLogin } from './lib/utils';
-import { AnalyticsManager } from './lib/analytics';
-import { HotjarManager } from './lib/hotjar';
+import { setupHTEnv, handleAutomaticLogin } from './lib/utils.js';
+import { AnalyticsManager } from './lib/analytics.svelte.js';
+import { HotjarManager } from './lib/hotjar.svelte.js';
 
 // Import all of Bootstrap's JS
 // these are made available globally
 import * as bootstrap from 'bootstrap';
 
-import { writable } from 'svelte/store';
-import { mount } from 'svelte'
+import { mount } from 'svelte';
 
-import Quote from './components/Quote.svelte';
 import LoginFormModal from './components/LoginFormModal';
 import LoginForm from './components/LoginFormModal/LoginForm';
 import Header from './components/Header';
@@ -20,7 +18,6 @@ import ResultsToolbar from './components/ResultsToolbar';
 import CollectionsToolbar from './components/CollectionsToolbar';
 import Footer from './components/Footer';
 import AdvancedSearchForm from './components/AdvancedSearchForm';
-import AcceptableUseBanner from './components/AcceptableUseBanner';
 import FeedbackFormModal from './components/FeedbackFormModal';
 import CookieConsentBanner from './components/CookieConsentBanner';
 import AlertBanner from './components/AlertBanner';
@@ -48,7 +45,6 @@ const buildProps = (el) => {
 };
 
 const apps = {};
-apps['hathi-quote'] = Quote;
 apps['hathi-login-form-modal'] = LoginFormModal;
 apps['hathi-login-form'] = LoginForm;
 apps['hathi-website-header'] = Header;
@@ -57,7 +53,6 @@ apps['hathi-results-toolbar'] = ResultsToolbar;
 apps['hathi-collections-toolbar'] = CollectionsToolbar;
 apps['hathi-website-footer'] = Footer;
 apps['hathi-advanced-search-form'] = AdvancedSearchForm;
-apps['hathi-acceptable-use-banner'] = AcceptableUseBanner;
 apps['hathi-feedback-form-modal'] = FeedbackFormModal;
 apps['hathi-cookie-consent-banner'] = CookieConsentBanner;
 apps['hathi-alert-banner'] = AlertBanner;
@@ -65,23 +60,24 @@ apps['hathi-alert-banner'] = AlertBanner;
 // configure the HT global
 setupHTEnv();
 
-// // APPROACH: look for wrapper elements, e.g. <div data-hathi-use="website-header">
-// document.querySelectorAll('[data-hathi-use]').forEach((el) => {
-//   let slug = el.dataset.hathiUse;
-//   let props = {};
-//   let component = new apps[slug]({
-//     target: el,
-//     props: props,
-//   })
-// })
-
 // an empty login status
 let emptyLoginStatus = {
   logged_in: false,
   idp_list: [],
 };
 
-HT.loginStatus = writable(emptyLoginStatus);
+// Create the reactive state
+let loginStatusState = $state(emptyLoginStatus);
+
+Object.defineProperty(HT, 'loginStatus', {
+  get() {
+    return loginStatusState;
+  },
+  set(value) {
+    Object.assign(loginStatusState, value);
+  },
+});
+
 HT.login_status = emptyLoginStatus;
 
 HT.postPingCallback = function (login_status) {
@@ -90,7 +86,7 @@ HT.postPingCallback = function (login_status) {
 
   handleAutomaticLogin();
 
-  HT.loginStatus.set(login_status);
+  HT.loginStatus = login_status;
 
   Object.keys(apps).forEach((slug) => {
     document.querySelectorAll(slug).forEach((el) => {
@@ -98,9 +94,10 @@ HT.postPingCallback = function (login_status) {
         return;
       }
       let props = buildProps(el);
-      el.component = mount(apps[slug],{
+      el.component = mount(apps[slug], {
         target: el,
         props: props,
+        intro: false,
       });
     });
   });
