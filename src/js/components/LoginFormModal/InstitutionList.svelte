@@ -3,9 +3,8 @@
   import FilterableSelection from '../FilterableSelection.svelte';
 
   let HT = window.HT || {};
-  export let sdrinst = HT.prefs ? HT.prefs.get().sdrinst : undefined;
 
-  export let filterText;
+  let { sdrinst = $bindable(), filterText = $bindable() } = $props();
 
   function getItems() {
     return idpList.map((item) => ({
@@ -15,14 +14,14 @@
     }));
   }
 
-  $: loginStatus = HT.loginStatus;
-  $: idpList = $loginStatus.idp_list;
+  let loginStatus = $derived(HT.loginStatus);
+  let idpList = $derived(loginStatus.idp_list);
 </script>
 
-{#if !$loginStatus}
+{#if !loginStatus}
   <pre>WAITING</pre>
-{:else if $loginStatus.logged_in}
-  <div class="alert alert-info">You are currently logged into HathiTrust by way of {$loginStatus.institutionName}.</div>
+{:else if loginStatus.logged_in}
+  <div class="alert alert-info">You are currently logged into HathiTrust by way of {loginStatus.institutionName}.</div>
   <p>
     <a href="//{HT.service_domain}/cgi/logout" class="btn btn-primary">Log out</a>
   </p>

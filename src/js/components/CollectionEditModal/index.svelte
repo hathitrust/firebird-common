@@ -1,22 +1,35 @@
 <script>
   import Modal from '../Modal';
 
-  let modal;
-  let errorMessage,
-    nameError = false;
+  let modal = $state();
+  let errorMessage = $state(),
+    nameError = $state(false);
 
-  export let c = '__NEW__';
-  export let cn = '';
-  export let desc = '';
-  export let contributorName = '';
-  export let shared = 0;
-  export let userIsAnonymous = true;
+  /**
+   * @typedef {Object} Props
+   * @property {string} [c]
+   * @property {string} [cn]
+   * @property {string} [desc]
+   * @property {string} [contributorName]
+   * @property {number} [shared]
+   * @property {boolean} [userIsAnonymous]
+   * @property {any} [submitAction]
+   */
+
+  /** @type {Props} */
+  let {
+    c = '__NEW__',
+    cn = $bindable(''),
+    desc = $bindable(''),
+    contributorName = $bindable(''),
+    shared = $bindable(0),
+    userIsAnonymous = $bindable(true),
+    submitAction = function () {},
+  } = $props();
 
   if (HT.login_status.logged_in) {
     userIsAnonymous = false;
   }
-
-  export let submitAction = function () {};
 
   export function show() {
     modal.show();
@@ -50,20 +63,28 @@
     }
   }
 
-  $: if (cn.length == 100) {
-    HT.live.announce('Collection Name has a maximum size of 100');
-  }
-  $: if (desc.length == 255) {
-    HT.live.announce('Description has a maximum size of 255');
-  }
-  $: if (contributorName.length == 255) {
-    HT.live.announce('Contributor Name has a maximum size of 255');
-  }
+  $effect(() => {
+    if (cn.length == 100) {
+      HT.live.announce('Collection Name has a maximum size of 100');
+    }
+  });
+  $effect(() => {
+    if (desc.length == 255) {
+      HT.live.announce('Description has a maximum size of 255');
+    }
+  });
+  $effect(() => {
+    if (contributorName.length == 255) {
+      HT.live.announce('Contributor Name has a maximum size of 255');
+    }
+  });
 </script>
 
 <Modal bind:this={modal} scrollable={true}>
-  <svelte:fragment slot="title">{c == '__NEW__' ? 'New' : 'Edit'} Collection</svelte:fragment>
-  <svelte:fragment slot="body">
+  {#snippet title()}
+    {c == '__NEW__' ? 'New' : 'Edit'} Collection
+  {/snippet}
+  {#snippet body()}
     <form id="edit-collection" class="needs-validation" novalidate>
       <div class="mb-3">
         <label for="cn" class="form-label"
@@ -95,7 +116,7 @@
           rows="3"
           maxlength="255"
           bind:value={desc}
-        />
+        ></textarea>
         <div id="desc-help" class="form-text">
           Descriptions can be 255 characters long ({255 - desc.length} characters remaining).
         </div>
@@ -122,7 +143,7 @@
             <div class="form-check form-check-inline">
               <input class="form-check-input" type="radio" name="shared" id="shared-0" value={0} bind:group={shared} />
               <label class="form-check-label" for="shared-0">
-                <i class="fa-solid fa-lock" aria-hidden="true" />
+                <i class="fa-solid fa-lock" aria-hidden="true"></i>
                 Private
               </label>
             </div>
@@ -143,8 +164,8 @@
         </fieldset>
       </div>
     </form>
-  </svelte:fragment>
-  <svelte:fragment slot="footer">
+  {/snippet}
+  {#snippet footer()}
     {#if userIsAnonymous}
       <div class="alert alert-block alert-danger mx-3">
         <p class="mb-0">
@@ -157,9 +178,9 @@
         The collection could not be saved. Please add a collection name and try again.
       </div>
     {/if}
-    <button class="btn btn-secondary" type="button" on:click={() => modal.hide()}>Close</button>
-    <button class="btn btn-primary" type="button" on:click={saveChanges}>Save Changes</button>
-  </svelte:fragment>
+    <button class="btn btn-secondary" type="button" onclick={() => modal.hide()}>Close</button>
+    <button class="btn btn-primary" type="button" onclick={saveChanges}>Save Changes</button>
+  {/snippet}
 </Modal>
 
 <style>
