@@ -14,7 +14,7 @@
     "build": "vite build && storybook build -o dist/storybook && node ./build-redirects.js",
     "test-storybook": "test-storybook",
     "chromatic": "chromatic --exit-zero-on-changes",
-    "babel": "vite build --watch"
+    "babel": "vite build --watch --minify false"
   },
   "repository": {
     "type": "git",
@@ -41,7 +41,8 @@
     "chromatic": "^10.0.0",
     "fast-glob": "^3.2.12",
     "happy-dom": "^17.4.4",
-    "prettier": "2.8.6",
+    "prettier": "^3.5.3",
+    "prettier-plugin-svelte": "^3.4.0",
     "sass": "1.77.6",
     "storybook": "^8.3.3",
     "vite": "^5.4.17",
