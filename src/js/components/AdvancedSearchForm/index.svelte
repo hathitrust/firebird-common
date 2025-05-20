@@ -405,7 +405,7 @@
     {/if}
     <div class="search-details d-flex">
       <span class="search-help"
-        ><i class="fa-solid fa-circle-info fa-fw" />
+        ><i class="fa-solid fa-circle-info fa-fw"></i>
         {#if isFullView}
           Search for items you can access.
         {:else}
@@ -512,7 +512,7 @@
         <h2 class="mb-3">Search by field</h2>
         {#if errors.lookFors}
           <div class="alert alert-block alert-warning d-flex gap-3 align-items-center">
-            <i class="fa-solid fa-triangle-exclamation" aria-hidden="true" />
+            <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
             A search term is required to submit an advanced search.
           </div>
         {/if}
@@ -575,7 +575,7 @@
         <div class="d-flex mb-3 justify-content-end">
           <button class="btn btn-primary btn-lg" type="submit">
             <span>Advanced Search</span>
-            <i class="fa-solid fa-arrow-up" aria-hidden="true" />
+            <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
           </button>
         </div>
 
@@ -600,7 +600,7 @@
           <div class="col-md-6">
             <fieldset>
               <legend class="fs-4 fw-bold">
-                <i class="fa-solid fa-database" aria-hidden="true" />
+                <i class="fa-solid fa-database" aria-hidden="true"></i>
                 Index Options</legend
               >
               <div class="form-check">
@@ -622,7 +622,7 @@
           <legend class="fs-4 fw-bold">Publication Year</legend>
           {#if errors.yop}
             <div class="alert alert-block alert-warning d-flex gap-3 align-items-center">
-              <i class="fa-solid fa-triangle-exclamation" aria-hidden="true" />
+              <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
               Publication Year must be between 0-9999.
             </div>
           {/if}
@@ -735,11 +735,11 @@
         <div class="d-flex gap-3 mb-3 justify-content-end">
           <button class="btn btn-secondary" type="reset">
             <span>Reset Form</span>
-            <i class="fa-solid fa-arrows-rotate" aria-hidden="true" />
+            <i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i>
           </button>
           <button class="btn btn-primary btn-lg" type="submit">
             <span>Advanced Search</span>
-            <i class="fa-solid fa-arrow-up" aria-hidden="true" />
+            <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
           </button>
         </div>
       </form>

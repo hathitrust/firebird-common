@@ -172,7 +172,7 @@
             placeholder="Search using keywords"
             bind:this={_input}
           />
-          <span class="input-group-text" id="search-icon"><i class="fa-solid fa-magnifying-glass fa-fw" /></span>
+          <span class="input-group-text" id="search-icon"><i class="fa-solid fa-magnifying-glass fa-fw"></i></span>
         </div>
         <div class="select-container" id="search-where">
           <select
@@ -218,7 +218,7 @@
     </form>
     <div class="search-details d-flex">
       <span class="search-help" id="search-bar-help"
-        ><i class="fa-solid fa-circle-info fa-fw" />
+        ><i class="fa-solid fa-circle-info fa-fw"></i>
         {#if index == 'library'}
           You're searching in {fieldValue} for {accessScope}.
         {/if}
@@ -228,10 +228,10 @@
       </span>
       <div class="search-links">
         <a href="//{window.HT.www_domain}/the-collection/search-access/#hathitrust-search-basics"
-          ><i class="fa-regular fa-circle-question fa-fw" /><span>Search Help</span></a
+          ><i class="fa-regular fa-circle-question fa-fw"></i><span>Search Help</span></a
         >
         <a href={`//${SERVICE_DOMAIN}/cgi/ls?a=page&page=advanced`}
-          ><i class="fa-solid fa-toolbox fa-fw" /><span>Advanced Search</span></a
+          ><i class="fa-solid fa-toolbox fa-fw"></i><span>Advanced Search</span></a
         >
       </div>
     </div>

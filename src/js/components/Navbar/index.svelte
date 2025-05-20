@@ -175,7 +175,7 @@
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
-        <span><i class:hasNotification class="fa-solid fa-bars fa-fw" /></span>
+        <span><i class:hasNotification class="fa-solid fa-bars fa-fw"></i></span>
       </button>
       {#if searchState != 'none'}
         <button
@@ -188,7 +188,7 @@
           aria-label="Toggle search bar"
           on:click|stopPropagation={toggleSearch}
         >
-          <span><i class="fa-solid fa-magnifying-glass fa-fw" /></span>
+          <span><i class="fa-solid fa-magnifying-glass fa-fw"></i></span>
         </button>
       {/if}
     </div>
@@ -313,7 +313,7 @@
               role="button"
               aria-expanded={searchOpen}
               on:click|preventDefault|stopPropagation={toggleSearch}
-              >Search <i class="fa-solid fa-magnifying-glass fa-fw" /></a
+              >Search <i class="fa-solid fa-magnifying-glass fa-fw"></i></a
             >
           </li>
         {/if}
@@ -335,7 +335,7 @@
                   class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
                 >
                   <span>Find Help</span>
-                  <i class="fa-solid fa-square-arrow-up-right fa-fw" />
+                  <i class="fa-solid fa-square-arrow-up-right fa-fw"></i>
                 </a>
               </li>
               <li class="px-3">
@@ -346,7 +346,7 @@
                   on:click|preventDefault={() => openFeedback('questions')}
                 >
                   <span>Ask a Question</span>
-                  <i class="fa-regular fa-circle-question" />
+                  <i class="fa-regular fa-circle-question"></i>
                 </a>
               </li>
               <li class="px-3">
@@ -357,7 +357,7 @@
                   on:click|preventDefault={() => openFeedback(location)}
                 >
                   <span>Report a Problem</span>
-                  <i class="fa-solid fa-bug" />
+                  <i class="fa-solid fa-bug"></i>
                 </a>
               </li>
             </div>
@@ -379,9 +379,9 @@
                     class="account-icon me-n1 d-flex align-items-center justify-content-center border border-neutral-300 rounded-circle bg-neutral-100"
                   >
                     {#if hasActivatedRole}
-                      <i class="fa-solid fa-bolt-lightning text-primary-600" />
+                      <i class="fa-solid fa-bolt-lightning text-primary-600"></i>
                     {:else}
-                      <i class="fa-solid fa-user text-neutral-800" />
+                      <i class="fa-solid fa-user text-neutral-800"></i>
                     {/if}
                   </span>
                   <span class="account-text ms-3">My Account</span>
@@ -398,7 +398,7 @@
                       ><span class="needs-hover-state"
                         >Notifications {#if hasNotification}({notificationsManager.count()}){/if}</span
                       >
-                      <i class="fa-solid fa-bell fa-fw" class:opacity-25={!hasNotification} />
+                      <i class="fa-solid fa-bell fa-fw" class:opacity-25={!hasNotification}></i>
                     </button>
                   </li>
                   {#if hasSwitchableRoles}
@@ -420,7 +420,7 @@
                           {:else}
                             Switch Role: {role}
                           {/if}
-                        </span><i class="fa-solid fa-bolt-lightning fa-fw" /></a
+                        </span><i class="fa-solid fa-bolt-lightning fa-fw"></i></a
                       >
                     </li>
                   {/if}
@@ -429,7 +429,7 @@
                       class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
                       href="//{`${HT.service_domain}/cgi/mb?a=listcs&colltype=my-collections`}"
                       role="button"
-                      ><span class="needs-hover-state">My Collections</span><i class="fa-solid fa-list fa-fw" /></a
+                      ><span class="needs-hover-state">My Collections</span><i class="fa-solid fa-list fa-fw"></i></a
                     >
                   </li>
                   <li style="margin-top: -1rem; margin-bottom: -1rem;">
@@ -442,7 +442,7 @@
                       role="button"
                       ><span class="needs-hover-state">Log Out</span><i
                         class="fa-solid fa-arrow-right-from-bracket fa-fw"
-                      /></a
+                     ></i></a
                     >
                   </li>
                 </div>
@@ -456,7 +456,7 @@
                 href="#"
                 role="button"
                 data-testid="login-button"
-                on:click|preventDefault={openLogin}>Log In<i class="fa-solid fa-user fa-fw" /></a
+                on:click|preventDefault={openLogin}>Log In<i class="fa-solid fa-user fa-fw"></i></a
               >
             </li>
           {/if}
