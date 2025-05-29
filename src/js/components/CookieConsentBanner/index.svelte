@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
-  import { allowAll, denyAll } from '../../lib/cookies.js';
-  import { cookieConsentSeen, trackingConsent, marketingConsent, preferencesConsent } from '../../lib/store.js';
+  import { allowAll, denyAll } from '../../lib/cookies.svelte.js';
+  import { consent } from '../../lib/store.svelte.js';
   import CookieSettingsModal from '../CookieSettingsModal';
 
   let HT = window.HT || {};
@@ -62,14 +62,14 @@
   }, 1000);
 
   onMount(() => {
-    $cookieConsentSeen = cookieJar.getItem('HT-cookie-banner-seen') || 'false';
-    $trackingConsent = cookieJar.getItem('HT-tracking-cookie-consent') || 'false';
-    $marketingConsent = cookieJar.getItem('HT-marketing-cookie-consent') || 'false';
-    $preferencesConsent = cookieJar.getItem('HT-preferences-cookie-consent') || 'false';
+    consent.cookieConsentSeen = cookieJar.getItem('HT-cookie-banner-seen') || 'false';
+    consent.trackingConsent = cookieJar.getItem('HT-tracking-cookie-consent') || 'false';
+    consent.marketingConsent = cookieJar.getItem('HT-marketing-cookie-consent') || 'false';
+    consent.preferencesConsent = cookieJar.getItem('HT-preferences-cookie-consent') || 'false';
   });
 </script>
 
-{#if $cookieConsentSeen === 'false'}
+{#if consent.cookieConsentSeen === 'false'}
   <CookieSettingsModal bind:this={settingsModal} />
   <div aria-labelledby="cookie-heading" aria-describedby="cookie-description" role="dialog" aria-modal="false">
     <div class="cookie-banner alert alert-block mb-0 shadow-lg rounded-bottom-0">

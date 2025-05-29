@@ -1,7 +1,7 @@
 <script>
   import { writable } from 'svelte/store';
   import { getContext } from 'svelte';
-  import { TestCookieJar } from '../lib/cookies';
+  import { TestCookieJar } from '../lib/cookies.svelte';
 
   function fakeIdpUrl(sdrinst) {
     return `https://hathi/Login?entityID=urn:institution:${sdrinst}&target=___TARGET___`;

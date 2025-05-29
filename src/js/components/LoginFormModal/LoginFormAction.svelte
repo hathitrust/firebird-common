@@ -1,5 +1,5 @@
 <script>
-  import { preferencesConsent } from '../../lib/store';
+  import { consent } from '../../lib/store.svelte';
   let HT = window.HT || {};
 
   export let sdrinst;
@@ -17,7 +17,7 @@
     let selected = idpList.find((item) => item.sdrinst == sdrinst);
     console.log('-- handleClick', sdrinst, selected);
     if (selected) {
-      if ($preferencesConsent === 'true') {
+      if (consent.preferencesConsent === 'true') {
         HT.prefs.set({ sdrinst: sdrinst });
       }
       let login_href = selected.idp_url.replace('___TARGET___', encodeURIComponent(target));

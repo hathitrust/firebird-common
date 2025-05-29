@@ -1,7 +1,5 @@
 <script>
-  import { preventDefault } from 'svelte/legacy';
-
-  import { cookieConsentSeen } from '../../lib/store';
+  import { consent } from '../../lib/store.svelte';
   import CookieSettingsModal from '../CookieSettingsModal';
   const year = new Date().getFullYear();
   let HT = window.HT || {};
@@ -12,7 +10,7 @@
   }
 </script>
 
-{#if $cookieConsentSeen === 'true'}
+{#if consent.cookieConsentSeen === 'true'}
   <CookieSettingsModal bind:this={settingsModal} />
 {/if}
 <!-- svelte-ignore a11y_invalid_attribute -->

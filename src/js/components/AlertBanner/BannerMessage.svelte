@@ -1,7 +1,7 @@
 <script>
   let HT = window.HT || {};
   let cookieJar = HT.cookieJar;
-  import { preferencesConsent } from '../../lib/store';
+  import { consent } from '../../lib/store.svelte.js';
 
   /**
    * @typedef {Object} Props
@@ -27,7 +27,7 @@
 
   export function closeAlert() {
     //if user has functional/preference cookies enabled, set a 14-day cookie to remember dismissed preference
-    if ($preferencesConsent === 'true') {
+    if (consent.preferencesConsent === 'true') {
       let expires = new Date();
       expires.setDate(expires.getDate() + 14);
       cookieJar.setItem(`HT-alert-${id}`, 'dismissed', expires, '/', HT.cookies_domain, true);

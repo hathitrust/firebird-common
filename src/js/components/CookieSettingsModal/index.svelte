@@ -1,8 +1,8 @@
 <script>
   import { onMount } from 'svelte';
   import Modal from '../Modal';
-  import { allowSelected, denyAll } from '../../lib/cookies';
-  import { cookieConsentSeen, allowTracking, allowMarketing, allowPreferences } from '../../lib/store.js';
+  import { allowSelected, denyAll } from '../../lib/cookies.svelte.js';
+  import { consent } from '../../lib/store.svelte.js';
 
   let HT = window.HT || {};
   let cookieJar = HT.cookieJar;
@@ -38,14 +38,14 @@
     if (isOpen && modal) {
       modal.show();
     }
-    if ($cookieConsentSeen === 'true') {
-      $allowTracking = makeBool(cookieJar.getItem('HT-tracking-cookie-consent'));
-      $allowMarketing = makeBool(cookieJar.getItem('HT-marketing-cookie-consent'));
-      $allowPreferences = makeBool(cookieJar.getItem('HT-preferences-cookie-consent'));
+    if (consent.cookieConsentSeen === 'true') {
+      consent.allowTracking = makeBool(cookieJar.getItem('HT-tracking-cookie-consent'));
+      consent.allowMarketing = makeBool(cookieJar.getItem('HT-marketing-cookie-consent'));
+      consent.allowPreferences = makeBool(cookieJar.getItem('HT-preferences-cookie-consent'));
     } else {
-      $allowTracking = false;
-      $allowMarketing = false;
-      $allowPreferences = false;
+      consent.allowTracking = false;
+      consent.allowMarketing = false;
+      consent.allowPreferences = false;
     }
   });
 
@@ -144,7 +144,7 @@
                         value="preferences"
                         id="preferences"
                         aria-labelledby="preferences-button"
-                        bind:checked={$allowPreferences}
+                        bind:checked={consent.allowPreferences}
                       />
                     </div>
                     <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="heading3">
@@ -179,7 +179,7 @@
                         id="statistics"
                         aria-labelledby="statistics-button"
                         aria-describedby="statistics-description"
-                        bind:checked={$allowTracking}
+                        bind:checked={consent.allowTracking}
                       />
                     </div>
                     <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="heading2">
@@ -216,7 +216,7 @@
                         value="marketing"
                         id="marketing"
                         aria-labelledby="marketing-button"
-                        bind:checked={$allowMarketing}
+                        bind:checked={consent.allowMarketing}
                       />
                     </div>
                     <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="heading4">
@@ -236,9 +236,9 @@
                 class="btn btn-primary"
                 id="deny-all"
                 onclick={() => {
-                  $allowMarketing = false;
-                  $allowPreferences = false;
-                  $allowTracking = false;
+                  consent.allowMarketing = false;
+                  consent.allowPreferences = false;
+                  consent.allowTracking = false;
                   denyAll();
                   hide();
                 }}>Allow necessary cookies only</button

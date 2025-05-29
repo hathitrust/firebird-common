@@ -1,15 +1,15 @@
 // Import our custom CSS
 import '../scss/styles.scss';
 import { setupHTEnv, handleAutomaticLogin } from './lib/utils';
-import { AnalyticsManager } from './lib/analytics';
-import { HotjarManager } from './lib/hotjar';
+import { AnalyticsManager } from './lib/analytics.svelte.js';
+import { HotjarManager } from './lib/hotjar.svelte.js';
 
 // Import all of Bootstrap's JS
 // these are made available globally
 import * as bootstrap from 'bootstrap';
 
 import { writable } from 'svelte/store';
-import { mount } from 'svelte'
+import { mount } from 'svelte';
 
 import Quote from './components/Quote.svelte';
 import LoginFormModal from './components/LoginFormModal';
@@ -98,7 +98,7 @@ HT.postPingCallback = function (login_status) {
         return;
       }
       let props = buildProps(el);
-      el.component = mount(apps[slug],{
+      el.component = mount(apps[slug], {
         target: el,
         props: props,
       });
