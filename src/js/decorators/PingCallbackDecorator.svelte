@@ -1,16 +1,17 @@
 <script>
   import { writable } from 'svelte/store';
   import { getContext } from 'svelte';
-  import { TestCookieJar } from '../lib/cookies.svelte';
+  import { TestCookieJar } from '../lib/cookies.svelte.js';
 
   function fakeIdpUrl(sdrinst) {
     return `https://hathi/Login?entityID=urn:institution:${sdrinst}&target=___TARGET___`;
   }
 
-  export let loggedIn = false;
-  export let prefs = null;
-  export let notificationData = null;
-  export let cookieData = null;
+  let { children, loggedIn = false, prefs = null, notificationData = null, cookieData = null } = $props();
+  // export let loggedIn = false;
+  // export let prefs = null;
+  // export let notificationData = null;
+  // export let cookieData = null;
 
   const HT = {};
   HT.get_pong_target = function (href) {
@@ -42,6 +43,10 @@
       { name: 'Central Moosylvania University', sdrinst: 'central', idp_url: fakeIdpUrl('central') },
       { name: 'Eastern Moosylvania University', sdrinst: 'eastern', idp_url: fakeIdpUrl('eastern') },
     ];
+    if (!prefs) {
+      prefs = {};
+    }
+    prefs.sdrinst = false;
   } else {
     HT.login_status.institutionName = 'Moosylvania State';
     HT.login_status.institutionCode = 'state';
@@ -51,11 +56,27 @@
     prefs.sdrinst = 'state';
   }
 
-  // HT.cookieJar = new CookieJar();
-  HT.loginStatus = writable(HT.login_status);
+  // Create the reactive state
+  let loginStatusState = $state(HT.login_status);
+
+  Object.defineProperty(HT, 'loginStatus', {
+    get() {
+      return loginStatusState;
+    },
+    set(value) {
+      Object.assign(loginStatusState, value);
+    },
+  });
+
+  //I think this is testing/making sure HT.login_status is set in the "store"
+  //so I added the new getter/setter definiton from main.svelte.js here
+  HT.loginStatus = HT.login_status;
   globalThis.HT = HT;
 
-  $: console.log('LoginStatusDecorator', loggedIn, prefs, notificationData);
+  $effect(() => {
+    console.log('LoginStatusDecorator', loggedIn, prefs, notificationData);
+  });
 </script>
 
-<slot />
+{@render children?.()}
+<!-- {@render children?.()} -->
