@@ -1,6 +1,6 @@
 // Import our custom CSS
 import '../scss/styles.scss';
-import { setupHTEnv, handleAutomaticLogin } from './lib/utils';
+import { setupHTEnv, handleAutomaticLogin } from './lib/utils.js';
 import { AnalyticsManager } from './lib/analytics.svelte.js';
 import { HotjarManager } from './lib/hotjar.svelte.js';
 
@@ -8,7 +8,6 @@ import { HotjarManager } from './lib/hotjar.svelte.js';
 // these are made available globally
 import * as bootstrap from 'bootstrap';
 
-import { writable } from 'svelte/store';
 import { mount } from 'svelte';
 
 import Quote from './components/Quote.svelte';
@@ -65,23 +64,24 @@ apps['hathi-alert-banner'] = AlertBanner;
 // configure the HT global
 setupHTEnv();
 
-// // APPROACH: look for wrapper elements, e.g. <div data-hathi-use="website-header">
-// document.querySelectorAll('[data-hathi-use]').forEach((el) => {
-//   let slug = el.dataset.hathiUse;
-//   let props = {};
-//   let component = new apps[slug]({
-//     target: el,
-//     props: props,
-//   })
-// })
-
 // an empty login status
 let emptyLoginStatus = {
   logged_in: false,
   idp_list: [],
 };
 
-HT.loginStatus = writable(emptyLoginStatus);
+// Create the reactive state
+let loginStatusState = $state(emptyLoginStatus);
+
+Object.defineProperty(HT, 'loginStatus', {
+  get() {
+    return loginStatusState;
+  },
+  set(value) {
+    Object.assign(loginStatusState, value);
+  },
+});
+
 HT.login_status = emptyLoginStatus;
 
 HT.postPingCallback = function (login_status) {
@@ -90,7 +90,7 @@ HT.postPingCallback = function (login_status) {
 
   handleAutomaticLogin();
 
-  HT.loginStatus.set(login_status);
+  HT.loginStatus = login_status;
 
   Object.keys(apps).forEach((slug) => {
     document.querySelectorAll(slug).forEach((el) => {
