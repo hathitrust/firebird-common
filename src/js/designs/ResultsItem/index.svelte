@@ -43,31 +43,31 @@
         <a
           class="list-group-item list-group-item-action w-sm-50"
           href="http://catalog.hathitrust.org/Record/{catalogId}"
-          ><i class="fa-solid fa-circle-info" aria-hidden="true" /> <span>Catalog Record</span></a
+          ><i class="fa-solid fa-circle-info" aria-hidden="true"></i> <span>Catalog Record</span></a
         >
         {#if access == 'multiple-items'}
           <a
             class="list-group-item list-group-item-action w-sm-50"
             href="http://catalog.hathitrust.org/Record/{catalogId}#viewability"
-            ><i class="fa-solid fa-layer-group" aria-hidden="true" /> <span>Multiple Items</span></a
+            ><i class="fa-solid fa-layer-group" aria-hidden="true"></i> <span>Multiple Items</span></a
           >
           <!-- <span class="list-group-item w-sm-50 border-0 bg-transparent fs-7">Use the Catalog Record to view multiple volumes</span> -->
         {:else if access == 'limited-search-only'}
           <a class="list-group-item list-group-item-action w-sm-50" href="https://babel.hathitrust.org/cgi/pt?id={htid}"
-            ><i aria-hidden="true" class="fa-solid fa-lock" /> <span>Limited (search-only)</span></a
+            ><i aria-hidden="true" class="fa-solid fa-lock"></i> <span>Limited (search-only)</span></a
           >
         {:else if access == 'limited-access-permitted'}
           <a
             data-access-role="superuser"
             class="list-group-item list-group-item-action w-sm-50"
             href="https://babel.hathitrust.org/cgi/pt?id={htid}"
-            ><i aria-hidden="true" class="fa-solid fa-unlock-keyhole" /> <span>Limited (access permitted)</span></a
+            ><i aria-hidden="true" class="fa-solid fa-unlock-keyhole"></i> <span>Limited (access permitted)</span></a
           >
         {:else}
           <a
             class="list-group-item list-group-item-action active active w-sm-50"
             href="https://babel.hathitrust.org/cgi/pt?id={htid}"
-            ><i class="fa-regular fa-file-lines" aria-hidden="true" /> <span>Full View</span></a
+            ><i class="fa-regular fa-file-lines" aria-hidden="true"></i> <span>Full View</span></a
           >
         {/if}
       </div>

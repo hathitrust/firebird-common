@@ -1,5 +1,4 @@
-import { get } from 'svelte/store'
-import { cookieConsentSeen, trackingConsent, marketingConsent, preferencesConsent, allowTracking, allowMarketing, allowPreferences } from './store'
+import { consent } from './store.svelte.js';
 export class TestCookieJar {
   constructor(data) {
     this.data = data || {};
@@ -94,43 +93,43 @@ expires.setMonth(expires.getMonth() + 12);
 
 function setCookieConsentSeen() {
   docCookies.setItem('HT-cookie-banner-seen', 'true', expires, '/', HT.cookies_domain, true);
-  cookieConsentSeen.set('true');
+  consent.cookieConsentSeen = 'true';
 }
 function setTrackingAllowedCookie() {
   docCookies.setItem('HT-tracking-cookie-consent', 'true', expires, '/', HT.cookies_domain, true);
-  trackingConsent.set('true');
+  consent.trackingConsent = 'true';
   return true;
 }
 
 function setTrackingDisallowedCookie() {
   docCookies.setItem('HT-tracking-cookie-consent', 'false', expires, '/', HT.cookies_domain, true);
-  trackingConsent.set('false');
+  consent.trackingConsent = 'false';
 }
 
 function setMarketingAllowedCookie() {
   docCookies.setItem('HT-marketing-cookie-consent', 'true', expires, '/', HT.cookies_domain, true);
-  marketingConsent.set('true');
+  consent.marketingConsent = 'true';
 }
 
 function setMarketingDisallowedCookie() {
   docCookies.setItem('HT-marketing-cookie-consent', 'false', expires, '/', HT.cookies_domain, true);
-  marketingConsent.set('false');
+  consent.marketingConsent = 'false';
 }
 
 function setPreferencesAllowedCookie() {
   docCookies.setItem('HT-preferences-cookie-consent', 'true', expires, '/', HT.cookies_domain, true);
-  preferencesConsent.set('true');
+  consent.preferencesConsent = 'true';
 }
 
 function setPreferencesDisallowedCookie() {
   docCookies.setItem('HT-preferences-cookie-consent', 'false', expires, '/', HT.cookies_domain, true);
-  preferencesConsent.set('false');
+  consent.preferencesConsent = 'false';
 }
 
 export function setSelectedConsent() {
-  const track = get(allowTracking);
-  const mark = get(allowMarketing);
-  const pref = get(allowPreferences);
+  const track = consent.allowTracking;
+  const mark = consent.allowMarketing;
+  const pref = consent.allowPreferences;
   if (track === false) {
     setTrackingDisallowedCookie();
   }
@@ -175,11 +174,10 @@ export function resetCookieBanner() {
   docCookies.removeItem('HT-tracking-cookie-consent');
   docCookies.removeItem('HT-marketing-cookie-consent');
   docCookies.removeItem('HT-preferences-cookie-consent');
-  cookieConsentSeen.set('false');
-  trackingConsent.set('false');
-  marketingConsent.set('false');
-  preferencesConsent.set('false');
+  consent.cookieConsentSeen = 'false';
+  consent.trackingConsent = 'false';
+  consent.marketingConsent = 'false';
+  consent.preferencesConsent = 'false';
 }
-
 
 export default docCookies;
