@@ -19,7 +19,6 @@
     cookieJar: HT.cookieJar,
   });
 
-  // export let loggedIn = $loginStatus.logged_in;
   export let hasNotification = false;
   export let searchOpen = true;
   export let searchState;
@@ -38,7 +37,7 @@
 
   function openLogin() {
     //check viewport size to see if LoginFormModal will fit
-    if (window.innerHeight <= 670 || $loginStatus.idp_list.length == 0) {
+    if (window.innerHeight <= 670 || loginStatus.idp_list.length == 0) {
       //if not, redirect user
       //calculate login target
       let target = window.location.href;
@@ -68,14 +67,14 @@
   }
 
   function checkSwitchableRoles(isLoggedIn) {
-    if ($loginStatus.r) {
+    if (loginStatus.r) {
       for (const i in switchableRoles) {
         let role = switchableRoles[i];
-        if ($loginStatus.r.hasOwnProperty(role)) {
+        if (loginStatus.r.hasOwnProperty(role)) {
           return {
             status: true,
             label: switchableRolesLabels[role],
-            activated: $loginStatus.r[role],
+            activated: loginStatus.r[role],
           };
         }
       }
@@ -84,12 +83,12 @@
   }
 
   $: loginStatus = HT.loginStatus;
-  $: loggedIn = $loginStatus.logged_in;
+  $: loggedIn = loginStatus.logged_in;
   $: hasSwitchableRoles = checkSwitchableRoles(loggedIn).status;
   $: hasActivatedRole = checkSwitchableRoles(loggedIn).activated;
   $: role = checkSwitchableRoles(loggedIn).label;
-  $: if ($loginStatus && $loginStatus.notificationData) {
-    notificationsManager.update($loginStatus.notificationData);
+  $: if (loginStatus && loginStatus.notificationData) {
+    notificationsManager.update(loginStatus.notificationData);
     hasNotification = notificationsManager.hasNotifications();
   }
 </script>
@@ -442,7 +441,7 @@
                       role="button"
                       ><span class="needs-hover-state">Log Out</span><i
                         class="fa-solid fa-arrow-right-from-bracket fa-fw"
-                     ></i></a
+                      ></i></a
                     >
                   </li>
                 </div>
