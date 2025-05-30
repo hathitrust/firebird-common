@@ -13,15 +13,7 @@
    */
 
   /** @type {Props} */
-  let {
-    items,
-    placeholder,
-    label,
-    icon,
-    multiple = false,
-    value = $bindable(''),
-    filterText = $bindable(''),
-  } = $props();
+  let { items, placeholder, label, icon, multiple = false, value = $bindable(), filterText = $bindable('') } = $props();
 
   let fieldset1 = $state();
   let fieldset2 = $state();
