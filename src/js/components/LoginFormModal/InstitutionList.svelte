@@ -4,7 +4,7 @@
 
   let HT = window.HT || {};
 
-  let { sdrinst = $bindable(HT.prefs ? HT.prefs.get().sdrinst : undefined), filterText = $bindable() } = $props();
+  let { sdrinst = $bindable(HT.prefs ? HT.prefs.get().sdrinst : false), filterText = $bindable() } = $props();
 
   function getItems() {
     return idpList.map((item) => ({
