@@ -10,7 +10,6 @@ import * as bootstrap from 'bootstrap';
 
 import { mount } from 'svelte';
 
-import Quote from './components/Quote.svelte';
 import LoginFormModal from './components/LoginFormModal';
 import LoginForm from './components/LoginFormModal/LoginForm';
 import Header from './components/Header';
@@ -19,7 +18,6 @@ import ResultsToolbar from './components/ResultsToolbar';
 import CollectionsToolbar from './components/CollectionsToolbar';
 import Footer from './components/Footer';
 import AdvancedSearchForm from './components/AdvancedSearchForm';
-import AcceptableUseBanner from './components/AcceptableUseBanner';
 import FeedbackFormModal from './components/FeedbackFormModal';
 import CookieConsentBanner from './components/CookieConsentBanner';
 import AlertBanner from './components/AlertBanner';
@@ -47,7 +45,6 @@ const buildProps = (el) => {
 };
 
 const apps = {};
-apps['hathi-quote'] = Quote;
 apps['hathi-login-form-modal'] = LoginFormModal;
 apps['hathi-login-form'] = LoginForm;
 apps['hathi-website-header'] = Header;
@@ -56,7 +53,6 @@ apps['hathi-results-toolbar'] = ResultsToolbar;
 apps['hathi-collections-toolbar'] = CollectionsToolbar;
 apps['hathi-website-footer'] = Footer;
 apps['hathi-advanced-search-form'] = AdvancedSearchForm;
-apps['hathi-acceptable-use-banner'] = AcceptableUseBanner;
 apps['hathi-feedback-form-modal'] = FeedbackFormModal;
 apps['hathi-cookie-consent-banner'] = CookieConsentBanner;
 apps['hathi-alert-banner'] = AlertBanner;
