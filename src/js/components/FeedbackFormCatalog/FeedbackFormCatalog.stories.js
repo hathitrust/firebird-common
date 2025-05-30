@@ -1,6 +1,6 @@
 import FeedbackFormCatalog from './index.svelte';
-import { userEvent, within } from "@storybook/test";
-import { expect } from "@storybook/test";
+import { userEvent, within } from '@storybook/test';
+import { expect } from '@storybook/test';
 
 export default {
   title: 'Feedback Form - Catalog',
@@ -21,9 +21,9 @@ export const Default = {
     });
 
     //sanity check
-    expect(await canvas.getByRole('main')).toBeInTheDocument();
-    expect(submitButton.innerHTML).toBe('Submit');
-    expect(submitButton.classList).toContain('btn-primary');
+    await expect(canvas.getByRole('main')).toBeInTheDocument();
+    await expect(submitButton).toHaveTextContent('Submit');
+    await expect(submitButton.classList).toContain('btn-primary');
   },
 };
 
