@@ -1,18 +1,23 @@
 <script>
   import { onMount } from 'svelte';
-  import { afterUpdate } from 'svelte';
 
-  export let items;
-  export let placeholder;
-  export let label;
-  export let icon;
-  export let multiple = false;
-  export let value = '';
-  export let filterText = '';
+  /**
+   * @typedef {Object} Props
+   * @property {any} items
+   * @property {any} placeholder
+   * @property {any} label
+   * @property {any} icon
+   * @property {boolean} [multiple]
+   * @property {string} [value]
+   * @property {string} [filterText]
+   */
 
-  let fieldset1;
-  let fieldset2;
-  let list;
+  /** @type {Props} */
+  let { items, placeholder, label, icon, multiple = false, value = $bindable(), filterText = $bindable('') } = $props();
+
+  let fieldset1 = $state();
+  let fieldset2 = $state();
+  let list = $state();
 
   export const utils = {
     resize(height, container) {
@@ -24,11 +29,7 @@
     },
   };
 
-  // export let itemKey;
-  // export let itemValue;
-  // export let itemLabel;
-
-  let guid;
+  let guid = $state();
 
   function filterData(value) {
     if (value.trim() == '') {
@@ -58,8 +59,14 @@
     }
   }
 
-  $: possibleItems = filterData(filterText);
-  $: isSelected = (check, value) => value.indexOf(check) > -1;
+  function clearFilter(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    filterText = '';
+  }
+
+  let possibleItems = $derived(filterData(filterText));
+  let isSelected = $derived((check, value) => value.indexOf(check) > -1);
 
   onMount(() => {
     guid = `${new Date().getTime()}-${Math.random() * 1000}`;
@@ -70,7 +77,7 @@
   <legend class="fs-7">Filter by {label}</legend>
   <div class="input-group">
     {#if icon}
-      <span class="input-group-text ms-0"><i class={icon} aria-hidden="true" /></span>
+      <span class="input-group-text ms-0"><i class={icon} aria-hidden="true"></i></span>
     {/if}
     <input
       type="text"
@@ -80,14 +87,8 @@
       aria-describedby="filter-help-{guid}"
       bind:value={filterText}
     />
-    <button
-      class="btn btn-outline-secondary"
-      aria-label="Clear filter"
-      on:click|preventDefault|stopPropagation={() => {
-        filterText = '';
-      }}
-    >
-      <i class="fa-regular fa-circle-xmark" aria-hidden="true" />
+    <button class="btn btn-outline-secondary" aria-label="Clear filter" onclick={clearFilter}>
+      <i class="fa-regular fa-circle-xmark" aria-hidden="true"></i>
     </button>
   </div>
   <p id="filter-help-{guid}" class="visually-hidden">
@@ -108,7 +109,7 @@
             name="item-{guid}"
             id="item{index}-{guid}"
             value={item.value}
-            on:click={updateValue}
+            onclick={updateValue}
             checked={isSelected(item.value, value)}
           />
         {:else}
@@ -119,8 +120,8 @@
             id="item{index}-{guid}"
             checked={item.value == value}
             value={item.value}
-            on:click={updateValue}
-            on:focus={(event) => updateValue(event, true)}
+            onclick={updateValue}
+            onfocus={(event) => updateValue(event, true)}
           />
         {/if}
         <label class="form-check-label p-2 px-3" for="item{index}-{guid}">{@html item.option}</label>
