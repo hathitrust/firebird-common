@@ -26,10 +26,11 @@
   export let compact = false;
   export let userNavigation = true;
 
-  const switchableRoles = ['enhancedTextProxy', 'totalAccess'];
+  const switchableRoles = ['enhancedTextProxy', 'totalAccess','resourceSharing'];
   const switchableRolesLabels = {};
   switchableRolesLabels['enhancedTextProxy'] = 'ATRS';
   switchableRolesLabels['totalAccess'] = 'CAA';
+  switchableRolesLabels['resourceSharing'] = 'Resource Sharing';
 
   function toggleSearch() {
     searchOpen = !searchOpen;

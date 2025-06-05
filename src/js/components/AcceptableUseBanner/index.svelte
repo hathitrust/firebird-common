@@ -9,10 +9,8 @@
   // let isVisible = loggedIn && xtracking[key] != true;
 
   function confirm() {
-    let expires = new Date();
-    expires.setDate(expires.getDate() + 90);
     xtracking[key] = true;
-    cookieJar.setItem('HT.x', JSON.stringify(xtracking), expires, '/', HT.cookies_domain, true);
+    cookieJar.setItem('HT.x', JSON.stringify(xtracking), 90);
     isVisible = false;
   }
 

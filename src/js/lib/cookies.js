@@ -31,43 +31,34 @@ export const docCookies = {
       ) || null
     );
   },
-  setItem: function (sKey, sValue, vEnd, sPath, sDomain, bSecure) {
+  setItem: function (sKey, sValue, duration = 365) {
     if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) {
       return false;
     }
-    var sExpires = '';
-    if (vEnd) {
-      switch (vEnd.constructor) {
-        case Number:
-          sExpires = vEnd === Infinity ? '; expires=Fri, 31 Dec 9999 23:59:59 GMT' : '; max-age=' + vEnd;
-          break;
-        case String:
-          sExpires = '; expires=' + vEnd;
-          break;
-        case Date:
-          sExpires = '; expires=' + vEnd.toUTCString();
-          break;
-      }
-    }
+    var expires = new Date();
+    expires.setMonth(expires.getDate() + duration);
+
+    var sExpires = '; expires=' + expires.toUTCString();
     document.cookie =
       encodeURIComponent(sKey) +
       '=' +
       encodeURIComponent(sValue) +
       sExpires +
-      (sDomain ? '; domain=' + sDomain : '') +
-      (sPath ? '; path=' + sPath : '') +
-      (bSecure ? '; secure' : '');
+      (HT.cookies_domain ? '; domain=' + HT.cookies_domain : '') +
+      ('; path=/') +
+      (HT.secure_cookies ? '; secure' : '') +
+      ( '; SameSite=Lax')
     return true;
   },
-  removeItem: function (sKey, sPath, sDomain) {
+  removeItem: function (sKey) {
     if (!this.hasItem(sKey)) {
       return false;
     }
     document.cookie =
       encodeURIComponent(sKey) +
       '=; expires=Thu, 01 Jan 1970 00:00:00 GMT' +
-      (sDomain ? '; domain=' + sDomain : '') +
-      (sPath ? '; path=' + sPath : '');
+      (HT.cookies_domain ? '; domain=' + HT.cookies_domain : '') +
+      ('; path=/')
     return true;
   },
   hasItem: function (sKey) {
@@ -89,41 +80,37 @@ export const docCookies = {
   },
 };
 
-let expires = new Date();
-expires.setMonth(expires.getMonth() + 12);
-
 function setCookieConsentSeen() {
-  docCookies.setItem('HT-cookie-banner-seen', 'true', expires, '/', HT.cookies_domain, true);
+  docCookies.setItem('HT-cookie-banner-seen', 'true');
   cookieConsentSeen.set('true');
 }
 function setTrackingAllowedCookie() {
-  docCookies.setItem('HT-tracking-cookie-consent', 'true', expires, '/', HT.cookies_domain, true);
+  docCookies.setItem('HT-tracking-cookie-consent', 'true');
   trackingConsent.set('true');
-  return true;
 }
 
 function setTrackingDisallowedCookie() {
-  docCookies.setItem('HT-tracking-cookie-consent', 'false', expires, '/', HT.cookies_domain, true);
+  docCookies.setItem('HT-tracking-cookie-consent', 'false');
   trackingConsent.set('false');
 }
 
 function setMarketingAllowedCookie() {
-  docCookies.setItem('HT-marketing-cookie-consent', 'true', expires, '/', HT.cookies_domain, true);
+  docCookies.setItem('HT-marketing-cookie-consent', 'true');
   marketingConsent.set('true');
 }
 
 function setMarketingDisallowedCookie() {
-  docCookies.setItem('HT-marketing-cookie-consent', 'false', expires, '/', HT.cookies_domain, true);
+  docCookies.setItem('HT-marketing-cookie-consent', 'false');
   marketingConsent.set('false');
 }
 
 function setPreferencesAllowedCookie() {
-  docCookies.setItem('HT-preferences-cookie-consent', 'true', expires, '/', HT.cookies_domain, true);
+  docCookies.setItem('HT-preferences-cookie-consent', 'true');
   preferencesConsent.set('true');
 }
 
 function setPreferencesDisallowedCookie() {
-  docCookies.setItem('HT-preferences-cookie-consent', 'false', expires, '/', HT.cookies_domain, true);
+  docCookies.setItem('HT-preferences-cookie-consent', 'false');
   preferencesConsent.set('false');
 }
 
