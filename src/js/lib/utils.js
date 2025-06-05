@@ -28,20 +28,24 @@ function setDomains() {
   HT.catalog_domain = 'catalog.hathitrust.org';
   HT.www_domain = 'www.hathitrust.org';
   HT.cookies_domain = '.hathitrust.org';
+  HT.secure_cookies = true;
+
   var hostname = location.hostname;
   HT.is_dev =
     hostname != 'www.hathitrust.org' && hostname != 'catalog.hathitrust.org' && hostname != 'babel.hathitrust.org';
   if (HT.is_dev) {
     var prefix = hostname.split('.')[0];
     console.log('-- main setting hostname', prefix, hostname);
-    if (prefix == 'localhost' || prefix == 'apache-test') {
+    HT.secure_cookies = (location.protocol == 'https');
+    // no dots in hostname -- e.g. localhost or docker container
+    if (hostname == prefix) {
       if (location.port) {
         hostname += ':' + location.port;
       }
       HT.service_domain = hostname;
       HT.catalog_domain = hostname;
       HT.www_domain = hostname;
-      HT.cookies_domain = 'localhost';
+      HT.cookies_domain = null;
     } else if (hostname.indexOf('phiredevelopment') > -1) {
       // shameless green
       HT.www_domain = hostname;

@@ -17,9 +17,7 @@
   export function closeAlert() {
     //if user has functional/preference cookies enabled, set a 14-day cookie to remember dismissed preference
     if ($preferencesConsent === 'true') {
-      let expires = new Date();
-      expires.setDate(expires.getDate() + 14);
-      cookieJar.setItem(`HT-alert-${id}`, 'dismissed', expires, '/', HT.cookies_domain, true);
+      cookieJar.setItem(`HT-alert-${id}`, 'dismissed', 14);
       isVisible = false;
     }
     //reset focus to the main element once the banner is removed from the DOM
