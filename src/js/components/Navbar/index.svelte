@@ -40,7 +40,7 @@
 
   function openLogin() {
     //check viewport size to see if LoginFormModal will fit
-    if (window.innerHeight <= 670 || loginStatus.idp_list.length == 0) {
+    if (window.innerHeight <= 670 || HT.loginStatus.idp_list.length == 0) {
       //if not, redirect user
       //calculate login target
       let target = window.location.href;
@@ -70,14 +70,14 @@
   }
 
   function checkSwitchableRoles(isLoggedIn) {
-    if (loginStatus.r) {
+    if (HT.loginStatus.r) {
       for (const i in switchableRoles) {
         let role = switchableRoles[i];
-        if (loginStatus.r.hasOwnProperty(role)) {
+        if (HT.loginStatus.r.hasOwnProperty(role)) {
           return {
             status: true,
             label: switchableRolesLabels[role],
-            activated: loginStatus.r[role],
+            activated: HT.loginStatus.r[role],
           };
         }
       }
@@ -85,13 +85,13 @@
     return { status: false };
   }
 
-  $: loginStatus = HT.loginStatus;
-  $: loggedIn = loginStatus.logged_in;
+  // $: loginStatus = HT.loginStatus;
+  $: loggedIn = HT.loginStatus.logged_in;
   $: hasSwitchableRoles = checkSwitchableRoles(loggedIn).status;
   $: hasActivatedRole = checkSwitchableRoles(loggedIn).activated;
   $: role = checkSwitchableRoles(loggedIn).label;
-  $: if (loginStatus && loginStatus.notificationData) {
-    notificationsManager.update(loginStatus.notificationData);
+  $: if (HT.loginStatus && HT.loginStatus.notificationData) {
+    notificationsManager.update(HT.loginStatus.notificationData);
     hasNotification = notificationsManager.hasNotifications();
   }
 </script>

@@ -13,8 +13,7 @@
   let { target, ...rest } = $props();
   let filterText = $state('');
 
-  let loginStatus = $derived(HT.loginStatus);
-  let idpList = $derived(loginStatus.idp_list);
+  let idpList = HT.loginStatus.idp_list;
 
   $effect(() => {
     console.log('-- wut', idpList);
@@ -24,10 +23,12 @@
   });
 </script>
 
-{#if !loginStatus}
+{#if !HT.loginStatus}
   <pre>WAITING</pre>
-{:else if loginStatus.logged_in}
-  <div class="alert alert-info">You are currently logged into HathiTrust by way of {loginStatus.institutionName}.</div>
+{:else if HT.loginStatus.logged_in}
+  <div class="alert alert-info">
+    You are currently logged into HathiTrust by way of {HT.loginStatus.institutionName}.
+  </div>
   <p>
     <a href="//{HT.service_domain}/cgi/logout" class="btn btn-primary">Log out</a>
   </p>
