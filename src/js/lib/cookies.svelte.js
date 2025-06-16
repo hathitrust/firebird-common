@@ -86,7 +86,6 @@ function setCookieConsentSeen() {
 function setTrackingAllowedCookie() {
   docCookies.setItem('HT-tracking-cookie-consent', 'true');
   consent.trackingConsent = 'true';
-  return true;
 }
 
 function setTrackingDisallowedCookie() {

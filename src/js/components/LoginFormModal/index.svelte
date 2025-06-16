@@ -43,8 +43,7 @@
     }
   });
 
-  let loginStatus = $derived(HT.loginStatus);
-  let idpList = $derived(loginStatus.idp_list);
+  let idpList = HT.loginStatus.idp_list;
   $effect(() => {
     if (modal && isOpen) {
       show();

@@ -2,8 +2,6 @@
   import { consent } from '../../lib/store.svelte';
   let HT = window.HT || {};
 
-  let loginStatus = HT.loginStatus;
-
   /**
    * @typedef {Object} Props
    * @property {any} sdrinst
@@ -34,7 +32,7 @@
     }
   }
 
-  let idpList = $derived(loginStatus.idp_list);
+  let idpList = HT.loginStatus.idp_list;
 </script>
 
 <div class="m-0 w-100">

@@ -1,5 +1,4 @@
 <script>
-  import { writable } from 'svelte/store';
   import { getContext } from 'svelte';
   import { TestCookieJar } from '../lib/cookies.svelte.js';
 

@@ -118,10 +118,5 @@
 
   .list-group a {
     white-space: nowrap;
-
-    // &:has(+ span) {
-    //   border-top-right-radius: var(--bs-list-group-border-radius) !important;
-    //   border-bottom-right-radius: var(--bs-list-group-border-radius) !important;
-    // }
   }
 </style>

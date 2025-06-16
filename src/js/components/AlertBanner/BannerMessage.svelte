@@ -28,8 +28,6 @@
   export function closeAlert() {
     //if user has functional/preference cookies enabled, set a 14-day cookie to remember dismissed preference
     if (consent.preferencesConsent === 'true') {
-      let expires = new Date();
-      expires.setDate(expires.getDate() + 14);
       cookieJar.setItem(`HT-alert-${id}`, 'dismissed', 14);
       isVisible = false;
     }

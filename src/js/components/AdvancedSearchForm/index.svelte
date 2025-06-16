@@ -7,12 +7,18 @@
   // data-prop-format-data
   // data-prop-language-data
   // and can be assigned a JSON-encoded array of strings, e.g.
-  // <hathi-advanced-search-form data-prop-language-data="[&quot;Abkhaz&quot;,&quot;Achinese&quot;,&quot;Acoli&quot;,&quot;Adangme&quot;...
-  export let formatData = [];
-  export let languageData = [];
-  export let locationData = [];
-  export let collid = null;
-  export let collectionName = null;
+
+  /**
+   * @typedef {Object} Props
+   * @property {any} [formatData] - <hathi-advanced-search-form data-prop-language-data="[&quot;Abkhaz&quot;,&quot;Achinese&quot;,&quot;Acoli&quot;,&quot;Adangme&quot;...
+   * @property {any} [languageData]
+   * @property {any} [locationData]
+   * @property {any} [collid]
+   * @property {any} [collectionName]
+   */
+
+  /** @type {Props} */
+  let { formatData = [], languageData = [], locationData = [], collid = null, collectionName = null } = $props();
 
   // export let useAnyAll = true;
 
@@ -47,27 +53,27 @@
     { value: 'phrase', label: 'this exact phrase' },
   ];
 
-  let yop = 'after';
-  let pubYear = {};
-  let lang = [];
-  let format = [];
-  let originalLocation = '';
+  let yop = $state('after');
+  let pubYear = $state({});
+  let lang = $state([]);
+  let format = $state([]);
+  let originalLocation = $state('');
   let modal;
   // let types = new Array(4); types.fill('ocr');
-  let types = ['ocr', 'all', 'title', 'author'];
-  let lookFors = new Array(4);
+  let types = $state(['ocr', 'all', 'title', 'author']);
+  let lookFors = $state(new Array(4));
   lookFors.fill('');
-  let bools = new Array(4);
+  let bools = $state(new Array(4));
   bools.fill('AND');
-  let anyalls = new Array(4);
+  let anyalls = $state(new Array(4));
   anyalls.fill('all');
-  let isFullView = true;
-  let useFullTextIndex = sessionStorage.getItem('useFullTextIndex') == 'true';
+  let isFullView = $state(true);
+  let useFullTextIndex = $state(sessionStorage.getItem('useFullTextIndex') == 'true');
 
-  let errors = {
+  let errors = $state({
     lookFors: false,
     yop: false,
-  };
+  });
 
   let protocol = 'https:' == location.protocol ? 'https:' : 'http:';
 
@@ -508,7 +514,7 @@
   </div>
   <div class="twocol-main">
     <div class="mainplain w-auto position-relative">
-      <form on:submit={submitForm}>
+      <form onsubmit={submitForm}>
         <h2 class="mb-3">Search by field</h2>
         {#if errors.lookFors}
           <div class="alert alert-block alert-warning d-flex gap-3 align-items-center">
@@ -610,7 +616,7 @@
                   class="form-check-input"
                   value="ft"
                   bind:checked={useFullTextIndex}
-                  on:change={saveIndexSelection}
+                  onchange={saveIndexSelection}
                 />
                 <label class="form-check-label" for="index-options">Always use the Full Text Index</label>
               </div>
