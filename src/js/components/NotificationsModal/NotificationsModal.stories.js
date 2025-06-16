@@ -1,11 +1,11 @@
 import NotificationsModal from './index.svelte';
 import PingCallbackDecorator from '../../decorators/PingCallbackDecorator';
-import { userEvent, within, waitFor } from "@storybook/test";
+import { userEvent, within, waitFor } from '@storybook/test';
 import { action } from '@storybook/addon-actions';
 
-import { expect } from "@storybook/test";
+import { expect } from '@storybook/test';
 
-import { TestCookieJar } from '../../lib/cookies';
+import { TestCookieJar } from '../../lib/cookies.svelte';
 import NotificationsManager from '../../lib/notifications';
 
 let sampleData = [

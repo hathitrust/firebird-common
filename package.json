@@ -14,7 +14,7 @@
     "build": "vite build && storybook build -o dist/storybook && node ./build-redirects.js",
     "test-storybook": "test-storybook",
     "chromatic": "chromatic --exit-zero-on-changes",
-    "babel": "vite build --watch"
+    "babel": "vite build --watch --minify false"
   },
   "repository": {
     "type": "git",
@@ -36,12 +36,13 @@
     "@storybook/svelte-vite": "^8.3.3",
     "@storybook/test": "^8.3.3",
     "@storybook/test-runner": "^0.19.1",
-    "@sveltejs/vite-plugin-svelte": "^3.1.2",
+    "@sveltejs/vite-plugin-svelte": "^4.0.4",
     "@vitest/coverage-istanbul": "^2.1.9",
     "chromatic": "^10.0.0",
     "fast-glob": "^3.2.12",
     "happy-dom": "^17.4.4",
-    "prettier": "2.8.6",
+    "prettier": "^3.5.3",
+    "prettier-plugin-svelte": "^3.4.0",
     "sass": "1.77.6",
     "storybook": "^8.3.3",
     "vite": "^5.4.17",
@@ -53,6 +54,6 @@
     "bootstrap": "^5.2.3",
     "dialog-polyfill": "^0.5.6",
     "open-props": "^1.5.10",
-    "svelte-preprocess": "^5.1.4"
+    "svelte-preprocess": "^6.0.3"
   }
 }

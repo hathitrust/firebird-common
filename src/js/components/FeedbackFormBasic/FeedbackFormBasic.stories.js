@@ -1,6 +1,6 @@
 import FeedbackFormBasic from './index.svelte';
-import { userEvent, within } from "@storybook/test";
-import { expect } from "@storybook/test";
+import { userEvent, within } from '@storybook/test';
+import { expect } from '@storybook/test';
 
 export default {
   title: 'Feedback Form - Basic',
@@ -16,14 +16,14 @@ export const Default = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const submitButton = await canvas.getByRole('button', {
+    const submitButton = canvas.getByRole('button', {
       name: 'Submit',
     });
 
     //sanity check
-    expect(await canvas.getByRole('main')).toBeInTheDocument();
-    expect(submitButton.innerHTML).toBe('Submit');
-    expect(submitButton.classList).toContain('btn-primary');
+    await expect(canvas.getByRole('main')).toBeInTheDocument();
+    await expect(submitButton).toHaveTextContent('Submit');
+    await expect(submitButton.classList).toContain('btn-primary');
   },
 };
 
@@ -36,14 +36,17 @@ export const DesktopFormFilled = {
     const canvas = within(canvasElement);
 
     // const name = await canvas.getByRole('textbox', { name: 'Name ' });
-    const name = await canvas.getByLabelText('Name (required)', {selector: 'input'});
-    const email = await canvas.getByLabelText('Email address (required)', {selector: 'input'});
-    const summary = await canvas.getByLabelText('Short summary (required)', {selector: 'input'});
-    const bookDescription = await canvas.getByLabelText('If your question is related to a specific book, what is the title or URL? (optional)', {
-      selector: 'input'
-    });
+    const name = await canvas.getByLabelText('Name (required)', { selector: 'input' });
+    const email = await canvas.getByLabelText('Email address (required)', { selector: 'input' });
+    const summary = await canvas.getByLabelText('Short summary (required)', { selector: 'input' });
+    const bookDescription = await canvas.getByLabelText(
+      'If your question is related to a specific book, what is the title or URL? (optional)',
+      {
+        selector: 'input',
+      }
+    );
     const description = await canvas.getByLabelText('Full description of problem or question (required)', {
-      selector: 'textarea'
+      selector: 'textarea',
     });
 
     await userEvent.type(name, 'Caryl Wyatt');
@@ -61,9 +64,12 @@ export const DesktopFormMissingRequiredFields = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const bookDescription = await canvas.getByLabelText('If your question is related to a specific book, what is the title or URL? (optional)', {
-      selector: 'input'
-    });
+    const bookDescription = await canvas.getByLabelText(
+      'If your question is related to a specific book, what is the title or URL? (optional)',
+      {
+        selector: 'input',
+      }
+    );
 
     const submitButton = await canvas.getByRole('button', { name: 'Submit' });
 

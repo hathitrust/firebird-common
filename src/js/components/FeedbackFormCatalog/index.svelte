@@ -1,16 +1,14 @@
 <script>
   import { slide } from 'svelte/transition';
-  export let id = `id${new Date().getTime()}`;
-  export let form = `form#${id}`;
-  let problems = ['None'];
-  let access = 'None';
-  let userURL = location.href;
-  let userAgent = navigator.userAgent;
-  let formName = 'catalog-correction';
-  let errorMessage,
-    nameError,
-    emailError,
-    summaryError = false;
+  let problems = $state(['None']);
+  let access = $state('None');
+  let userURL = $state(location.href);
+  let userAgent = $state(navigator.userAgent);
+  let formName = $state('catalog-correction');
+  let errorMessage = $state(),
+    nameError = $state(),
+    emailError = $state(),
+    summaryError = $state(false);
 
   //takes long string output of document.cookie and splits it into a usable javascript object
   let cookies = document.cookie
@@ -25,16 +23,27 @@
     );
 
   //if user isn't logged in, HTstatus cookie won't exist
-  let userAuthStatus = cookies.HTstatus || 'not logged in';
+  let userAuthStatus = $state(cookies.HTstatus || 'not logged in');
 
-  export let postResponseStatusCode;
+  /**
+   * @typedef {Object} Props
+   * @property {any} [id]
+   * @property {any} [form]
+   * @property {any} postResponseStatusCode
+   * @property {boolean} [loading] - when true, spinner on submit button animates
+   * @property {boolean} [hidden] - when true, hides the element (in this case, the form)
+   * @property {boolean} [submitted] - when true, shows the success/failure alert message
+   */
 
-  // when true, spinner on submit button animates
-  export let loading = false;
-  // when true, hides the element (in this case, the form)
-  export let hidden = false;
-  // when true, shows the success/failure alert message
-  export let submitted = false;
+  /** @type {Props} */
+  let {
+    id = `id${new Date().getTime()}`,
+    form = `form#${id}`,
+    postResponseStatusCode = $bindable(),
+    loading = $bindable(false),
+    hidden = $bindable(false),
+    submitted = $bindable(false),
+  } = $props();
 
   const postForm = async (data) => {
     console.log(data);
@@ -64,7 +73,8 @@
   };
 
   // handles front-end reaction to form submission
-  const onSubmit = (event) => {
+  const onsubmit = (event) => {
+    event.preventDefault();
     // set the submit button spinner spinning
     loading = true;
 
@@ -133,7 +143,7 @@
 </script>
 
 <main>
-  <form on:submit|preventDefault={onSubmit} class:hidden class="needs-validation mb-3" name="feedback" novalidate {id}>
+  <form {onsubmit} class:hidden class="needs-validation mb-3" name="feedback" novalidate {id}>
     <div class="mb-3">
       <label for="name" class="form-label">Name <span class="required" aria-hidden="true">(required)</span></label>
       <input type="name" class="form-control" id="name" autocomplete="name" name="name" required />
@@ -280,7 +290,7 @@
       <label for="description" class="form-label"
         >Other problems or comments? <span class="required" aria-hidden="true">(optional)</span></label
       >
-      <textarea class="form-control" id="description" name="description" rows="3" />
+      <textarea class="form-control" id="description" name="description" rows="3"></textarea>
     </div>
     <input name="userURL" id="userURL" type="hidden" bind:value={userURL} />
     <input name="userAgent" id="userAgent" type="hidden" bind:value={userAgent} />
@@ -295,7 +305,7 @@
 
     <button type="submit" class="btn btn-primary" disabled={loading}>
       Submit{#if loading}
-        <span class="ms-2 spinner-border spinner-border-sm" role="status" aria-hidden="true" />
+        <span class="ms-2 spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
         <span class="visually-hidden">Loading...</span>
       {/if}
     </button>
@@ -310,13 +320,13 @@
       {#if postResponseStatusCode === 200}
         <div transition:slide|global>
           <div class="alert alert-success submit-message" role="alert">
-            <i class="fa-solid fa-circle-check fa-lg me-2" />
+            <i class="fa-solid fa-circle-check fa-lg me-2"></i>
             <div>
               <div class="d-flex flex-column">
                 <strong>Thank you!&nbsp;</strong>Your feedback has been submitted.
               </div>
-              <button type="button" class="btn btn-success" on:click={startOver} on:keypress={startOver}
-                >Start over <i class="fa-solid fa-arrow-rotate-left fa-lg ms-2" /></button
+              <button type="button" class="btn btn-success" onclick={startOver} onkeypress={startOver}
+                >Start over <i class="fa-solid fa-arrow-rotate-left fa-lg ms-2"></i></button
               >
             </div>
           </div>
@@ -324,7 +334,7 @@
       {:else if postResponseStatusCode === 429}
         <div transition:slide|global>
           <div class="alert alert-danger submit-message" role="alert">
-            <i class="fa-solid fa-triangle-exclamation fa-lg me-2" />
+            <i class="fa-solid fa-triangle-exclamation fa-lg me-2"></i>
             <div>
               <strong>Limit reached.&nbsp;</strong>You have reached the maximum amount of submissions for this time
               period. Please submit your request again another time.
@@ -334,7 +344,7 @@
       {:else}
         <div transition:slide|global={{ duration: 300 }}>
           <div class="alert alert-danger submit-message" role="alert">
-            <i class="fa-solid fa-triangle-exclamation fa-lg me-2" />
+            <i class="fa-solid fa-triangle-exclamation fa-lg me-2"></i>
             <div>
               <strong>Oops!&nbsp;</strong>There was an error submitting the form. Please try again or email us at
               support@hathitrust.org

@@ -1,4 +1,4 @@
-import { trackingConsent } from './store'
+import { consent } from './store.svelte';
 export class HotjarManager {
   constructor({ hotjarSettings }) {
     this.enabled = false;
@@ -13,14 +13,13 @@ export class HotjarManager {
     if (!this.enabled) {
       return;
     }
-    trackingConsent.subscribe((value) => {
-      if (value === 'false') {
-        if (document.getElementById('hotjar-js')) {
-          document.getElementById('hotjar-js').remove();
-        }
-        return;
-      } else {
-        const snippet = `
+    if (consent.trackingConsent === 'false') {
+      if (document.getElementById('hotjar-js')) {
+        document.getElementById('hotjar-js').remove();
+      }
+      return;
+    } else {
+      const snippet = `
         (function(h,o,t,j,a,r){
             h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
             h._hjSettings={hjid:${this.hjid},hjsv:${this.hjsv}};
@@ -30,13 +29,11 @@ export class HotjarManager {
             a.appendChild(r);
         })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
         `;
-        const script = document.createElement('script');
-        script.innerText = snippet;
-        script.id = 'hotjar-js';
-        document.head.appendChild(script);
-
-      }
-    })
+      const script = document.createElement('script');
+      script.innerText = snippet;
+      script.id = 'hotjar-js';
+      document.head.appendChild(script);
+    }
   }
 }
 
