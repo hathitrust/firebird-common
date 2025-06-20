@@ -154,6 +154,7 @@ $utilities: map-merge(
     'color': (
       property: color,
       class: text,
+      state: hover focus,
       local-vars: (
         'text-opacity': 1,
       ),
@@ -163,6 +164,7 @@ $utilities: map-merge(
           (
             'neutral-100': $ht-color-neutral-100,
             'neutral-200': $ht-color-neutral-200,
+            'neutral-500': $ht-color-neutral-500,
             'neutral-800': $ht-color-neutral-800,
             'neutral-900': $ht-color-neutral-900,
             'cyan-700': $cyan-700,
@@ -205,6 +207,7 @@ $utilities: map-merge(
             'neutral-50': $ht-color-neutral-50,
             'neutral-100': $ht-color-neutral-100,
             'neutral-200': $ht-color-neutral-200,
+            'neutral-500': $ht-color-neutral-500,
             'transparent': transparent,
             'body-secondary':
               rgba(
@@ -236,6 +239,7 @@ $utilities: map-merge(
           (
             'neutral-200': $ht-color-neutral-200,
             'neutral-300': $ht-color-neutral-300,
+            'neutral-500': $ht-color-neutral-500,
           )
         ),
     ),
