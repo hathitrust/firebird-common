@@ -26,10 +26,10 @@
   export let compact = false;
   export let userNavigation = true;
 
-  const switchableRoles = ['enhancedTextProxy', 'totalAccess','resourceSharing'];
+  const switchableRoles = ['enhancedTextProxy', 'totalAccess', 'resourceSharing'];
   const switchableRolesLabels = {};
-  switchableRolesLabels['enhancedTextProxy'] = 'ATRS';
-  switchableRolesLabels['totalAccess'] = 'CAA';
+  switchableRolesLabels['enhancedTextProxy'] = 'Accessible Text Request Service';
+  switchableRolesLabels['totalAccess'] = 'Collection Administrative Access';
   switchableRolesLabels['resourceSharing'] = 'Resource Sharing';
 
   function toggleSearch() {
@@ -368,7 +368,7 @@
           {#if loggedIn}
             <li id="my-account" class="nav-item dropdown">
               <a
-                class="nav-link dropdown-toggle text-uppercase d-flex flex-row justify-content-between align-items-center"
+                class="nav-link dropdown-toggle text-uppercase d-flex flex-row justify-content-between align-items-center text-black-hover text-black-focus"
                 href="#"
                 role="button"
                 data-bs-toggle="dropdown"
@@ -380,72 +380,92 @@
                     class="account-icon me-n1 d-flex align-items-center justify-content-center border border-neutral-300 rounded-circle bg-neutral-100"
                   >
                     {#if hasActivatedRole}
-                      <i class="fa-solid fa-bolt-lightning text-primary-600" />
+                      <i class="fa-solid fa-user-plus text-primary-600" aria-label="My account" />
                     {:else}
-                      <i class="fa-solid fa-user text-neutral-800" />
+                      <i class="fa-solid fa-user text-neutral-800" aria-label="My account" />
                     {/if}
                   </span>
-                  <span class="account-text ms-3">My Account</span>
+                  <span class="account-text ms-3" aria-hidden="true">My Account</span>
                 </div>
               </a>
-              <ul class="dropdown-menu dropdown-menu-end">
-                <div class="d-flex flex-column gap-4">
-                  <li class="px-3">
-                    <button
-                      class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
-                      data-disabled={!hasNotification}
-                      disabled={!hasNotification ? true : null}
-                      on:click={notificationsModal.show()}
-                      ><span class="needs-hover-state"
-                        >Notifications {#if hasNotification}({notificationsManager.count()}){/if}</span
-                      >
-                      <i class="fa-solid fa-bell fa-fw" class:opacity-25={!hasNotification} />
-                    </button>
-                  </li>
+              <ul class="dropdown-menu dropdown-menu-end p-0" class:accountDropdown={!hasSwitchableRoles}>
+                <div class="d-flex flex-column">
                   {#if hasSwitchableRoles}
-                    <li style="margin-bottom: -1rem">
-                      <h6 class="dropdown-header">
-                        Current Role: {hasActivatedRole ? role : 'Member'}
-                      </h6>
-                    </li>
-                    <li class="px-3">
-                      <a
-                        class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
-                        href="//{`${HT.service_domain}/cgi/ping/switch?target=${encodeURIComponent(
-                          window.location.href
-                        )}`}"
-                        role="button"
-                        ><span class="needs-hover-state">
-                          {#if hasActivatedRole}
-                            Switch Role: Member
-                          {:else}
-                            Switch Role: {role}
-                          {/if}
-                        </span><i class="fa-solid fa-bolt-lightning fa-fw" /></a
+                    <li class="d-flex p-3 current-role align-items-center">
+                      <span
+                        class="account-icon d-flex align-items-center justify-content-center border border-neutral-300 rounded-circle bg-neutral-100"
                       >
+                        {#if hasActivatedRole}
+                          <i class="fa-solid fa-user-plus text-primary-600" aria-hidden="true" />
+                        {:else}
+                          <i class="fa-solid fa-user text-neutral-800" aria-hidden="true" />
+                        {/if}
+                      </span>
+                      <div class="d-flex flex-column align-items-start gap-1">
+                        <span class="role-heading"> Current Role </span>
+                        <span class="role-active">{hasActivatedRole ? role : 'Member'}</span>
+                      </div>
+                    </li>
+
+                    <li aria-hidden="true">
+                      <hr class="dropdown-divider" />
                     </li>
                   {/if}
-                  <li class="px-3">
-                    <a
-                      class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
-                      href="//{`${HT.service_domain}/cgi/mb?a=listcs&colltype=my-collections`}"
-                      role="button"
-                      ><span class="needs-hover-state">My Collections</span><i class="fa-solid fa-list fa-fw" /></a
-                    >
-                  </li>
-                  <li style="margin-top: -1rem; margin-bottom: -1rem;">
+                  <div class="d-flex flex-column gap-3 p-3">
+                    <li class="">
+                      <button
+                        class="dropdown-item px-0 d-flex flex-row gap-2 align-items-center"
+                        data-disabled={!hasNotification}
+                        disabled={!hasNotification ? true : null}
+                        on:click={notificationsModal.show()}
+                        ><i class="fa-solid fa-bell fa-fw" class:opacity-25={!hasNotification} /><span
+                          class="needs-hover-state"
+                          aria-hidden="true"
+                          >Notifications {#if hasNotification}({notificationsManager.count()}){/if}</span
+                        >
+                      </button>
+                    </li>
+                    <li class="">
+                      <a
+                        class="dropdown-item px-0 d-flex flex-row gap-2 align-items-center"
+                        href="//{`${HT.service_domain}/cgi/mb?a=listcs&colltype=my-collections`}"
+                        role="button"
+                        ><i class="fa-solid fa-list fa-fw" aria-hidden="true" /><span class="needs-hover-state"
+                          >My Collections</span
+                        ></a
+                      >
+                    </li>
+                  </div>
+                  <li aria-hidden="true">
                     <hr class="dropdown-divider" />
                   </li>
-                  <li class="px-3">
-                    <a
-                      class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
-                      href="//{`${HT.service_domain}/cgi/logout?${encodeURIComponent(window.location.href)}`}"
-                      role="button"
-                      ><span class="needs-hover-state">Log Out</span><i
-                        class="fa-solid fa-arrow-right-from-bracket fa-fw"
-                      /></a
-                    >
-                  </li>
+                  <div class="p-3 d-flex flex-column gap-3">
+                    {#if hasSwitchableRoles}
+                      <li class="">
+                        <a
+                          class="dropdown-item px-0 d-flex flex-row gap-2 align-items-center switch-roles"
+                          href="//{`${HT.service_domain}/cgi/ping/switch?target=${encodeURIComponent(
+                            window.location.href
+                          )}`}"
+                          role="button"
+                          ><span class="needs-hover-state">
+                            {#if hasActivatedRole}
+                              Switch to Member role
+                            {:else}
+                              Switch to {role} role
+                            {/if}
+                          </span></a
+                        >
+                      </li>
+                    {/if}
+                    <li class="">
+                      <a
+                        class="dropdown-item px-0 d-flex flex-row gap-2 align-items-center"
+                        href="//{`${HT.service_domain}/cgi/logout?${encodeURIComponent(window.location.href)}`}"
+                        role="button"><span class="needs-hover-state">Sign Out</span></a
+                      >
+                    </li>
+                  </div>
                 </div>
               </ul>
             </li>
@@ -457,7 +477,7 @@
                 href="#"
                 role="button"
                 data-testid="login-button"
-                on:click|preventDefault={openLogin}>Log In<i class="fa-solid fa-user fa-fw" /></a
+                on:click|preventDefault={openLogin}>Sign In<i class="fa-solid fa-user fa-fw" /></a
               >
             </li>
           {/if}
@@ -564,6 +584,9 @@
     i {
       color: var(--color-primary-600);
     }
+    #my-account ul.dropdown-menu li:not(.current-role) i {
+      color: var(--color-neutral-500);
+    }
     .needs-hover-state:hover {
       text-decoration: underline;
     }
@@ -574,16 +597,39 @@
       color: var(--color-primary-600);
     }
   }
-  #my-account a span.account-icon {
-    width: 40px;
-    height: 40px;
+  .current-role {
+    gap: 0.75rem;
+  }
+  .role-heading {
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.125rem;
+    letter-spacing: -0.0075rem;
+  }
+  .role-active {
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.3125rem;
+    letter-spacing: -0.01rem;
+  }
+  .account-icon {
+    min-width: 2.5rem;
+    height: 2.5rem;
+  }
+  #my-account a.nav-link div {
+    text-decoration: none;
   }
   #my-account .account-text {
     @media (min-width: 1200px) {
       display: none;
     }
   }
-
+  #my-account a.switch-roles {
+    max-width: 13rem;
+    white-space: pre-wrap;
+  }
   .hasNotification {
     position: relative;
     &::after {
@@ -613,6 +659,18 @@
   .dropdown-toggle::after {
     font-size: 1.1em;
   }
+
+  .dropdown-divider {
+    margin: 0;
+  }
+  @media (min-width: 1200px) {
+    #my-account .dropdown-menu {
+      width: 16rem;
+    }
+    #my-account ul.accountDropdown {
+      width: 11rem;
+    }
+  }
   .dropdown-menu {
     --bs-dropdown-padding-y: 1rem;
     --bs-dropdown-font-size: var(--ht-text-sm);
@@ -634,10 +692,19 @@
       }
     }
     a {
+      line-height: 1.125rem;
+      letter-spacing: -0.00875rem;
       &:hover {
         text-decoration: underline;
       }
     }
+    a.dropdown-item span {
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
     @media (min-width: 1200px) {
       --bs-dropdown-padding-y: 1.5rem;
       --bs-dropdown-item-padding-y: 0;
