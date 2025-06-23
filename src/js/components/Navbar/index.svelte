@@ -380,15 +380,15 @@
                     class="account-icon me-n1 d-flex align-items-center justify-content-center border border-neutral-300 rounded-circle bg-neutral-100"
                   >
                     {#if hasActivatedRole}
-                      <i class="fa-solid fa-user-plus text-primary-600" aria-hidden="true" />
+                      <i class="fa-solid fa-user-plus text-primary-600" aria-label="My account" />
                     {:else}
-                      <i class="fa-solid fa-user text-neutral-800" aria-hidden="true" />
+                      <i class="fa-solid fa-user text-neutral-800" aria-label="My account" />
                     {/if}
                   </span>
-                  <span class="account-text ms-3">My Account</span>
+                  <span class="account-text ms-3" aria-hidden="true">My Account</span>
                 </div>
               </a>
-              <ul class="dropdown-menu dropdown-menu-end p-0">
+              <ul class="dropdown-menu dropdown-menu-end p-0" class:accountDropdown={!hasSwitchableRoles}>
                 <div class="d-flex flex-column">
                   {#if hasSwitchableRoles}
                     <li class="d-flex p-3 current-role align-items-center">
@@ -443,7 +443,7 @@
                     {#if hasSwitchableRoles}
                       <li class="">
                         <a
-                          class="dropdown-item px-0 d-flex flex-row gap-2 align-items-center"
+                          class="dropdown-item px-0 d-flex flex-row gap-2 align-items-center switch-roles"
                           href="//{`${HT.service_domain}/cgi/ping/switch?target=${encodeURIComponent(
                             window.location.href
                           )}`}"
@@ -626,7 +626,10 @@
       display: none;
     }
   }
-
+  #my-account a.switch-roles {
+    max-width: 13rem;
+    white-space: pre-wrap;
+  }
   .hasNotification {
     position: relative;
     &::after {
@@ -664,6 +667,9 @@
     #my-account .dropdown-menu {
       width: 16rem;
     }
+    #my-account ul.accountDropdown {
+      width: 11rem;
+    }
   }
   .dropdown-menu {
     --bs-dropdown-padding-y: 1rem;
@@ -686,6 +692,8 @@
       }
     }
     a {
+      line-height: 1.125rem;
+      letter-spacing: -0.00875rem;
       &:hover {
         text-decoration: underline;
       }
