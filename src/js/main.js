@@ -23,6 +23,7 @@ import AcceptableUseBanner from './components/AcceptableUseBanner';
 import FeedbackFormModal from './components/FeedbackFormModal';
 import CookieConsentBanner from './components/CookieConsentBanner';
 import AlertBanner from './components/AlertBanner';
+import Modal from './components/Modal'
 
 const toCamel = (s) => {
   return s.replace(/([-_][a-z])/gi, ($1) => {
@@ -60,6 +61,7 @@ apps['hathi-acceptable-use-banner'] = AcceptableUseBanner;
 apps['hathi-feedback-form-modal'] = FeedbackFormModal;
 apps['hathi-cookie-consent-banner'] = CookieConsentBanner;
 apps['hathi-alert-banner'] = AlertBanner;
+apps['hathi-modal'] = Modal;
 
 // configure the HT global
 setupHTEnv();
