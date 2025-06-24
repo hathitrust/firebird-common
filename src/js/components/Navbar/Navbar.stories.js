@@ -63,20 +63,40 @@ export const DesktopLoggedIn = {
     }),
   ],
 };
-export const DesktopLoggedInAccountDropdown = {
+export const DesktopLoggedInResourceSharingRole = {
   parameters: { ...Default.parameters },
   args: {
-    loggedIn: false,
-    hasSwitchableRole: true,
-    hasActivatedRole: false,
-    role: 'resourceSharing'
+    loggedIn: true,
   },
   decorators: [
     () => ({
       Component: PingCallbackDecorator,
-      props: { loggedIn: true },
+      props: { loggedIn: true, role: 'resourceSharing', hasActivatedRole: false },
     }),
   ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const accountButton = canvas.getByRole('button', { name: 'My account' });
+    await userEvent.click(accountButton);
+  },
+};
+export const DesktopLoggedInResourceSharingRoleActivated = {
+  parameters: { ...Default.parameters },
+  args: {
+    loggedIn: true,
+    hasActivatedRole: true,
+  },
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      props: { loggedIn: true, role: 'resourceSharing', hasActivatedRole: true },
+    }),
+  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const accountButton = canvas.getByRole('button', { name: 'My account' });
+    await userEvent.click(accountButton);
+  },
 };
 export const DesktopLoggedInWithNotifications = {
   parameters: { ...Default.parameters },
