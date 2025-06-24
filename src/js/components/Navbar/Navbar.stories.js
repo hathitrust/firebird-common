@@ -43,25 +43,13 @@ export const DesktopLoginModalOpen = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const loginButton = await canvas.getByTestId('login-button');
+    const loginButton = canvas.getByTestId('login-button');
     // const loginButton = await canvas.getByRole('button', { name: /log in/i });
     // const loginButton = await canvas.locator('#navbarNavDropdown:has-text"Log In"');
     await userEvent.click(loginButton);
   },
 };
-// export const DesktopShortViewportModal = {
-//   parameters: {
-//     viewport: {
-//       defaultViewport: 'shortDesktop'
-//     }
-//   },
-// play: async ({ canvasElement }) => {
-//   const canvas = within(canvasElement);
 
-//   const loginButton = await canvas.getByRole('button', {name: /log in/i});
-//   await userEvent.click(loginButton);
-// },
-// }
 export const DesktopLoggedIn = {
   parameters: { ...Default.parameters },
   args: {
@@ -74,6 +62,41 @@ export const DesktopLoggedIn = {
       props: { loggedIn: true },
     }),
   ],
+};
+export const DesktopLoggedInResourceSharingRole = {
+  parameters: { ...Default.parameters },
+  args: {
+    loggedIn: true,
+  },
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      props: { loggedIn: true, role: 'resourceSharing', hasActivatedRole: false },
+    }),
+  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const accountButton = canvas.getByRole('button', { name: 'My account' });
+    await userEvent.click(accountButton);
+  },
+};
+export const DesktopLoggedInResourceSharingRoleActivated = {
+  parameters: { ...Default.parameters },
+  args: {
+    loggedIn: true,
+    hasActivatedRole: true,
+  },
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      props: { loggedIn: true, role: 'resourceSharing', hasActivatedRole: true },
+    }),
+  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const accountButton = canvas.getByRole('button', { name: 'My account' });
+    await userEvent.click(accountButton);
+  },
 };
 export const DesktopLoggedInWithNotifications = {
   parameters: { ...Default.parameters },
