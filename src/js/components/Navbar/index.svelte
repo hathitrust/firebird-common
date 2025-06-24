@@ -4,6 +4,7 @@
   import menuData from '../../../assets/menuData.json';
   import LoginFormModal from '../LoginFormModal';
   import FeedbackFormModal from '../FeedbackFormModal';
+  import RoleSwitchModal from '../RoleSwitchModal';
   import NotificationsModal from '../NotificationsModal';
 
   import NotificationsManager from '../../lib/notifications';
@@ -11,6 +12,7 @@
   let HT = window.HT || {};
   let modal;
   let feedbackModal;
+  let roleSwitchModal;
   let location = document.documentElement.dataset.app;
   let form = 'basic';
 
@@ -26,7 +28,7 @@
   export let compact = false;
   export let userNavigation = true;
 
-  const switchableRoles = ['enhancedTextProxy', 'totalAccess','resourceSharing'];
+  const switchableRoles = ['enhancedTextProxy', 'totalAccess', 'resourceSharing'];
   const switchableRolesLabels = {};
   switchableRolesLabels['enhancedTextProxy'] = 'ATRS';
   switchableRolesLabels['totalAccess'] = 'CAA';
@@ -67,7 +69,9 @@
     }
     feedbackModal.show();
   }
-
+  function openRoleSwitchModal() {
+    roleSwitchModal.show();
+  }
   function checkSwitchableRoles(isLoggedIn) {
     if ($loginStatus.r) {
       for (const i in switchableRoles) {
@@ -96,6 +100,7 @@
 </script>
 
 <FeedbackFormModal {form} bind:this={feedbackModal} />
+<RoleSwitchModal bind:this={roleSwitchModal} />
 <nav class="navbar navbar-expand-xl bg-white">
   <div class="container-fluid">
     <div class="ht-logo" class:compact>
@@ -411,9 +416,8 @@
                     <li class="px-3">
                       <a
                         class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
-                        href="//{`${HT.service_domain}/cgi/ping/switch?target=${encodeURIComponent(
-                          window.location.href
-                        )}`}"
+                        href="#"
+                        on:click={roleSwitchModal.show()}
                         role="button"
                         ><span class="needs-hover-state">
                           {#if hasActivatedRole}
