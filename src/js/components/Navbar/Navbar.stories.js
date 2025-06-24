@@ -43,30 +43,33 @@ export const DesktopLoginModalOpen = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const loginButton = await canvas.getByTestId('login-button');
+    const loginButton = canvas.getByTestId('login-button');
     // const loginButton = await canvas.getByRole('button', { name: /log in/i });
     // const loginButton = await canvas.locator('#navbarNavDropdown:has-text"Log In"');
     await userEvent.click(loginButton);
   },
 };
-// export const DesktopShortViewportModal = {
-//   parameters: {
-//     viewport: {
-//       defaultViewport: 'shortDesktop'
-//     }
-//   },
-// play: async ({ canvasElement }) => {
-//   const canvas = within(canvasElement);
 
-//   const loginButton = await canvas.getByRole('button', {name: /log in/i});
-//   await userEvent.click(loginButton);
-// },
-// }
 export const DesktopLoggedIn = {
   parameters: { ...Default.parameters },
   args: {
     loggedIn: false,
     isOpen: true,
+  },
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      props: { loggedIn: true },
+    }),
+  ],
+};
+export const DesktopLoggedInAccountDropdown = {
+  parameters: { ...Default.parameters },
+  args: {
+    loggedIn: false,
+    hasSwitchableRole: true,
+    hasActivatedRole: false,
+    role: 'resourceSharing'
   },
   decorators: [
     () => ({
