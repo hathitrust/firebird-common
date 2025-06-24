@@ -4,6 +4,7 @@
   import menuData from '../../../assets/menuData.json';
   import LoginFormModal from '../LoginFormModal';
   import FeedbackFormModal from '../FeedbackFormModal';
+  import RoleSwitchModal from '../RoleSwitchModal';
   import NotificationsModal from '../NotificationsModal';
 
   import NotificationsManager from '../../lib/notifications';
@@ -11,6 +12,7 @@
   let HT = window.HT || {};
   let modal;
   let feedbackModal;
+  let roleSwitchModal;
   let location = document.documentElement.dataset.app;
   let form = 'basic';
 
@@ -67,7 +69,9 @@
     }
     feedbackModal.show();
   }
-
+  function openRoleSwitchModal() {
+    roleSwitchModal.show();
+  }
   function checkSwitchableRoles(isLoggedIn) {
     if ($loginStatus.r) {
       for (const i in switchableRoles) {
@@ -96,6 +100,7 @@
 </script>
 
 <FeedbackFormModal {form} bind:this={feedbackModal} />
+<RoleSwitchModal bind:this={roleSwitchModal} />
 <nav class="navbar navbar-expand-xl bg-white">
   <div class="container-fluid">
     <div class="ht-logo" class:compact>
@@ -441,10 +446,9 @@
                       <li>
                         <a
                           class="dropdown-item d-flex flex-row gap-2 align-items-center switch-roles"
-                          href="//{`${HT.service_domain}/cgi/ping/switch?target=${encodeURIComponent(
-                            window.location.href
-                          )}`}"
+                          href="#"
                           role="button"
+                          on:click={roleSwitchModal.show()}
                           ><i class="fa-solid fa-user-group fa-fw" aria-hidden="true" /><span class="needs-hover-state">
                             Switch Role
                           </span></a
