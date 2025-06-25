@@ -328,37 +328,38 @@
             data-bs-toggle="dropdown"
             ><span>Get Help</span>
           </a>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <div class="d-flex flex-column gap-4">
-              <li class="px-3">
+          <ul class="dropdown-menu dropdown-menu-end p-0">
+            <div class="d-flex flex-column gap-2">
+              <li class="p-2">
                 <a
                   href="https://hathitrust.atlassian.net/servicedesk/customer/portals"
-                  class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
+                  class="dropdown-item px-0 d-flex flex-row align-items-center gap-2"
                 >
-                  <span>Find Help</span>
-                  <i class="fa-solid fa-square-arrow-up-right fa-fw" />
+                  <i class="fa-solid fa-square-arrow-up-right fa-fw text-neutral-500" aria-hidden="true" /><span
+                    >Find Help</span
+                  >
                 </a>
               </li>
-              <li class="px-3">
+              <li class="p-2">
                 <a
                   href="#"
                   id="ask-a-question"
-                  class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
+                  class="dropdown-item px-0 d-flex flex-row align-items-center gap-2"
                   on:click|preventDefault={() => openFeedback('questions')}
                 >
-                  <span>Ask a Question</span>
-                  <i class="fa-regular fa-circle-question" />
+                  <i class="fa-solid fa-circle-question fa-fw text-neutral-500" aria-hidden="true" /><span
+                    >Ask a Question</span
+                  >
                 </a>
               </li>
-              <li class="px-3">
+              <li class="p-2">
                 <a
                   href="#"
                   id="report-a-problem"
-                  class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
+                  class="dropdown-item px-0 d-flex flex-row align-items-center gap-2"
                   on:click|preventDefault={() => openFeedback(location)}
                 >
-                  <span>Report a Problem</span>
-                  <i class="fa-solid fa-bug" />
+                  <i class="fa-solid fa-bug fa-fw text-neutral-500" aria-hidden="true" /><span>Report a Problem</span>
                 </a>
               </li>
             </div>
@@ -368,11 +369,12 @@
           {#if loggedIn}
             <li id="my-account" class="nav-item dropdown">
               <a
-                class="nav-link dropdown-toggle text-uppercase d-flex flex-row justify-content-between align-items-center text-black-hover text-black-focus"
+                class="nav-link dropdown-toggle d-flex flex-row justify-content-between align-items-center text-black-hover text-black-focus"
                 href="#"
                 role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
+                aria-label="My account"
               >
                 <div class="d-flex justify-content-center align-items-center">
                   <span
@@ -380,12 +382,14 @@
                     class="account-icon me-n1 d-flex align-items-center justify-content-center border border-neutral-300 rounded-circle bg-neutral-100"
                   >
                     {#if hasActivatedRole}
-                      <i class="fa-solid fa-user-plus text-primary-600" aria-label="My account" />
+                      <i class="fa-solid fa-user-plus text-primary-600" />
                     {:else}
-                      <i class="fa-solid fa-user text-neutral-800" aria-label="My account" />
+                      <i class="fa-solid fa-user text-neutral-800" />
                     {/if}
                   </span>
-                  <span class="account-text ms-3" aria-hidden="true">My Account</span>
+                  <span class="ms-3 d-xl-none">My Account</span><span class="visually-hidden d-none d-xl-block"
+                    >My Account</span
+                  >
                 </div>
               </a>
               <ul class="dropdown-menu dropdown-menu-end p-0" class:accountDropdown={!hasSwitchableRoles}>
@@ -448,12 +452,8 @@
                             window.location.href
                           )}`}"
                           role="button"
-                          ><span class="needs-hover-state">
-                            {#if hasActivatedRole}
-                              Switch to Member role
-                            {:else}
-                              Switch to {role} role
-                            {/if}
+                          ><i class="fa-solid fa-user-group fa-fw" aria-hidden="true" /><span class="needs-hover-state">
+                            Switch Role
                           </span></a
                         >
                       </li>
@@ -462,7 +462,10 @@
                       <a
                         class="dropdown-item px-0 d-flex flex-row gap-2 align-items-center"
                         href="//{`${HT.service_domain}/cgi/logout?${encodeURIComponent(window.location.href)}`}"
-                        role="button"><span class="needs-hover-state">Sign Out</span></a
+                        role="button"
+                        ><i class="fa-solid fa-arrow-right-from-bracket fa-fw" aria-hidden="true" /><span
+                          class="needs-hover-state">Sign Out</span
+                        ></a
                       >
                     </li>
                   </div>
@@ -473,11 +476,12 @@
             <LoginFormModal bind:this={modal} />
             <li class="nav-item">
               <a
-                class="nav-link text-uppercase d-flex flex-row justify-content-between align-items-center"
+                id="log-in"
+                class="nav-link text-uppercase d-flex align-items-center gap-2"
                 href="#"
                 role="button"
                 data-testid="login-button"
-                on:click|preventDefault={openLogin}>Sign In<i class="fa-solid fa-user fa-fw" /></a
+                on:click|preventDefault={openLogin}><i class="fa-solid fa-user fa-fw" aria-hidden="true" /> Log In</a
               >
             </li>
           {/if}
@@ -558,10 +562,26 @@
         background: white;
         border-top: none;
       }
+      #log-in {
+        flex-direction: row;
+        @media (min-width: 1200px) {
+          flex-direction: row-reverse;
+        }
+      }
+
       a {
         @media (min-width: 1200px) {
           gap: 0.75rem;
         }
+      }
+      ul.dropdown-menu {
+        background: var(--color-shades-0);
+      }
+    }
+    .nav-item:nth-of-type(2) ul.dropdown-menu div {
+      padding: 0.5rem;
+      @media (min-width: 1200px) {
+        padding: 1rem 0.5rem;
       }
     }
     .nav-item:last-of-type {
@@ -665,7 +685,7 @@
   }
   @media (min-width: 1200px) {
     #my-account .dropdown-menu {
-      width: 16rem;
+      width: 14rem;
     }
     #my-account ul.accountDropdown {
       width: 11rem;
@@ -686,7 +706,6 @@
     --bs-dropdown-link-hover-bg: var(--color-neutral-50);
 
     div {
-      padding-top: 0.5rem;
       @media (min-width: 1200px) {
         padding-top: 0;
       }
@@ -715,6 +734,10 @@
       --bs-dropdown-box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.1);
       --bs-dropdown-link-hover-bg: #fff;
       margin-top: 1rem;
+
+      a.dropdown-item {
+        display: inline;
+      }
     }
     &.dropdown-menu-end {
       padding-top: 0;

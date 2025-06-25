@@ -76,7 +76,7 @@ export const DesktopLoggedInResourceSharingRole = {
   ],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const accountButton = canvas.getByRole('button', { name: 'My account' });
+    const accountButton = canvas.getByLabelText('My account');
     await userEvent.click(accountButton);
   },
 };
@@ -94,7 +94,7 @@ export const DesktopLoggedInResourceSharingRoleActivated = {
   ],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const accountButton = canvas.getByRole('button', { name: 'My account' });
+    const accountButton = canvas.getByLabelText('My account');
     await userEvent.click(accountButton);
   },
 };
@@ -132,7 +132,7 @@ export const MobileOpenMenu = {
   parameters: { ...Mobile.parameters },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const mobileMenuButton = await canvas.getByLabelText('Toggle navigation');
+    const mobileMenuButton = canvas.getByLabelText('Toggle navigation');
     await userEvent.click(mobileMenuButton);
   },
 };
@@ -141,8 +141,8 @@ export const MobileDropdownMenuSelected = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const mobileMenuButton = await canvas.getByLabelText('Toggle navigation');
-    const mainMenu = await canvas.getByText(/member libraries/i);
+    const mobileMenuButton = canvas.getByLabelText('Toggle navigation');
+    const mainMenu = canvas.getByText(/member libraries/i);
 
     await userEvent.click(mobileMenuButton);
     await userEvent.click(mainMenu);
@@ -159,6 +159,45 @@ export const MobileLoggedIn = {
       props: { loggedIn: true },
     }),
   ],
+};
+export const MobileLoggedInResourceSharingRole = {
+  parameters: { ...Mobile.parameters },
+  args: {
+    loggedIn: true,
+  },
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      props: { loggedIn: true, role: 'resourceSharing', hasActivatedRole: false },
+    }),
+  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const mobileMenuButton = canvas.getByLabelText('Toggle navigation');
+    const accountButton = canvas.getByLabelText('My account');
+    await userEvent.click(mobileMenuButton);
+    await userEvent.click(accountButton);
+  },
+};
+export const MobileLoggedInResourceSharingRoleActivated = {
+  parameters: { ...Mobile.parameters },
+  args: {
+    loggedIn: true,
+    hasActivatedRole: true,
+  },
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      props: { loggedIn: true, role: 'resourceSharing', hasActivatedRole: true },
+    }),
+  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const mobileMenuButton = canvas.getByLabelText('Toggle navigation');
+    const accountButton = canvas.getByLabelText('My account' );
+    await userEvent.click(mobileMenuButton);
+    await userEvent.click(accountButton);
+  },
 };
 export const MobileLoggedInWithNotifications = {
   parameters: { ...Mobile.parameters },
@@ -197,10 +236,37 @@ export const MobileLoggedInMyAccountDropdown = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const mobileMenuButton = await canvas.getByLabelText('Toggle navigation');
-    const myAccount = await canvas.getByText(/my account/i);
+    const mobileMenuButton =  canvas.getByLabelText('Toggle navigation');
+    const myAccount =  canvas.getByLabelText('My account');
 
     await userEvent.click(mobileMenuButton);
     await userEvent.click(myAccount);
+  },
+};
+export const MobileLoggedInResourceSharingRoleActivatedHasNotification = {
+  parameters: { ...Mobile.parameters },
+  args: {
+    loggedIn: true,
+    hasActivatedRole: true,
+  },
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      props: { loggedIn: true, role: 'resourceSharing', hasActivatedRole: true, notificationData: [
+        {
+          title: 'A navbar story',
+          message: 'Once upon a time there was a user with notifications',
+          read_more_label: 'Do you want to know more?',
+          read_more_link: 'https://umich.edu',
+        },
+      ], },
+    }),
+  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const mobileMenuButton = canvas.getByLabelText('Toggle navigation');
+    const accountButton = canvas.getByLabelText('My account' );
+    await userEvent.click(mobileMenuButton);
+    await userEvent.click(accountButton);
   },
 };
