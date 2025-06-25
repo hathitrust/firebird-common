@@ -1,6 +1,10 @@
 <script>
   import { onMount } from 'svelte';
   import Modal from '../Modal';
+  //   import get from 'svelte/store'
+
+  let HT = window.HT || {};
+  let url = document.location.href;
 
   let modal;
   export let isOpen = false;
@@ -19,6 +23,9 @@
     }
   });
 
+  //   $: loginStatus = HT.loginStatus;
+  //   $: console.log($loginStatus.r);
+  console.log('role status', HT.login_status.r);
   $: if (modal && isOpen) {
     show();
   }
@@ -38,18 +45,35 @@
     </svelte:fragment>
     <svelte:fragment slot="body">
       <div>
-        <div class="d-flex gap-4 h-100">
-          <form action="/cgi/ping/switch" method="POST" class="w-100 h-100 d-flex flex-column justify-content-between">
-            <div class="control">
-              <input type="radio" name="role" value="default" id="role--default" checked />
-              <label class="radio" for="role--default">Member</label>
+        <form action="/cgi/ping/switch" method="POST" class="w-100 h-100 d-flex flex-column justify-content-between">
+          <div class="roles d-flex flex-column h-100">
+            <div class="form-check d-flex flex-column px-0 gap-75">
+              <div class="d-flex align-items-center gap-3">
+                <input
+                  type="radio"
+                  name="role"
+                  value="default"
+                  id="role--default"
+                  class="form-check-input ms-0"
+                  checked
+                />
+                <label for="role--default" class="form-check-label">Member</label>
+              </div>
               <div class="control--help">
-                <p>Read and download public domain and open access books.</p>
+                <p class="mb-0">Read and download public domain and open access books.</p>
               </div>
             </div>
-            <div class="control">
-              <input type="radio" name="role" value="resourceSharing" id="role--resourceSharing" />
-              <label class="radio" for="role--resourceSharing">Resource Sharing</label>
+            <div class="form-check d-flex flex-column px-0 gap-75">
+              <div class="d-flex align-items-center gap-3">
+                <input
+                  class="form-check-input ms-0"
+                  type="radio"
+                  name="role"
+                  value="resourceSharing"
+                  id="role--resourceSharing"
+                />
+                <label class="form-check-label" for="role--resourceSharing">Resource Sharing</label>
+              </div>
               <div class="control--help">
                 <p>This access is only provided for the following use cases:</p>
                 <ul>
@@ -62,7 +86,6 @@
                 <ul>
                   <li>PLACEHOLDER</li>
                 </ul>
-
                 <p>
                   HathiTrust will immediately terminate a registered user’s ability to employ Resource Sharing if we
                   determine that a disallowed use has occurred or is occurring. Individuals with Resource Sharing must
@@ -73,19 +96,33 @@
                 </p>
               </div>
             </div>
-            <input type="hidden" name="refferer" value="referrer" />
-          </form>
-        </div>
+            <input type="hidden" name="referer" bind:value={url} />
+          </div>
+        </form>
       </div>
     </svelte:fragment>
     <svelte:fragment slot="footer">
-      <button class="btn btn-outline-dark" type="button" on:click={() => hide()}>Cancel</button>
-      <button class="btn btn-primary" type="button" on:click={() => hide()}>Submit</button>
+      <button class="btn btn-outline-dark" name="action" value="cancel" on:click={() => hide()}>Cancel</button>
+      <button class="btn btn-primary" type="submit" value="submit">Submit</button>
     </svelte:fragment>
   </Modal>
 </div>
 
 <style lang="scss">
+  .gap-75 {
+    gap: 0.75rem !important;
+  }
+  .roles {
+    gap: 2rem;
+    padding: 0.75rem 0;
+  }
+  .control--help p {
+    padding-inline-start: 2rem;
+  }
+  .control--help ul {
+    padding-inline-start: 3rem;
+  }
+
   .cookie-settings {
     //removes the element from pt's grid layout
     position: absolute;
