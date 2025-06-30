@@ -328,37 +328,38 @@
             data-bs-toggle="dropdown"
             ><span>Get Help</span>
           </a>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <div class="d-flex flex-column gap-4">
-              <li class="px-3">
+          <ul class="dropdown-menu dropdown-menu-end p-0">
+            <div class="d-flex flex-column gap-1 p-2">
+              <li>
                 <a
                   href="https://hathitrust.atlassian.net/servicedesk/customer/portals"
-                  class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
+                  class="dropdown-item d-flex flex-row align-items-center gap-2"
                 >
-                  <span>Find Help</span>
-                  <i class="fa-solid fa-square-arrow-up-right fa-fw" />
+                  <i class="fa-solid fa-square-arrow-up-right fa-fw text-neutral-500" aria-hidden="true" /><span
+                    >Find Help</span
+                  >
                 </a>
               </li>
-              <li class="px-3">
+              <li>
                 <a
                   href="#"
                   id="ask-a-question"
-                  class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
+                  class="dropdown-item d-flex flex-row align-items-center gap-2"
                   on:click|preventDefault={() => openFeedback('questions')}
                 >
-                  <span>Ask a Question</span>
-                  <i class="fa-regular fa-circle-question" />
+                  <i class="fa-solid fa-circle-question fa-fw text-neutral-500" aria-hidden="true" /><span
+                    >Ask a Question</span
+                  >
                 </a>
               </li>
-              <li class="px-3">
+              <li>
                 <a
                   href="#"
                   id="report-a-problem"
-                  class="dropdown-item px-0 d-flex flex-row justify-content-between align-items-center"
+                  class="dropdown-item d-flex flex-row align-items-center gap-2"
                   on:click|preventDefault={() => openFeedback(location)}
                 >
-                  <span>Report a Problem</span>
-                  <i class="fa-solid fa-bug" />
+                  <i class="fa-solid fa-bug fa-fw text-neutral-500" aria-hidden="true" /><span>Report a Problem</span>
                 </a>
               </li>
             </div>
@@ -368,11 +369,12 @@
           {#if loggedIn}
             <li id="my-account" class="nav-item dropdown">
               <a
-                class="nav-link dropdown-toggle text-uppercase d-flex flex-row justify-content-between align-items-center text-black-hover text-black-focus"
+                class="nav-link dropdown-toggle d-flex flex-row justify-content-between align-items-center text-black-hover text-black-focus"
                 href="#"
                 role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
+                aria-label="My account"
               >
                 <div class="d-flex justify-content-center align-items-center">
                   <span
@@ -380,18 +382,20 @@
                     class="account-icon me-n1 d-flex align-items-center justify-content-center border border-neutral-300 rounded-circle bg-neutral-100"
                   >
                     {#if hasActivatedRole}
-                      <i class="fa-solid fa-user-plus text-primary-600" aria-label="My account" />
+                      <i class="fa-solid fa-user-plus text-primary-600" />
                     {:else}
-                      <i class="fa-solid fa-user text-neutral-800" aria-label="My account" />
+                      <i class="fa-solid fa-user text-neutral-800" />
                     {/if}
                   </span>
-                  <span class="account-text ms-3" aria-hidden="true">My Account</span>
+                  <span class="ms-3 d-xl-none">My Account</span><span class="visually-hidden d-none d-xl-block"
+                    >My Account</span
+                  >
                 </div>
               </a>
               <ul class="dropdown-menu dropdown-menu-end p-0" class:accountDropdown={!hasSwitchableRoles}>
                 <div class="d-flex flex-column">
                   {#if hasSwitchableRoles}
-                    <li class="d-flex p-3 current-role align-items-center">
+                    <li class="d-flex p-3 current-role align-items-center border-bottom border-neutral-300">
                       <span
                         class="account-icon d-flex align-items-center justify-content-center border border-neutral-300 rounded-circle bg-neutral-100"
                       >
@@ -401,20 +405,16 @@
                           <i class="fa-solid fa-user text-neutral-800" aria-hidden="true" />
                         {/if}
                       </span>
-                      <div class="d-flex flex-column align-items-start gap-1">
+                      <div class="role d-flex flex-column align-items-start">
                         <span class="role-heading"> Current Role </span>
                         <span class="role-active">{hasActivatedRole ? role : 'Member'}</span>
                       </div>
                     </li>
-
-                    <li aria-hidden="true">
-                      <hr class="dropdown-divider" />
-                    </li>
                   {/if}
-                  <div class="d-flex flex-column gap-3 p-3">
-                    <li class="">
+                  <div class="d-flex flex-column p-2 gap-1 border-bottom border-neutral-300">
+                    <li>
                       <button
-                        class="dropdown-item px-0 d-flex flex-row gap-2 align-items-center"
+                        class="dropdown-item d-flex flex-row gap-2 align-items-center"
                         data-disabled={!hasNotification}
                         disabled={!hasNotification ? true : null}
                         on:click={notificationsModal.show()}
@@ -425,9 +425,9 @@
                         >
                       </button>
                     </li>
-                    <li class="">
+                    <li>
                       <a
-                        class="dropdown-item px-0 d-flex flex-row gap-2 align-items-center"
+                        class="dropdown-item d-flex flex-row gap-2 align-items-center"
                         href="//{`${HT.service_domain}/cgi/mb?a=listcs&colltype=my-collections`}"
                         role="button"
                         ><i class="fa-solid fa-list fa-fw" aria-hidden="true" /><span class="needs-hover-state"
@@ -436,33 +436,29 @@
                       >
                     </li>
                   </div>
-                  <li aria-hidden="true">
-                    <hr class="dropdown-divider" />
-                  </li>
-                  <div class="p-3 d-flex flex-column gap-3">
+                  <div class="p-2 gap-1 d-flex flex-column">
                     {#if hasSwitchableRoles}
-                      <li class="">
+                      <li>
                         <a
-                          class="dropdown-item px-0 d-flex flex-row gap-2 align-items-center switch-roles"
+                          class="dropdown-item d-flex flex-row gap-2 align-items-center switch-roles"
                           href="//{`${HT.service_domain}/cgi/ping/switch?target=${encodeURIComponent(
                             window.location.href
                           )}`}"
                           role="button"
-                          ><span class="needs-hover-state">
-                            {#if hasActivatedRole}
-                              Switch to Member role
-                            {:else}
-                              Switch to {role} role
-                            {/if}
+                          ><i class="fa-solid fa-user-group fa-fw" aria-hidden="true" /><span class="needs-hover-state">
+                            Switch Role
                           </span></a
                         >
                       </li>
                     {/if}
-                    <li class="">
+                    <li>
                       <a
-                        class="dropdown-item px-0 d-flex flex-row gap-2 align-items-center"
+                        class="dropdown-item d-flex flex-row gap-2 align-items-center"
                         href="//{`${HT.service_domain}/cgi/logout?${encodeURIComponent(window.location.href)}`}"
-                        role="button"><span class="needs-hover-state">Sign Out</span></a
+                        role="button"
+                        ><i class="fa-solid fa-arrow-right-from-bracket fa-fw" aria-hidden="true" /><span
+                          class="needs-hover-state">Sign Out</span
+                        ></a
                       >
                     </li>
                   </div>
@@ -473,11 +469,12 @@
             <LoginFormModal bind:this={modal} />
             <li class="nav-item">
               <a
-                class="nav-link text-uppercase d-flex flex-row justify-content-between align-items-center"
+                id="log-in"
+                class="nav-link text-uppercase d-flex align-items-center gap-2"
                 href="#"
                 role="button"
                 data-testid="login-button"
-                on:click|preventDefault={openLogin}>Sign In<i class="fa-solid fa-user fa-fw" /></a
+                on:click|preventDefault={openLogin}><i class="fa-solid fa-user fa-fw" aria-hidden="true" /> Log In</a
               >
             </li>
           {/if}
@@ -558,9 +555,23 @@
         background: white;
         border-top: none;
       }
+      #log-in {
+        flex-direction: row;
+        @media (min-width: 1200px) {
+          flex-direction: row-reverse;
+        }
+      }
+
       a {
         @media (min-width: 1200px) {
           gap: 0.75rem;
+        }
+      }
+      ul.dropdown-menu {
+        background: var(--color-shades-0);
+        a:hover,
+        a:active {
+          background: var(--color-shades-0);
         }
       }
     }
@@ -618,13 +629,11 @@
     min-width: 2.5rem;
     height: 2.5rem;
   }
+  .role {
+    gap: 0.125rem;
+  }
   #my-account a.nav-link div {
     text-decoration: none;
-  }
-  #my-account .account-text {
-    @media (min-width: 1200px) {
-      display: none;
-    }
   }
   #my-account a.switch-roles {
     max-width: 13rem;
@@ -660,12 +669,9 @@
     font-size: 1.1em;
   }
 
-  .dropdown-divider {
-    margin: 0;
-  }
   @media (min-width: 1200px) {
     #my-account .dropdown-menu {
-      width: 16rem;
+      width: 14rem;
     }
     #my-account ul.accountDropdown {
       width: 11rem;
@@ -680,13 +686,13 @@
     --bs-dropdown-border-width: 0;
     --bs-dropdown-border-color: transparent;
     --bs-dropdown-box-shadow: none;
-    --bs-dropdown-item-padding-y: 0;
+    --bs-dropdown-item-padding-y: 0.5rem;
+    --bs-dropdown-item-padding-x: 0.5rem;
     --bs-dropdown-link-color: var(--color-neutral-800);
     --bs-dropdown-link-hover-color: var(--color-netural-800);
     --bs-dropdown-link-hover-bg: var(--color-neutral-50);
 
     div {
-      padding-top: 0.5rem;
       @media (min-width: 1200px) {
         padding-top: 0;
       }
@@ -704,10 +710,21 @@
         text-decoration: underline;
       }
     }
+    a.dropdown-item:active {
+      color: var(--color-netural-800);
+      background-color: var(--color-neutral-50);
+      span {
+        text-decoration: underline;
+      }
+      @media (min-width: 1200px) {
+        background-color: var(--color-shades-0);
+      }
+    }
 
     @media (min-width: 1200px) {
       --bs-dropdown-padding-y: 1.5rem;
-      --bs-dropdown-item-padding-y: 0;
+      --bs-dropdown-item-padding-y: 0.5rem;
+      --bs-dropdown-item-padding-x: 0.5rem;
       --bs-dropdown-bg: #fff;
       --bs-dropdown-border-radius: 8px;
       --bs-dropdown-border-width: 1px;
@@ -715,6 +732,10 @@
       --bs-dropdown-box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.1);
       --bs-dropdown-link-hover-bg: #fff;
       margin-top: 1rem;
+
+      a.dropdown-item {
+        display: inline;
+      }
     }
     &.dropdown-menu-end {
       padding-top: 0;
