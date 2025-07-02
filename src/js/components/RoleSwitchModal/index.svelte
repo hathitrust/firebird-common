@@ -4,8 +4,11 @@
   //   import get from 'svelte/store'
 
   let HT = window.HT || {};
+  // const switchableRoles = ['enhancedTextProxy', 'totalAccess', 'resourceSharing'];
+  let switchableRole = Object.keys(HT.login_status.r)[0];
+  let roleActivated = Object.values(HT.login_status.r)[0];
+  let role = roleActivated ? switchableRole : 'default';
   let url = document.location.href;
-
   let modal;
   export let isOpen = false;
 
@@ -23,9 +26,28 @@
     }
   });
 
+  //TO DO
+  // different markup/message for ATRS/CAA/RS
+
+  function submit() {
+    let params = new URLSearchParams();
+    params.set('role', role);
+
+    // ping/switch needs a refferer, but does firebird really need one? could we reload the current page?
+    // in theory, since HT.loginStatus is a store, when it's updated, all the login stuff in the navbar should update, too
+    params.set('referer', url);
+    params.set('action', 'submit');
+
+    let switchUrl = new URL(`${location.protocol}//${HT.service_domain}/cgi/ping/switch?${params.toString()}`);
+
+    location.href = switchUrl;
+    // modal.hide();
+  }
+
   //   $: loginStatus = HT.loginStatus;
   //   $: console.log($loginStatus.r);
-  console.log('role status', HT.login_status.r);
+  console.log('referrer', url);
+  $: console.log('role status', HT.login_status.r, role, roleActivated);
   $: if (modal && isOpen) {
     show();
   }
@@ -47,54 +69,149 @@
       <div>
         <form action="/cgi/ping/switch" method="POST" class="w-100 h-100 d-flex flex-column justify-content-between">
           <div class="roles d-flex flex-column h-100">
-            <div class="form-check d-flex flex-column px-0 gap-75">
-              <div class="d-flex align-items-center gap-3">
+            <div class="form-check option py-4 px-3" class:selected={role === 'default'}>
+              <span class="badge rounded-pill" class:nobadge={roleActivated}>Current role</span>
+              <div class="d-flex justify-content-between gap-4" class:mt-n4={!roleActivated}>
+                <div class="d-flex gap-75">
+                  <span
+                    class="role-icon d-flex align-items-center justify-content-center border border-neutral-300 rounded-circle bg-neutral-100"
+                    ><i class="fa-solid fa-user text-neutral-800"></i></span
+                  >
+                  <div class="d-flex flex-column gap-2">
+                    <label for="role--default" class="form-check-label"
+                      >Member <span class="visually-hidden">For additional info read below</span></label
+                    >
+                    <p class="option--help mb-0">Read and download public domain and open access books.</p>
+                  </div>
+                </div>
                 <input
                   type="radio"
                   name="role"
                   value="default"
                   id="role--default"
                   class="form-check-input ms-0"
-                  checked
+                  bind:group={role}
                 />
-                <label for="role--default" class="form-check-label">Member</label>
-              </div>
-              <div class="control--help">
-                <p class="mb-0">Read and download public domain and open access books.</p>
               </div>
             </div>
-            <div class="form-check d-flex flex-column px-0 gap-75">
-              <div class="d-flex align-items-center gap-3">
+            <div class="form-check option py-4 px-3" class:selected={role !== 'default'}>
+              <span class="badge rounded-pill" class:nobadge={!roleActivated}>Current role</span>
+              <div class="d-flex justify-content-between gap-4" class:mt-n4={roleActivated}>
+                <div class="d-flex gap-75">
+                  <span
+                    class="role-icon d-flex align-items-center justify-content-center border border-neutral-300 rounded-circle bg-neutral-100"
+                    ><i class="fa-solid fa-user-plus text-primary-600"></i></span
+                  >
+                  <div class="d-flex flex-column gap-2">
+                    <label class="form-check-label" for="role--{switchableRole}">
+                      {#if switchableRole === 'resourceSharing'}
+                        Resource Sharing
+                      {:else if switchableRole === 'totalAccess'}
+                        Collection Administration Access
+                      {:else if switchableRole === 'enhancedTextProxy'}
+                        Accessible Text Request Service (ATRS) Provider
+                      {/if} <span class="visually-hidden">For additional info read below</span>
+                    </label>
+                    <div class="option--help">
+                      {#if switchableRole === 'resourceSharing'}
+                        <p>This access is only provided for the following use cases:</p>
+                        <ul>
+                          <li>PLACEHOLDER</li>
+                        </ul>
+                        <p>
+                          Individuals making use of Resource Sharing are not permitted to use this access for other use
+                          cases, such as:
+                        </p>
+                        <ul>
+                          <li>PLACEHOLDER</li>
+                        </ul>
+                        <p>
+                          HathiTrust will immediately terminate a registered user’s ability to employ Resource Sharing
+                          if we determine that a disallowed use has occurred or is occurring. Individuals with Resource
+                          Sharing must notify HathiTrust staff at support@hathitrust.org if they believe their
+                          credentials have been used by someone else to gain inappropriate access to copyrighted
+                          materials; if they have any questions about appropriate uses of this service; or if their role
+                          has changed (including departure from the organization) and they no longer need this service.
+                        </p>
+                      {:else if switchableRole === 'totalAccess'}
+                        <p>This access is only provided for the following use cases:</p>
+                        <ul>
+                          <li>
+                            Evaluating or improving the quality of digital files or catalog records in the HathiTrust
+                            collection
+                          </li>
+                          <li>Reviewing the copyright status of HathiTrust volumes</li>
+                          <li>Developing or maintaining HathiTrust systems, applications, and the repository</li>
+                        </ul>
+                        <p>
+                          Individuals making use of Collection Administration Access are not permitted to use this
+                          access for other use cases, such as:
+                        </p>
+                        <ul>
+                          <li>Answering patron reference questions using copyrighted HathiTrust books.</li>
+                          <li>Reading copyrighted HathiTrust books for their own purposes.</li>
+                          <li>Downloading or otherwise copying and sharing copyrighted files for personal use.</li>
+                          <li>Downloading or otherwise copying and sharing copyrighted files with patrons.</li>
+                          <li>
+                            Downloading and sharing pages from copyrighted works with co-workers who will use them for
+                            any non-permitted uses listed above. However, to meet the permitted use cases above, users
+                            with Collection Administration Access may, when absolutely necessary, download and share a
+                            few pages of a copyrighted work with co-workers.
+                          </li>
+                          <li>
+                            Providing others with credentials to use Collection Administrator Access to perform any
+                            task.
+                          </li>
+                        </ul>
+                        <p>
+                          HathiTrust will immediately terminate a registered user’s ability to employ Collection
+                          Administration Access if we determine that a disallowed use has occurred or is occurring.
+                          Individuals with Collection Administration Access must notify HathiTrust staff at
+                          support@hathitrust.org if they believe their credentials have been used by someone else to
+                          gain inappropriate access to copyrighted materials; if they have any questions about
+                          appropriate uses of this service; or if their role has changed (including departure from the
+                          organization) and they no longer need this service.
+                        </p>
+                      {:else if switchableRole === 'enhancedTextProxy'}
+                        <p>
+                          Download copyrighted books, in order to provide them to eligible patrons with print
+                          disabilities.
+                        </p>
+                        <p>
+                          The following terms of use apply when accessing books as an ATRS provider. Per the agreement
+                          you signed to become an ATRS provider, you must confirm with eligible patrons that they
+                          understand:
+                        </p>
+                        <ul>
+                          <li>The copyrighted nature of the content</li>
+                          <li>Why they are being granted special access to the work</li>
+                          <li>
+                            That the cover sheet indicating the copyright status and terms of use must remain with the
+                            work at all times
+                          </li>
+                          <li>
+                            That the accessible copies are for personal use only and may not be reproduced, distributed,
+                            or made available to anyone else other than to facilitate the Eligible Patron’s personal use
+                          </li>
+                          <li>
+                            That if the Eligible Patrons have any questions about proper use of the material or suspect
+                            unauthorized access to the material, they should contact the DSP immediately
+                          </li>
+                        </ul>
+                      {/if}
+                    </div>
+                  </div>
+                </div>
                 <input
                   class="form-check-input ms-0"
                   type="radio"
                   name="role"
-                  value="resourceSharing"
-                  id="role--resourceSharing"
+                  value={switchableRole}
+                  id="role--{switchableRole}"
+                  bind:group={role}
                 />
-                <label class="form-check-label" for="role--resourceSharing">Resource Sharing</label>
               </div>
-              <div class="control--help">
-                <p>This access is only provided for the following use cases:</p>
-                <ul>
-                  <li>PLACEHOLDER</li>
-                </ul>
-                <p>
-                  Individuals making use of Resource Sharing are not permitted to use this access for other use cases,
-                  such as:
-                </p>
-                <ul>
-                  <li>PLACEHOLDER</li>
-                </ul>
-                <p>
-                  HathiTrust will immediately terminate a registered user’s ability to employ Resource Sharing if we
-                  determine that a disallowed use has occurred or is occurring. Individuals with Resource Sharing must
-                  notify HathiTrust staff at support@hathitrust.org if they believe their credentials have been used by
-                  someone else to gain inappropriate access to copyrighted materials; if they have any questions about
-                  appropriate uses of this service; or if their role has changed (including departure from the
-                  organization) and they no longer need this service.
-                </p>
-              </div>
+              <div class="control--help"></div>
             </div>
             <input type="hidden" name="referer" bind:value={url} />
           </div>
@@ -102,43 +219,15 @@
       </div>
     </svelte:fragment>
     <svelte:fragment slot="footer">
-      <button class="btn btn-outline-dark" name="action" value="cancel" on:click={() => hide()}>Cancel</button>
-      <button class="btn btn-primary" type="submit" value="submit">Submit</button>
+      <div class="d-flex gap-3 m-0">
+        <button class="btn btn-white py-2 px-3 m-0" name="action" value="cancel" on:click={() => hide()}>Cancel</button>
+        <button class="btn btn-primary py-2 px-3 m-0" on:click={submit}>Submit</button>
+      </div>
     </svelte:fragment>
   </Modal>
 </div>
 
 <style lang="scss">
-  .gap-75 {
-    gap: 0.75rem !important;
-  }
-  .roles {
-    gap: 2rem;
-    padding: 0.75rem 0;
-  }
-  .control--help p {
-    padding-inline-start: 2rem;
-  }
-  .control--help ul {
-    padding-inline-start: 3rem;
-  }
-
-  .cookie-settings {
-    //removes the element from pt's grid layout
-    position: absolute;
-    a {
-      color: var(--bs-link-color);
-      &:hover {
-        color: var(--bs-link-hover-color);
-      }
-    }
-  }
-  .cookie-settings :is(p, h3, button.accordion-button) {
-    font-size: var(--ht-text-sm);
-  }
-  // .settings-heading {
-  //   border-bottom: 1px solid var(--color-neutral-600);
-  // }
   .settings-heading img {
     height: 2.625rem;
   }
@@ -146,61 +235,71 @@
     font-weight: 800;
     letter-spacing: 0.0225rem;
   }
-  #settings-accordion {
-    .accordion-button::after {
-      all: unset;
+  .gap-75 {
+    gap: 0.75rem !important;
+  }
+  .roles {
+    gap: 2rem;
+    padding: 0.75rem 0;
+  }
+  .option {
+    border-radius: 0.375rem;
+    border: 0.5px solid var(--color-neutral-500);
+    background: var(--color-shades-0);
+    box-shadow: 6px 12px 4px 0px rgba(0, 0, 0, 0.01);
+  }
+  .option.selected {
+    border-radius: 0.375rem;
+    border: 1.5px solid var(--color-primary-600);
+    background: var(--color-primary-50);
+  }
+  .badge {
+    --bs-badge-padding-x: 0.5rem;
+    --bs-badge-padding-y: 0.25rem;
+    --bs-badge-font-size: 0.75em;
+    --bs-badge-font-weight: 500;
+    --bs-badge-color: var(--color-shades-0);
+    --bs-badge-border-radius: 2.5rem;
+    background-color: var(--color-primary-600);
+    line-height: 1.125rem;
+    letter-spacing: -0.0075rem;
+    position: relative;
+    top: -2.5rem;
+  }
+  .badge.nobadge {
+    display: none;
+  }
+  .role-icon {
+    padding: 0.625rem;
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+  label {
+    color: var(--color-neutral-900);
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.3125rem;
+    letter-spacing: -0.01rem;
+  }
+  .option--help {
+    color: var(--color-neutral-800);
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.3125rem;
+    letter-spacing: -0.01rem;
+    ul {
+      padding-inline-start: 1rem;
     }
-    .accordion-button::before {
-      flex-shrink: 0;
-      width: var(--bs-accordion-btn-icon-width);
-      height: var(--bs-accordion-btn-icon-width);
-      content: '';
-      background-image: var(--bs-accordion-btn-icon);
-      background-repeat: no-repeat;
-      background-size: var(--bs-accordion-btn-icon-width);
-      transition: var(--bs-accordion-btn-icon-transition);
-      transform: rotate(-90deg);
-    }
-    .accordion-button:not(.collapsed)::before {
-      transform: rotate(0deg);
-    }
-    &.accordion input.form-check-input {
-      width: 1.25rem;
-      height: 1.25rem;
-      padding: 0.5rem;
-    }
-    .always-active {
-      font-size: 0.75rem;
-    }
-    .accordion-body {
-      padding: 0 1.75rem;
+    & :last-child {
+      margin-block-end: 0;
     }
   }
-  button.btn {
-    display: flex;
-    height: 2.75rem;
-    padding: 0.5rem 1rem;
-    justify-content: center;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .settings-buttons {
-    flex-direction: column;
-    width: 100%;
-    align-items: normal;
-  }
-  @media (min-width: 48em) {
-    /* 768px, bootstrap "medium" and up */
-    .cookie-settings :is(p, h3, button.accordion-button) {
-      font-size: 1rem;
-    }
-    .always-active {
-      font-size: var(--ht-text-sm);
-    }
-    .settings-buttons {
-      flex-direction: row;
-      align-items: center;
+  .btn.btn-white {
+    box-shadow: none;
+    &:active {
+      border: none;
     }
   }
 </style>

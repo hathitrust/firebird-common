@@ -100,7 +100,9 @@
 </script>
 
 <FeedbackFormModal {form} bind:this={feedbackModal} />
-<RoleSwitchModal bind:this={roleSwitchModal} />
+{#if hasSwitchableRoles}
+  <RoleSwitchModal bind:this={roleSwitchModal} />
+{/if}
 <nav class="navbar navbar-expand-xl bg-white">
   <div class="container-fluid">
     <div class="ht-logo" class:compact>
