@@ -74,8 +74,8 @@ export const HasNewNotifications = {
     await waitFor(() => {
       expect(canvas.getByText('Your notifications')).toBeInTheDocument();
     });
-    closeButton = await canvas.getAllByText(/^Close$/);
-    await userEvent.click(closeButton[0]);
+    closeButton = canvas.getByRole('button', {name: 'Close modal'});
+    await userEvent.click(closeButton);
     expect(newCookieJar.getItem('HT.notice')).toBe(newNotificationData[0].effective_on);
   },
 };

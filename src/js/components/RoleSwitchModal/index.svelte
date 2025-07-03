@@ -1,16 +1,15 @@
 <script>
   import { onMount } from 'svelte';
   import Modal from '../Modal';
-  //   import get from 'svelte/store'
 
   let HT = window.HT || {};
-  // const switchableRoles = ['enhancedTextProxy', 'totalAccess', 'resourceSharing'];
   let switchableRole = Object.keys(HT.login_status.r)[0];
   let roleActivated = Object.values(HT.login_status.r)[0];
   let role = roleActivated ? switchableRole : 'default';
   let url = document.location.href;
   let modal;
   export let isOpen = false;
+  let loading = false;
 
   export const show = function () {
     isOpen = true;
@@ -26,28 +25,18 @@
     }
   });
 
-  //TO DO
-  // different markup/message for ATRS/CAA/RS
-
   function submit() {
+    loading = true;
     let params = new URLSearchParams();
     params.set('role', role);
-
-    // ping/switch needs a refferer, but does firebird really need one? could we reload the current page?
-    // in theory, since HT.loginStatus is a store, when it's updated, all the login stuff in the navbar should update, too
     params.set('referer', url);
     params.set('action', 'submit');
 
     let switchUrl = new URL(`${location.protocol}//${HT.service_domain}/cgi/ping/switch?${params.toString()}`);
 
     location.href = switchUrl;
-    // modal.hide();
   }
 
-  //   $: loginStatus = HT.loginStatus;
-  //   $: console.log($loginStatus.r);
-  console.log('referrer', url);
-  $: console.log('role status', HT.login_status.r, role, roleActivated);
   $: if (modal && isOpen) {
     show();
   }
@@ -61,7 +50,6 @@
     <svelte:fragment slot="title">
       <div class="align-items-center d-flex gap-2 py-2 settings-heading">
         <img src="/common/firebird/dist/hathitrust-icon-orange.svg" alt="" role="presentation" />
-        <!-- <img src="/firebird-common/dist/hathitrust-icon-orange.svg" alt="" role="presentation" /> -->
         <h2 class="text-uppercase fs-3 mb-0">Choose a role</h2>
       </div>
     </svelte:fragment>
@@ -70,7 +58,7 @@
         <form action="/cgi/ping/switch" method="POST" class="w-100 h-100 d-flex flex-column justify-content-between">
           <div class="roles d-flex flex-column h-100">
             <div class="form-check option py-4 px-3" class:selected={role === 'default'}>
-              <span class="badge rounded-pill" class:nobadge={roleActivated}>Current role</span>
+              <span class="badge rounded-pill" class:d-none={roleActivated}>Current role</span>
               <div class="d-flex justify-content-between gap-4" class:mt-n4={!roleActivated}>
                 <div class="d-flex gap-75">
                   <span
@@ -95,7 +83,7 @@
               </div>
             </div>
             <div class="form-check option py-4 px-3" class:selected={role !== 'default'}>
-              <span class="badge rounded-pill" class:nobadge={!roleActivated}>Current role</span>
+              <span class="badge rounded-pill" class:d-none={!roleActivated}>Current role</span>
               <div class="d-flex justify-content-between gap-4" class:mt-n4={roleActivated}>
                 <div class="d-flex gap-75">
                   <span
@@ -219,9 +207,17 @@
       </div>
     </svelte:fragment>
     <svelte:fragment slot="footer">
-      <div class="d-flex gap-3 m-0">
-        <button class="btn btn-white py-2 px-3 m-0" name="action" value="cancel" on:click={() => hide()}>Cancel</button>
-        <button class="btn btn-primary py-2 px-3 m-0" on:click={submit}>Submit</button>
+      <div class="py-3 px-4 m-0">
+        <div class="d-flex gap-3">
+          <button class="btn btn-white py-2 px-3 m-0" name="action" value="cancel" on:click={() => hide()}
+            >Cancel</button
+          >
+          <button class="btn btn-primary py-2 px-3 m-0" disabled={loading} on:click={submit}
+            >Submit{#if loading}
+              <span class="spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true"></span>
+              <span class="visually-hidden">Loading...</span>{/if}</button
+          >
+        </div>
       </div>
     </svelte:fragment>
   </Modal>
@@ -247,11 +243,11 @@
     border: 0.5px solid var(--color-neutral-500);
     background: var(--color-shades-0);
     box-shadow: 6px 12px 4px 0px rgba(0, 0, 0, 0.01);
-  }
-  .option.selected {
-    border-radius: 0.375rem;
-    border: 1.5px solid var(--color-primary-600);
-    background: var(--color-primary-50);
+    &.selected {
+      border-radius: 0.375rem;
+      border: 1.5px solid var(--color-primary-600);
+      background: var(--color-primary-50);
+    }
   }
   .badge {
     --bs-badge-padding-x: 0.5rem;
@@ -265,9 +261,6 @@
     letter-spacing: -0.0075rem;
     position: relative;
     top: -2.5rem;
-  }
-  .badge.nobadge {
-    display: none;
   }
   .role-icon {
     padding: 0.625rem;
