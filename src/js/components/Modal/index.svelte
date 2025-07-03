@@ -91,17 +91,17 @@
           <button
             type="button"
             class="close"
-            aria-label="Close Modal"
+            aria-label="Close modal"
             data-bs-dismiss="modal"
             on:click={() => {
               hide();
             }}
             ><span class="close-icon">
               <i class="fa-solid fa-xmark icon-default" aria-hidden="true"></i><span class="fa-sr-only"
-                >Close banner</span
+                >Close modal</span
               >
               <i class="fa-solid fa-circle-xmark fa-2x icon-hover" aria-hidden="true"></i><span class="fa-sr-only"
-                >Close banner</span
+                >Close modal</span
               >
             </span></button
           >
@@ -111,7 +111,7 @@
           <div class="visually-hidden" role="status" aria-atomic="true" aria-live="polite" />
         </div>
         {#if $$slots.footer}
-          <div class="modal-footer py-3 px-4">
+          <div class="modal-footer">
             <slot name="footer">
               <!-- svelte-ignore a11y-autofocus -->
               <button
