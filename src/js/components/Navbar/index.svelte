@@ -720,6 +720,10 @@
         background-color: var(--color-shades-0);
       }
     }
+    button.dropdown-item:focus-visible {
+      border-radius: 6px;
+      position: relative;
+    }
 
     @media (min-width: 1200px) {
       --bs-dropdown-padding-y: 1.5rem;
