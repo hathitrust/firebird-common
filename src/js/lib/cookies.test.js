@@ -1,4 +1,4 @@
-import { afterEach, afterAll, describe, it, expect, test, vi } from 'vitest'
+import { beforeEach, afterAll, describe, it, expect, test, vi } from 'vitest'
 import { docCookies, setSelectedConsent} from './cookies'
 import { allowTracking, allowMarketing } from './store'
 import { get } from 'svelte/store';
@@ -15,7 +15,6 @@ HT.cookies_domain = '.hathitrust.org'
 window.location.host = "www.hathitrust.org"
 window.location.protocol = "https:"
 
-
 const getItemSpy = vi.spyOn(docCookies, 'getItem')
 const setItemSpy = vi.spyOn(docCookies, 'setItem')
 const remoteItemSpy = vi.spyOn(docCookies, 'removeItem')
@@ -26,14 +25,13 @@ it('should not be undefined', () => {
         })
 })
 describe('docCookies', () => {
-    afterEach(() => {
-        document.cookie = "COOKIE=true;expires=Thu, 01 Jan 1970 00:00:00 GMT"
-        document.cookie = "COOKIE=cookie;expires=Thu, 01 Jan 1970 00:00:00 GMT"
-    }) 
+    beforeEach(() => {
+        document.cookie = "COOKIE=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/"
+    })
     describe('getItem', () => {
-        document.cookie="COOKIE=true"
 
         test('gets value of cookie from document.cookie', () => {
+            document.cookie="COOKIE=true; path=/"
             expect(docCookies.getItem('COOKIE')).toStrictEqual('true');
             expect(getItemSpy).toHaveBeenCalled()
         }) 
@@ -44,7 +42,7 @@ describe('docCookies', () => {
     })
     describe('setItem', () => {
         test('sets cookie with key and value', () => {
-            expect(docCookies.setItem('COOKIE', 'cookie', '', '', '')).toBe(true)
+            expect(docCookies.setItem('COOKIE', 'cookie')).toBe(true)
             expect(document.cookie).toBeTruthy()
             expect(document.cookie).toContain("COOKIE=cookie")
             expect(setItemSpy).toHaveBeenCalled()
@@ -54,7 +52,7 @@ describe('docCookies', () => {
         test('removes cookie with given name/key', () => {
             //set up a cookie
             expect(document.cookie).toEqual('')
-            document.cookie = "COOKIE=cookie"
+            document.cookie = "COOKIE=cookie; path=/"
             expect(document.cookie).toContain("COOKIE=cookie")
 
             //now test removeItem
