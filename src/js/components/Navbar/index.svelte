@@ -463,7 +463,7 @@
                         href="//{`${HT.service_domain}/cgi/logout?${encodeURIComponent(window.location.href)}`}"
                         role="button"
                         ><i class="fa-solid fa-arrow-right-from-bracket fa-fw" aria-hidden="true" /><span
-                          class="needs-hover-state">Sign Out</span
+                          class="needs-hover-state">Log Out</span
                         ></a
                       >
                     </li>
