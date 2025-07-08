@@ -64,7 +64,7 @@
         >
           <div class="roles d-flex flex-column h-100">
             <div class="form-check option py-4 px-3" class:selected={role === 'default'}>
-              <span class="badge rounded-pill" class:d-none={roleActivated}>Current role</span>
+              <span id="member-current-role" class="badge rounded-pill" class:d-none={roleActivated}>Current role</span>
               <div class="d-flex justify-content-between gap-4" class:mt-n4={!roleActivated}>
                 <div class="d-flex gap-75">
                   <span
@@ -72,7 +72,11 @@
                     ><i class="fa-solid fa-user text-neutral-800"></i></span
                   >
                   <div class="d-flex flex-column gap-2">
-                    <label for="role--default" class="form-check-label"
+                    <label
+                      id="member"
+                      for="role--default"
+                      class="form-check-label"
+                      aria-labelledby={roleActivated ? 'member' : 'member-current-role member'}
                       >Member <span class="visually-hidden">For additional info read below</span></label
                     >
                     <p class="option--help mb-0">Read and download public domain and open access books.</p>
@@ -89,7 +93,9 @@
               </div>
             </div>
             <div class="form-check option py-4 px-3" class:selected={role !== 'default'}>
-              <span class="badge rounded-pill" class:d-none={!roleActivated}>Current role</span>
+              <span id="switchable-current-role" class="badge rounded-pill" class:d-none={!roleActivated}
+                >Current role</span
+              >
               <div class="d-flex justify-content-between gap-4" class:mt-n4={roleActivated}>
                 <div class="d-flex gap-75">
                   <span
@@ -97,7 +103,12 @@
                     ><i class="fa-solid fa-user-plus text-primary-600"></i></span
                   >
                   <div class="d-flex flex-column gap-2">
-                    <label class="form-check-label" for="role--{switchableRole}">
+                    <label
+                      id="switchable"
+                      class="form-check-label"
+                      for="role--{switchableRole}"
+                      aria-labelledby={roleActivated ? 'switchable-current-role switchable' : 'switchable'}
+                    >
                       {#if switchableRole === 'resourceSharing'}
                         Resource Sharing
                       {:else if switchableRole === 'totalAccess'}
