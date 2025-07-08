@@ -6,6 +6,9 @@ import { action } from '@storybook/addon-actions'
 export default {
     title: 'Role Switch Modal',
     component: RoleSwitchModal,
+    props: {
+        src: '/hathitrust-icon-orange.svg'
+    },
     decorators: [
       () => ({
         Component: PingCallbackDecorator,
@@ -21,6 +24,7 @@ export const DesktopSwitchableRoleNotActivated = {
     }, },
     args: {
         isOpen: true,
+        src: '/hathitrust-icon-orange.svg'
     },
     decorators: [
         () => ({
@@ -38,7 +42,7 @@ export const DesktopRoleToggle = {
         defaultViewport: 'bsXl',
     }, },
     args: {
-        isOpen: true,
+        ...DesktopSwitchableRoleNotActivated.args,
     },
     decorators: [
         () => ({
@@ -48,7 +52,6 @@ export const DesktopRoleToggle = {
       ],
       play: async ({ canvasElement }) => {
         const canvas = within(canvasElement);
-        // expect(canvas.getByRole('heading', {name: 'Choose a role'}))
         const switchableRole = canvas.getByLabelText(/Resource Sharing/)
         await userEvent.click(switchableRole)
     }
@@ -58,7 +61,7 @@ export const DesktopRoleToggleSubmitted = {
         defaultViewport: 'bsXl',
     }, },
     args: {
-        isOpen: true,
+        ...DesktopSwitchableRoleNotActivated.args,
         loading: true,
     },
     decorators: [
@@ -69,7 +72,6 @@ export const DesktopRoleToggleSubmitted = {
       ],
       play: async ({ canvasElement }) => {
         const canvas = within(canvasElement);
-        // expect(canvas.getByRole('heading', {name: 'Choose a role'}))
         const switchableRole = canvas.getByLabelText(/Resource Sharing/)
         await userEvent.click(switchableRole)
     }
@@ -79,7 +81,7 @@ export const DesktopSwitchableRoleActivated = {
         defaultViewport: 'bsXl',
     }, },
     args: {
-        isOpen: true,
+        ...DesktopSwitchableRoleNotActivated.args,
     },
     decorators: [
         () => ({
@@ -89,7 +91,6 @@ export const DesktopSwitchableRoleActivated = {
       ],
       play: async ({ canvasElement }) => {
         const canvas = within(canvasElement);
-        // expect(canvas.getByRole('heading', {name: 'Choose a role'}))
         const switchableRole = canvas.getByLabelText(/Member/)
         await userEvent.click(switchableRole)
     }

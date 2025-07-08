@@ -71,10 +71,6 @@
   }
 </script>
 
-<!-- <svelte:head>
-  <link rel="stylesheet" href="https://unpkg.com/open-props" />
-</svelte:head> -->
-
 <dialog
   bind:this={dialog}
   aria-hidden={!isOpen}
@@ -267,10 +263,6 @@
       outline-offset: 0px;
     }
   }
-
-  // .modal-header {
-  //   flex-wrap: wrap;
-  // }
 
   .modal-title {
     flex-basis: 100%;

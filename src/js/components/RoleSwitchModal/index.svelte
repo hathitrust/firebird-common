@@ -8,6 +8,7 @@
   let role = roleActivated ? switchableRole : 'default';
   let url = document.location.href;
   let modal;
+  export let src = '/common/firebird/dist/hathitrust-icon-orange.svg';
   export let isOpen = false;
   export let loading = false;
 
@@ -49,7 +50,7 @@
   <Modal bind:this={modal} scrollable modalLarge fullscreenOnMobile>
     <svelte:fragment slot="title">
       <div class="align-items-center d-flex gap-2 py-2 settings-heading">
-        <img src="/common/firebird/dist/hathitrust-icon-orange.svg" alt="" role="presentation" />
+        <img {src} alt="" role="presentation" />
         <span class="text-uppercase fw-exbold fs-3 mb-0">Choose a role</span>
       </div>
     </svelte:fragment>

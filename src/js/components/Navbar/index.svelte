@@ -69,9 +69,7 @@
     }
     feedbackModal.show();
   }
-  function openRoleSwitchModal() {
-    roleSwitchModal.show();
-  }
+
   function checkSwitchableRoles(isLoggedIn) {
     if ($loginStatus.r) {
       for (const i in switchableRoles) {
@@ -413,8 +411,8 @@
                         {/if}
                       </span>
                       <div class="role d-flex flex-column align-items-start">
-                        <span class="role-heading"> Current Role </span>
-                        <span class="role-active">{hasActivatedRole ? role : 'Member'}</span>
+                        <span id="role-heading" class="role-heading"> Current Role </span>
+                        <span id="role-active" class="role-active">{hasActivatedRole ? role : 'Member'}</span>
                       </div>
                     </li>
                   {/if}
@@ -450,6 +448,8 @@
                           class="dropdown-item d-flex flex-row gap-2 align-items-center switch-roles"
                           href="#"
                           role="button"
+                          id="switch"
+                          aria-labelledby="switch role-heading role-active"
                           on:click={roleSwitchModal.show()}
                           ><i class="fa-solid fa-user-group fa-fw" aria-hidden="true" /><span class="needs-hover-state">
                             Switch Role
