@@ -211,7 +211,7 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            <span>HELLO!!</span>
+            <span>About</span>
             <!-- <i class="fa-solid fa-caret-down" /> -->
           </a>
           <div>
