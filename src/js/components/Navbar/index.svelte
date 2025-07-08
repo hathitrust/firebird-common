@@ -211,7 +211,7 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            <span>About</span>
+            <span>HELLO!!</span>
             <!-- <i class="fa-solid fa-caret-down" /> -->
           </a>
           <div>
@@ -716,7 +716,8 @@
         text-decoration: underline;
       }
     }
-    a.dropdown-item:active {
+    a.dropdown-item:active,
+    button.dropdown-item:active {
       color: var(--color-netural-800);
       background-color: var(--color-neutral-50);
       span {

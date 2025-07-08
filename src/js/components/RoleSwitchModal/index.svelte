@@ -9,7 +9,7 @@
   let url = document.location.href;
   let modal;
   export let isOpen = false;
-  let loading = false;
+  export let loading = false;
 
   export const show = function () {
     isOpen = true;
@@ -50,12 +50,17 @@
     <svelte:fragment slot="title">
       <div class="align-items-center d-flex gap-2 py-2 settings-heading">
         <img src="/common/firebird/dist/hathitrust-icon-orange.svg" alt="" role="presentation" />
-        <h2 class="text-uppercase fs-3 mb-0">Choose a role</h2>
+        <span class="text-uppercase fw-exbold fs-3 mb-0">Choose a role</span>
       </div>
     </svelte:fragment>
     <svelte:fragment slot="body">
       <div>
-        <form action="/cgi/ping/switch" method="POST" class="w-100 h-100 d-flex flex-column justify-content-between">
+        <form
+          id="ping-switch"
+          action="/cgi/ping/switch"
+          method="POST"
+          class="w-100 h-100 d-flex flex-column justify-content-between"
+        >
           <div class="roles d-flex flex-column h-100">
             <div class="form-check option py-4 px-3" class:selected={role === 'default'}>
               <span class="badge rounded-pill" class:d-none={roleActivated}>Current role</span>
@@ -212,7 +217,12 @@
           <button class="btn btn-white py-2 px-3 m-0" name="action" value="cancel" on:click={() => hide()}
             >Cancel</button
           >
-          <button class="btn btn-primary py-2 px-3 m-0" disabled={loading} on:click={submit}
+          <button
+            class="btn btn-primary py-2 px-3 m-0"
+            type="submit"
+            form="ping-switch"
+            disabled={loading}
+            on:click={submit}
             >Submit{#if loading}
               <span class="spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true"></span>
               <span class="visually-hidden">Loading...</span>{/if}</button
@@ -227,9 +237,9 @@
   .settings-heading img {
     height: 2.625rem;
   }
-  .settings-heading h2 {
-    font-weight: 800;
+  .settings-heading span {
     letter-spacing: 0.0225rem;
+    line-height: 1.3125rem;
   }
   .gap-75 {
     gap: 0.75rem !important;
