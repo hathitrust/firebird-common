@@ -77,12 +77,10 @@
                     ><i class="fa-solid fa-user text-neutral-800"></i></span
                   >
                   <div class=" d-flex flex-column gap-2">
-                    <div class="d-flex flex-column">
-                      <span id="member" class="form-check-label"
-                        >Member <span class="visually-hidden">For additional info read below</span></span
-                      >
-                      <p class="option--help mb-0">Read and download public domain and open access books.</p>
-                    </div>
+                    <span id="member" class="form-check-label"
+                      >Member <span class="visually-hidden">For additional info read below</span></span
+                    >
+                    <p class="option--help mb-0">Read and download public domain and open access books.</p>
                   </div>
                 </div>
                 <input
@@ -260,8 +258,8 @@
     gap: 0.75rem !important;
   }
   .roles {
-    gap: 2rem;
-    padding: 0.75rem 0;
+    gap: 1.5rem;
+    padding: 0.5rem 0;
   }
   .option {
     border-radius: 0.375rem;
