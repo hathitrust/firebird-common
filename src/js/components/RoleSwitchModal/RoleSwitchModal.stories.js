@@ -52,7 +52,7 @@ export const DesktopRoleToggle = {
       ],
       play: async ({ canvasElement }) => {
         const canvas = within(canvasElement);
-        const switchableRole = canvas.getByLabelText(/Resource Sharing/)
+        const switchableRole = canvas.getByRole('radio', { name: /Resource Sharing/ })
         await userEvent.click(switchableRole)
     }
 }
@@ -72,7 +72,7 @@ export const DesktopRoleToggleSubmitted = {
       ],
       play: async ({ canvasElement }) => {
         const canvas = within(canvasElement);
-        const switchableRole = canvas.getByLabelText(/Resource Sharing/)
+        const switchableRole = canvas.getByRole('radio', { name: /Resource Sharing/ })
         await userEvent.click(switchableRole)
     }
 }
@@ -91,7 +91,7 @@ export const DesktopSwitchableRoleActivated = {
       ],
       play: async ({ canvasElement }) => {
         const canvas = within(canvasElement);
-        const switchableRole = canvas.getByLabelText(/Member/)
+        const switchableRole = canvas.getByRole('radio', { name: /Member/ })
         await userEvent.click(switchableRole)
     }
 }
