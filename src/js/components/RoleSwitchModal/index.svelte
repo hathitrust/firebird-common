@@ -112,7 +112,7 @@
                       {#if switchableRole === 'resourceSharing'}
                         Resource Sharing
                       {:else if switchableRole === 'totalAccess'}
-                        Collection Administrative Access
+                        Collection Administration Access
                       {:else if switchableRole === 'enhancedTextProxy'}
                         Accessible Text Request Service (ATRS) Provider
                       {/if} <span class="visually-hidden">For additional info read below</span>
@@ -164,7 +164,7 @@
                             few pages of a copyrighted work with co-workers.
                           </li>
                           <li>
-                            Providing others with credentials to use Collection Administrator Access to perform any
+                            Providing others with credentials to use Collection Administration Access to perform any
                             task.
                           </li>
                         </ul>

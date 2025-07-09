@@ -31,7 +31,7 @@
   const switchableRoles = ['enhancedTextProxy', 'totalAccess', 'resourceSharing'];
   const switchableRolesLabels = {};
   switchableRolesLabels['enhancedTextProxy'] = 'Accessible Text Request Service';
-  switchableRolesLabels['totalAccess'] = 'Collection Administrative Access';
+  switchableRolesLabels['totalAccess'] = 'Collection Administration Access';
   switchableRolesLabels['resourceSharing'] = 'Resource Sharing';
 
   function toggleSearch() {
