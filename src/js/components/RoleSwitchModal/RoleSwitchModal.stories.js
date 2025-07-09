@@ -95,3 +95,41 @@ export const DesktopSwitchableRoleActivated = {
         await userEvent.click(switchableRole)
     }
 }
+export const DesktopCollAdmAccNotActivated = {
+    parameters: { viewport: {
+        defaultViewport: 'bsXl',
+    }, },
+    args: {
+        ...DesktopSwitchableRoleNotActivated.args,
+    },
+    decorators: [
+        () => ({
+          Component: PingCallbackDecorator,
+          props: { loggedIn: true, role: 'totalAccess', hasActivatedRole: false },
+        }),
+      ],
+      play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        const switchableRole = canvas.getByRole('radio', { name: /Collection Administration Access/ })
+        await userEvent.click(switchableRole)
+    }
+}
+export const DesktopAccTextReqNotActivated = {
+    parameters: { viewport: {
+        defaultViewport: 'bsXl',
+    }, },
+    args: {
+        ...DesktopSwitchableRoleNotActivated.args,
+    },
+    decorators: [
+        () => ({
+          Component: PingCallbackDecorator,
+          props: { loggedIn: true, role: 'enhancedTextProxy', hasActivatedRole: false },
+        }),
+      ],
+      play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        const switchableRole = canvas.getByRole('radio', { name: /Accessible Text Request Service/ })
+        await userEvent.click(switchableRole)
+    }
+}
