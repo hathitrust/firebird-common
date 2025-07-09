@@ -4,6 +4,7 @@
   import menuData from '../../../assets/menuData.json';
   import LoginFormModal from '../LoginFormModal';
   import FeedbackFormModal from '../FeedbackFormModal';
+  import RoleSwitchModal from '../RoleSwitchModal';
   import NotificationsModal from '../NotificationsModal';
 
   import NotificationsManager from '../../lib/notifications';
@@ -11,6 +12,7 @@
   let HT = window.HT || {};
   let modal;
   let feedbackModal;
+  let roleSwitchModal;
   let location = document.documentElement.dataset.app;
   let form = 'basic';
 
@@ -29,7 +31,7 @@
   const switchableRoles = ['enhancedTextProxy', 'totalAccess', 'resourceSharing'];
   const switchableRolesLabels = {};
   switchableRolesLabels['enhancedTextProxy'] = 'Accessible Text Request Service';
-  switchableRolesLabels['totalAccess'] = 'Collection Administrative Access';
+  switchableRolesLabels['totalAccess'] = 'Collection Administration Access';
   switchableRolesLabels['resourceSharing'] = 'Resource Sharing';
 
   function toggleSearch() {
@@ -96,6 +98,9 @@
 </script>
 
 <FeedbackFormModal {form} bind:this={feedbackModal} />
+{#if hasSwitchableRoles}
+  <RoleSwitchModal bind:this={roleSwitchModal} />
+{/if}
 <nav class="navbar navbar-expand-xl bg-white">
   <div class="container-fluid">
     <div class="ht-logo" class:compact>
@@ -406,8 +411,8 @@
                         {/if}
                       </span>
                       <div class="role d-flex flex-column align-items-start">
-                        <span class="role-heading"> Current Role </span>
-                        <span class="role-active">{hasActivatedRole ? role : 'Member'}</span>
+                        <span id="role-heading" class="role-heading"> Current Role </span>
+                        <span id="role-active" class="role-active">{hasActivatedRole ? role : 'Member'}</span>
                       </div>
                     </li>
                   {/if}
@@ -441,10 +446,11 @@
                       <li>
                         <a
                           class="dropdown-item d-flex flex-row gap-2 align-items-center switch-roles"
-                          href="//{`${HT.service_domain}/cgi/ping/switch?target=${encodeURIComponent(
-                            window.location.href
-                          )}`}"
+                          href="#"
                           role="button"
+                          id="switch"
+                          aria-labelledby="switch role-heading role-active"
+                          on:click={roleSwitchModal.show()}
                           ><i class="fa-solid fa-user-group fa-fw" aria-hidden="true" /><span class="needs-hover-state">
                             Switch Role
                           </span></a
@@ -457,7 +463,7 @@
                         href="//{`${HT.service_domain}/cgi/logout?${encodeURIComponent(window.location.href)}`}"
                         role="button"
                         ><i class="fa-solid fa-arrow-right-from-bracket fa-fw" aria-hidden="true" /><span
-                          class="needs-hover-state">Sign Out</span
+                          class="needs-hover-state">Log Out</span
                         ></a
                       >
                     </li>
@@ -710,7 +716,8 @@
         text-decoration: underline;
       }
     }
-    a.dropdown-item:active {
+    a.dropdown-item:active,
+    button.dropdown-item:active {
       color: var(--color-netural-800);
       background-color: var(--color-neutral-50);
       span {

@@ -71,10 +71,6 @@
   }
 </script>
 
-<!-- <svelte:head>
-  <link rel="stylesheet" href="https://unpkg.com/open-props" />
-</svelte:head> -->
-
 <dialog
   bind:this={dialog}
   aria-hidden={!isOpen}
@@ -84,18 +80,26 @@
   <div class="modal show" aria-labelledby="{id}-label" style="display: block;">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered {modalLarge ? 'modal-lg' : ''}">
       <div class="modal-content" style:height={height != 'auto' && height}>
-        <div class="modal-header">
+        <div class="modal-header d-flex flex-row-reverse">
           <h1 id="{id}-label" class="modal-title">
             <slot name="title" />
           </h1>
           <button
             type="button"
-            class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-2 justify-between order-1 ms-auto text-uppercase"
-            aria-label="Close Modal"
+            class="close"
+            aria-label="Close modal"
             data-bs-dismiss="modal"
             on:click={() => {
               hide();
-            }}>Close <i class="fa-solid fa-xmark" aria-hidden="true" /></button
+            }}
+            ><span class="close-icon">
+              <i class="fa-solid fa-xmark icon-default" aria-hidden="true"></i><span class="fa-sr-only"
+                >Close modal</span
+              >
+              <i class="fa-solid fa-circle-xmark fa-2x icon-hover" aria-hidden="true"></i><span class="fa-sr-only"
+                >Close modal</span
+              >
+            </span></button
           >
         </div>
         <div class="modal-body {scrollable ? '' : 'dont-scroll'}">
@@ -105,7 +109,7 @@
         {#if $$slots.footer}
           <div class="modal-footer">
             <slot name="footer">
-                  <!-- svelte-ignore a11y-autofocus -->
+              <!-- svelte-ignore a11y-autofocus -->
               <button
                 type="reset"
                 autofocus
@@ -244,8 +248,20 @@
     font-size: 1.75rem;
   }
 
-  .modal-header {
-    flex-wrap: wrap;
+  button.close {
+    // grid-area: close;
+    width: 2.75rem;
+    height: 2.75rem;
+    background: inherit;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.625rem;
+    justify-self: end;
+    &:focus-visible {
+      outline-offset: 0px;
+    }
   }
 
   .modal-title {
@@ -254,7 +270,7 @@
   }
 
   button[data-bs-dismiss] i.fa-solid {
-    color: var(--color-primary-500) !important;
+    color: var(--color-neutral-900) !important;
   }
 
   .dont-scroll {
