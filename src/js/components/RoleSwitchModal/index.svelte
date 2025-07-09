@@ -63,7 +63,12 @@
           class="w-100 h-100 d-flex flex-column justify-content-between"
         >
           <div class="roles d-flex flex-column h-100">
-            <div class="form-check option py-4 px-3" class:selected={role === 'default'}>
+            <label
+              for="role--default"
+              class="form-check option py-4 px-3"
+              class:selected={role === 'default'}
+              aria-labelledby={roleActivated ? 'member' : 'member-current-role member'}
+            >
               <span id="member-current-role" class="badge rounded-pill" class:d-none={roleActivated}>Current role</span>
               <div class="d-flex justify-content-between gap-4" class:mt-n4={!roleActivated}>
                 <div class="d-flex gap-75">
@@ -71,15 +76,13 @@
                     class="role-icon d-flex align-items-center justify-content-center border border-neutral-300 rounded-circle bg-neutral-100"
                     ><i class="fa-solid fa-user text-neutral-800"></i></span
                   >
-                  <div class="d-flex flex-column gap-2">
-                    <label
-                      id="member"
-                      for="role--default"
-                      class="form-check-label"
-                      aria-labelledby={roleActivated ? 'member' : 'member-current-role member'}
-                      >Member <span class="visually-hidden">For additional info read below</span></label
-                    >
-                    <p class="option--help mb-0">Read and download public domain and open access books.</p>
+                  <div class=" d-flex flex-column gap-2">
+                    <div class="d-flex flex-column">
+                      <span id="member" class="form-check-label"
+                        >Member <span class="visually-hidden">For additional info read below</span></span
+                      >
+                      <p class="option--help mb-0">Read and download public domain and open access books.</p>
+                    </div>
                   </div>
                 </div>
                 <input
@@ -91,8 +94,13 @@
                   bind:group={role}
                 />
               </div>
-            </div>
-            <div class="form-check option py-4 px-3" class:selected={role !== 'default'}>
+            </label>
+            <label
+              for="role--{switchableRole}"
+              class="form-check option py-4 px-3"
+              class:selected={role !== 'default'}
+              aria-labelledby={roleActivated ? 'switchable-current-role switchable' : 'switchable'}
+            >
               <span id="switchable-current-role" class="badge rounded-pill" class:d-none={!roleActivated}
                 >Current role</span
               >
@@ -103,12 +111,7 @@
                     ><i class="fa-solid fa-user-plus text-primary-600"></i></span
                   >
                   <div class="d-flex flex-column gap-2">
-                    <label
-                      id="switchable"
-                      class="form-check-label"
-                      for="role--{switchableRole}"
-                      aria-labelledby={roleActivated ? 'switchable-current-role switchable' : 'switchable'}
-                    >
+                    <span id="switchable" class="form-check-label">
                       {#if switchableRole === 'resourceSharing'}
                         Resource Sharing
                       {:else if switchableRole === 'totalAccess'}
@@ -116,7 +119,7 @@
                       {:else if switchableRole === 'enhancedTextProxy'}
                         Accessible Text Request Service (ATRS) Provider
                       {/if} <span class="visually-hidden">For additional info read below</span>
-                    </label>
+                    </span>
                     <div class="option--help">
                       {#if switchableRole === 'resourceSharing'}
                         <p>This access is only provided for the following use cases:</p>
@@ -217,7 +220,7 @@
                 />
               </div>
               <div class="control--help"></div>
-            </div>
+            </label>
             <input type="hidden" name="referer" bind:value={url} />
           </div>
         </form>
