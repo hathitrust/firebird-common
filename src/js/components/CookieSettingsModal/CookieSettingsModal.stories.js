@@ -65,7 +65,7 @@ export const CloseSettingsModal = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const closeButton = await canvas.getByLabelText('Close Modal')
+    const closeButton = canvas.getByRole('button', {name: 'Close modal'})
     await userEvent.click(closeButton);
   },
 }
