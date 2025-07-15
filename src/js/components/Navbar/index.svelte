@@ -453,7 +453,6 @@
                           href="#"
                           role="button"
                           id="switch"
-                          aria-labelledby="switch role-heading role-active"
                           on:click={roleSwitchModal.show()}
                           ><i class="fa-solid fa-user-group fa-fw" aria-hidden="true" /><span class="needs-hover-state">
                             Switch Role
