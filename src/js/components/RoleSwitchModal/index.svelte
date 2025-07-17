@@ -8,7 +8,7 @@
   let role = roleActivated ? switchableRole : 'default';
 
   const switchableRolesLabels = {};
-  switchableRolesLabels['enhancedTextProxy'] = 'Accessible Text Request Service';
+  switchableRolesLabels['enhancedTextProxy'] = 'Accessible Text Request Service (ATRS)';
   switchableRolesLabels['totalAccess'] = 'Collection Administration Access';
   switchableRolesLabels['resourceSharing'] = 'Resource Sharing';
 
