@@ -34,7 +34,8 @@
     }
   });
 
-  function submit() {
+  function submit(event) {
+    event.preventDefault();
     loading = true;
     let params = new URLSearchParams();
     params.set('role', role);
@@ -69,6 +70,7 @@
           action="/cgi/ping/switch"
           method="POST"
           class="w-100 h-100 d-flex flex-column justify-content-between"
+          on:submit={submit}
         >
           <div class="roles d-flex flex-column h-100">
             <label
@@ -232,15 +234,10 @@
           <button class="btn btn-white border-0 py-2 px-3 m-0" name="action" value="cancel" on:click={() => hide()}
             >Cancel</button
           >
-          <button
-            class="btn btn-primary py-2 px-3 m-0"
-            type="submit"
-            form="ping-switch"
-            disabled={loading}
-            on:click={submit}
+          <button class="btn btn-primary py-2 px-3 m-0" type="submit" form="ping-switch" disabled={loading}
             >Submit{#if loading}
               <span class="spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true"></span>
-              <span class="visually-hidden">Switching your role to {roleActivated ? 'Member' : roleLabel}</span
+              <span class="visually-hidden">Switching your role to {role === 'default' ? 'Member' : roleLabel}</span
               >{/if}</button
           >
         </div>
