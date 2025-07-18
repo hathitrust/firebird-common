@@ -13,13 +13,14 @@
   export let modalLarge = false;
   export let fullscreenOnMobile = false;
   export let focusHelpOnClose = false;
+  export let focusMyAccountOnClose = false;
 
   let modalBody;
 
   let dialog;
 
   function logKeys(e) {
-    console.log(`Key "${e.key}" was pressed`);
+    // console.log(`Key "${e.key}" was pressed`);
     if (e.key === 'Escape') {
       hide();
       window.removeEventListener('keydown', logKeys);
@@ -32,7 +33,7 @@
     }
     isOpen = true;
     dialog.showModal();
-    if (focusHelpOnClose) {
+    if (focusHelpOnClose || focusMyAccountOnClose) {
       window.addEventListener('keydown', logKeys);
     }
   };
@@ -52,6 +53,9 @@
 
     if (focusHelpOnClose) {
       document.getElementById('get-help').focus();
+    }
+    if (focusMyAccountOnClose) {
+      document.querySelector('#my-account a').focus();
     }
   };
 
