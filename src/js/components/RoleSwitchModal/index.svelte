@@ -56,7 +56,7 @@
 </script>
 
 <div class="switch-roles">
-  <Modal bind:this={modal} scrollable modalLarge fullscreenOnMobile>
+  <Modal bind:this={modal} scrollable modalLarge fullscreenOnMobile focusMyAccountOnClose>
     <svelte:fragment slot="title">
       <div class="align-items-center d-flex gap-2 py-2 settings-heading">
         <img {src} alt="" role="presentation" />
