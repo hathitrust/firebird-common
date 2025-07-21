@@ -379,7 +379,7 @@
                 role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
-                aria-label="My account"
+                aria-labelledby="my-account-label role-heading role-active"
               >
                 <div class="d-flex justify-content-center align-items-center">
                   <span
@@ -392,8 +392,10 @@
                       <i class="fa-solid fa-user text-neutral-800" />
                     {/if}
                   </span>
-                  <span class="ms-3 d-xl-none">My Account</span><span class="visually-hidden d-none d-xl-block"
-                    >My Account</span
+                  <span id="my-account-label"
+                    ><span class="ms-3 d-xl-none">My Account</span><span class="visually-hidden d-none d-xl-block"
+                      >My Account</span
+                    ></span
                   >
                 </div>
               </a>
@@ -423,9 +425,11 @@
                         data-disabled={!hasNotification}
                         disabled={!hasNotification ? true : null}
                         on:click={notificationsModal.show()}
-                        ><i class="fa-solid fa-bell fa-fw" class:opacity-25={!hasNotification} /><span
-                          class="needs-hover-state"
+                        ><i
+                          class="fa-solid fa-bell fa-fw"
                           aria-hidden="true"
+                          class:opacity-25={!hasNotification}
+                        /><span class="needs-hover-state"
                           >Notifications {#if hasNotification}({notificationsManager.count()}){/if}</span
                         >
                       </button>
@@ -449,7 +453,6 @@
                           href="#"
                           role="button"
                           id="switch"
-                          aria-labelledby="switch role-heading role-active"
                           on:click={roleSwitchModal.show()}
                           ><i class="fa-solid fa-user-group fa-fw" aria-hidden="true" /><span class="needs-hover-state">
                             Switch Role

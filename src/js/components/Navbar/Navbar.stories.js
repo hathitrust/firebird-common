@@ -76,7 +76,7 @@ export const DesktopLoggedInResourceSharingRole = {
   ],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const accountButton = canvas.getByLabelText('My account');
+    const accountButton = canvas.getByLabelText(/My Account/);
     await userEvent.click(accountButton);
   },
 };
@@ -94,7 +94,7 @@ export const DesktopLoggedInResourceSharingRoleActivated = {
   ],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const accountButton = canvas.getByLabelText('My account');
+    const accountButton = canvas.getByLabelText(/My Account/);
     await userEvent.click(accountButton);
   },
 };
@@ -174,7 +174,7 @@ export const MobileLoggedInResourceSharingRole = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const mobileMenuButton = canvas.getByLabelText('Toggle navigation');
-    const accountButton = canvas.getByLabelText('My account');
+    const accountButton = canvas.getByLabelText(/My Account/);
     await userEvent.click(mobileMenuButton);
     await userEvent.click(accountButton);
   },
@@ -194,7 +194,7 @@ export const MobileLoggedInResourceSharingRoleActivated = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const mobileMenuButton = canvas.getByLabelText('Toggle navigation');
-    const accountButton = canvas.getByLabelText('My account' );
+    const accountButton = canvas.getByLabelText(/My Account/);
     await userEvent.click(mobileMenuButton);
     await userEvent.click(accountButton);
   },
@@ -237,7 +237,7 @@ export const MobileLoggedInMyAccountDropdown = {
     const canvas = within(canvasElement);
 
     const mobileMenuButton =  canvas.getByLabelText('Toggle navigation');
-    const myAccount =  canvas.getByLabelText('My account');
+    const myAccount =  canvas.getByLabelText(/My Account/);
 
     await userEvent.click(mobileMenuButton);
     await userEvent.click(myAccount);
@@ -265,7 +265,7 @@ export const MobileLoggedInResourceSharingRoleActivatedHasNotification = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const mobileMenuButton = canvas.getByLabelText('Toggle navigation');
-    const accountButton = canvas.getByLabelText('My account' );
+    const accountButton = canvas.getByLabelText(/My Account/);
     await userEvent.click(mobileMenuButton);
     await userEvent.click(accountButton);
   },
