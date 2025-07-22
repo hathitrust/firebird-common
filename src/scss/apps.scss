@@ -180,16 +180,7 @@ body {
     text-decoration: none;
   }
 
-  a[data-access-role] {
-    background: #924a0b;
-    // border-radius: 4px;
-    color: white;
-
-    &:hover {
-      background: white;
-      color: #924a0b;
-    }
-  }
+  
 
   .list-group a {
     white-space: nowrap;
@@ -197,15 +188,22 @@ body {
     align-items: center;
     gap: 0.5rem;
 
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.3125rem;
+    letter-spacing: -0.01rem;
+
     &:has(+ span) {
       border-top-right-radius: var(--bs-list-group-border-radius) !important;
       border-bottom-right-radius: var(--bs-list-group-border-radius) !important;
+      
     }
 
     .visited-link {
       color: var(--bs-list-group-bg);
       margin-left: auto;
     }
+
 
     &:hover .visited-link,&:focus .visited-link {
       color: var(--bs-list-group-action-hover-bg);
@@ -226,7 +224,36 @@ body {
     &.active:visited .visited-link {
       color: var(--bs-list-group-active-color);
     }
+   
+  }
+  .list-group-horizontal-sm>.list-group-item {
+    &:focus-visible {
+      border-top-right-radius: 6px;
+      border-bottom-left-radius: 6px;
+    }
+  }
+  a[data-activated-role] {
+    background: #924a0b;
+    // border-radius: 4px;
+    color: white;
 
+    &:hover, &:focus-visible {
+      background: white;
+      color: #924a0b;
+    }
+    &:visited .visited-link  {
+      color: var(--color-shades-0)
+    }
+    &:hover .visited-link, &:focus .visited-link {
+      color: #924a0b;
+    }
+    &:active {
+      background-color: var(--color-primary-900);
+      color: var(--color-shades-0)
+    }
+    &:active .visited-link {
+      color: var(--color-shades-0)
+    }
   }
 
   // by default, hide the 10+nth facets

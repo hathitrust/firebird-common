@@ -7,6 +7,7 @@
   export let publicationDate = 1827;
   export let author = 'Nicolas, Nicholas Harris, Sir, 1799-1848.';
   export let supportsSelection = true;
+  export let visited = false;
 
   let coverUrl = `https://babel.hathitrust.org/cgi/imgsrv/cover?id=${htid}&width=250`;
   let blankImage = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=`;
@@ -43,7 +44,10 @@
         <a
           class="list-group-item list-group-item-action w-sm-50"
           href="http://catalog.hathitrust.org/Record/{catalogId}"
-          ><i class="fa-solid fa-circle-info" aria-hidden="true" /> <span>Catalog Record</span></a
+          ><i class="fa-solid fa-circle-info" aria-hidden="true" /> <span>Catalog Record</span>{#if visited}<i
+              aria-hidden="true"
+              class="visited-link fa-solid fa-check-double"
+            ></i>{/if}</a
         >
         {#if access == 'multiple-items'}
           <a
@@ -54,20 +58,39 @@
           <!-- <span class="list-group-item w-sm-50 border-0 bg-transparent fs-7">Use the Catalog Record to view multiple volumes</span> -->
         {:else if access == 'limited-search-only'}
           <a class="list-group-item list-group-item-action w-sm-50" href="https://babel.hathitrust.org/cgi/pt?id={htid}"
-            ><i aria-hidden="true" class="fa-solid fa-lock" /> <span>Limited (search-only)</span></a
+            ><i aria-hidden="true" class="fa-solid fa-lock" /> <span>Limited (search-only)</span>{#if visited}<i
+                aria-hidden="true"
+                class="visited-link fa-solid fa-check-double"
+              ></i>{/if}</a
+          >
+        {:else if access == 'registered-access'}
+          <a
+            data-activated-role="superuser"
+            class="list-group-item list-group-item-action w-sm-50"
+            href="https://babel.hathitrust.org/cgi/pt?id={htid}"
+            ><i aria-hidden="true" class="fa-solid fa-lock-open" /> <span>Registered Access</span>{#if visited}<i
+                aria-hidden="true"
+                class="visited-link fa-solid fa-check-double"
+              ></i>{/if}</a
           >
         {:else if access == 'limited-access-permitted'}
           <a
-            data-access-role="superuser"
+            data-activated-role="superuser"
             class="list-group-item list-group-item-action w-sm-50"
             href="https://babel.hathitrust.org/cgi/pt?id={htid}"
-            ><i aria-hidden="true" class="fa-solid fa-unlock-keyhole" /> <span>Limited (access permitted)</span></a
+            ><i aria-hidden="true" class="fa-solid fa-unlock" /> <span>Limited (access permitted)</span>{#if visited}<i
+                aria-hidden="true"
+                class="visited-link fa-solid fa-check-double"
+              ></i>{/if}</a
           >
         {:else}
           <a
             class="list-group-item list-group-item-action active active w-sm-50"
             href="https://babel.hathitrust.org/cgi/pt?id={htid}"
-            ><i class="fa-regular fa-file-lines" aria-hidden="true" /> <span>Full View</span></a
+            ><i class="fa-regular fa-file-lines" aria-hidden="true" /> <span>Full View</span>{#if visited}<i
+                aria-hidden="true"
+                class="visited-link fa-solid fa-check-double"
+              ></i>{/if}</a
           >
         {/if}
       </div>
@@ -106,23 +129,68 @@
     text-decoration: none;
   }
 
-  a[data-access-role] {
+  .list-group {
+    a {
+      white-space: nowrap;
+
+      &:has(+ span) {
+        border-top-right-radius: var(--bs-list-group-border-radius) !important;
+        border-bottom-right-radius: var(--bs-list-group-border-radius) !important;
+      }
+      .visited-link {
+        color: var(--bs-list-group-color);
+        margin-left: auto;
+      }
+      &:hover .visited-link,
+      &:focus .visited-link {
+        color: var(--bs-list-group-action-hover-color);
+      }
+
+      &:active .visited-link {
+        color: var(--bs-list-group-action-active-bg);
+      }
+
+      .visited-link {
+        color: var(--bs-list-group-color);
+      }
+
+      // &.active .visited-link {
+      //   color: var(--bs-list-group-active-bg);
+      // }
+
+      &.active .visited-link {
+        color: var(--bs-list-group-active-color);
+      }
+    }
+    .list-group-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+  a[data-activated-role] {
     background: #924a0b;
     // border-radius: 4px;
     color: white;
 
-    &:hover {
+    &:hover,
+    &:focus {
       background: white;
       color: #924a0b;
     }
-  }
-
-  .list-group a {
-    white-space: nowrap;
-
-    &:has(+ span) {
-      border-top-right-radius: var(--bs-list-group-border-radius) !important;
-      border-bottom-right-radius: var(--bs-list-group-border-radius) !important;
+    .visited-link {
+      color: var(--color-shades-0);
+    }
+    &:hover .visited-link,
+    &:focus .visited-link {
+      color: #924a0b;
+    }
+    &:active {
+      background-color: var(--color-primary-900);
+      color: var(--color-shades-0);
+    }
+    &:active .visited-link {
+      color: var(--color-shades-0);
     }
   }
 </style>
