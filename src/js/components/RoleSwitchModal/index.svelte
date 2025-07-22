@@ -6,6 +6,14 @@
   let switchableRole = Object.keys(HT.login_status.r)[0];
   let roleActivated = Object.values(HT.login_status.r)[0];
   let role = roleActivated ? switchableRole : 'default';
+
+  const switchableRolesLabels = {};
+  switchableRolesLabels['enhancedTextProxy'] = 'Accessible Text Request Service (ATRS)';
+  switchableRolesLabels['totalAccess'] = 'Collection Administration Access';
+  switchableRolesLabels['resourceSharing'] = 'Resource Sharing';
+
+  let roleLabel = switchableRolesLabels[switchableRole];
+
   let url = document.location.href;
   let modal;
   export let src = '/common/firebird/dist/hathitrust-icon-orange.svg';
@@ -26,7 +34,8 @@
     }
   });
 
-  function submit() {
+  function submit(event) {
+    event.preventDefault();
     loading = true;
     let params = new URLSearchParams();
     params.set('role', role);
@@ -47,7 +56,7 @@
 </script>
 
 <div class="switch-roles">
-  <Modal bind:this={modal} scrollable modalLarge fullscreenOnMobile>
+  <Modal bind:this={modal} scrollable modalLarge fullscreenOnMobile focusMyAccountOnClose>
     <svelte:fragment slot="title">
       <div class="align-items-center d-flex gap-2 py-2 settings-heading">
         <img {src} alt="" role="presentation" />
@@ -61,6 +70,7 @@
           action="/cgi/ping/switch"
           method="POST"
           class="w-100 h-100 d-flex flex-column justify-content-between"
+          on:submit={submit}
         >
           <div class="roles d-flex flex-column h-100">
             <label
@@ -110,13 +120,7 @@
                   >
                   <div class="d-flex flex-column gap-2">
                     <span id="switchable" class="form-check-label">
-                      {#if switchableRole === 'resourceSharing'}
-                        Resource Sharing
-                      {:else if switchableRole === 'totalAccess'}
-                        Collection Administration Access
-                      {:else if switchableRole === 'enhancedTextProxy'}
-                        Accessible Text Request Service (ATRS) Provider
-                      {/if} <span class="visually-hidden">For additional info read below</span>
+                      {roleLabel} <span class="visually-hidden">For additional info read below</span>
                     </span>
                     <div class="option--help">
                       {#if switchableRole === 'resourceSharing'}
@@ -227,18 +231,14 @@
     <svelte:fragment slot="footer">
       <div class="py-3 px-4 m-0">
         <div class="d-flex gap-3">
-          <button class="btn btn-white py-2 px-3 m-0" name="action" value="cancel" on:click={() => hide()}
+          <button class="btn btn-white border-0 py-2 px-3 m-0" name="action" value="cancel" on:click={() => hide()}
             >Cancel</button
           >
-          <button
-            class="btn btn-primary py-2 px-3 m-0"
-            type="submit"
-            form="ping-switch"
-            disabled={loading}
-            on:click={submit}
+          <button class="btn btn-primary py-2 px-3 m-0" type="submit" form="ping-switch" disabled={loading}
             >Submit{#if loading}
               <span class="spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true"></span>
-              <span class="visually-hidden">Loading...</span>{/if}</button
+              <span class="visually-hidden">Switching your role to {role === 'default' ? 'Member' : roleLabel}</span
+              >{/if}</button
           >
         </div>
       </div>
