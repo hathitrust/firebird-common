@@ -180,8 +180,6 @@ body {
     text-decoration: none;
   }
 
-  
-
   .list-group a {
     white-space: nowrap;
     display: inline-flex;
@@ -261,6 +259,12 @@ body {
         color: var(--color-primary-800);
       }
 
+    }
+  }
+  .list-group-horizontal-sm>.list-group-item {
+    &:focus-visible {
+      border-top-right-radius: 6px;
+      border-bottom-left-radius: 6px;
     }
   }
 
