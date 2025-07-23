@@ -180,37 +180,40 @@ body {
     text-decoration: none;
   }
 
-  a[data-access-role] {
-    background: #924a0b;
-    // border-radius: 4px;
-    color: white;
-
-    &:hover {
-      background: white;
-      color: #924a0b;
-    }
-  }
-
   .list-group a {
     white-space: nowrap;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
 
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.3125rem;
+    letter-spacing: -0.01rem;
+
     &:has(+ span) {
       border-top-right-radius: var(--bs-list-group-border-radius) !important;
       border-bottom-right-radius: var(--bs-list-group-border-radius) !important;
+      
     }
+
+    // label colors
+    --bs-list-group-color: var(--color-neutral-900);
+    --bs-list-group-bg: var(--color-shades-0);
+    --bs-list-group-active-color: var(--color-shades-0);
+    --bs-list-group-active-bg: var(--color-primary-600);
+    --bs-list-group-action-active-color: var(--color-neutral-900);
+    --bs-list-group-action-active-bg: var(--color-neutral-100);
 
     .visited-link {
       color: var(--bs-list-group-bg);
       margin-left: auto;
     }
 
-    &:hover .visited-link,&:focus .visited-link {
+    &:hover .visited-link, &:focus .visited-link {
       color: var(--bs-list-group-action-hover-bg);
     }
-
+    
     &:active .visited-link {
       color: var(--bs-list-group-action-active-bg);
     }
@@ -219,14 +222,50 @@ body {
       color: var(--bs-list-group-color);
     }
 
-    &.active .visited-link { 
-      color: var(--bs-list-group-active-bg);
-    }
-
     &.active:visited .visited-link {
       color: var(--bs-list-group-active-color);
     }
 
+    &.active .visited-link {
+      color: var(--bs-list-group-active-bg);
+    }   
+
+    &[data-activated-role] {
+      background: var(--color-primary-800);
+      color: var(--color-shades-0);
+
+      &:hover, &:focus {
+        background: var(--color-shades-0);
+        color: var(--color-primary-800);
+      }
+
+      .visited-link {
+        color: var(--color-primary-800);
+      }
+      
+      &:visited .visited-link {
+        color: var(--color-shades-0);
+      }
+
+      &:hover .visited-link, &:focus .visited-link {
+        color: var(--color-shades-0);
+      }
+
+      &:active .visited-link {
+        color: var(--color-shades-0);
+      }
+
+      &:visited:hover .visited-link, &:visited:focus .visited-link {
+        color: var(--color-primary-800);
+      }
+
+    }
+  }
+  .list-group-horizontal-sm>.list-group-item {
+    &:focus-visible {
+      border-top-right-radius: 6px;
+      border-bottom-left-radius: 6px;
+    }
   }
 
   // by default, hide the 10+nth facets

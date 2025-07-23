@@ -21,6 +21,14 @@
       access: 'limited-search-only',
     },
     {
+      htid: 'coo.31924057934600',
+      catalogId: '000552872',
+      title: 'Contributions from the Dominion Observatory, Ottawa, Ontario v.6:6',
+      author: 'Dominion Observatory (Canada)',
+      publicationDate: 1979,
+      access: 'registered-access',
+    },
+    {
       htid: 'hvd.32044019639822',
       catalogId: '009720544',
       title:
