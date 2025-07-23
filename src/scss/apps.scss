@@ -233,26 +233,30 @@ body {
     }
   }
   a[data-activated-role] {
-    background: #924a0b;
-    // border-radius: 4px;
+    background: var(--color-primary-800);
     color: white;
 
     &:hover, &:focus-visible {
       background: white;
-      color: #924a0b;
+      color: var(--color-primary-800);
     }
     &:visited .visited-link  {
-      color: var(--color-shades-0)
+      color: var(--color-shades-0);
     }
     &:hover .visited-link, &:focus .visited-link {
-      color: #924a0b;
+      color: var(--color-primary-800);
     }
     &:active {
       background-color: var(--color-primary-900);
-      color: var(--color-shades-0)
+      color: var(--color-shades-0);
     }
-    &:active .visited-link {
-      color: var(--color-shades-0)
+
+    &.list-group-item-action {
+      --bs-list-group-action-hover-color: var(--color-shades-0);
+      --bs-list-group-action-hover-bg: var(--color-primary-900);
+      &:active .visited-link {
+        color: var(--color-shades-0);
+      }
     }
   }
 

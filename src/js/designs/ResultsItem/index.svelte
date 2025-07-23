@@ -169,21 +169,20 @@
     }
   }
   a[data-activated-role] {
-    background: #924a0b;
-    // border-radius: 4px;
+    background: var(--color-primary-800);
     color: white;
 
     &:hover,
     &:focus {
       background: white;
-      color: #924a0b;
+      color: var(--color-primary-800);
     }
     .visited-link {
       color: var(--color-shades-0);
     }
     &:hover .visited-link,
     &:focus .visited-link {
-      color: #924a0b;
+      color: var(--color-primary-800);
     }
     &:active {
       background-color: var(--color-primary-900);
