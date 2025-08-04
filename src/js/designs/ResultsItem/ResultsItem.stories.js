@@ -21,6 +21,9 @@ const parameters = {
 
 export const FullView = {
   parameters: parameters,
+  args: {
+    visited: false,
+  }
 };
 export const MultipleItems = {
   parameters: parameters,
@@ -33,11 +36,20 @@ export const SearchOnly = {
   parameters: parameters,
   args: {
     access: 'limited-search-only',
+    visited: false,
+  },
+};
+export const RegisteredAccess = {
+  parameters: parameters,
+  args: {
+    access: 'registered-access',
+    visited: false,
   },
 };
 export const AccessPermitted = {
   parameters: parameters,
   args: {
     access: 'limited-access-permitted',
+    visited: false,
   },
 };
