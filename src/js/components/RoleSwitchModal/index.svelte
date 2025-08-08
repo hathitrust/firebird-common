@@ -252,6 +252,12 @@
 </div>
 
 <style lang="scss">
+  a {
+    color: var(--color-primary-700);
+    &:hover {
+      color: var(--color-primary-800);
+    }
+  }
   .settings-heading img {
     height: 2.625rem;
   }
@@ -275,12 +281,6 @@
       border-radius: 0.375rem;
       border: 1.5px solid var(--color-primary-600);
       background: var(--color-primary-50);
-      a {
-        color: var(--color-primary-700);
-        &:hover {
-          color: var(--color-primary-800);
-        }
-      }
     }
   }
   .badge {
