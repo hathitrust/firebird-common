@@ -92,9 +92,7 @@ function setupHTEnv() {
     var prefs = HT.prefs.get();
     prefs = mergeDeep(prefs, params);
     try {
-      var expires = new Date();
-      expires.setDate(expires.getDate() + 90);
-      cookies.setItem('HT.prefs', JSON.stringify(prefs), expires, '/', HT.cookies_domain, true);
+      cookies.setItem('HT.prefs', JSON.stringify(prefs), 90);
     } catch (e) {
       // noop
       console.log(e);
