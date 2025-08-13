@@ -124,25 +124,30 @@
                     </span>
                     <div class="option--help">
                       {#if switchableRole === 'resourceSharing'}
-                        <p>This access is only provided for the following use cases:</p>
-                        <ul>
-                          <li>PLACEHOLDER</li>
-                        </ul>
                         <p>
-                          Individuals making use of Resource Sharing are not permitted to use this access for other use
-                          cases, such as:
+                          Through HathiTrust Resource Sharing, library workers are permitted to download Full View and
+                          Registered Access scans in HathiTrust in order to fulfill Interlibrary Loan and Document
+                          Delivery requests.
                         </p>
+                        <p>You may only access Registered Access texts under the following conditions:</p>
                         <ul>
-                          <li>PLACEHOLDER</li>
+                          <li>The text is currently held in a physical format in your library,</li>
+                          <li>
+                            You may only download an article, chapter, or other excerpt from a Registered Access text,
+                          </li>
+                          <li>
+                            HathiTrust files downloaded through your Resource Sharing access are used only to fulfill
+                            Interlibrary Loan and Document Delivery requests, and you will not use HathiTrust Resource
+                            Sharing for other purposes (e.g., personal reading, course reserves, reference work),
+                          </li>
+                          <!-- this link will be updated to a HT webpage for service launch -->
+                          <li>
+                            You will follow the full <a
+                              href="https://docs.google.com/document/d/1gdkU14w-0x3mhy2n0wJCZ6EZTft0mo9bTpVGPYKQJf4/edit?tab=t.0#heading=h.m2mrywmwq2fj"
+                              >Terms of Service for HathiTrust Resource Sharing</a
+                            >.
+                          </li>
                         </ul>
-                        <p>
-                          HathiTrust will immediately terminate a registered user’s ability to employ Resource Sharing
-                          if we determine that a disallowed use has occurred or is occurring. Individuals with Resource
-                          Sharing must notify HathiTrust staff at support@hathitrust.org if they believe their
-                          credentials have been used by someone else to gain inappropriate access to copyrighted
-                          materials; if they have any questions about appropriate uses of this service; or if their role
-                          has changed (including departure from the organization) and they no longer need this service.
-                        </p>
                       {:else if switchableRole === 'totalAccess'}
                         <p>This access is only provided for the following use cases:</p>
                         <ul>
@@ -177,7 +182,7 @@
                           HathiTrust will immediately terminate a registered user’s ability to employ Collection
                           Administration Access if we determine that a disallowed use has occurred or is occurring.
                           Individuals with Collection Administration Access must notify HathiTrust staff at
-                          support@hathitrust.org if they believe their credentials have been used by someone else to
+                          <a href="mailto:support@hathitrust.org">support@hathitrust.org</a> if they believe their credentials have been used by someone else to
                           gain inappropriate access to copyrighted materials; if they have any questions about
                           appropriate uses of this service; or if their role has changed (including departure from the
                           organization) and they no longer need this service.
@@ -247,6 +252,12 @@
 </div>
 
 <style lang="scss">
+  a {
+    color: var(--color-primary-700);
+    &:hover {
+      color: var(--color-primary-800);
+    }
+  }
   .settings-heading img {
     height: 2.625rem;
   }
@@ -306,7 +317,10 @@
     line-height: 1.3125rem;
     letter-spacing: -0.01rem;
     ul {
-      padding-inline-start: 1rem;
+      padding-inline-start: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
     }
     & :last-child {
       margin-block-end: 0;
