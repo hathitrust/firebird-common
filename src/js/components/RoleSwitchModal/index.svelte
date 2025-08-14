@@ -5,7 +5,7 @@
   let HT = window.HT || {};
   let switchableRole = Object.keys(HT.login_status.r)[0];
   let roleActivated = Object.values(HT.login_status.r)[0];
-  let role = roleActivated ? switchableRole : 'default';
+  let role = $state(roleActivated ? switchableRole : 'default');
 
   const switchableRolesLabels = {};
   switchableRolesLabels['enhancedTextProxy'] = 'Accessible Text Request Service (ATRS)';
@@ -14,11 +14,21 @@
 
   let roleLabel = switchableRolesLabels[switchableRole];
 
-  let url = document.location.href;
-  let modal;
-  export let src = '/common/firebird/dist/hathitrust-icon-orange.svg';
-  export let isOpen = false;
-  export let loading = false;
+  let url = $state(document.location.href);
+  let modal = $state();
+  /**
+   * @typedef {Object} Props
+   * @property {string} [src]
+   * @property {boolean} [isOpen]
+   * @property {boolean} [loading]
+   */
+
+  /** @type {Props} */
+  let {
+    src = '/common/firebird/dist/hathitrust-icon-orange.svg',
+    isOpen = $bindable(false),
+    loading = $bindable(false),
+  } = $props();
 
   export const show = function () {
     isOpen = true;
@@ -47,30 +57,32 @@
     location.href = switchUrl;
   }
 
-  $: if (modal && isOpen) {
-    show();
-  }
-  $: if (modal && !isOpen) {
-    hide();
-  }
+  $effect(() => {
+    if (modal && isOpen) {
+      show();
+    }
+    if (modal && !isOpen) {
+      hide();
+    }
+  });
 </script>
 
 <div class="switch-roles">
   <Modal bind:this={modal} scrollable modalLarge fullscreenOnMobile focusMyAccountOnClose>
-    <svelte:fragment slot="title">
+    {#snippet title()}
       <div class="align-items-center d-flex gap-2 py-2 settings-heading">
         <img {src} alt="" role="presentation" />
         <span class="text-uppercase fw-exbold fs-3 mb-0">Choose a role</span>
       </div>
-    </svelte:fragment>
-    <svelte:fragment slot="body">
+    {/snippet}
+    {#snippet body()}
       <div>
         <form
           id="ping-switch"
           action="/cgi/ping/switch"
           method="POST"
           class="w-100 h-100 d-flex flex-column justify-content-between"
-          on:submit={submit}
+          onsubmit={submit}
         >
           <div class="roles d-flex flex-column h-100">
             <label
@@ -182,10 +194,10 @@
                           HathiTrust will immediately terminate a registered user’s ability to employ Collection
                           Administration Access if we determine that a disallowed use has occurred or is occurring.
                           Individuals with Collection Administration Access must notify HathiTrust staff at
-                          <a href="mailto:support@hathitrust.org">support@hathitrust.org</a> if they believe their credentials have been used by someone else to
-                          gain inappropriate access to copyrighted materials; if they have any questions about
-                          appropriate uses of this service; or if their role has changed (including departure from the
-                          organization) and they no longer need this service.
+                          <a href="mailto:support@hathitrust.org">support@hathitrust.org</a> if they believe their credentials
+                          have been used by someone else to gain inappropriate access to copyrighted materials; if they have
+                          any questions about appropriate uses of this service; or if their role has changed (including departure
+                          from the organization) and they no longer need this service.
                         </p>
                       {:else if switchableRole === 'enhancedTextProxy'}
                         <p>
@@ -232,11 +244,11 @@
           </div>
         </form>
       </div>
-    </svelte:fragment>
-    <svelte:fragment slot="footer">
+    {/snippet}
+    {#snippet footer()}
       <div class="py-3 px-4 m-0">
         <div class="d-flex gap-3">
-          <button class="btn btn-white border-0 py-2 px-3 m-0" name="action" value="cancel" on:click={() => hide()}
+          <button class="btn btn-white border-0 py-2 px-3 m-0" name="action" value="cancel" onclick={() => hide()}
             >Cancel</button
           >
           <button class="btn btn-primary py-2 px-3 m-0" type="submit" form="ping-switch" disabled={loading}
@@ -247,7 +259,7 @@
           >
         </div>
       </div>
-    </svelte:fragment>
+    {/snippet}
   </Modal>
 </div>
 
