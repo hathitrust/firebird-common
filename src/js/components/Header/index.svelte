@@ -15,9 +15,6 @@
   /** @type {Props} */
   let { searchState = 'default', compact = false, userNavigation = true } = $props();
 
-  // let searchFormDisplayed = search_state == 'default';
-  // let searchFormDisplayed = true;
-
   function displaySearchForm() {
     if (searchState == 'default') {
       return true;
@@ -26,11 +23,6 @@
     }
     return false;
   }
-  // function toggleSearch() {
-  //   searchFormDisplayed = !searchFormDisplayed;
-  // }
-
-  // let searchOpenToggle = ( searchState == 'default' );
 
   let searchOpenToggle = $derived(searchState == 'default');
   let searchFormDisplayed = $derived(searchState == 'default');
