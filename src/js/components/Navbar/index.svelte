@@ -1,4 +1,3 @@
-<!-- svelte-ignore a11y-invalid-attribute -->
 <script>
   import { onMount } from 'svelte';
   import menuData from '../../../assets/menuData.json';
@@ -10,22 +9,24 @@
   import NotificationsManager from '../../lib/notifications';
 
   let HT = window.HT || {};
-  let modal;
+  let modal = $state();
   let feedbackModal;
-  let roleSwitchModal;
+  let roleSwitchModal = $state();
   let location = document.documentElement.dataset.app;
-  let form = 'basic';
+  let form = $state('basic');
 
-  let notificationsModal;
+  let notificationsModal = $state();
   let notificationsManager = new NotificationsManager({
     cookieJar: HT.cookieJar,
   });
 
-  export let hasNotification = false;
-  export let searchOpen = true;
-  export let searchState;
-  export let compact = false;
-  export let userNavigation = true;
+  let {
+    hasNotification = $bindable(false),
+    searchOpen = $bindable(true),
+    searchState,
+    compact = false,
+    userNavigation = true,
+  } = $props();
 
   const switchableRoles = ['enhancedTextProxy', 'totalAccess', 'resourceSharing'];
   const switchableRolesLabels = {};
@@ -33,12 +34,15 @@
   switchableRolesLabels['totalAccess'] = 'Collection Administration Access';
   switchableRolesLabels['resourceSharing'] = 'Resource Sharing';
 
-  function toggleSearch() {
+  function toggleSearch(event) {
+    event && event.preventDefault();
+    event.stopPropagation();
     searchOpen = !searchOpen;
     console.log('AHOY searchOpen', searchOpen);
   }
 
-  function openLogin() {
+  function openLogin(event) {
+    event.preventDefault();
     //check viewport size to see if LoginFormModal will fit
     if (window.innerHeight <= 670 || HT.loginStatus.idp_list.length == 0) {
       //if not, redirect user
@@ -55,7 +59,16 @@
     }
   }
 
-  function openFeedback(formLocation) {
+  function openRoleSwitchModal(event) {
+    event.preventDefault();
+    roleSwitchModal.show();
+  }
+  function openNotificationsModal(event) {
+    event.preventDefault();
+    notificationsModal.show();
+  }
+  function openFeedback(formLocation, event) {
+    event && event.preventDefault();
     if (document.activeElement !== document.getElementById('get-help')) document.getElementById('get-help').focus();
     if (formLocation === 'catalog') {
       form = 'catalog';
@@ -86,14 +99,16 @@
   }
 
   // $: loginStatus = HT.loginStatus;
-  $: loggedIn = HT.loginStatus.logged_in;
-  $: hasSwitchableRoles = checkSwitchableRoles(loggedIn).status;
-  $: hasActivatedRole = checkSwitchableRoles(loggedIn).activated;
-  $: role = checkSwitchableRoles(loggedIn).label;
-  $: if (HT.loginStatus && HT.loginStatus.notificationData) {
-    notificationsManager.update(HT.loginStatus.notificationData);
-    hasNotification = notificationsManager.hasNotifications();
-  }
+  let loggedIn = $derived(HT.loginStatus.logged_in);
+  let hasSwitchableRoles = $derived(checkSwitchableRoles(loggedIn).status);
+  let hasActivatedRole = $derived(checkSwitchableRoles(loggedIn).activated);
+  let role = $derived(checkSwitchableRoles(loggedIn).label);
+  $effect(() => {
+    if (HT.loginStatus && HT.loginStatus.notificationData) {
+      notificationsManager.update(HT.loginStatus.notificationData);
+      hasNotification = notificationsManager.hasNotifications();
+    }
+  });
 </script>
 
 <FeedbackFormModal {form} bind:this={feedbackModal} />
@@ -191,13 +206,13 @@
           aria-controls="siteSearchDropdown"
           aria-expanded="true"
           aria-label="Toggle search bar"
-          on:click|stopPropagation={toggleSearch}
+          onclick={toggleSearch}
         >
           <span><i class="fa-solid fa-magnifying-glass fa-fw"></i></span>
         </button>
       {/if}
     </div>
-    <!-- svelte-ignore a11y-invalid-attribute -->
+    <!-- svelte-ignore a11y_invalid_attribute -->
     <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
       <ul class="navbar-nav menu-links">
         <li class="nav-item dropdown">
@@ -209,7 +224,6 @@
             aria-expanded="false"
           >
             <span>About</span>
-            <!-- <i class="fa-solid fa-caret-down" /> -->
           </a>
           <div>
             <ul class="dropdown-menu">
@@ -232,11 +246,6 @@
             aria-expanded="false"
           >
             <span>The Collection</span>
-            <!-- <i
-              class="fa-solid {dropdownOpen.collection
-                ? 'fa-caret-down open'
-                : 'fa-caret-down'}"
-            /> -->
           </a>
           <ul class="dropdown-menu">
             <div class="d-flex flex-column gap-4">
@@ -263,11 +272,6 @@
             aria-expanded="false"
           >
             <span>Member Libraries</span>
-            <!-- <i
-              class="fa-solid {dropdownOpen.libraries
-                ? 'fa-caret-down open'
-                : 'fa-caret-down'}"
-            /> -->
           </a>
           <ul class="dropdown-menu">
             <div class="d-flex flex-column gap-4">
@@ -291,11 +295,6 @@
             aria-expanded="false"
           >
             <span>News &amp; Events</span>
-            <!-- <i
-              class="fa-solid {dropdownOpen.news
-                ? 'fa-caret-down open'
-                : 'fa-caret-down'}"
-            />-->
           </a>
           <ul class="dropdown-menu">
             <div class="d-flex flex-column gap-4">
@@ -317,8 +316,7 @@
               href="#"
               role="button"
               aria-expanded={searchOpen}
-              on:click|preventDefault|stopPropagation={toggleSearch}
-              >Search <i class="fa-solid fa-magnifying-glass fa-fw"></i></a
+              onclick={toggleSearch}>Search <i class="fa-solid fa-magnifying-glass fa-fw"></i></a
             >
           </li>
         {/if}
@@ -349,7 +347,7 @@
                   href="#"
                   id="ask-a-question"
                   class="dropdown-item d-flex flex-row align-items-center gap-2"
-                  on:click|preventDefault={() => openFeedback('questions')}
+                  onclick={() => openFeedback('questions')}
                 >
                   <i class="fa-solid fa-circle-question fa-fw text-neutral-500" aria-hidden="true"></i><span
                     >Ask a Question</span
@@ -361,7 +359,7 @@
                   href="#"
                   id="report-a-problem"
                   class="dropdown-item d-flex flex-row align-items-center gap-2"
-                  on:click|preventDefault={() => openFeedback(location)}
+                  onclick={() => openFeedback(location)}
                 >
                   <i class="fa-solid fa-bug fa-fw text-neutral-500" aria-hidden="true"></i><span>Report a Problem</span>
                 </a>
@@ -423,7 +421,7 @@
                         class="dropdown-item d-flex flex-row gap-2 align-items-center"
                         data-disabled={!hasNotification}
                         disabled={!hasNotification ? true : null}
-                        on:click={notificationsModal.show()}
+                        onclick={openNotificationsModal}
                         ><i class="fa-solid fa-bell fa-fw" aria-hidden="true" class:opacity-25={!hasNotification}
                         ></i><span class="needs-hover-state"
                           >Notifications {#if hasNotification}({notificationsManager.count()}){/if}</span
@@ -449,7 +447,7 @@
                           href="#"
                           role="button"
                           id="switch"
-                          on:click={roleSwitchModal.show()}
+                          onclick={openRoleSwitchModal}
                           ><i class="fa-solid fa-user-group fa-fw" aria-hidden="true"></i><span
                             class="needs-hover-state"
                           >
@@ -481,7 +479,7 @@
                 href="#"
                 role="button"
                 data-testid="login-button"
-                on:click|preventDefault={openLogin}><i class="fa-solid fa-user fa-fw" aria-hidden="true"></i>Log In</a
+                onclick={openLogin}><i class="fa-solid fa-user fa-fw" aria-hidden="true"></i>Log In</a
               >
             </li>
           {/if}
