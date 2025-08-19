@@ -1,6 +1,9 @@
 <script>
   import { onMount } from 'svelte';
   import Modal from '../Modal';
+  import ResourceSharing from './ResourceSharing.svelte';
+  import TotalAccess from './TotalAccess.svelte';
+  import EnhancedTextProxy from './EnhancedTextProxy.svelte';
 
   let HT = window.HT || {};
   let switchableRole = Object.keys(HT.login_status.r)[0];
@@ -136,95 +139,11 @@
                     </span>
                     <div class="option--help">
                       {#if switchableRole === 'resourceSharing'}
-                        <p>
-                          Through HathiTrust Resource Sharing, library workers are permitted to download Full View and
-                          Registered Access scans in HathiTrust in order to fulfill Interlibrary Loan and Document
-                          Delivery requests.
-                        </p>
-                        <p>You may only access Registered Access texts under the following conditions:</p>
-                        <ul>
-                          <li>The text is currently held in a physical format in your library,</li>
-                          <li>
-                            You may only download an article, chapter, or other excerpt from a Registered Access text,
-                          </li>
-                          <li>
-                            HathiTrust files downloaded through your Resource Sharing access are used only to fulfill
-                            Interlibrary Loan and Document Delivery requests, and you will not use HathiTrust Resource
-                            Sharing for other purposes (e.g., personal reading, course reserves, reference work),
-                          </li>
-                          <!-- this link will be updated to a HT webpage for service launch -->
-                          <li>
-                            You will follow the full <a
-                              href="https://docs.google.com/document/d/1gdkU14w-0x3mhy2n0wJCZ6EZTft0mo9bTpVGPYKQJf4/edit?tab=t.0#heading=h.m2mrywmwq2fj"
-                              >Terms of Service for HathiTrust Resource Sharing</a
-                            >.
-                          </li>
-                        </ul>
+                        <ResourceSharing />
                       {:else if switchableRole === 'totalAccess'}
-                        <p>This access is only provided for the following use cases:</p>
-                        <ul>
-                          <li>
-                            Evaluating or improving the quality of digital files or catalog records in the HathiTrust
-                            collection
-                          </li>
-                          <li>Reviewing the copyright status of HathiTrust volumes</li>
-                          <li>Developing or maintaining HathiTrust systems, applications, and the repository</li>
-                        </ul>
-                        <p>
-                          Individuals making use of Collection Administration Access are not permitted to use this
-                          access for other use cases, such as:
-                        </p>
-                        <ul>
-                          <li>Answering patron reference questions using copyrighted HathiTrust books.</li>
-                          <li>Reading copyrighted HathiTrust books for their own purposes.</li>
-                          <li>Downloading or otherwise copying and sharing copyrighted files for personal use.</li>
-                          <li>Downloading or otherwise copying and sharing copyrighted files with patrons.</li>
-                          <li>
-                            Downloading and sharing pages from copyrighted works with co-workers who will use them for
-                            any non-permitted uses listed above. However, to meet the permitted use cases above, users
-                            with Collection Administration Access may, when absolutely necessary, download and share a
-                            few pages of a copyrighted work with co-workers.
-                          </li>
-                          <li>
-                            Providing others with credentials to use Collection Administration Access to perform any
-                            task.
-                          </li>
-                        </ul>
-                        <p>
-                          HathiTrust will immediately terminate a registered user’s ability to employ Collection
-                          Administration Access if we determine that a disallowed use has occurred or is occurring.
-                          Individuals with Collection Administration Access must notify HathiTrust staff at
-                          <a href="mailto:support@hathitrust.org">support@hathitrust.org</a> if they believe their credentials
-                          have been used by someone else to gain inappropriate access to copyrighted materials; if they have
-                          any questions about appropriate uses of this service; or if their role has changed (including departure
-                          from the organization) and they no longer need this service.
-                        </p>
+                        <TotalAccess />
                       {:else if switchableRole === 'enhancedTextProxy'}
-                        <p>
-                          Download copyrighted books, in order to provide them to eligible patrons with print
-                          disabilities.
-                        </p>
-                        <p>
-                          The following terms of use apply when accessing books as an ATRS provider. Per the agreement
-                          you signed to become an ATRS provider, you must confirm with eligible patrons that they
-                          understand:
-                        </p>
-                        <ul>
-                          <li>The copyrighted nature of the content</li>
-                          <li>Why they are being granted special access to the work</li>
-                          <li>
-                            That the cover sheet indicating the copyright status and terms of use must remain with the
-                            work at all times
-                          </li>
-                          <li>
-                            That the accessible copies are for personal use only and may not be reproduced, distributed,
-                            or made available to anyone else other than to facilitate the Eligible Patron’s personal use
-                          </li>
-                          <li>
-                            That if the Eligible Patrons have any questions about proper use of the material or suspect
-                            unauthorized access to the material, they should contact the DSP immediately
-                          </li>
-                        </ul>
+                        <EnhancedTextProxy />
                       {/if}
                     </div>
                   </div>
