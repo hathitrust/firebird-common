@@ -112,18 +112,16 @@
     }
   }
 
-  .twocol-main > * {
-    // max-width: 43.75rem;
-  }
-
   #action-toggle-filters {
     &[aria-expanded='false'] .is-expanded {
       display: none;
     }
 
-    &:is([aria-expanded='true']) .not-expanded {
-      display: none;
-    }
+    // will leave this here for now
+    // we eventually will want to create full-blown pages in storybook, and i will want this
+    // &:is([aria-expanded='true']) .not-expanded {
+    //   display: none;
+    // }
 
     &[aria-expanded='false'] ~ * {
       display: none !important;

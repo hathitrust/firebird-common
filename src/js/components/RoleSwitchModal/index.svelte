@@ -183,10 +183,12 @@
 </div>
 
 <style lang="scss">
-  a {
-    color: var(--color-primary-700);
-    &:hover {
-      color: var(--color-primary-800);
+  .switch-roles :global {
+    a {
+      color: var(--color-primary-700);
+      &:hover {
+        color: var(--color-primary-800);
+      }
     }
   }
   .settings-heading img {
@@ -240,7 +242,7 @@
     line-height: 1.3125rem;
     letter-spacing: -0.01rem;
   }
-  .option--help {
+  .option--help :global {
     color: var(--color-neutral-800);
     font-size: 1rem;
     font-style: normal;
