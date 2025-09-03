@@ -1,5 +1,4 @@
 <script>
-  import { getContext } from 'svelte';
   import { TestCookieJar } from '../lib/cookies.svelte.js';
 
   function fakeIdpUrl(sdrinst) {

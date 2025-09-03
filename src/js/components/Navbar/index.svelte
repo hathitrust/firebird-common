@@ -9,7 +9,7 @@
   import NotificationsManager from '../../lib/notifications';
 
   let HT = window.HT || {};
-  let modal = $state();
+  let loginModal = $state();
   let feedbackModal;
   let roleSwitchModal = $state();
   let location = document.documentElement.dataset.app;
@@ -42,7 +42,8 @@
   }
 
   function openLogin(event) {
-    event.preventDefault();
+    console.log(loginModal);
+    event && event.preventDefault();
     //check viewport size to see if LoginFormModal will fit
     if (window.innerHeight <= 670 || HT.loginStatus.idp_list.length == 0) {
       //if not, redirect user
@@ -55,7 +56,7 @@
       window.location.assign(`//${HT.service_domain}/cgi/wayf?target=${encodeURIComponent(target)}`);
     } else {
       //else, open LoginFormModal
-      modal.show();
+      loginModal.show();
     }
   }
 
@@ -471,7 +472,7 @@
               </ul>
             </li>
           {:else}
-            <LoginFormModal bind:this={modal} />
+            <LoginFormModal bind:this={loginModal} />
             <li class="nav-item">
               <a
                 id="log-in"
