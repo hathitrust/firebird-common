@@ -14,19 +14,14 @@
   let roleSwitchModal = $state();
   let location = document.documentElement.dataset.app;
   let form = $state('basic');
+  let hasNotification = $state(false);
 
   let notificationsModal = $state();
   let notificationsManager = new NotificationsManager({
     cookieJar: HT.cookieJar,
   });
 
-  let {
-    hasNotification = $bindable(false),
-    searchOpen = $bindable(true),
-    searchState,
-    compact = false,
-    userNavigation = true,
-  } = $props();
+  let { searchOpen = $bindable(true), searchState, compact = false, userNavigation = true } = $props();
 
   const switchableRoles = ['enhancedTextProxy', 'totalAccess', 'resourceSharing'];
   const switchableRolesLabels = {};
@@ -42,7 +37,6 @@
   }
 
   function openLogin(event) {
-    console.log(loginModal);
     event && event.preventDefault();
     //check viewport size to see if LoginFormModal will fit
     if (window.innerHeight <= 670 || HT.loginStatus.idp_list.length == 0) {
