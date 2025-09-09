@@ -21,7 +21,7 @@
   } = $props();
 
   function handleClick() {
-    let selected = idpList.find((item) => item.sdrinst == sdrinst);
+    let selected = HT.loginStatus.idp_list.find((item) => item.sdrinst == sdrinst);
     console.log('-- handleClick', sdrinst, selected);
     if (selected) {
       if (consent.preferencesConsent === 'true') {
@@ -31,8 +31,6 @@
       onSubmit(login_href);
     }
   }
-
-  let idpList = HT.loginStatus.idp_list;
 </script>
 
 <div class="m-0 w-100">

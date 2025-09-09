@@ -22,13 +22,14 @@
   }
 
   export const show = function () {
-    if (!idpList.length) {
+    if (!HT.loginStatus.idp_list.length) {
+      console.log('idp_list is empty, dont show modal');
       return;
     }
     if (!sdrinst) {
       filterText = '';
     } else {
-      filterText = idpList.find((item) => item.sdrinst == sdrinst).name.replace(/&amp;/g, '&');
+      filterText = HT.loginStatus.idp_list.find((item) => item.sdrinst == sdrinst).name.replace(/&amp;/g, '&');
     }
     modal.show();
   };
@@ -43,7 +44,7 @@
     }
   });
 
-  let idpList = HT.loginStatus.idp_list;
+  // let idpList = HT.loginStatus.idp_list;
   $effect(() => {
     if (modal && isOpen) {
       show();

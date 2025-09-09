@@ -6,14 +6,14 @@
   let { sdrinst = $bindable(), filterText = $bindable() } = $props();
 
   function getItems() {
-    return idpList.map((item) => ({
+    return HT.loginStatus.idp_list.map((item) => ({
       option: item.name.replace(/&amp;/g, '&'),
       key: item.sdrinst,
       value: item.sdrinst,
     }));
   }
 
-  let idpList = HT.loginStatus.idp_list;
+  // let idpList = HT.loginStatus.idp_list;
 </script>
 
 {#if !HT.loginStatus}
@@ -25,7 +25,7 @@
   <p>
     <a href="//{HT.service_domain}/cgi/logout" class="btn btn-primary">Log out</a>
   </p>
-{:else if idpList.length == 0}
+{:else if HT.loginStatus.idp_list.length == 0}
   <div class="alert alert-warning">No institution list.</div>
 {:else}
   <div class="filterable-grid gap-1 mb-1" style:--filterable-list-height="12rem">

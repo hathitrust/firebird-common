@@ -13,12 +13,10 @@
   let { target, ...rest } = $props();
   let filterText = $state('');
 
-  let idpList = HT.loginStatus.idp_list;
-
   $effect(() => {
-    console.log('-- wut', idpList);
-    if (sdrinst && idpList && idpList.length) {
-      filterText = idpList.find((item) => item.sdrinst == sdrinst).name.replace(/&amp;/g, '&');
+    console.log('-- wut', HT.loginStatus.idp_list);
+    if (sdrinst && HT.loginStatus.idp_list && HT.loginStatus.idp_list.length) {
+      filterText = HT.loginStatus.idp_list.find((item) => item.sdrinst == sdrinst).name.replace(/&amp;/g, '&');
     }
   });
 </script>
