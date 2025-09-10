@@ -2,10 +2,16 @@
   import { onMount } from 'svelte';
   import Modal from '../Modal';
 
-  export let manager;
-  let modal;
+  let modal = $state();
 
-  export let isOpen = false;
+  /**
+   * @typedef {Object} Props
+   * @property {any} manager
+   * @property {boolean} [isOpen]
+   */
+
+  /** @type {Props} */
+  let { manager, isOpen = false } = $props();
 
   export const show = function () {
     if (!manager.hasNotifications()) {
@@ -28,19 +34,25 @@
     }
   });
 
-  $: if (modal && manager.hasNewNotifications()) {
-    show();
-  }
-  $: if (modal && isOpen) {
-    show();
-  }
+  $effect(() => {
+    if (modal && manager.hasNewNotifications()) {
+      show();
+    }
+  });
+  $effect(() => {
+    if (modal && isOpen) {
+      show();
+    }
+  });
   // $: if ( modal && ! isOpen ) { hide() }
 </script>
 
 {#if manager.hasNotifications()}
   <Modal bind:this={modal} {onClose}>
-    <svelte:fragment slot="title">Your notifications</svelte:fragment>
-    <svelte:fragment slot="body">
+    {#snippet title()}
+      Your notifications
+    {/snippet}
+    {#snippet body()}
       <ul class="list-group list-group-flush">
         {#each manager.notificationData as datum, i}
           <li class="list-group-item p-3">
@@ -59,7 +71,7 @@
           </li>
         {/each}
       </ul>
-    </svelte:fragment>
+    {/snippet}
   </Modal>
 {/if}
 

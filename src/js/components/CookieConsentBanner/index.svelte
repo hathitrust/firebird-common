@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
-  import { allowAll, denyAll } from '../../lib/cookies.js';
-  import { cookieConsentSeen, trackingConsent, marketingConsent, preferencesConsent } from '../../lib/store.js';
+  import { allowAll, denyAll } from '../../lib/cookies.svelte.js';
+  import { consent } from '../../lib/store.svelte.js';
   import CookieSettingsModal from '../CookieSettingsModal';
 
   let HT = window.HT || {};
@@ -36,15 +36,23 @@
     });
   }
 
-  // export let lgSrc = '/common/firebird/dist/hathitrust-logo-stacked-orange-gray.png';
-  export let lgSrc = '/common/firebird/dist/hathitrust-logo-stacked_300x225.png';
-  export let smSrc = '/common/firebird/dist/hathitrust-icon-orange.png';
-
-  let settingsModal;
+  let settingsModal = $state();
   function openSettings() {
     settingsModal.show();
   }
-  export let cookieJar = HT.cookieJar;
+  /**
+   * @typedef {Object} Props
+   * @property {string} [lgSrc] - export let lgSrc = '/common/firebird/dist/hathitrust-logo-stacked-orange-gray.png';
+   * @property {string} [smSrc]
+   * @property {any} [cookieJar]
+   */
+
+  /** @type {Props} */
+  let {
+    lgSrc = '/common/firebird/dist/hathitrust-logo-stacked_300x225.png',
+    smSrc = '/common/firebird/dist/hathitrust-icon-orange.png',
+    cookieJar = HT.cookieJar,
+  } = $props();
 
   setTimeout(() => {
     if (!document.querySelector('.cookie-banner')) {
@@ -54,14 +62,14 @@
   }, 1000);
 
   onMount(() => {
-    $cookieConsentSeen = cookieJar.getItem('HT-cookie-banner-seen') || 'false';
-    $trackingConsent = cookieJar.getItem('HT-tracking-cookie-consent') || 'false';
-    $marketingConsent = cookieJar.getItem('HT-marketing-cookie-consent') || 'false';
-    $preferencesConsent = cookieJar.getItem('HT-preferences-cookie-consent') || 'false';
+    consent.cookieConsentSeen = cookieJar.getItem('HT-cookie-banner-seen') || 'false';
+    consent.trackingConsent = cookieJar.getItem('HT-tracking-cookie-consent') || 'false';
+    consent.marketingConsent = cookieJar.getItem('HT-marketing-cookie-consent') || 'false';
+    consent.preferencesConsent = cookieJar.getItem('HT-preferences-cookie-consent') || 'false';
   });
 </script>
 
-{#if $cookieConsentSeen === 'false'}
+{#if consent.cookieConsentSeen === 'false'}
   <CookieSettingsModal bind:this={settingsModal} />
   <div aria-labelledby="cookie-heading" aria-describedby="cookie-description" role="dialog" aria-modal="false">
     <div class="cookie-banner alert alert-block mb-0 shadow-lg rounded-bottom-0">
@@ -79,7 +87,7 @@
             type="button"
             class="close"
             aria-label="Close banner"
-            on:click={() => {
+            onclick={() => {
               denyAll();
             }}
             ><span class="close-icon">
@@ -113,19 +121,19 @@
             <button
               type="button"
               class="btn btn-primary"
-              on:click={() => {
+              onclick={() => {
                 allowAll();
               }}>Allow all cookies</button
             >
             <button
               type="button"
               class="btn btn-primary"
-              on:click={() => {
+              onclick={() => {
                 denyAll();
               }}>Allow necessary cookies only</button
             >
 
-            <button type="button" class="btn btn-tertiary" on:click={openSettings}
+            <button type="button" class="btn btn-tertiary" onclick={openSettings}
               >Customize cookies<i class="fa-solid fa-fw fa-sm fa-chevron-right"></i></button
             >
           </div>

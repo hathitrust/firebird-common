@@ -3,26 +3,32 @@
 
   import CollectionEditModal from '../CollectionEditModal';
 
-  export let editable = false;
-  export let collid = null;
+  /**
+   * @typedef {Object} Props
+   * @property {boolean} [editable]
+   * @property {any} [collid]
+   */
 
-  let userCollections = [];
-  let div;
+  /** @type {Props} */
+  let { editable = false, collid = null } = $props();
+
+  let userCollections = $state([]);
+  let div = $state();
 
   let externItemIdOptions;
-  let allItemsSelected = false;
+  let allItemsSelected = $state(false);
 
-  let modal;
+  let modal = $state();
 
-  let c = '__NEW__';
-  let cn = '';
-  let desc = '';
-  let contributorName = '';
-  let shared = 0;
+  let c = $state('__NEW__');
+  let cn = $state('');
+  let desc = $state('');
+  let contributorName = $state('');
+  let shared = $state(0);
 
   let action = 'addc';
-  let status = { result: null };
-  let statusEl;
+  let status = $state({ result: null });
+  let statusEl = $state();
 
   function selectAllItems() {
     allItemsSelected = !allItemsSelected;
@@ -203,9 +209,11 @@
     HT.live.announce(statusEl.innerText);
   }
 
-  $: if (status.class) {
-    announceStatus();
-  }
+  $effect(() => {
+    if (status.class) {
+      announceStatus();
+    }
+  });
 
   onMount(() => {
     let parentEl = div.parentElement;
@@ -289,12 +297,12 @@
   <button
     class="btn btn-outline-light d-flex align-items-center gap-2 flex-nowrap"
     aria-pressed={allItemsSelected}
-    on:click={selectAllItems}
+    onclick={selectAllItems}
   >
     {#if allItemsSelected}
-      <i class="fa-solid fa-square-check" aria-hidden="true" />
+      <i class="fa-solid fa-square-check" aria-hidden="true"></i>
     {:else}
-      <i class="fa-regular fa-square" aria-hidden="true" />
+      <i class="fa-regular fa-square" aria-hidden="true"></i>
     {/if}
     <span class="text-nowrap">Select all items</span>
   </button>
@@ -306,7 +314,7 @@
       {/each}
     </select>
     <div class="btn-group">
-      <button id="addits" type="button" class="btn btn-outline-light" on:click={addItems}>Add</button>
+      <button id="addits" type="button" class="btn btn-outline-light" onclick={addItems}>Add</button>
       {#if editable}
         <button
           type="button"
@@ -318,10 +326,10 @@
         </button>
         <ul class="dropdown-menu">
           <li>
-            <button class="dropdown-item" type="button" on:click={moveItems}>Move</button>
+            <button class="dropdown-item" type="button" onclick={moveItems}>Move</button>
           </li>
           <li>
-            <button class="dropdown-item" type="button" on:click={removeItems}>Remove</button>
+            <button class="dropdown-item" type="button" onclick={removeItems}>Remove</button>
           </li>
         </ul>
       {/if}
@@ -331,9 +339,9 @@
 {#if status.class}
   <div class="alert mt-1 {status.class} d-flex align-items-center gap-3" bind:this={statusEl}>
     {#if status.class == 'alert-danger'}
-      <i class="fa-solid fa-triangle-exclamation" aria-hidden="true" />
+      <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
     {:else}
-      <i class="fa-regular fa-circle-check" aria-hidden="true" />
+      <i class="fa-regular fa-circle-check" aria-hidden="true"></i>
     {/if}
     <span>{@html status.message}</span>
   </div>

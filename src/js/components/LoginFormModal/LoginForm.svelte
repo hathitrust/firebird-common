@@ -1,4 +1,6 @@
 <script>
+  import { run } from 'svelte/legacy';
+
   import { getContext } from 'svelte';
 
   import InstitutionList from './InstitutionList.svelte';
@@ -6,27 +8,29 @@
   import FilterableSelection from '../FilterableSelection.svelte';
 
   let HT = window.HT || {};
-  let sdrinst = HT.prefs ? HT.prefs.get().sdrinst : undefined;
+  let sdrinst = $state(HT.prefs ? HT.prefs.get().sdrinst : false);
 
-  export let target;
-  let filterText;
+  let { target, ...rest } = $props();
+  let filterText = $state('');
 
-  $: loginStatus = HT.loginStatus;
-  $: idpList = $loginStatus.idp_list;
-  $: console.log('-- wut', idpList);
-  $: if (sdrinst && idpList && idpList.length) {
-    filterText = idpList.find((item) => item.sdrinst == sdrinst).name.replace(/&amp;/g, '&');
-  }
+  $effect(() => {
+    console.log('-- wut', HT.loginStatus.idp_list);
+    if (sdrinst && HT.loginStatus.idp_list && HT.loginStatus.idp_list.length) {
+      filterText = HT.loginStatus.idp_list.find((item) => item.sdrinst == sdrinst).name.replace(/&amp;/g, '&');
+    }
+  });
 </script>
 
-{#if !$loginStatus}
+{#if !HT.loginStatus}
   <pre>WAITING</pre>
-{:else if $loginStatus.logged_in}
-  <div class="alert alert-info">You are currently logged into HathiTrust by way of {$loginStatus.institutionName}.</div>
+{:else if HT.loginStatus.logged_in}
+  <div class="alert alert-info">
+    You are currently logged into HathiTrust by way of {HT.loginStatus.institutionName}.
+  </div>
   <p>
     <a href="//{HT.service_domain}/cgi/logout" class="btn btn-primary">Log out</a>
   </p>
 {:else}
   <InstitutionList bind:sdrinst {filterText} />
-  <LoginFormAction {...$$props} {sdrinst} {target} />
+  <LoginFormAction {...rest} {sdrinst} {target} />
 {/if}

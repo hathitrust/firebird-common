@@ -1,8 +1,8 @@
 <script>
   import BannerMessage from './BannerMessage.svelte';
 
-  let alert;
-  let alertEmpty = true;
+  let alert = $state();
+  let alertEmpty = $state(true);
 
   const request = async () => {
     try {

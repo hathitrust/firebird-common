@@ -1,17 +1,17 @@
 import Navbar from './index.svelte';
 import PingCallbackDecorator from '../../decorators/PingCallbackDecorator';
-import { userEvent, within } from "@storybook/test";
-import { expect } from "@storybook/test";
+import { userEvent, within } from '@storybook/test';
+import { expect } from '@storybook/test';
 
 export default {
   title: 'Navbar',
   component: Navbar,
-  decorators: [
-    () => ({
-      Component: PingCallbackDecorator,
-      props: { loggedIn: false, notificationData: null },
-    }),
-  ],
+  // decorators: [
+  //   () => ({
+  //     Component: PingCallbackDecorator,
+  //     props: { loggedIn: false, notificationData: null },
+  //   }),
+  // ],
 };
 
 export const Default = {
@@ -20,6 +20,12 @@ export const Default = {
       defaultViewport: 'bsXl',
     },
   },
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      props: { loggedIn: false, notificationData: null },
+    }),
+  ],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     //sanity check
@@ -28,6 +34,12 @@ export const Default = {
 };
 export const DesktopDropdownMenuSelected = {
   parameters: { ...Default.parameters },
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      props: { loggedIn: false, notificationData: null },
+    }),
+  ],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
@@ -37,6 +49,12 @@ export const DesktopDropdownMenuSelected = {
 };
 export const DesktopLoginModalOpen = {
   parameters: { ...Default.parameters },
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      props: { loggedIn: false, notificationData: null },
+    }),
+  ],
   args: {
     loggedIn: false,
   },
@@ -127,9 +145,21 @@ export const Mobile = {
       defaultViewport: 'bsXs',
     },
   },
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      props: { loggedIn: false, notificationData: null },
+    }),
+  ],
 };
 export const MobileOpenMenu = {
   parameters: { ...Mobile.parameters },
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      props: { loggedIn: false, notificationData: null },
+    }),
+  ],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const mobileMenuButton = canvas.getByLabelText('Toggle navigation');
@@ -138,6 +168,12 @@ export const MobileOpenMenu = {
 };
 export const MobileDropdownMenuSelected = {
   parameters: { ...Mobile.parameters },
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      props: { loggedIn: false, notificationData: null },
+    }),
+  ],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
@@ -236,8 +272,8 @@ export const MobileLoggedInMyAccountDropdown = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const mobileMenuButton =  canvas.getByLabelText('Toggle navigation');
-    const myAccount =  canvas.getByLabelText(/My Account/);
+    const mobileMenuButton = canvas.getByLabelText('Toggle navigation');
+    const myAccount = canvas.getByLabelText(/My Account/);
 
     await userEvent.click(mobileMenuButton);
     await userEvent.click(myAccount);
@@ -252,14 +288,19 @@ export const MobileLoggedInResourceSharingRoleActivatedHasNotification = {
   decorators: [
     () => ({
       Component: PingCallbackDecorator,
-      props: { loggedIn: true, role: 'resourceSharing', hasActivatedRole: true, notificationData: [
-        {
-          title: 'A navbar story',
-          message: 'Once upon a time there was a user with notifications',
-          read_more_label: 'Do you want to know more?',
-          read_more_link: 'https://umich.edu',
-        },
-      ], },
+      props: {
+        loggedIn: true,
+        role: 'resourceSharing',
+        hasActivatedRole: true,
+        notificationData: [
+          {
+            title: 'A navbar story',
+            message: 'Once upon a time there was a user with notifications',
+            read_more_label: 'Do you want to know more?',
+            read_more_link: 'https://umich.edu',
+          },
+        ],
+      },
     }),
   ],
   play: async ({ canvasElement }) => {

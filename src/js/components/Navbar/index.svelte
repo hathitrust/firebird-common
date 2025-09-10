@@ -1,4 +1,3 @@
-<!-- svelte-ignore a11y-invalid-attribute -->
 <script>
   import { onMount } from 'svelte';
   import menuData from '../../../assets/menuData.json';
@@ -10,23 +9,19 @@
   import NotificationsManager from '../../lib/notifications';
 
   let HT = window.HT || {};
-  let modal;
+  let loginModal = $state();
   let feedbackModal;
-  let roleSwitchModal;
+  let roleSwitchModal = $state();
   let location = document.documentElement.dataset.app;
-  let form = 'basic';
+  let form = $state('basic');
+  let hasNotification = $state(false);
 
-  let notificationsModal;
+  let notificationsModal = $state();
   let notificationsManager = new NotificationsManager({
     cookieJar: HT.cookieJar,
   });
 
-  // export let loggedIn = $loginStatus.logged_in;
-  export let hasNotification = false;
-  export let searchOpen = true;
-  export let searchState;
-  export let compact = false;
-  export let userNavigation = true;
+  let { searchOpen = $bindable(true), searchState, compact = false, userNavigation = true } = $props();
 
   const switchableRoles = ['enhancedTextProxy', 'totalAccess', 'resourceSharing'];
   const switchableRolesLabels = {};
@@ -34,14 +29,17 @@
   switchableRolesLabels['totalAccess'] = 'Collection Administration Access';
   switchableRolesLabels['resourceSharing'] = 'Resource Sharing';
 
-  function toggleSearch() {
+  function toggleSearch(event) {
+    event && event.preventDefault();
+    event.stopPropagation();
     searchOpen = !searchOpen;
     console.log('AHOY searchOpen', searchOpen);
   }
 
-  function openLogin() {
+  function openLogin(event) {
+    event && event.preventDefault();
     //check viewport size to see if LoginFormModal will fit
-    if (window.innerHeight <= 670 || $loginStatus.idp_list.length == 0) {
+    if (window.innerHeight <= 670 || HT.loginStatus.idp_list.length == 0) {
       //if not, redirect user
       //calculate login target
       let target = window.location.href;
@@ -52,11 +50,20 @@
       window.location.assign(`//${HT.service_domain}/cgi/wayf?target=${encodeURIComponent(target)}`);
     } else {
       //else, open LoginFormModal
-      modal.show();
+      loginModal.show();
     }
   }
 
-  function openFeedback(formLocation) {
+  function openRoleSwitchModal(event) {
+    event.preventDefault();
+    roleSwitchModal.show();
+  }
+  function openNotificationsModal(event) {
+    event.preventDefault();
+    notificationsModal.show();
+  }
+  function openFeedback(formLocation, event) {
+    event && event.preventDefault();
     if (document.activeElement !== document.getElementById('get-help')) document.getElementById('get-help').focus();
     if (formLocation === 'catalog') {
       form = 'catalog';
@@ -71,14 +78,14 @@
   }
 
   function checkSwitchableRoles(isLoggedIn) {
-    if ($loginStatus.r) {
+    if (HT.loginStatus.r) {
       for (const i in switchableRoles) {
         let role = switchableRoles[i];
-        if ($loginStatus.r.hasOwnProperty(role)) {
+        if (HT.loginStatus.r.hasOwnProperty(role)) {
           return {
             status: true,
             label: switchableRolesLabels[role],
-            activated: $loginStatus.r[role],
+            activated: HT.loginStatus.r[role],
           };
         }
       }
@@ -86,15 +93,17 @@
     return { status: false };
   }
 
-  $: loginStatus = HT.loginStatus;
-  $: loggedIn = $loginStatus.logged_in;
-  $: hasSwitchableRoles = checkSwitchableRoles(loggedIn).status;
-  $: hasActivatedRole = checkSwitchableRoles(loggedIn).activated;
-  $: role = checkSwitchableRoles(loggedIn).label;
-  $: if ($loginStatus && $loginStatus.notificationData) {
-    notificationsManager.update($loginStatus.notificationData);
-    hasNotification = notificationsManager.hasNotifications();
-  }
+  // $: loginStatus = HT.loginStatus;
+  let loggedIn = $derived(HT.loginStatus.logged_in);
+  let hasSwitchableRoles = $derived(checkSwitchableRoles(loggedIn).status);
+  let hasActivatedRole = $derived(checkSwitchableRoles(loggedIn).activated);
+  let role = $derived(checkSwitchableRoles(loggedIn).label);
+  $effect(() => {
+    if (HT.loginStatus && HT.loginStatus.notificationData) {
+      notificationsManager.update(HT.loginStatus.notificationData);
+      hasNotification = notificationsManager.hasNotifications();
+    }
+  });
 </script>
 
 <FeedbackFormModal {form} bind:this={feedbackModal} />
@@ -181,7 +190,7 @@
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
-        <span><i class:hasNotification class="fa-solid fa-bars fa-fw" /></span>
+        <span><i class:hasNotification class="fa-solid fa-bars fa-fw"></i></span>
       </button>
       {#if searchState != 'none'}
         <button
@@ -192,13 +201,13 @@
           aria-controls="siteSearchDropdown"
           aria-expanded="true"
           aria-label="Toggle search bar"
-          on:click|stopPropagation={toggleSearch}
+          onclick={toggleSearch}
         >
-          <span><i class="fa-solid fa-magnifying-glass fa-fw" /></span>
+          <span><i class="fa-solid fa-magnifying-glass fa-fw"></i></span>
         </button>
       {/if}
     </div>
-    <!-- svelte-ignore a11y-invalid-attribute -->
+    <!-- svelte-ignore a11y_invalid_attribute -->
     <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
       <ul class="navbar-nav menu-links">
         <li class="nav-item dropdown">
@@ -210,7 +219,6 @@
             aria-expanded="false"
           >
             <span>About</span>
-            <!-- <i class="fa-solid fa-caret-down" /> -->
           </a>
           <div>
             <ul class="dropdown-menu">
@@ -233,11 +241,6 @@
             aria-expanded="false"
           >
             <span>The Collection</span>
-            <!-- <i
-              class="fa-solid {dropdownOpen.collection
-                ? 'fa-caret-down open'
-                : 'fa-caret-down'}"
-            /> -->
           </a>
           <ul class="dropdown-menu">
             <div class="d-flex flex-column gap-4">
@@ -264,11 +267,6 @@
             aria-expanded="false"
           >
             <span>Member Libraries</span>
-            <!-- <i
-              class="fa-solid {dropdownOpen.libraries
-                ? 'fa-caret-down open'
-                : 'fa-caret-down'}"
-            /> -->
           </a>
           <ul class="dropdown-menu">
             <div class="d-flex flex-column gap-4">
@@ -292,11 +290,6 @@
             aria-expanded="false"
           >
             <span>News &amp; Events</span>
-            <!-- <i
-              class="fa-solid {dropdownOpen.news
-                ? 'fa-caret-down open'
-                : 'fa-caret-down'}"
-            />-->
           </a>
           <ul class="dropdown-menu">
             <div class="d-flex flex-column gap-4">
@@ -318,8 +311,7 @@
               href="#"
               role="button"
               aria-expanded={searchOpen}
-              on:click|preventDefault|stopPropagation={toggleSearch}
-              >Search <i class="fa-solid fa-magnifying-glass fa-fw" /></a
+              onclick={toggleSearch}>Search <i class="fa-solid fa-magnifying-glass fa-fw"></i></a
             >
           </li>
         {/if}
@@ -340,7 +332,7 @@
                   href="https://hathitrust.atlassian.net/servicedesk/customer/portals"
                   class="dropdown-item d-flex flex-row align-items-center gap-2"
                 >
-                  <i class="fa-solid fa-square-arrow-up-right fa-fw text-neutral-500" aria-hidden="true" /><span
+                  <i class="fa-solid fa-square-arrow-up-right fa-fw text-neutral-500" aria-hidden="true"></i><span
                     >Find Help</span
                   >
                 </a>
@@ -350,9 +342,9 @@
                   href="#"
                   id="ask-a-question"
                   class="dropdown-item d-flex flex-row align-items-center gap-2"
-                  on:click|preventDefault={() => openFeedback('questions')}
+                  onclick={() => openFeedback('questions')}
                 >
-                  <i class="fa-solid fa-circle-question fa-fw text-neutral-500" aria-hidden="true" /><span
+                  <i class="fa-solid fa-circle-question fa-fw text-neutral-500" aria-hidden="true"></i><span
                     >Ask a Question</span
                   >
                 </a>
@@ -362,9 +354,9 @@
                   href="#"
                   id="report-a-problem"
                   class="dropdown-item d-flex flex-row align-items-center gap-2"
-                  on:click|preventDefault={() => openFeedback(location)}
+                  onclick={() => openFeedback(location)}
                 >
-                  <i class="fa-solid fa-bug fa-fw text-neutral-500" aria-hidden="true" /><span>Report a Problem</span>
+                  <i class="fa-solid fa-bug fa-fw text-neutral-500" aria-hidden="true"></i><span>Report a Problem</span>
                 </a>
               </li>
             </div>
@@ -387,9 +379,9 @@
                     class="account-icon me-n1 d-flex align-items-center justify-content-center border border-neutral-300 rounded-circle bg-neutral-100"
                   >
                     {#if hasActivatedRole}
-                      <i class="fa-solid fa-user-plus text-primary-600" />
+                      <i class="fa-solid fa-user-plus text-primary-600"></i>
                     {:else}
-                      <i class="fa-solid fa-user text-neutral-800" />
+                      <i class="fa-solid fa-user text-neutral-800"></i>
                     {/if}
                   </span>
                   <span id="my-account-label"
@@ -407,9 +399,9 @@
                         class="account-icon d-flex align-items-center justify-content-center border border-neutral-300 rounded-circle bg-neutral-100"
                       >
                         {#if hasActivatedRole}
-                          <i class="fa-solid fa-user-plus text-primary-600" aria-hidden="true" />
+                          <i class="fa-solid fa-user-plus text-primary-600" aria-hidden="true"></i>
                         {:else}
-                          <i class="fa-solid fa-user text-neutral-800" aria-hidden="true" />
+                          <i class="fa-solid fa-user text-neutral-800" aria-hidden="true"></i>
                         {/if}
                       </span>
                       <div class="role d-flex flex-column align-items-start">
@@ -424,12 +416,9 @@
                         class="dropdown-item d-flex flex-row gap-2 align-items-center"
                         data-disabled={!hasNotification}
                         disabled={!hasNotification ? true : null}
-                        on:click={notificationsModal.show()}
-                        ><i
-                          class="fa-solid fa-bell fa-fw"
-                          aria-hidden="true"
-                          class:opacity-25={!hasNotification}
-                        /><span class="needs-hover-state"
+                        onclick={openNotificationsModal}
+                        ><i class="fa-solid fa-bell fa-fw" aria-hidden="true" class:opacity-25={!hasNotification}
+                        ></i><span class="needs-hover-state"
                           >Notifications {#if hasNotification}({notificationsManager.count()}){/if}</span
                         >
                       </button>
@@ -439,7 +428,7 @@
                         class="dropdown-item d-flex flex-row gap-2 align-items-center"
                         href="//{`${HT.service_domain}/cgi/mb?a=listcs&colltype=my-collections`}"
                         role="button"
-                        ><i class="fa-solid fa-list fa-fw" aria-hidden="true" /><span class="needs-hover-state"
+                        ><i class="fa-solid fa-list fa-fw" aria-hidden="true"></i><span class="needs-hover-state"
                           >My Collections</span
                         ></a
                       >
@@ -453,8 +442,10 @@
                           href="#"
                           role="button"
                           id="switch"
-                          on:click={roleSwitchModal.show()}
-                          ><i class="fa-solid fa-user-group fa-fw" aria-hidden="true" /><span class="needs-hover-state">
+                          onclick={openRoleSwitchModal}
+                          ><i class="fa-solid fa-user-group fa-fw" aria-hidden="true"></i><span
+                            class="needs-hover-state"
+                          >
                             Switch Role
                           </span></a
                         >
@@ -465,7 +456,7 @@
                         class="dropdown-item d-flex flex-row gap-2 align-items-center"
                         href="//{`${HT.service_domain}/cgi/logout?${encodeURIComponent(window.location.href)}`}"
                         role="button"
-                        ><i class="fa-solid fa-arrow-right-from-bracket fa-fw" aria-hidden="true" /><span
+                        ><i class="fa-solid fa-arrow-right-from-bracket fa-fw" aria-hidden="true"></i><span
                           class="needs-hover-state">Log Out</span
                         ></a
                       >
@@ -475,7 +466,7 @@
               </ul>
             </li>
           {:else}
-            <LoginFormModal bind:this={modal} />
+            <LoginFormModal bind:this={loginModal} />
             <li class="nav-item">
               <a
                 id="log-in"
@@ -483,7 +474,7 @@
                 href="#"
                 role="button"
                 data-testid="login-button"
-                on:click|preventDefault={openLogin}><i class="fa-solid fa-user fa-fw" aria-hidden="true" /> Log In</a
+                onclick={openLogin}><i class="fa-solid fa-user fa-fw" aria-hidden="true"></i>Log In</a
               >
             </li>
           {/if}

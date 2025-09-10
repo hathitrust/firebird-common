@@ -5,12 +5,15 @@
   import Navbar from '../Navbar/';
   import SearchBar from '../SearchBar';
 
-  export let searchState = 'default';
-  export let compact = false;
-  export let userNavigation = true;
+  /**
+   * @typedef {Object} Props
+   * @property {string} [searchState]
+   * @property {boolean} [compact]
+   * @property {boolean} [userNavigation]
+   */
 
-  // let searchFormDisplayed = search_state == 'default';
-  // let searchFormDisplayed = true;
+  /** @type {Props} */
+  let { searchState = 'default', compact = false, userNavigation = true } = $props();
 
   function displaySearchForm() {
     if (searchState == 'default') {
@@ -20,16 +23,15 @@
     }
     return false;
   }
-  // function toggleSearch() {
-  //   searchFormDisplayed = !searchFormDisplayed;
-  // }
 
-  // let searchOpenToggle = ( searchState == 'default' );
-
-  $: searchOpenToggle = searchState == 'default';
-  $: searchFormDisplayed = searchState == 'default';
-  $: console.log('AHOY search_state', searchState, searchOpenToggle, searchFormDisplayed);
-  $: console.log('AHOY searchOpenToggle changed', searchOpenToggle);
+  let searchOpenToggle = $derived(searchState == 'default');
+  let searchFormDisplayed = $derived(searchState == 'default');
+  $effect(() => {
+    console.log('AHOY search_state', searchState, searchOpenToggle, searchFormDisplayed);
+  });
+  $effect(() => {
+    console.log('AHOY searchOpenToggle changed', searchOpenToggle);
+  });
 </script>
 
 <div>

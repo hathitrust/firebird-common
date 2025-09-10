@@ -1,11 +1,11 @@
 import NotificationsModal from './index.svelte';
 import PingCallbackDecorator from '../../decorators/PingCallbackDecorator';
-import { userEvent, within, waitFor } from "@storybook/test";
+import { userEvent, within, waitFor } from '@storybook/test';
 import { action } from '@storybook/addon-actions';
 
-import { expect } from "@storybook/test";
+import { expect } from '@storybook/test';
 
-import { TestCookieJar } from '../../lib/cookies';
+import { TestCookieJar } from '../../lib/cookies.svelte';
 import NotificationsManager from '../../lib/notifications';
 
 let sampleData = [
@@ -74,7 +74,7 @@ export const HasNewNotifications = {
     await waitFor(() => {
       expect(canvas.getByText('Your notifications')).toBeInTheDocument();
     });
-    closeButton = canvas.getByRole('button', {name: 'Close modal'});
+    closeButton = canvas.getByRole('button', { name: 'Close modal' });
     await userEvent.click(closeButton);
     expect(newCookieJar.getItem('HT.notice')).toBe(newNotificationData[0].effective_on);
   },

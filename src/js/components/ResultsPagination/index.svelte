@@ -1,14 +1,28 @@
 <script>
-  export let minPages = 1;
-  export let maxPages = 35;
-  export let value = 1;
-  export let stickyBottom = true;
-  export let param = 'page';
-  export let nextHref;
-  export let prevHref;
+  /**
+   * @typedef {Object} Props
+   * @property {number} [minPages]
+   * @property {number} [maxPages]
+   * @property {number} [value]
+   * @property {boolean} [stickyBottom]
+   * @property {string} [param]
+   * @property {any} nextHref
+   * @property {any} prevHref
+   */
 
-  $: hasPreviousItem = value > 1;
-  $: hasNextItem = value < maxPages;
+  /** @type {Props} */
+  let {
+    minPages = 1,
+    maxPages = 35,
+    value = $bindable(1),
+    stickyBottom = true,
+    param = 'page',
+    nextHref,
+    prevHref,
+  } = $props();
+
+  let hasPreviousItem = $derived(value > 1);
+  let hasNextItem = $derived(value < maxPages);
 
   function onSubmit(event) {
     event.preventDefault();
@@ -37,7 +51,7 @@
           class:disabled={!hasPreviousItem}
           href={hasPreviousItem ? prevHref : undefined}
           class="btn btn-outline-secondary d-inline-flex align-items-center gap-1 text-decoration-none"
-          ><i aria-hidden="true" class="fa-solid fa-chevron-left" /><span>Previous</span></a
+          ><i aria-hidden="true" class="fa-solid fa-chevron-left"></i><span>Previous</span></a
         >
       </li>
       <li>
@@ -49,12 +63,12 @@
           class:disabled={!hasNextItem}
           href={hasNextItem ? nextHref : undefined}
           class="btn btn-outline-secondary d-inline-flex align-items-center gap-1 text-decoration-none"
-          ><span>Next</span><i aria-hidden="true" class="fa-solid fa-chevron-right" /></a
+          ><span>Next</span><i aria-hidden="true" class="fa-solid fa-chevron-right"></i></a
         >
       </li>
     </ul>
   </div>
-  <form on:submit={onSubmit}>
+  <form onsubmit={onSubmit}>
     <div class="d-flex gap-2 w-xxsm-50 align-items-center justify-content-end">
       <label for="results-pagination" class="form-label text-nowrap fw-normal m-0">Go to page:</label>
       <input type="number" class="form-control" id="results-pagination" min={minPages} max={maxPages} bind:value />
