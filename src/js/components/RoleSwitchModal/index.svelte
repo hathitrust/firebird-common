@@ -1,11 +1,14 @@
 <script>
   import { onMount } from 'svelte';
   import Modal from '../Modal';
+  import ResourceSharing from './ResourceSharing.svelte';
+  import TotalAccess from './TotalAccess.svelte';
+  import EnhancedTextProxy from './EnhancedTextProxy.svelte';
 
   let HT = window.HT || {};
   let switchableRole = Object.keys(HT.login_status.r)[0];
   let roleActivated = Object.values(HT.login_status.r)[0];
-  let role = roleActivated ? switchableRole : 'default';
+  let role = $state(roleActivated ? switchableRole : 'default');
 
   const switchableRolesLabels = {};
   switchableRolesLabels['enhancedTextProxy'] = 'Accessible Text Request Service (ATRS)';
@@ -14,11 +17,21 @@
 
   let roleLabel = switchableRolesLabels[switchableRole];
 
-  let url = document.location.href;
-  let modal;
-  export let src = '/common/firebird/dist/hathitrust-icon-orange.svg';
-  export let isOpen = false;
-  export let loading = false;
+  let url = $state(document.location.href);
+  let modal = $state();
+  /**
+   * @typedef {Object} Props
+   * @property {string} [src]
+   * @property {boolean} [isOpen]
+   * @property {boolean} [loading]
+   */
+
+  /** @type {Props} */
+  let {
+    src = '/common/firebird/dist/hathitrust-icon-orange.svg',
+    isOpen = $bindable(false),
+    loading = $bindable(false),
+  } = $props();
 
   export const show = function () {
     isOpen = true;
@@ -47,30 +60,32 @@
     location.href = switchUrl;
   }
 
-  $: if (modal && isOpen) {
-    show();
-  }
-  $: if (modal && !isOpen) {
-    hide();
-  }
+  $effect(() => {
+    if (modal && isOpen) {
+      show();
+    }
+    if (modal && !isOpen) {
+      hide();
+    }
+  });
 </script>
 
 <div class="switch-roles">
   <Modal bind:this={modal} scrollable modalLarge fullscreenOnMobile focusMyAccountOnClose>
-    <svelte:fragment slot="title">
+    {#snippet title()}
       <div class="align-items-center d-flex gap-2 py-2 settings-heading">
         <img {src} alt="" role="presentation" />
         <span class="text-uppercase fw-exbold fs-3 mb-0">Choose a role</span>
       </div>
-    </svelte:fragment>
-    <svelte:fragment slot="body">
+    {/snippet}
+    {#snippet body()}
       <div>
         <form
           id="ping-switch"
           action="/cgi/ping/switch"
           method="POST"
           class="w-100 h-100 d-flex flex-column justify-content-between"
-          on:submit={submit}
+          onsubmit={submit}
         >
           <div class="roles d-flex flex-column h-100">
             <label
@@ -124,95 +139,11 @@
                     </span>
                     <div class="option--help">
                       {#if switchableRole === 'resourceSharing'}
-                        <p>
-                          Through HathiTrust Resource Sharing, library workers are permitted to download Full View and
-                          Registered Access scans in HathiTrust in order to fulfill Interlibrary Loan and Document
-                          Delivery requests.
-                        </p>
-                        <p>You may only access Registered Access texts under the following conditions:</p>
-                        <ul>
-                          <li>The text is currently held in a physical format in your library,</li>
-                          <li>
-                            You may only download an article, chapter, or other excerpt from a Registered Access text,
-                          </li>
-                          <li>
-                            HathiTrust files downloaded through your Resource Sharing access are used only to fulfill
-                            Interlibrary Loan and Document Delivery requests, and you will not use HathiTrust Resource
-                            Sharing for other purposes (e.g., personal reading, course reserves, reference work),
-                          </li>
-                          <!-- this link will be updated to a HT webpage for service launch -->
-                          <li>
-                            You will follow the full <a
-                              href="https://docs.google.com/document/d/1gdkU14w-0x3mhy2n0wJCZ6EZTft0mo9bTpVGPYKQJf4/edit?tab=t.0#heading=h.m2mrywmwq2fj"
-                              >Terms of Service for HathiTrust Resource Sharing</a
-                            >.
-                          </li>
-                        </ul>
+                        <ResourceSharing />
                       {:else if switchableRole === 'totalAccess'}
-                        <p>This access is only provided for the following use cases:</p>
-                        <ul>
-                          <li>
-                            Evaluating or improving the quality of digital files or catalog records in the HathiTrust
-                            collection
-                          </li>
-                          <li>Reviewing the copyright status of HathiTrust volumes</li>
-                          <li>Developing or maintaining HathiTrust systems, applications, and the repository</li>
-                        </ul>
-                        <p>
-                          Individuals making use of Collection Administration Access are not permitted to use this
-                          access for other use cases, such as:
-                        </p>
-                        <ul>
-                          <li>Answering patron reference questions using copyrighted HathiTrust books.</li>
-                          <li>Reading copyrighted HathiTrust books for their own purposes.</li>
-                          <li>Downloading or otherwise copying and sharing copyrighted files for personal use.</li>
-                          <li>Downloading or otherwise copying and sharing copyrighted files with patrons.</li>
-                          <li>
-                            Downloading and sharing pages from copyrighted works with co-workers who will use them for
-                            any non-permitted uses listed above. However, to meet the permitted use cases above, users
-                            with Collection Administration Access may, when absolutely necessary, download and share a
-                            few pages of a copyrighted work with co-workers.
-                          </li>
-                          <li>
-                            Providing others with credentials to use Collection Administration Access to perform any
-                            task.
-                          </li>
-                        </ul>
-                        <p>
-                          HathiTrust will immediately terminate a registered user’s ability to employ Collection
-                          Administration Access if we determine that a disallowed use has occurred or is occurring.
-                          Individuals with Collection Administration Access must notify HathiTrust staff at
-                          <a href="mailto:support@hathitrust.org">support@hathitrust.org</a> if they believe their credentials have been used by someone else to
-                          gain inappropriate access to copyrighted materials; if they have any questions about
-                          appropriate uses of this service; or if their role has changed (including departure from the
-                          organization) and they no longer need this service.
-                        </p>
+                        <TotalAccess />
                       {:else if switchableRole === 'enhancedTextProxy'}
-                        <p>
-                          Download copyrighted books, in order to provide them to eligible patrons with print
-                          disabilities.
-                        </p>
-                        <p>
-                          The following terms of use apply when accessing books as an ATRS provider. Per the agreement
-                          you signed to become an ATRS provider, you must confirm with eligible patrons that they
-                          understand:
-                        </p>
-                        <ul>
-                          <li>The copyrighted nature of the content</li>
-                          <li>Why they are being granted special access to the work</li>
-                          <li>
-                            That the cover sheet indicating the copyright status and terms of use must remain with the
-                            work at all times
-                          </li>
-                          <li>
-                            That the accessible copies are for personal use only and may not be reproduced, distributed,
-                            or made available to anyone else other than to facilitate the Eligible Patron’s personal use
-                          </li>
-                          <li>
-                            That if the Eligible Patrons have any questions about proper use of the material or suspect
-                            unauthorized access to the material, they should contact the DSP immediately
-                          </li>
-                        </ul>
+                        <EnhancedTextProxy />
                       {/if}
                     </div>
                   </div>
@@ -232,11 +163,11 @@
           </div>
         </form>
       </div>
-    </svelte:fragment>
-    <svelte:fragment slot="footer">
+    {/snippet}
+    {#snippet footer()}
       <div class="py-3 px-4 m-0">
         <div class="d-flex gap-3">
-          <button class="btn btn-white border-0 py-2 px-3 m-0" name="action" value="cancel" on:click={() => hide()}
+          <button class="btn btn-white border-0 py-2 px-3 m-0" name="action" value="cancel" onclick={() => hide()}
             >Cancel</button
           >
           <button class="btn btn-primary py-2 px-3 m-0" type="submit" form="ping-switch" disabled={loading}
@@ -247,15 +178,17 @@
           >
         </div>
       </div>
-    </svelte:fragment>
+    {/snippet}
   </Modal>
 </div>
 
 <style lang="scss">
-  a {
-    color: var(--color-primary-700);
-    &:hover {
-      color: var(--color-primary-800);
+  .switch-roles :global {
+    a {
+      color: var(--color-primary-700);
+      &:hover {
+        color: var(--color-primary-800);
+      }
     }
   }
   .settings-heading img {
@@ -309,7 +242,7 @@
     line-height: 1.3125rem;
     letter-spacing: -0.01rem;
   }
-  .option--help {
+  .option--help :global {
     color: var(--color-neutral-800);
     font-size: 1rem;
     font-style: normal;

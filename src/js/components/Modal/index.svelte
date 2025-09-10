@@ -1,23 +1,47 @@
 <script>
   import { onMount } from 'svelte';
-  import { fade } from 'svelte/transition';
 
   import dialogPolyfill from 'dialog-polyfill';
 
-  export let isOpen = false;
-  export let id = `id${new Date().getTime()}-${Math.floor(Math.random() * Date.now())}`;
-  export let onClose = function () {};
-  export let height = 'auto';
-  export let scrollable = false;
-  export let mode = 'alert';
-  export let modalLarge = false;
-  export let fullscreenOnMobile = false;
-  export let focusHelpOnClose = false;
-  export let focusMyAccountOnClose = false;
+  /**
+   * @typedef {Object} Props
+   * @property {boolean} [isOpen]
+   * @property {any} [id]
+   * @property {any} [onClose]
+   * @property {string} [height]
+   * @property {boolean} [scrollable]
+   * @property {string} [mode]
+   * @property {boolean} [modalLarge]
+   * @property {boolean} [fullscreenOnMobile]
+   * @property {boolean} [focusHelpOnClose]
+   * @property {boolean} [focusMyAccountOnClose]
+   * @property {import('svelte').Snippet} [title]
+   * @property {import('svelte').Snippet} [body]
+   * @property {import('svelte').Snippet} [footer]
+   * @property {import('svelte').Snippet} [action]
+   */
 
-  let modalBody;
+  /** @type {Props} */
+  let {
+    isOpen = $bindable(false),
+    id = `id${new Date().getTime()}-${Math.floor(Math.random() * Date.now())}`,
+    onClose = function () {},
+    height = 'auto',
+    scrollable = false,
+    mode = 'alert',
+    modalLarge = false,
+    fullscreenOnMobile = false,
+    focusHelpOnClose = false,
+    focusMyAccountOnClose = false,
+    title,
+    body,
+    footer,
+    action,
+  } = $props();
 
-  let dialog;
+  // let modalBody;
+
+  let dialog = $state();
 
   function logKeys(e) {
     // console.log(`Key "${e.key}" was pressed`);
@@ -70,9 +94,11 @@
     }
   });
 
-  $: if (dialog && isOpen) {
-    show();
-  }
+  $effect(() => {
+    if (dialog && isOpen) {
+      show();
+    }
+  });
 </script>
 
 <dialog
@@ -86,14 +112,14 @@
       <div class="modal-content" style:height={height != 'auto' && height}>
         <div class="modal-header d-flex flex-row-reverse">
           <h1 id="{id}-label" class="modal-title">
-            <slot name="title" />
+            {@render title?.()}
           </h1>
           <button
             type="button"
             class="close"
             aria-label="Close modal"
             data-bs-dismiss="modal"
-            on:click={() => {
+            onclick={() => {
               hide();
             }}
             ><span class="close-icon">
@@ -107,27 +133,29 @@
           >
         </div>
         <div class="modal-body {scrollable ? '' : 'dont-scroll'}">
-          <slot name="body" />
-          <div class="visually-hidden" role="status" aria-atomic="true" aria-live="polite" />
+          {@render body?.()}
+          <div class="visually-hidden" role="status" aria-atomic="true" aria-live="polite"></div>
         </div>
-        {#if $$slots.footer}
+        {#if footer}
           <div class="modal-footer">
-            <slot name="footer">
-              <!-- svelte-ignore a11y-autofocus -->
+            {#if footer}
+              {@render footer()}
+            {:else}
+              <!-- svelte-ignore a11y_autofocus -->
               <button
                 type="reset"
                 autofocus
                 class="btn btn-secondary"
-                on:click={() => {
+                onclick={() => {
                   hide();
                 }}>Close</button
               >
-              {#if mode == 'prompt'}
-                <button type="button" class="btn btn-primary">
-                  <slot name="action">OK</slot>
-                </button>
-              {/if}
-            </slot>
+            {/if}
+            {#if mode == 'prompt'}
+              <button type="button" class="btn btn-primary">
+                {#if action}{@render action()}{:else}OK{/if}
+              </button>
+            {/if}
           </div>
         {/if}
       </div>
@@ -161,7 +189,7 @@
       left: 50%;
       transform: translateX(-50%) translateY(-50%);
     }
-    &:has(.modal-lg) {
+    &:has(:global(.modal-lg)) {
       max-inline-size: min(90vw, 70ch);
       /* this feels redundant with a style below, but safari mobile isn't applying
       styles in the correct order */
@@ -191,23 +219,6 @@
   dialog:not([open]) {
     display: none;
   }
-
-  // dialog:not([open]) {
-  //   pointer-events: none;
-  //   opacity: 0;
-  //   z-index: -100;
-
-  //   // for browsers that do not support inert
-  //   position: absolute !important;
-  //   width: 1px !important;
-  //   height: 1px !important;
-  //   padding: 0 !important;
-  //   margin: -1px !important;
-  //   overflow: hidden !important;
-  //   clip: rect(0, 0, 0, 0) !important;
-  //   white-space: nowrap !important;
-  //   border: 0 !important;
-  // }
 
   dialog::backdrop {
     transition: backdrop-filter 0.25s ease;

@@ -1,29 +1,23 @@
-<!-- svelte-ignore a11y-invalid-attribute -->
 <script>
-  import { onMount } from 'svelte';
-
-  export let index = 'library';
-
-  // export let bootstrapToggleShow;
+  let index = $state('library');
 
   //search form bindings
-  let _select, _searchtype, _root, fieldValue, _input;
-  fieldValue = 'Everything';
+  let _select = $state();
+  let _searchtype = $state();
+  let _root = $state();
+  let _input = $state();
+  let fieldValue = $state('Everything');
 
   const ACCESSIBLE_ITEMS = 'items you can access';
   const ALL_ITEMS = 'all items';
-  let accessScope = ACCESSIBLE_ITEMS;
-  let isFullView = true;
+  let accessScope = $state(ACCESSIBLE_ITEMS);
+  let isFullView = $state(true);
 
   //updates UI when 'Collection' or 'Website' is selected in search options
   let _updateSelect = function (event) {
     _root.dataset.index = event.target.value;
     index = event.target.value;
   };
-
-  // function toggleSearchModal() {
-  //   modalOpen = !modalOpen;
-  // }
 
   function isSiteBabel() {
     if (
@@ -64,7 +58,7 @@
     fieldValue = menuItem.text;
   }
 
-  let SERVICE_DOMAIN = 'babel.hathitrust.org';
+  let SERVICE_DOMAIN = $state('babel.hathitrust.org');
   let CATALOG_DOMAIN = 'catalog.hathitrust.org';
   let WWW_DOMAIN = 'www.hathitrust.org';
   if (window.HT && window.HT.service_domain) {
@@ -74,6 +68,7 @@
   }
 
   let _submitSearch = function (event) {
+    event.preventDefault();
     let search_url;
     if (index == 'library' && _searchtype.value == 'everything') {
       let submitData = new URLSearchParams();
@@ -103,7 +98,7 @@
     }
   };
 
-  onMount(() => {
+  $effect(() => {
     // find current configuration
     let _searchtypeValue = 'everything';
     let _selectValue = 'library';
@@ -162,7 +157,7 @@
 
 <div>
   <div class="search-form-wrapper" bind:this={_root}>
-    <form on:submit|preventDefault={_submitSearch}>
+    <form onsubmit={_submitSearch}>
       <div id="searchbar-form" class="input-group d-flex">
         <div class="search-input">
           <input
@@ -172,7 +167,7 @@
             placeholder="Search using keywords"
             bind:this={_input}
           />
-          <span class="input-group-text" id="search-icon"><i class="fa-solid fa-magnifying-glass fa-fw" /></span>
+          <span class="input-group-text" id="search-icon"><i class="fa-solid fa-magnifying-glass fa-fw"></i></span>
         </div>
         <div class="select-container" id="search-where">
           <select
@@ -180,7 +175,7 @@
             aria-label="Where do you want to search?"
             aria-describedby="search-bar-help"
             bind:this={_select}
-            on:change={_updateSelect}
+            onchange={_updateSelect}
           >
             <option value="library" selected>Collection</option>
             <option value="website">Website</option>
@@ -193,7 +188,7 @@
               aria-label="Field"
               aria-describedby="search-bar-help"
               bind:this={_searchtype}
-              on:change={_updateSearchType}
+              onchange={_updateSearchType}
             >
               <option value="everything">Full Text & All Fields</option>
               <option value="all">All Fields</option>
@@ -206,19 +201,14 @@
             </select>
           </div>
         {/if}
-        <button class="btn btn-primary btn-outline-secondary" type="button" id="button-addon2" on:click={_submitSearch}
+        <button class="btn btn-primary btn-outline-secondary" type="button" id="button-addon2" onclick={_submitSearch}
           >Search
         </button>
-        <!-- <button
-          class="btn btn-primary btn-outline-secondary"
-          type="button"
-          id="button-addon2">Search</button
-        > -->
       </div>
     </form>
     <div class="search-details d-flex">
       <span class="search-help" id="search-bar-help"
-        ><i class="fa-solid fa-circle-info fa-fw" />
+        ><i class="fa-solid fa-circle-info fa-fw"></i>
         {#if index == 'library'}
           You're searching in {fieldValue} for {accessScope}.
         {/if}
@@ -228,10 +218,10 @@
       </span>
       <div class="search-links">
         <a href="//{window.HT.www_domain}/the-collection/search-access/#hathitrust-search-basics"
-          ><i class="fa-regular fa-circle-question fa-fw" /><span>Search Help</span></a
+          ><i class="fa-regular fa-circle-question fa-fw"></i><span>Search Help</span></a
         >
         <a href={`//${SERVICE_DOMAIN}/cgi/ls?a=page&page=advanced`}
-          ><i class="fa-solid fa-toolbox fa-fw" /><span>Advanced Search</span></a
+          ><i class="fa-solid fa-toolbox fa-fw"></i><span>Advanced Search</span></a
         >
       </div>
     </div>

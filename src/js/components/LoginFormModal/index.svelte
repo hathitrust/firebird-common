@@ -1,6 +1,3 @@
-<svelte:options accessors={true} />
-
-<!-- <svelte:body on:keyup={handleKeydown} /> -->
 <script>
   import { onMount } from 'svelte';
   import Modal from '../Modal';
@@ -10,12 +7,11 @@
 
   import FilterableSelection from '../FilterableSelection.svelte';
 
+  let { target, isOpen = false, ...rest } = $props();
   let HT = window.HT || {};
-  let sdrinst = HT.prefs ? HT.prefs.get().sdrinst : undefined;
-  let filterText;
+  let sdrinst = $state(HT.prefs ? HT.prefs.get().sdrinst : false);
+  let filterText = $state('');
   let modal;
-
-  export let target;
 
   if (!target) {
     target = window.location.href;
@@ -25,16 +21,15 @@
     }
   }
 
-  export let isOpen = false;
-
   export const show = function () {
-    if (!idpList.length) {
+    if (!HT.loginStatus.idp_list.length) {
+      console.log('idp_list is empty, dont show modal');
       return;
     }
     if (!sdrinst) {
       filterText = '';
     } else {
-      filterText = idpList.find((item) => item.sdrinst == sdrinst).name.replace(/&amp;/g, '&');
+      filterText = HT.loginStatus.idp_list.find((item) => item.sdrinst == sdrinst).name.replace(/&amp;/g, '&');
     }
     modal.show();
   };
@@ -49,27 +44,30 @@
     }
   });
 
-  $: loginStatus = HT.loginStatus;
-  $: idpList = $loginStatus.idp_list;
-  $: if (modal && isOpen) {
-    show();
-  }
-  $: if (modal && !isOpen) {
-    hide();
-  }
+  // let idpList = HT.loginStatus.idp_list;
+  $effect(() => {
+    if (modal && isOpen) {
+      show();
+    }
+    if (modal && !isOpen) {
+      hide();
+    }
+  });
 </script>
 
 <!--  height="90vh" ?? -->
 <Modal bind:this={modal}>
-  <svelte:fragment slot="title">Log in with Your Institution</svelte:fragment>
-  <svelte:fragment slot="body">
+  {#snippet title()}
+    Log in with Your Institution
+  {/snippet}
+  {#snippet body()}
     <p class="mb-0">Log in with your university or library to access the largest number of volumes and features.</p>
     <div class="mt-3" style="display: grid; grid-template-rows: minmax(0, 1fr); min-height: 0;">
       <InstitutionList bind:sdrinst {filterText} />
     </div>
-  </svelte:fragment>
-  <svelte:fragment slot="footer">
-    <LoginFormAction {...$$props} {sdrinst} {target} />
+  {/snippet}
+  {#snippet footer()}
+    <LoginFormAction {...rest} {sdrinst} {target} />
     <div class="m-0 p-0 w-100">
       <div>
         <p class="p-3 px-modal mb-0 border-top bg-light rounded-bottom">
@@ -80,11 +78,5 @@
         </p>
       </div>
     </div>
-  </svelte:fragment>
+  {/snippet}
 </Modal>
-
-<style>
-  /* :global(.modal-body) {
-    overflow: hidden !important;
-  } */
-</style>

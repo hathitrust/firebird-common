@@ -1,18 +1,19 @@
 <script>
-  import { writable } from 'svelte/store';
-  import { getContext } from 'svelte';
-  import { TestCookieJar } from '../lib/cookies';
+  import { TestCookieJar } from '../lib/cookies.svelte.js';
 
   function fakeIdpUrl(sdrinst) {
     return `https://hathi/Login?entityID=urn:institution:${sdrinst}&target=___TARGET___`;
   }
 
-  export let loggedIn = false;
-  export let prefs = null;
-  export let notificationData = null;
-  export let cookieData = null;
-  export let role;
-  export let hasActivatedRole;
+  let {
+    children,
+    loggedIn = false,
+    prefs = null,
+    notificationData = null,
+    cookieData = null,
+    role,
+    hasActivatedRole,
+  } = $props();
 
   const HT = {};
   HT.get_pong_target = function (href) {
@@ -62,12 +63,26 @@
     prefs.sdrinst = 'state';
   }
 
-  // HT.cookieJar = new CookieJar();
-  HT.loginStatus = writable(HT.login_status);
+  // Create the reactive state
+  let loginStatusState = $state(HT.login_status);
+
+  Object.defineProperty(HT, 'loginStatus', {
+    get() {
+      return loginStatusState;
+    },
+    set(value) {
+      Object.assign(loginStatusState, value);
+    },
+  });
+
+  //I think this is testing/making sure HT.login_status is set in the "store"
+  //so I added the new getter/setter definiton from main.svelte.js here
+  HT.loginStatus = HT.login_status;
   globalThis.HT = HT;
 
-  $: console.log('LoginStatusDecorator', loggedIn, prefs, notificationData, role);
-  $: console.log('HT.login_status.r', HT.login_status.r);
+  $effect(() => {
+    console.log('LoginStatusDecorator', loggedIn, prefs, notificationData);
+  });
 </script>
 
-<slot />
+{@render children?.()}

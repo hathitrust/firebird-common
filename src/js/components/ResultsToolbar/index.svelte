@@ -1,14 +1,25 @@
 <script>
-  import { onMount } from 'svelte';
   import CollectionEditModal from '../CollectionEditModal';
 
-  export let firstRecordNumber = 1;
-  export let lastRecordNumber = 35;
-  export let totalRecords = 225314;
-  export let currentSortOption = null;
-  export let target = 'catalog';
+  /**
+   * @typedef {Object} Props
+   * @property {number} [firstRecordNumber]
+   * @property {number} [lastRecordNumber]
+   * @property {number} [totalRecords]
+   * @property {any} [currentSortOption]
+   * @property {string} [target]
+   */
 
-  const config = {};
+  /** @type {Props} */
+  let {
+    firstRecordNumber = 1,
+    lastRecordNumber = 35,
+    totalRecords = 225314,
+    currentSortOption = $bindable(null),
+    target = 'catalog',
+  } = $props();
+
+  const config = $state({});
   config['catalog'] = {
     label: 'results',
     sortParam: 'sort',
@@ -54,8 +65,8 @@
     ],
   };
 
-  $: label = config[target].label;
-  $: sortOptions = config[target].sortOptions;
+  let label = $derived(config[target].label);
+  let sortOptions = $derived(config[target].sortOptions);
 
   const format = function (number) {
     return number.toLocaleString('en-US');
@@ -71,7 +82,7 @@
     location.href = url.toString();
   };
 
-  let modal;
+  let modal = $state();
   let action = 'addc';
   let status = {};
   const openModal = function () {
@@ -129,7 +140,7 @@
           name="sort"
           size="1"
           bind:value={currentSortOption}
-          on:change={onSubmit}
+          onchange={onSubmit}
         >
           {#each sortOptions as sortOption}
             <option value={sortOption.value} selected={sortOption.value == currentSortOption}>{sortOption.label}</option
@@ -139,26 +150,11 @@
       </div>
     {/if}
     {#if target == 'mb.listcs'}
-      <button type="button" class="btn btn-secondary text-nowrap" on:click={openModal}>New Collection</button>
+      <button type="button" class="btn btn-secondary text-nowrap" onclick={openModal}>New Collection</button>
     {/if}
-    <!-- <div class="row flex-nowrap" style="--bs-gutter-x: 0.5rem">
-      <div class="col-auto">
-        <label class="col-form-label fw-normal" for="sort">Items per page</label>
-      </div>
-      <div class="col-auto">
-        <select class="form-select" id="sort" name="sort" size="1">
-          {#each perPageOptions as pageOption}
-            <option>{pageOption}</option>
-          {/each}
-        </select>
-      </div>
-    </div> -->
   </div>
 </div>
 
 {#if target == 'mb.listcs'}
   <CollectionEditModal bind:this={modal} {submitAction} />
 {/if}
-
-<style>
-</style>

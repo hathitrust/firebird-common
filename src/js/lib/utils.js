@@ -1,8 +1,7 @@
-import docCookies from './cookies';
-import cookies from './cookies';
+import docCookies from './cookies.svelte';
+import cookies from './cookies.svelte';
 import { stageLinks } from './staging';
 import { Live } from './live';
-import { preferencesConsent } from './store'
 
 function isObject(item) {
   return item && typeof item === 'object' && !Array.isArray(item);
@@ -98,7 +97,7 @@ function setupHTEnv() {
       console.log(e);
     }
   };
-  
+
   HT.cookieJar = docCookies;
   HT.live = new Live(HT.is_dev);
 

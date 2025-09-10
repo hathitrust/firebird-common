@@ -44,7 +44,7 @@
         <a
           class="list-group-item list-group-item-action w-sm-50"
           href="http://catalog.hathitrust.org/Record/{catalogId}"
-          ><i class="fa-solid fa-circle-info" aria-hidden="true" /> <span>Catalog Record</span>{#if visited}<i
+          ><i class="fa-solid fa-circle-info" aria-hidden="true"></i> <span>Catalog Record</span>{#if visited}<i
               aria-hidden="true"
               class="visited-link fa-solid fa-check-double"
             ></i>{/if}</a
@@ -53,12 +53,11 @@
           <a
             class="list-group-item list-group-item-action w-sm-50"
             href="http://catalog.hathitrust.org/Record/{catalogId}#viewability"
-            ><i class="fa-solid fa-layer-group" aria-hidden="true" /> <span>Multiple Items</span></a
+            ><i class="fa-solid fa-layer-group" aria-hidden="true"></i> <span>Multiple Items</span></a
           >
-          <!-- <span class="list-group-item w-sm-50 border-0 bg-transparent fs-7">Use the Catalog Record to view multiple volumes</span> -->
         {:else if access == 'limited-search-only'}
           <a class="list-group-item list-group-item-action w-sm-50" href="https://babel.hathitrust.org/cgi/pt?id={htid}"
-            ><i aria-hidden="true" class="fa-solid fa-lock" /> <span>Limited (search-only)</span>{#if visited}<i
+            ><i aria-hidden="true" class="fa-solid fa-lock"></i> <span>Limited (search-only)</span>{#if visited}<i
                 aria-hidden="true"
                 class="visited-link fa-solid fa-check-double"
               ></i>{/if}</a
@@ -68,7 +67,7 @@
             data-activated-role="superuser"
             class="list-group-item list-group-item-action w-sm-50"
             href="https://babel.hathitrust.org/cgi/pt?id={htid}"
-            ><i aria-hidden="true" class="fa-solid fa-lock-open" /> <span>Registered Access</span>{#if visited}<i
+            ><i aria-hidden="true" class="fa-solid fa-lock-open"></i> <span>Registered Access</span>{#if visited}<i
                 aria-hidden="true"
                 class="visited-link fa-solid fa-check-double"
               ></i>{/if}</a
@@ -78,7 +77,8 @@
             data-activated-role="superuser"
             class="list-group-item list-group-item-action w-sm-50"
             href="https://babel.hathitrust.org/cgi/pt?id={htid}"
-            ><i aria-hidden="true" class="fa-solid fa-unlock" /> <span>Limited (access permitted)</span>{#if visited}<i
+            ><i aria-hidden="true" class="fa-solid fa-unlock"></i>
+            <span>Limited (access permitted)</span>{#if visited}<i
                 aria-hidden="true"
                 class="visited-link fa-solid fa-check-double"
               ></i>{/if}</a
@@ -87,7 +87,7 @@
           <a
             class="list-group-item list-group-item-action active active w-sm-50"
             href="https://babel.hathitrust.org/cgi/pt?id={htid}"
-            ><i class="fa-regular fa-file-lines" aria-hidden="true" /> <span>Full View</span>{#if visited}<i
+            ><i class="fa-regular fa-file-lines" aria-hidden="true"></i> <span>Full View</span>{#if visited}<i
                 aria-hidden="true"
                 class="visited-link fa-solid fa-check-double"
               ></i>{/if}</a
@@ -133,10 +133,6 @@
     a {
       white-space: nowrap;
 
-      &:has(+ span) {
-        border-top-right-radius: var(--bs-list-group-border-radius) !important;
-        border-bottom-right-radius: var(--bs-list-group-border-radius) !important;
-      }
       .visited-link {
         color: var(--bs-list-group-color);
         margin-left: auto;
@@ -153,10 +149,6 @@
       .visited-link {
         color: var(--bs-list-group-color);
       }
-
-      // &.active .visited-link {
-      //   color: var(--bs-list-group-active-bg);
-      // }
 
       &.active .visited-link {
         color: var(--bs-list-group-active-color);

@@ -1,25 +1,26 @@
 <script>
-  import { cookieConsentSeen } from '../../lib/store';
+  import { consent } from '../../lib/store.svelte';
   import CookieSettingsModal from '../CookieSettingsModal';
   const year = new Date().getFullYear();
   let HT = window.HT || {};
-  let settingsModal;
-  function openSettings() {
+  let settingsModal = $state();
+  function openSettings(e) {
+    e.preventDefault();
     settingsModal.show();
   }
 </script>
 
-{#if $cookieConsentSeen === 'true'}
+{#if consent.cookieConsentSeen === 'true'}
   <CookieSettingsModal bind:this={settingsModal} />
 {/if}
-<!-- svelte-ignore a11y-invalid-attribute -->
+<!-- svelte-ignore a11y_invalid_attribute -->
 <div class="sub-footer">
   <div class="legal">
     <span class="copyright">&#169;{year} HathiTrust</span>
     <div>
       <a href="//{HT.www_domain}/privacy-policy">Privacy Policy</a><span>|</span><a
         href="//{HT.www_domain}/takedown-policy">Takedown Policy</a
-      ><span>|</span><a href="#" role="button" on:click|preventDefault={openSettings}>Cookie Settings</a>
+      ><span>|</span><a href="#" role="button" onclick={openSettings}>Cookie Settings</a>
     </div>
   </div>
   <ul>
