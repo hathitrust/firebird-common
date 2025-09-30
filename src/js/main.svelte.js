@@ -131,7 +131,7 @@ document.documentElement.dataset.suportsInert = document.body.inert !== undefine
 document.querySelectorAll('[data-hathi-trigger]').forEach((el) => {
   let slug = el.dataset.hathiTrigger;
   let props = buildProps(el);
-  el.component = new apps[slug]({
+  el.component = mount(apps[slug], {
     target: document.body,
     props: props,
     intro: true,
