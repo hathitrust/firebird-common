@@ -245,20 +245,31 @@ body {
         color: var(--color-primary-800);
       }
 
+      &:active {
+        background: var(--color-primary-900);
+        color: var(--color-shades-0);
+      }
+
+      //if the link hasn't been visited, then on hover/focus, the icon should match the background (800 on 800)
       .visited-link {
         color: var(--color-primary-800);
       }
 
-      &:visited .visited-link {
-        color: var(--color-shades-0);
-      }
-
+      //if the link hasn't been visited, then on hover/focus the icon should match the background (white on white)
       &:hover .visited-link,
       &:focus .visited-link {
         color: var(--color-shades-0);
       }
 
+      //if the link hasn't been visited, then on active state, the icon should match the background (900 on 900)
       &:active .visited-link {
+        color: var(--color-primary-900);
+      }
+
+      // the rest of these are *visited* states, which should contrast with the background
+      &:visited .visited-link,
+      &:visited:active .visited-link,
+      &:visited:active:hover .visited-link {
         color: var(--color-shades-0);
       }
 
