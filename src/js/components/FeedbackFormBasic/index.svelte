@@ -9,6 +9,9 @@
     summaryError = $state(),
     descriptionError = $state(false);
 
+  const id = $props.id();
+  const form = `form#${id}`;
+
   //takes long string output of document.cookie and splits it into a usable javascript object
   let cookies = document.cookie
     .split(';')
@@ -26,8 +29,6 @@
 
   /**
    * @typedef {Object} Props
-   * @property {any} [id]
-   * @property {any} [form]
    * @property {any} postResponseStatusCode
    * @property {boolean} [loading] - when true, spinner on submit button animates
    * @property {boolean} [hidden] - when true, hides the element (in this case, the form)
@@ -38,8 +39,6 @@
 
   /** @type {Props} */
   let {
-    id = `id${new Date().getTime()}`,
-    form = `form#${id}`,
     postResponseStatusCode = $bindable(),
     loading = $bindable(false),
     hidden = $bindable(false),
@@ -86,16 +85,16 @@
       event.stopPropagation();
       loading = false;
       formValid.classList.add('was-validated');
-      if (formValid.querySelector('#name.form-control:invalid')) {
+      if (formValid.querySelector(`#${id}-name.form-control:invalid`)) {
         nameError = true;
       }
-      if (formValid.querySelector('#email.form-control:invalid')) {
+      if (formValid.querySelector(`#${id}-email.form-control:invalid`)) {
         emailError = true;
       }
-      if (formValid.querySelector('#summary.form-control:invalid')) {
+      if (formValid.querySelector(`#${id}-summary.form-control:invalid`)) {
         summaryError = true;
       }
-      if (formValid.querySelector('#description.form-control:invalid')) {
+      if (formValid.querySelector(`#${id}-description.form-control:invalid`)) {
         descriptionError = true;
       }
       errorMessage = true;
@@ -143,70 +142,79 @@
 <main>
   <form {onsubmit} class:hidden class="needs-validation mb-3" name="feedback" novalidate {id}>
     <div class="mb-3">
-      <label for="name" class="form-label">Name <span class="required" aria-hidden="true">(required)</span> </label>
+      <label for="{id}-name" class="form-label"
+        >Name <span class="required" aria-hidden="true">(required)</span>
+      </label>
       <input
-        aria-describedby="name-error"
+        aria-describedby="{id}-name-error"
         type="name"
         class="form-control"
-        id="name"
+        id="{id}-name"
         name="name"
         autocomplete="name"
         required
       />
-      <div class="invalid-feedback" id="name-error">
+      <div class="invalid-feedback" id="{id}-name-error">
         {#if nameError}
           <span>Error: Please provide your name.</span>
         {/if}
       </div>
     </div>
     <div class="mb-3">
-      <label for="email" class="form-label"
+      <label for="{id}-email" class="form-label"
         >Email address <span class="required" aria-hidden="true">(required)</span></label
       >
       <input
         type="email"
         class="form-control"
-        id="email"
+        id="{id}-email"
         name="email"
-        aria-describedby="email-error"
+        aria-describedby="{id}-email-error"
         autocomplete="email"
         required
       />
-      <div class="invalid-feedback" id="email-error">
+      <div class="invalid-feedback" id="{id}-email-error">
         {#if emailError}<span>Error: Please provide an email address.</span>{/if}
       </div>
     </div>
     <div class="mb-3">
-      <label for="summary" class="form-label"
+      <label for="{id}-summary" class="form-label"
         >Short summary <span class="required" aria-hidden="true">(required)</span></label
       >
-      <input type="text" class="form-control" id="summary" name="summary" aria-describedby="summary-error" required />
-      <div class="invalid-feedback" id="summary-error">
+      <input
+        type="text"
+        class="form-control"
+        id="{id}-summary"
+        name="summary"
+        aria-describedby="{id}-summary-error"
+        required
+      />
+      <div class="invalid-feedback" id="{id}-summary-error">
         {#if summaryError}<span>Error: Please provide a title or subject line to summarize your feedback.</span>{/if}
       </div>
     </div>
     <div class="mb-3">
-      <label for="bookDescription" class="form-label"
+      <label for="{id}-bookDescription" class="form-label"
         >If your question is related to a specific book, what is the title or URL? <span
           class="required"
           aria-hidden="true">(optional)</span
         ></label
       >
-      <input type="text" class="form-control" id="bookDescription" name="bookDescription" />
+      <input type="text" class="form-control" id="{id}-bookDescription" name="bookDescription" />
     </div>
     <div class="mb-3">
-      <label for="description" class="form-label"
+      <label for="{id}-description" class="form-label"
         >Full description of problem or question <span class="required" aria-hidden="true">(required)</span></label
       >
       <textarea
         class="form-control"
-        aria-describedby="description-error"
-        id="description"
+        aria-describedby="{id}-description-error"
+        id="{id}-description"
         name="description"
         rows="3"
         required
       ></textarea>
-      <div class="invalid-feedback" id="description-error">
+      <div class="invalid-feedback" id="{id}-description-error">
         {#if descriptionError}<span
             >Error: Please provide some background or details for your feedback or question.</span
           >{/if}

@@ -15,6 +15,7 @@
    * @property {boolean} [fullscreenOnMobile]
    * @property {boolean} [focusHelpOnClose]
    * @property {boolean} [focusMyAccountOnClose]
+   * @property {boolean} [focusButtonOnClose]
    * @property {import('svelte').Snippet} [title]
    * @property {import('svelte').Snippet} [body]
    * @property {import('svelte').Snippet} [footer]
@@ -33,6 +34,7 @@
     fullscreenOnMobile = false,
     focusHelpOnClose = false,
     focusMyAccountOnClose = false,
+    focusButtonOnClose = false,
     title,
     body,
     footer,
@@ -57,7 +59,7 @@
     }
     isOpen = true;
     dialog.showModal();
-    if (focusHelpOnClose || focusMyAccountOnClose) {
+    if (focusHelpOnClose || focusMyAccountOnClose || focusButtonOnClose) {
       window.addEventListener('keydown', logKeys);
     }
   };
@@ -80,6 +82,9 @@
     }
     if (focusMyAccountOnClose) {
       document.querySelector('#my-account a').focus();
+    }
+    if (focusButtonOnClose) {
+      document.querySelector('#feedback-form').focus();
     }
   };
 
