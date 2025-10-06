@@ -80,6 +80,16 @@
         <FeedbackFormBasic />
       {/snippet}
     </Modal>
+  {:else if form == 'contact'}
+    <Modal bind:this={modal} focusButtonOnClose scrollable>
+      {#snippet title()}
+        Contact HathiTrust
+      {/snippet}
+      {#snippet body()}
+        {#if winterBreak}<p>{@html message}</p>{/if}
+        <FeedbackFormBasic />
+      {/snippet}
+    </Modal>
   {:else}
     <Modal bind:this={modal} focusHelpOnClose scrollable>
       {#snippet title()}
