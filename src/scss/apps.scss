@@ -238,16 +238,19 @@ body {
     &[data-activated-role] {
       background: var(--color-primary-800);
       color: var(--color-shades-0);
+      border-color: var(--color-primary-800);
 
       &:hover,
       &:focus {
         background: var(--color-shades-0);
         color: var(--color-primary-800);
+        border-color: var(--bs-list-group-border-color);
       }
 
       &:active {
         background: var(--color-primary-900);
         color: var(--color-shades-0);
+        border-color: var(--color-primary-900);
       }
 
       //if the link hasn't been visited, then on hover/focus, the icon should match the background (800 on 800)
