@@ -195,7 +195,7 @@
               <option value="title">Title</option>
               <option value="author">Author</option>
               <option value="subject">Subject</option>
-              <option value="isn">ISBN/ISSN</option>
+              <option value="isn">ISBN, ISSN, OCLC, etc.</option>
               <option value="publisher">Publisher</option>
               <option value="seriestitle">Series Title</option>
             </select>
