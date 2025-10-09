@@ -287,6 +287,10 @@ body {
       border-top-right-radius: 6px;
       border-bottom-left-radius: 6px;
     }
+    &:last-child:focus-visible {
+      border-inline-start-width: 1px;
+      margin-inline-start: -1px;
+    }
   }
 
   // by default, hide the 10+nth facets
