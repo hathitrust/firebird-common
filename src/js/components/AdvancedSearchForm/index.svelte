@@ -29,7 +29,7 @@
     { value: 'title', label: 'Title' },
     { value: 'author', label: 'Author' },
     { value: 'subject', label: 'Subject' },
-    { value: 'isn', label: 'ISBN/ISSN' },
+    { value: 'isn', label: 'ISBN, ISSN, OCLC, etc.' },
     { value: 'publisher', label: 'Publisher' },
     { value: 'series', label: 'Series' },
     // { field: 'year', label: 'Year of Publication' },
