@@ -7,7 +7,9 @@ body {
 }
 
 .apps {
-  transition: visibility 0s linear 100ms, opacity 150ms;
+  transition:
+    visibility 0s linear 100ms,
+    opacity 150ms;
 
   // &[data-initialized='true'] {
   //   visibility: visible !important;
@@ -56,10 +58,7 @@ body {
     gap: 1.5rem;
     align-items: start;
     margin-top: 2.625rem;
-    margin-inline: max(
-      clamp(0.938rem, calc(0.268rem + 3.348vw), 1.875rem),
-      ((100% - 73.125rem) / 2)
-    );
+    margin-inline: max(clamp(0.938rem, calc(0.268rem + 3.348vw), 1.875rem), ((100% - 73.125rem) / 2));
 
     // Phire is 48em, but that might assume a main
     // column that wraps more than HTDL
@@ -130,7 +129,7 @@ body {
     }
   }
 
-  button[data-action="expand-filter"] {
+  button[data-action='expand-filter'] {
     &[aria-expanded='false'] .is-expanded {
       display: none;
     }
@@ -194,7 +193,6 @@ body {
     &:has(+ span) {
       border-top-right-radius: var(--bs-list-group-border-radius) !important;
       border-bottom-right-radius: var(--bs-list-group-border-radius) !important;
-      
     }
 
     // label colors
@@ -210,10 +208,11 @@ body {
       margin-left: auto;
     }
 
-    &:hover .visited-link, &:focus .visited-link {
+    &:hover .visited-link,
+    &:focus .visited-link {
       color: var(--bs-list-group-action-hover-bg);
     }
-    
+
     &:active .visited-link {
       color: var(--bs-list-group-action-active-bg);
     }
@@ -222,49 +221,75 @@ body {
       color: var(--bs-list-group-color);
     }
 
+    // z-index on this was causing focus ring on the neighboring
+    // list-group-item to visually "slide" behind/underneath the full-view item
+    &.active {
+      z-index: auto;
+    }
+
     &.active:visited .visited-link {
       color: var(--bs-list-group-active-color);
     }
 
     &.active .visited-link {
       color: var(--bs-list-group-active-bg);
-    }   
+    }
 
     &[data-activated-role] {
       background: var(--color-primary-800);
       color: var(--color-shades-0);
+      border-color: var(--color-primary-800);
 
-      &:hover, &:focus {
+      &:hover,
+      &:focus {
         background: var(--color-shades-0);
         color: var(--color-primary-800);
+        border-color: var(--bs-list-group-border-color);
       }
 
+      &:active {
+        background: var(--color-primary-900);
+        color: var(--color-shades-0);
+        border-color: var(--color-primary-900);
+      }
+
+      //if the link hasn't been visited, then on hover/focus, the icon should match the background (800 on 800)
       .visited-link {
         color: var(--color-primary-800);
       }
-      
-      &:visited .visited-link {
+
+      //if the link hasn't been visited, then on hover/focus the icon should match the background (white on white)
+      &:hover .visited-link,
+      &:focus .visited-link {
         color: var(--color-shades-0);
       }
 
-      &:hover .visited-link, &:focus .visited-link {
-        color: var(--color-shades-0);
-      }
-
+      //if the link hasn't been visited, then on active state, the icon should match the background (900 on 900)
       &:active .visited-link {
+        color: var(--color-primary-900);
+      }
+
+      // the rest of these are *visited* states, which should contrast with the background
+      &:visited .visited-link,
+      &:visited:active .visited-link,
+      &:visited:active:hover .visited-link {
         color: var(--color-shades-0);
       }
 
-      &:visited:hover .visited-link, &:visited:focus .visited-link {
+      &:visited:hover .visited-link,
+      &:visited:focus .visited-link {
         color: var(--color-primary-800);
       }
-
     }
   }
-  .list-group-horizontal-sm>.list-group-item {
+  .list-group-horizontal-sm > .list-group-item {
     &:focus-visible {
       border-top-right-radius: 6px;
       border-bottom-left-radius: 6px;
+    }
+    &:last-child:focus-visible {
+      border-inline-start-width: 1px;
+      margin-inline-start: -1px;
     }
   }
 
@@ -315,15 +340,11 @@ body {
       border-right: var(--border);
       background-color: var(--color-primary-200);
     }
-    :is(thead, tbody:first-child, caption:first-child + tbody)
-      tr:first-child
-      > :first-child {
+    :is(thead, tbody:first-child, caption:first-child + tbody) tr:first-child > :first-child {
       border-left: var(--border);
       border-top-left-radius: 0.375rem;
     }
-    :is(thead, tbody:first-child, caption:first-child + tbody)
-      tr:first-child
-      > :last-child {
+    :is(thead, tbody:first-child, caption:first-child + tbody) tr:first-child > :last-child {
       border-right: var(--border);
       border-top-right-radius: 0.375rem;
     }
@@ -387,7 +408,7 @@ main.error::before {
 }
 
 .bg-vaguely-faded {
-  background: rgba(255,255,255,0.75);
+  background: rgba(255, 255, 255, 0.75);
 }
 
 .alert p:last-child {
