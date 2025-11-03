@@ -15,12 +15,11 @@
   let dropdownSelected = $state(false);
 
   //updates UI when 'Collection' or 'Website' is selected in search options
+  // sets a boolean for whether or not the dropdown for collection/website was selected
   let _updateSelect = function (event) {
     index = event.target.value;
     _root.dataset.index = event.target.value;
-    if (index == 'library') {
-      dropdownSelected = true;
-    }
+    dropdownSelected = true;
   };
 
   function isSiteBabel() {
@@ -57,9 +56,7 @@
     if (_searchtype) {
       let value = _searchtype.value;
       _root.dataset.field = value;
-
       let menuItem = _searchtype.options[_searchtype.selectedIndex];
-
       console.log('-- updateSearchType', value, _searchtype, menuItem);
       fieldValue = menuItem.text;
     }
@@ -116,13 +113,14 @@
       const isAdvancedSearch = searchParams.get('adv') == '1';
 
       if (isSiteBabel() || isWebsiteHome()) {
-        console.log('isSiteBabel or isWebsite');
         _searchtypeValue = 'everything';
         _selectValue = 'library';
         // set _inputValue to q1 IF this is ls AND it's not a mondo collection
         if (location.pathname.match('/cgi/ls') && !searchParams.has('c')) {
           _inputValue = searchParams.get('q1');
           isFullView = !(searchParams.get('lmt') == 'all');
+        } else if (dropdownSelected) {
+          _selectValue = index;
         }
       } else if (isSiteCatalog()) {
         _searchtypeValue = searchParams.get('searchtype') || 'all';
