@@ -12,11 +12,14 @@
   const ALL_ITEMS = 'all items';
   let accessScope = $state(ACCESSIBLE_ITEMS);
   let isFullView = $state(true);
+  let dropdownSelected = $state(false);
 
   //updates UI when 'Collection' or 'Website' is selected in search options
+  // sets a boolean for whether or not the dropdown for collection/website was selected
   let _updateSelect = function (event) {
-    _root.dataset.index = event.target.value;
     index = event.target.value;
+    _root.dataset.index = event.target.value;
+    dropdownSelected = true;
   };
 
   function isSiteBabel() {
@@ -50,12 +53,13 @@
 
   //updates search hint message when use selects search type
   function _updateSearchType() {
-    let value = _searchtype.value;
-    _root.dataset.field = value;
-    let menuItem = _searchtype.options[_searchtype.selectedIndex];
-    // window._s1 = _searchtype;
-    console.log('-- updateSearchType', value, _searchtype, menuItem);
-    fieldValue = menuItem.text;
+    if (_searchtype) {
+      let value = _searchtype.value;
+      _root.dataset.field = value;
+      let menuItem = _searchtype.options[_searchtype.selectedIndex];
+      console.log('-- updateSearchType', value, _searchtype, menuItem);
+      fieldValue = menuItem.text;
+    }
   }
 
   let SERVICE_DOMAIN = $state('babel.hathitrust.org');
@@ -111,6 +115,9 @@
       if (isSiteBabel() || isWebsiteHome()) {
         _searchtypeValue = 'everything';
         _selectValue = 'library';
+        if (dropdownSelected) {
+          _selectValue = index;
+        }
         // set _inputValue to q1 IF this is ls AND it's not a mondo collection
         if (location.pathname.match('/cgi/ls') && !searchParams.has('c')) {
           _inputValue = searchParams.get('q1');
@@ -120,6 +127,9 @@
         _searchtypeValue = searchParams.get('searchtype') || 'all';
         _selectValue = 'library';
         _inputValue = searchParams.get('lookfor') || searchParams.get('lookfor[]') || '';
+        if (dropdownSelected) {
+          _selectValue = index;
+        }
         if (location.pathname == '/Record' && searchParams.has('ft')) {
           // default to isFullView=true if /Record does not have an ft parameter
           isFullView = searchParams.get('ft') == 'ft';
@@ -128,12 +138,16 @@
         }
       } else {
         _searchtypeValue = 'everything';
-        if (location.pathname.startsWith('/search/')) {
+        if (dropdownSelected == false && location.pathname.startsWith('/search/')) {
           _selectValue = 'website';
           index = 'website';
           let tmp = location.pathname.split('/').slice(2);
           tmp = tmp.pop();
           _inputValue = decodeURI(tmp);
+        } else if (dropdownSelected == true && index == 'library') {
+          _selectValue = 'library';
+          index = 'library';
+          _inputValue = '';
         } else {
           _selectValue = 'website';
           index = 'website';
@@ -147,7 +161,7 @@
       }
     }
 
-    _searchtype.value = _searchtypeValue;
+    if (_searchtype) _searchtype.value = _searchtypeValue;
     _select.value = _selectValue;
     _input.value = _inputValue;
     accessScope = isFullView ? ACCESSIBLE_ITEMS : ALL_ITEMS;
