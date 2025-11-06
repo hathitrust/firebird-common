@@ -1,6 +1,5 @@
 import '../src/scss/styles.scss';
 import * as bootstrap from 'bootstrap';
-// import { INITIAL_VIEWPORTS } from 'storybook/viewport';
 
 const BOOTSTRAP_VIEWPORTS = {
   bsXs: {
@@ -49,8 +48,6 @@ const BOOTSTRAP_VIEWPORTS = {
 
 const preview = {
   parameters: {
-    backgrounds: {},
-    // actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
       matchers: {
         color: /(background|color)$/i,
@@ -58,13 +55,16 @@ const preview = {
       },
     },
     viewport: {
-      options: BOOTSTRAP_VIEWPORTS,
+      options: BOOTSTRAP_VIEWPORTS, // Keep as 'options' in Storybook 9
     },
   },
 
   initialGlobals: {
     backgrounds: {
       value: 'light',
+    },
+    viewport: {
+      value: 'bsMd', // Optional: set a default viewport
     },
   },
 };
