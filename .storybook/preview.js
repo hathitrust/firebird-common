@@ -1,6 +1,6 @@
 import '../src/scss/styles.scss';
 import * as bootstrap from 'bootstrap';
-// import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
+// import { INITIAL_VIEWPORTS } from 'storybook/viewport';
 
 const BOOTSTRAP_VIEWPORTS = {
   bsXs: {
@@ -49,9 +49,7 @@ const BOOTSTRAP_VIEWPORTS = {
 
 const preview = {
   parameters: {
-    backgrounds: {
-      default: 'light',
-    },
+    backgrounds: {},
     actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
       matchers: {
@@ -60,9 +58,15 @@ const preview = {
       },
     },
     viewport: {
-      viewports: BOOTSTRAP_VIEWPORTS,
+      options: BOOTSTRAP_VIEWPORTS,
     },
   },
+
+  initialGlobals: {
+    backgrounds: {
+      value: 'light'
+    }
+  }
 };
 
 export default preview;

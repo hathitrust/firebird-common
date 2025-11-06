@@ -1,10 +1,10 @@
 import ResultsItem from './index.svelte';
 import MarginDecorator from '../MarginDecorator';
 
-import { userEvent, within } from "@storybook/test";
-import { action } from '@storybook/addon-actions';
+import { userEvent, within } from "storybook/test";
+import { action } from 'storybook/actions';
 
-import { expect } from "@storybook/test";
+import { expect } from "storybook/test";
 
 export default {
   title: 'Designs/Results Item',

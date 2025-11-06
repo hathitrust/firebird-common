@@ -1,7 +1,7 @@
 import Navbar from './index.svelte';
 import PingCallbackDecorator from '../../decorators/PingCallbackDecorator';
-import { userEvent, within } from '@storybook/test';
-import { expect } from '@storybook/test';
+import { userEvent, within } from 'storybook/test';
+import { expect } from 'storybook/test';
 
 export default {
   title: 'Navbar',
@@ -15,11 +15,6 @@ export default {
 };
 
 export const Default = {
-  parameters: {
-    viewport: {
-      defaultViewport: 'bsXl',
-    },
-  },
   decorators: [
     () => ({
       Component: PingCallbackDecorator,
@@ -30,6 +25,12 @@ export const Default = {
     const canvas = within(canvasElement);
     //sanity check
     expect(await canvas.getByTitle('HathiTrust Home')).toBeInTheDocument();
+  },
+  globals: {
+    viewport: {
+      value: 'bsXl',
+      isRotated: false
+    }
   },
 };
 export const DesktopDropdownMenuSelected = {
@@ -140,17 +141,18 @@ export const DesktopLoggedInWithNotifications = {
   ],
 };
 export const Mobile = {
-  parameters: {
-    viewport: {
-      defaultViewport: 'bsXs',
-    },
-  },
   decorators: [
     () => ({
       Component: PingCallbackDecorator,
       props: { loggedIn: false, notificationData: null },
     }),
   ],
+  globals: {
+    viewport: {
+      value: 'bsXs',
+      isRotated: false
+    }
+  },
 };
 export const MobileOpenMenu = {
   parameters: { ...Mobile.parameters },
