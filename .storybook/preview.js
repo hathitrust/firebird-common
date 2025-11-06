@@ -50,7 +50,7 @@ const BOOTSTRAP_VIEWPORTS = {
 const preview = {
   parameters: {
     backgrounds: {},
-    actions: { argTypesRegex: '^on[A-Z].*' },
+    // actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
       matchers: {
         color: /(background|color)$/i,
@@ -64,9 +64,9 @@ const preview = {
 
   initialGlobals: {
     backgrounds: {
-      value: 'light'
-    }
-  }
+      value: 'light',
+    },
+  },
 };
 
 export default preview;

@@ -1,7 +1,13 @@
 /** @type { import('@storybook/svelte-vite').StorybookConfig } */
 const config = {
   stories: ['../src/**/*.stories.@(js|jsx|ts|tsx|svelte)'],
-  addons: ['@storybook/addon-links', '@storybook/addon-docs', '@storybook/addon-vitest'],
+  addons: [
+    '@storybook/addon-links',
+    '@storybook/addon-docs',
+    '@storybook/addon-vitest',
+    '@chromatic-com/storybook',
+    '@storybook/addon-a11y'
+  ],
   framework: {
     name: '@storybook/svelte-vite',
     options: {},

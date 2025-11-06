@@ -12,7 +12,7 @@
     "build-storybook": "storybook build",
     "build-js": "vite build",
     "build": "vite build && storybook build -o dist/storybook && node ./build-redirects.js",
-    "test-storybook": "test-storybook",
+    "test-storybook": "vitest --project=storybook",
     "chromatic": "chromatic --exit-zero-on-changes",
     "babel": "vite build --watch --minify false"
   },
@@ -27,6 +27,8 @@
   },
   "homepage": "https://github.com/hathitrust/firebird-common#readme",
   "devDependencies": {
+    "@chromatic-com/storybook": "^4.1.2",
+    "@storybook/addon-a11y": "^9.1.16",
     "@storybook/addon-docs": "9.1.16",
     "@storybook/addon-links": "9.1.16",
     "@storybook/addon-vitest": "^9.1.16",
