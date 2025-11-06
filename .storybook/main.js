@@ -1,11 +1,7 @@
 /** @type { import('@storybook/svelte-vite').StorybookConfig } */
 const config = {
   stories: ['../src/**/*.stories.@(js|jsx|ts|tsx|svelte)'],
-  addons: [
-    '@storybook/addon-links',
-    '@storybook/addon-designs',
-    '@storybook/addon-docs'
-  ],
+  addons: ['@storybook/addon-links', '@storybook/addon-docs', '@storybook/addon-vitest'],
   framework: {
     name: '@storybook/svelte-vite',
     options: {},
@@ -17,24 +13,21 @@ const config = {
   staticDirs: ['../src/public'],
   async viteFinal(config, { configType }) {
     const { mergeConfig } = await import('vite');
- 
+
     if (configType === 'DEVELOPMENT') {
       // Your development configuration goes here
     }
     if (configType === 'PRODUCTION') {
       // Your production configuration goes here.
-      config.plugins = config.plugins.filter(plugin => {
-        return plugin.name != 'postbuild-commands'
-      })
+      config.plugins = config.plugins.filter((plugin) => {
+        return plugin.name != 'postbuild-commands';
+      });
     }
     return mergeConfig(config, {
       // Your environment configuration here
       build: {
         rollupOptions: {
-          external: [
-            /^..\/fonts/,
-            /^\/common\/firebird/
-          ]
+          external: [/^..\/fonts/, /^\/common\/firebird/],
         },
       },
     });
