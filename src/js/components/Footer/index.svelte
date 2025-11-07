@@ -14,21 +14,21 @@
   <CookieSettingsModal bind:this={settingsModal} />
 {/if}
 <!-- svelte-ignore a11y_invalid_attribute -->
-<div class="sub-footer">
+<footer class="sub-footer">
   <div class="legal">
     <span class="copyright">&#169;{year} HathiTrust</span>
     <div>
-      <a href="//{HT.www_domain}/privacy-policy">Privacy Policy</a><span>|</span><a
-        href="//{HT.www_domain}/takedown-policy">Takedown Policy</a
+      <a href="//{HT.www_domain}/the-collection/terms-conditions/privacy-policy">Privacy Policy</a><span>|</span><a
+        href="//{HT.www_domain}/the-collection/search-access/copyright-access/#takedown-policy">Takedown Policy</a
       ><span>|</span><a href="#" role="button" onclick={openSettings}>Cookie Settings</a>
     </div>
   </div>
   <ul>
-    <li><a href="//{HT.www_domain}/careers">Careers</a></li>
+    <li><a href="//{HT.www_domain}/about/careers">Careers</a></li>
     <li><a href="//{HT.www_domain}/accessibility">Accessibility</a></li>
     <li><a href="//{HT.www_domain}/contact">Contact</a></li>
   </ul>
-</div>
+</footer>
 
 <style lang="scss">
   .sub-footer {
