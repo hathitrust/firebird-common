@@ -129,6 +129,21 @@ export default defineConfig({
     },
     projects: [
       {
+        plugins: [
+          svelte({
+            hot: false,
+            compilerOptions: {
+              hydratable: true,
+            },
+          }),
+        ],
+        test: {
+          name: 'default',
+          include: ['**/*.test.js'],
+          exclude: ['**/*.stories.js'],
+        },
+      },
+      {
         extends: true,
         plugins: [
           // The plugin will run tests for the stories defined in your Storybook config
@@ -139,6 +154,7 @@ export default defineConfig({
         ],
         test: {
           name: 'storybook',
+          root: path.resolve(dirname),
           browser: {
             enabled: true,
             headless: true,
@@ -149,7 +165,10 @@ export default defineConfig({
               },
             ],
           },
-          setupFiles: ['.storybook/vitest.setup.js'],
+          setupFiles: ['./.storybook/vitest.setup.js'],
+        },
+        optimizeDeps: {
+          include: ['@storybook/svelte-vite', 'bootstrap', '@storybook/test'],
         },
       },
     ],
