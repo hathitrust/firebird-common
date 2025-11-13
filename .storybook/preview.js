@@ -64,7 +64,8 @@ const preview = {
       value: 'light',
     },
     viewport: {
-      value: 'bsMd', // Optional: set a default viewport
+      value: 'bsXl', // Optional: set a default viewport
+      isRotated: false,
     },
   },
 };
