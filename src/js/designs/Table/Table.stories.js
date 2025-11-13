@@ -1,6 +1,6 @@
 import Table from './index.svelte';
-import { userEvent, within } from "@storybook/test";
-import { expect } from "@storybook/test";
+import { userEvent, within } from "storybook/test";
+import { expect } from "storybook/test";
 
 export default {
   title: 'Designs/Table',
@@ -8,9 +8,10 @@ export default {
 };
 
 export const Default = {
-  parameters: {
+  globals: {
     viewport: {
-      defaultViewport: 'bsXl',
-    },
+      value: 'bsXl',
+      isRotated: false
+    }
   },
 };

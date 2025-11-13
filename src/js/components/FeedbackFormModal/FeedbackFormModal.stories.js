@@ -42,9 +42,10 @@ export const WinterBreakMobile = {
     isOpen: true,
     winterBreak: true
   },
-  parameters: {
+  globals: {
     viewport: {
-      defaultViewport: 'bsXs',
-    },
+      value: 'bsXs',
+      isRotated: false
+    }
   }
 };
