@@ -7,13 +7,14 @@
   "scripts": {
     "dev": "vite",
     "test": "vitest --project=default",
+    "test:visual": "storybook dev --ci --no-open",
     "coverage": "vitest run --coverage.enabled --coverage.provider=istanbul",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "build-js": "vite build",
     "build": "vite build && storybook build -o dist/storybook && node ./build-redirects.js",
     "test-storybook": "vitest --project=storybook",
-    "chromatic": "chromatic --exit-zero-on-changes",
+    "chromatic": "if [ \"$CI\" = \"true\" ]; then chromatic --exit-zero-on-changes; else echo 'Skipping Chromatic upload locally (CI only)'; fi",
     "babel": "vite build --watch --minify false"
   },
   "repository": {
