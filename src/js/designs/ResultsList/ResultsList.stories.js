@@ -1,30 +1,27 @@
 import ResultsList from './index.svelte';
 import MarginDecorator from '../MarginDecorator';
 
-import { userEvent, within } from "@storybook/test";
-import { action } from '@storybook/addon-actions';
+import { userEvent, within } from 'storybook/test';
+import { action } from 'storybook/actions';
 
-import { expect } from "@storybook/test";
+import { expect } from 'storybook/test';
 
 export default {
   title: 'Designs/Results List',
   component: ResultsList,
   decorators: [() => MarginDecorator],
   excludeStories: /.*Data$/,
-};
-
-const parameters = {
-  viewport: {
-    defaultViewport: 'bsLg',
+  globals: {
+    viewport: {
+      value: 'bsLg',
+      isRotated: false,
+    },
   },
 };
 
-export const FullText = {
-  parameters: parameters,
-};
+export const FullText = {};
 
 export const Catalog = {
-  parameters: parameters,
   args: {
     supportsSelection: false,
   },

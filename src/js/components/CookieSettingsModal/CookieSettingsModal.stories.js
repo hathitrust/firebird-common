@@ -1,5 +1,5 @@
 import CookieSettingsModal from './index.svelte';
-import { userEvent, within } from "@storybook/test";
+import { userEvent, within } from "storybook/test";
 
 export default {
   title: 'Cookie Settings Modal',
@@ -8,29 +8,35 @@ export default {
 
 export const Default = {
   parameters: {
-    viewport: {
-      defaultViewport: 'bsXl',
-    },
     design:{
       type:'figma', 
       url: 'https://www.figma.com/file/Ju55vvmsCEFHHTjfyysGyJ/HathiTrust---Design-Explorations?type=design&node-id=1156-4805&mode=design&t=OFcXMYKLXi1GEmh5-4'
     }
   },
+
   args: {
     isOpen: true,
     
   },
+
+  globals: {
+    viewport: {
+      value: 'bsXl',
+      isRotated: false
+    }
+  }
 };
 
 export const MobileDefault = {
-  parameters: {
-    viewport: {
-      defaultViewport: 'bsXs',
-    },
-  },
   args: {
     isOpen: true,
     
+  },
+  globals: {
+    viewport: {
+      value: 'bsXs',
+      isRotated: false
+    }
   },
 };
 

@@ -1,7 +1,7 @@
 import Navbar from './index.svelte';
 import PingCallbackDecorator from '../../decorators/PingCallbackDecorator';
-import { userEvent, within } from '@storybook/test';
-import { expect } from '@storybook/test';
+import { userEvent, within } from 'storybook/test';
+import { expect } from 'storybook/test';
 
 export default {
   title: 'Navbar',
@@ -15,11 +15,6 @@ export default {
 };
 
 export const Default = {
-  parameters: {
-    viewport: {
-      defaultViewport: 'bsXl',
-    },
-  },
   decorators: [
     () => ({
       Component: PingCallbackDecorator,
@@ -30,6 +25,12 @@ export const Default = {
     const canvas = within(canvasElement);
     //sanity check
     expect(await canvas.getByTitle('HathiTrust Home')).toBeInTheDocument();
+  },
+  globals: {
+    viewport: {
+      value: 'bsXl',
+      isRotated: false,
+    },
   },
 };
 export const DesktopDropdownMenuSelected = {
@@ -140,17 +141,18 @@ export const DesktopLoggedInWithNotifications = {
   ],
 };
 export const Mobile = {
-  parameters: {
-    viewport: {
-      defaultViewport: 'bsXs',
-    },
-  },
   decorators: [
     () => ({
       Component: PingCallbackDecorator,
       props: { loggedIn: false, notificationData: null },
     }),
   ],
+  globals: {
+    viewport: {
+      value: 'bsXs',
+      isRotated: false,
+    },
+  },
 };
 export const MobileOpenMenu = {
   parameters: { ...Mobile.parameters },
@@ -160,6 +162,12 @@ export const MobileOpenMenu = {
       props: { loggedIn: false, notificationData: null },
     }),
   ],
+  globals: {
+    viewport: {
+      value: 'bsXs',
+      isRotated: false,
+    },
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const mobileMenuButton = canvas.getByLabelText('Toggle navigation');
@@ -174,6 +182,12 @@ export const MobileDropdownMenuSelected = {
       props: { loggedIn: false, notificationData: null },
     }),
   ],
+  globals: {
+    viewport: {
+      value: 'bsXs',
+      isRotated: false,
+    },
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
@@ -195,6 +209,12 @@ export const MobileLoggedIn = {
       props: { loggedIn: true },
     }),
   ],
+  globals: {
+    viewport: {
+      value: 'bsXs',
+      isRotated: false,
+    },
+  },
 };
 export const MobileLoggedInResourceSharingRole = {
   parameters: { ...Mobile.parameters },
@@ -207,6 +227,12 @@ export const MobileLoggedInResourceSharingRole = {
       props: { loggedIn: true, role: 'resourceSharing', hasActivatedRole: false },
     }),
   ],
+  globals: {
+    viewport: {
+      value: 'bsXs',
+      isRotated: false,
+    },
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const mobileMenuButton = canvas.getByLabelText('Toggle navigation');
@@ -227,6 +253,12 @@ export const MobileLoggedInResourceSharingRoleActivated = {
       props: { loggedIn: true, role: 'resourceSharing', hasActivatedRole: true },
     }),
   ],
+  globals: {
+    viewport: {
+      value: 'bsXs',
+      isRotated: false,
+    },
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const mobileMenuButton = canvas.getByLabelText('Toggle navigation');
@@ -257,6 +289,12 @@ export const MobileLoggedInWithNotifications = {
       },
     }),
   ],
+  globals: {
+    viewport: {
+      value: 'bsXs',
+      isRotated: false,
+    },
+  },
 };
 export const MobileLoggedInMyAccountDropdown = {
   parameters: { ...Mobile.parameters },
@@ -269,6 +307,12 @@ export const MobileLoggedInMyAccountDropdown = {
       },
     }),
   ],
+  globals: {
+    viewport: {
+      value: 'bsXs',
+      isRotated: false,
+    },
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
@@ -303,6 +347,12 @@ export const MobileLoggedInResourceSharingRoleActivatedHasNotification = {
       },
     }),
   ],
+  globals: {
+    viewport: {
+      value: 'bsXs',
+      isRotated: false,
+    },
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const mobileMenuButton = canvas.getByLabelText('Toggle navigation');

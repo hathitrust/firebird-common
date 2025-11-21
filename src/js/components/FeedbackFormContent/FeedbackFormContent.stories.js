@@ -1,6 +1,6 @@
 import FeedbackFormContent from './index.svelte';
-import { userEvent, within } from '@storybook/test';
-import { expect } from '@storybook/test';
+import { userEvent, within } from 'storybook/test';
+import { expect } from 'storybook/test';
 
 export default {
   title: 'Feedback Form - Content Correction',
@@ -9,11 +9,6 @@ export default {
 };
 
 export const Default = {
-  parameters: {
-    viewport: {
-      defaultViewport: 'bsXl',
-    },
-  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const submitButton = await canvas.getByRole('button', {
@@ -24,6 +19,12 @@ export const Default = {
     await expect(canvas.getByRole('main')).toBeInTheDocument();
     await expect(submitButton).toHaveTextContent('Submit');
     await expect(submitButton.classList).toContain('btn-primary');
+  },
+  globals: {
+    viewport: {
+      value: 'bsXl',
+      isRotated: false
+    }
   },
 };
 
@@ -125,9 +126,10 @@ export const Default = {
 // };
 
 export const DefaultMobile = {
-  parameters: {
+  globals: {
     viewport: {
-      defaultViewport: 'bsXs',
-    },
+      value: 'bsXs',
+      isRotated: false
+    }
   },
 };

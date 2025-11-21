@@ -3,6 +3,9 @@ import FeedbackFormModal from './index.svelte';
 export default {
   title: 'Feedback Form Modal',
   component: FeedbackFormModal,
+  globals: {
+    viewport: { value: 'bsXl' },
+  },
 };
 
 export const Default = {
@@ -29,22 +32,22 @@ export const Content = {
   },
 };
 
-
 export const WinterBreak = {
   args: {
     isOpen: true,
-    winterBreak: true
-  } 
+    winterBreak: true,
+  },
 };
 
 export const WinterBreakMobile = {
   args: {
     isOpen: true,
-    winterBreak: true
+    winterBreak: true,
   },
-  parameters: {
+  globals: {
     viewport: {
-      defaultViewport: 'bsXs',
+      value: 'bsXs',
+      isRotated: false,
     },
-  }
+  },
 };

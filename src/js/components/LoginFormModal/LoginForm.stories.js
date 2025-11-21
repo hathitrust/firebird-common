@@ -1,9 +1,9 @@
 import LoginForm from './LoginForm.svelte';
 import PingCallbackDecorator from '../../decorators/PingCallbackDecorator';
-import { userEvent, within } from '@storybook/test';
-import { action } from '@storybook/addon-actions';
+import { userEvent, within } from 'storybook/test';
+import { action } from 'storybook/actions';
 
-import { expect } from '@storybook/test';
+import { expect } from 'storybook/test';
 
 export const actionsData = {
   show: action('show'),
@@ -23,6 +23,12 @@ export default {
   argTypes: {
     show: { action: 'show' },
     hide: { action: 'hide' },
+  },
+  globals: {
+    viewport: {
+      value: 'bsXl',
+      isRotated: false,
+    },
   },
 };
 

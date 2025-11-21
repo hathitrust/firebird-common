@@ -1,5 +1,5 @@
 import Footer from './index.svelte';
-import { userEvent, within } from "@storybook/test";
+import { userEvent, within } from "storybook/test";
 
 export default {
   title: 'Footer',
@@ -7,17 +7,19 @@ export default {
 };
 
 export const MobileDefault = {
-  parameters: {
+  globals: {
     viewport: {
-      defaultViewport: 'bsXs',
-    },
+      value: 'bsXs',
+      isRotated: false
+    }
   },
 };
 
 export const DefaultDesktop = {
-  parameters: {
+  globals: {
     viewport: {
-      defaultViewport: 'bsXl',
-    },
+      value: 'bsXl',
+      isRotated: false
+    }
   },
 };

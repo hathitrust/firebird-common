@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { defineConfig } from 'vite';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 import autoPreprocess from 'svelte-preprocess';
@@ -8,8 +9,15 @@ import glob from 'fast-glob';
 import fs from 'fs';
 
 // Find all HTML files and build an object of names and paths to work from
+import { fileURLToPath } from 'node:url';
+import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
+const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
+
+// More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 const files = glob
-  .sync(path.resolve(__dirname, 'src') + '/**/*.html', { ignore: [(path.resolve(__dirname, 'src') + '/coverage')] })
+  .sync(path.resolve(__dirname, 'src') + '/**/*.html', {
+    ignore: [path.resolve(__dirname, 'src') + '/coverage'],
+  })
   .reduce((acc, cur) => {
     // we want to keep the path
     let name = cur
@@ -23,7 +31,6 @@ const files = glob
     acc[name] = cur;
     return acc;
   }, {});
-
 const scssOptions = {
   quietDeps: true,
 };
@@ -37,11 +44,10 @@ const removeStylesheet = () => {
     enforce: 'post',
     apply: 'build',
     transformIndexHtml(html) {
-      return html.replaceAll(/<link\s+rel="stylesheet"(\s.*\s)href="(.*)\.css">/gi, "");
+      return html.replaceAll(/<link\s+rel="stylesheet"(\s.*\s)href="(.*)\.css">/gi, '');
     },
-  }
-}
-
+  };
+};
 export default defineConfig({
   plugins: [
     svelte({
@@ -62,9 +68,9 @@ export default defineConfig({
           delete manifest['style.css'];
           fs.writeFileSync(path, JSON.stringify(manifest, null, 2));
         }
-      }
+      },
     },
-   removeStylesheet()
+    removeStylesheet(),
   ],
   root: path.resolve(__dirname, 'src'),
   publicDir: 'public',
@@ -82,16 +88,13 @@ export default defineConfig({
       },
       output: {
         assetFileNames: (assetInfo) => {
-         if (assetInfo.name == 'style.css') {
-          return `assets/index-[hash].[ext]`
-         }
-        return assetInfo;
+          if (assetInfo.name == 'style.css') {
+            return `assets/index-[hash].[ext]`;
+          }
+          return assetInfo;
         },
       },
-      external: [
-        /^..\/fonts/,
-        /^\/common\/firebird/
-      ]
+      external: [/^..\/fonts/, /^\/common\/firebird/],
     },
   },
   resolve: {
@@ -118,7 +121,52 @@ export default defineConfig({
   },
   test: {
     coverage: {
-      reporter: 'lcov'
+      reporter: 'lcov',
     },
+    projects: [
+      {
+        plugins: [
+          svelte({
+            hot: false,
+            compilerOptions: {
+              hydratable: true,
+            },
+          }),
+        ],
+        test: {
+          name: 'default',
+          include: ['**/*.test.js'],
+          exclude: ['**/*.stories.js'],
+        },
+      },
+      {
+        extends: true,
+        plugins: [
+          // The plugin will run tests for the stories defined in your Storybook config
+          // See options at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon#storybooktest
+          storybookTest({
+            configDir: path.join(dirname, '.storybook'),
+          }),
+        ],
+        test: {
+          name: 'storybook',
+          root: path.resolve(dirname),
+          browser: {
+            enabled: true,
+            headless: true,
+            provider: 'playwright',
+            instances: [
+              {
+                browser: 'chromium',
+              },
+            ],
+          },
+          setupFiles: ['./.storybook/vitest.setup.js'],
+        },
+        optimizeDeps: {
+          include: ['@storybook/svelte-vite', 'bootstrap', '@storybook/test'],
+        },
+      },
+    ],
   },
 });

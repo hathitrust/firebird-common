@@ -26,4 +26,10 @@ export default {
   overflowed: true,
   alert: 'Only one accordion will be open at a time.',
   example: panelsHTML,
+  globals: {
+    viewport: {
+      value: 'bsXl',
+      isRotated: false,
+    },
+  },
 };
