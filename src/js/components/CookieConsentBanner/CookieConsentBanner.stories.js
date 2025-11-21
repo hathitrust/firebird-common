@@ -1,7 +1,7 @@
 import CookieConsentBanner from './index.svelte';
 import PingCallbackDecorator from '../../decorators/PingCallbackDecorator';
-import { userEvent, within } from "@storybook/test";
-import { expect } from "@storybook/test";
+import { userEvent, within } from "storybook/test";
+import { expect } from "storybook/test";
 
 export default {
   title: 'Cookie Consent Banner',
@@ -15,21 +15,21 @@ export default {
 
 export const Default = {
   parameters: {
-    viewport: {
-      defaultViewport: 'bsXl',
-    },
     layout: 'fullscreen',
+
     design:{
       type:'figma', 
       url: 'https://www.figma.com/file/Ju55vvmsCEFHHTjfyysGyJ/HathiTrust---Design-Explorations?type=design&node-id=1095-14949&mode=design&t=afnXdsdlpCz3QKPV-4'
     }
   },
+
   decorators: [
     () => ({
       Component: PingCallbackDecorator,
       // props: { loggedIn: true },
     }),
   ],
+
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const consentButton = await canvas.getByRole('button', {
@@ -40,19 +40,27 @@ export const Default = {
     expect(consentButton.innerHTML).toBe('Allow all cookies');
     expect(consentButton.classList).toContain('btn-primary');
   },
+
+  globals: {
+    viewport: {
+      value: 'bsXl',
+      isRotated: false
+    }
+  }
 };
 export const MobileDefault = {
-  parameters: {
-    viewport: {
-      defaultViewport: 'bsXs',
-    },
-  },
   decorators: [
     () => ({
       Component: PingCallbackDecorator,
       // props: { loggedIn: true },
     }),
   ],
+  globals: {
+    viewport: {
+      value: 'bsXs',
+      isRotated: false
+    }
+  },
 };
 
 // export const PreviouslyAccepted = {
