@@ -87,7 +87,8 @@
           class="w-100 h-100 d-flex flex-column justify-content-between"
           onsubmit={submit}
         >
-          <div class="roles d-flex flex-column h-100">
+          <fieldset class="roles d-flex flex-column h-100">
+            <legend class="sr-only">Choose a role</legend>
             <label
               for="role--default"
               class="form-check option py-4 px-3"
@@ -160,7 +161,7 @@
               <div class="control--help"></div>
             </label>
             <input type="hidden" name="referer" bind:value={url} />
-          </div>
+          </fieldset>
         </form>
       </div>
     {/snippet}
