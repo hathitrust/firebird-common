@@ -48,7 +48,7 @@
 </script>
 
 {#if manager.hasNotifications()}
-  <Modal bind:this={modal} {onClose}>
+  <Modal bind:this={modal} {onClose} focusMyAccountOnClose>
     {#snippet title()}
       Your notifications
     {/snippet}
