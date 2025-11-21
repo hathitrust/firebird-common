@@ -175,7 +175,7 @@
       <div id="searchbar-form" class="input-group d-flex">
         <div class="search-input">
           <input
-            type="text"
+            type="search"
             class="form-control"
             aria-label="Keywords"
             placeholder="Search using keywords"
