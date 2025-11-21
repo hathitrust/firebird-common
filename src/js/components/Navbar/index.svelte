@@ -379,9 +379,9 @@
                     class="account-icon me-n1 d-flex align-items-center justify-content-center border border-neutral-300 rounded-circle bg-neutral-100"
                   >
                     {#if hasActivatedRole}
-                      <i class="fa-solid fa-user-plus text-primary-600"></i>
+                      <i class="fa-solid fa-user-plus text-primary-600" aria-hidden="true"></i>
                     {:else}
-                      <i class="fa-solid fa-user text-neutral-800"></i>
+                      <i class="fa-solid fa-user text-neutral-800" aria-hidden="true"></i>
                     {/if}
                   </span>
                   <span id="my-account-label"
