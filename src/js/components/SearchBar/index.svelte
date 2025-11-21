@@ -222,7 +222,7 @@
     </form>
     <div class="search-details d-flex">
       <span class="search-help" id="search-bar-help"
-        ><i class="fa-solid fa-circle-info fa-fw"></i>
+        ><i class="fa-solid fa-circle-info fa-fw" aria-label="Search hint" role="img"></i>
         {#if index == 'library'}
           You're searching in {fieldValue} for {accessScope}.
         {/if}
@@ -232,10 +232,10 @@
       </span>
       <div class="search-links">
         <a href="//{window.HT.www_domain}/the-collection/search-access/#hathitrust-search-basics"
-          ><i class="fa-regular fa-circle-question fa-fw"></i><span>Search Help</span></a
+          ><i class="fa-regular fa-circle-question fa-fw" aria-hidden="true"></i><span>Search Help</span></a
         >
         <a href={`//${SERVICE_DOMAIN}/cgi/ls?a=page&page=advanced`}
-          ><i class="fa-solid fa-toolbox fa-fw"></i><span>Advanced Search</span></a
+          ><i class="fa-solid fa-toolbox fa-fw" aria-hidden="true"></i><span>Advanced Search</span></a
         >
       </div>
     </div>
