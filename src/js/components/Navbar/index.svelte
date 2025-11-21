@@ -427,7 +427,6 @@
                       <a
                         class="dropdown-item d-flex flex-row gap-2 align-items-center"
                         href="//{`${HT.service_domain}/cgi/mb?a=listcs&colltype=my-collections`}"
-                        role="button"
                         ><i class="fa-solid fa-list fa-fw" aria-hidden="true"></i><span class="needs-hover-state"
                           >My Collections</span
                         ></a
@@ -455,7 +454,6 @@
                       <a
                         class="dropdown-item d-flex flex-row gap-2 align-items-center"
                         href="//{`${HT.service_domain}/cgi/logout?${encodeURIComponent(window.location.href)}`}"
-                        role="button"
                         ><i class="fa-solid fa-arrow-right-from-bracket fa-fw" aria-hidden="true"></i><span
                           class="needs-hover-state">Log Out</span
                         ></a
