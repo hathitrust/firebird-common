@@ -111,8 +111,9 @@
   aria-hidden={!isOpen}
   data-polyfilled={!globalThis.HTMLDialogElement}
   class={fullscreenOnMobile ? 'fullscreen-sm-down' : ''}
+  aria-labelledby="{id}-label"
 >
-  <div class="modal show" aria-labelledby="{id}-label" style="display: block;">
+  <div class="modal show" style="display: block;">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered {modalLarge ? 'modal-lg' : ''}">
       <div class="modal-content" style:height={height != 'auto' && height}>
         <div class="modal-header d-flex flex-row-reverse">

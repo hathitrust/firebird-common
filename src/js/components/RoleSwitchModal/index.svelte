@@ -87,7 +87,8 @@
           class="w-100 h-100 d-flex flex-column justify-content-between"
           onsubmit={submit}
         >
-          <div class="roles d-flex flex-column h-100">
+          <fieldset class="roles d-flex flex-column h-100">
+            <legend class="sr-only">Choose a role</legend>
             <label
               for="role--default"
               class="form-check option py-4 px-3"
@@ -160,19 +161,19 @@
               <div class="control--help"></div>
             </label>
             <input type="hidden" name="referer" bind:value={url} />
-          </div>
+          </fieldset>
         </form>
       </div>
     {/snippet}
     {#snippet footer()}
       <div class="py-3 px-4 m-0">
-        <div class="d-flex gap-3">
+        <div class="d-flex gap-3" role="status">
           <button class="btn btn-white border-0 py-2 px-3 m-0" name="action" value="cancel" onclick={() => hide()}
             >Cancel</button
           >
           <button class="btn btn-primary py-2 px-3 m-0" type="submit" form="ping-switch" disabled={loading}
-            >Submit{#if loading}
-              <span class="spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true"></span>
+            >Submit<span class={loading ? 'spinner-border spinner-border-sm ms-2' : ''} aria-hidden="true"
+            ></span>{#if loading}
               <span class="visually-hidden">Switching your role to {role === 'default' ? 'Member' : roleLabel}</span
               >{/if}</button
           >
