@@ -1,5 +1,4 @@
 /** @type { import('@storybook/svelte-vite').StorybookConfig } */
-process.env.CHROMATIC_DISABLE = 'true';
 
 const config = {
   framework: '@storybook/svelte-vite',
@@ -44,11 +43,9 @@ const config = {
               );
 
               if (iframeHtml) {
-                const isProduction = configType === 'PRODUCTION';
-                const basePath = isProduction ? '/common/firebird/dist/storybook' : '';
                 iframeHtml.source = iframeHtml.source.replace(
                   '</head>',
-                  `  <link rel="stylesheet" href="${basePath}/${cssChunk.fileName}">\n</head>`
+                  `  <link rel="stylesheet" href="./${cssChunk.fileName}">\n</head>`
                 );
               }
             }
