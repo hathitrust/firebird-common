@@ -6,13 +6,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "test": "vitest",
+    "test": "vitest --project=default",
+    "test:visual": "storybook dev --ci --no-open",
     "coverage": "vitest run --coverage.enabled --coverage.provider=istanbul",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "build-js": "vite build",
     "build": "vite build && storybook build -o dist/storybook && node ./build-redirects.js",
-    "test-storybook": "test-storybook",
+    "test-storybook": "vitest --project=storybook",
     "chromatic": "chromatic --exit-zero-on-changes",
     "babel": "vite build --watch --minify false"
   },
@@ -27,26 +28,25 @@
   },
   "homepage": "https://github.com/hathitrust/firebird-common#readme",
   "devDependencies": {
-    "@storybook/addon-designs": "^8.0.3",
-    "@storybook/addon-essentials": "^8.3.3",
-    "@storybook/addon-interactions": "^8.3.3",
-    "@storybook/addon-links": "^8.3.3",
-    "@storybook/blocks": "^8.3.3",
-    "@storybook/svelte": "^8.3.3",
-    "@storybook/svelte-vite": "^8.3.3",
-    "@storybook/test": "^8.3.3",
-    "@storybook/test-runner": "^0.19.1",
+    "@chromatic-com/storybook": "^4.1.2",
+    "@storybook/addon-a11y": "^9.1.16",
+    "@storybook/addon-docs": "9.1.16",
+    "@storybook/addon-links": "9.1.16",
+    "@storybook/addon-vitest": "^9.1.16",
+    "@storybook/svelte-vite": "9.1.16",
     "@sveltejs/vite-plugin-svelte": "^4.0.4",
-    "@vitest/coverage-istanbul": "^2.1.9",
-    "chromatic": "^10.0.0",
+    "@vitest/browser": "3.2.4",
+    "@vitest/coverage-istanbul": "^3.0.0",
+    "chromatic": "^13.0.0",
     "fast-glob": "^3.2.12",
     "happy-dom": "^17.4.4",
+    "playwright": "^1.56.1",
     "prettier": "^3.5.3",
     "prettier-plugin-svelte": "^3.4.0",
     "sass": "1.77.6",
-    "storybook": "^8.3.3",
+    "storybook": "9.1.16",
     "vite": "^5.4.17",
-    "vitest": "^2.1.9"
+    "vitest": "^3.0.0"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.6",
@@ -54,5 +54,8 @@
     "bootstrap": "^5.2.3",
     "dialog-polyfill": "^0.5.6",
     "svelte-preprocess": "^6.0.3"
+  },
+  "optionalDependencies": {
+    "@esbuild/linux-x64": "0.17.15"
   }
 }
