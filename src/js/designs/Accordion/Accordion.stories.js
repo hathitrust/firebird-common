@@ -8,6 +8,12 @@ import LargeAccordionInFixedViewArgs from './fixtures/LargeAccordionInFixedView.
 export default {
   title: 'Designs/Accordion',
   component: Accordion,
+  globals: {
+    viewport: {
+      value: 'bsXl',
+      isRotated: false,
+    },
+  },
 };
 
 export const SingleAccordionPanel = {

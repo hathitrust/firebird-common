@@ -1,13 +1,13 @@
 # .github/workflows/chromatic.yml
 
-name: "Chromatic"
+name: 'Chromatic'
 
-on: 
+on:
   push:
     branches-ignore:
       - deployment
     tags-ignore:
-      - v0.*
+      - '**'
 
 jobs:
   chromatic:
@@ -21,7 +21,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Publish to Chromatic
+      - name: Build storybook and run chromatic
         uses: chromaui/action@latest
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          onlyChanged: true
