@@ -16,6 +16,18 @@ const scssOptions = {
   quietDeps: true,
 };
 
+// removes the stylesheet from cloudflare.html
+const removeStylesheet = () => {
+  return {
+    name: 'remove-stylesheet',
+    enforce: 'post',
+    apply: 'build',
+    transformIndexHtml(html) {
+      return html.replaceAll(/<link\s+rel="stylesheet"(\s.*\s)href="(.*)\.css">/gi, '');
+    },
+  };
+};
+
 export default defineConfig({
   plugins: [
     svelte({
@@ -37,6 +49,7 @@ export default defineConfig({
         }
       },
     },
+    removeStylesheet(),
   ],
   root: path.resolve(__dirname, 'src'),
   publicDir: 'public',
