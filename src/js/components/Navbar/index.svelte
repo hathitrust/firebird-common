@@ -110,7 +110,7 @@
 {#if hasSwitchableRoles}
   <RoleSwitchModal bind:this={roleSwitchModal} />
 {/if}
-<nav class="navbar navbar-expand-xl bg-white" aira-label="Primary navigation">
+<nav class="navbar navbar-expand-xl bg-white" aria-label="Primary navigation">
   <div class="container-fluid">
     <div class="ht-logo" class:compact>
       <!-- <img src="../assets/HT-logo-mobile-nav.svg" alt="HathiTrust" class="" /> -->

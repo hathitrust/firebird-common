@@ -259,7 +259,7 @@
           bind:group={imageQuality}
           id="readability-other"
         />
-        <label class="form-check-label" for="should-not-have-access">
+        <label class="form-check-label" for="readability-other">
           Other problem (please describe in comment field below)
         </label>
       </div>

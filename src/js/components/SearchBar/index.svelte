@@ -171,17 +171,20 @@
 
 <div>
   <div class="search-form-wrapper" bind:this={_root}>
-    <form onsubmit={_submitSearch}>
+    <form onsubmit={_submitSearch} role="search" aria-label="Search HathiTrust">
       <div id="searchbar-form" class="input-group d-flex">
         <div class="search-input">
           <input
             type="search"
+            id="keyword-search"
             class="form-control"
-            aria-label="Keywords"
+            aria-label="Search using keywords"
             placeholder="Search using keywords"
             bind:this={_input}
           />
-          <span class="input-group-text" id="search-icon"><i class="fa-solid fa-magnifying-glass fa-fw"></i></span>
+          <span class="input-group-text" id="search-icon"
+            ><i class="fa-solid fa-magnifying-glass fa-fw" aria-hidden="true"></i></span
+          >
         </div>
         <div class="select-container" id="search-where">
           <select
@@ -232,10 +235,14 @@
       </span>
       <div class="search-links">
         <a href="//{window.HT.www_domain}/the-collection/search-access/#hathitrust-search-basics"
-          ><i class="fa-regular fa-circle-question fa-fw" aria-hidden="true"></i><span>Search Help</span></a
+          ><i class="fa-regular fa-circle-question fa-fw" aria-hidden="true"></i><span class="text-decoration-none"
+            >Search Help</span
+          ></a
         >
         <a href={`//${SERVICE_DOMAIN}/cgi/ls?a=page&page=advanced`}
-          ><i class="fa-solid fa-toolbox fa-fw" aria-hidden="true"></i><span>Advanced Search</span></a
+          ><i class="fa-solid fa-toolbox fa-fw" aria-hidden="true"></i><span class="text-decoration-none"
+            >Advanced Search</span
+          ></a
         >
       </div>
     </div>
