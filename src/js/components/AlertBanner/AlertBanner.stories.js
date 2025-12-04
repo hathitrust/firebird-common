@@ -1,5 +1,7 @@
 import BannerMessage from './BannerMessage.svelte';
 import PingCallbackDecorator from '../../decorators/PingCallbackDecorator';
+import { expect } from 'storybook/test';
+
 
 export default {
   title: 'Alert Banner',
@@ -80,6 +82,9 @@ export const MessageOnly = {
       Component: PingCallbackDecorator,
     }),
   ],
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole('heading', { name: 'Informational alert' })).toBeInTheDocument();
+  },
 };
 
 export const MessageOnlyMobile = {
@@ -97,4 +102,7 @@ export const MessageOnlyMobile = {
       Component: PingCallbackDecorator,
     }),
   ],
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole('heading', { name: 'Warning alert' })).toBeInTheDocument();
+  },
 };

@@ -1,5 +1,6 @@
 import NotificationsModal from './index.svelte';
 import PingCallbackDecorator from '../../decorators/PingCallbackDecorator';
+import NotificationModalDecorator from '../../decorators/NotificationModalDecorator.svelte'
 import { userEvent, within, waitFor } from 'storybook/test';
 import { action } from 'storybook/actions';
 
@@ -64,7 +65,7 @@ export const NoNotificationsSoTadaNothing = {
 
 let newNotificationData = structuredClone(sampleData);
 // optimistically future enough
-newNotificationData[0].effective_on = '2025-12-31 23:59:59';
+newNotificationData[0].effective_on = '2027-12-31 23:59:59';
 let newCookieJar = new TestCookieJar();
 let newManager = new NotificationsManager({
   cookieJar: newCookieJar,
@@ -73,11 +74,14 @@ let newManager = new NotificationsManager({
 export const HasNewNotifications = {
   args: {
     manager: newManager,
+    isOpen: true,
   },
+  decorators: [() => NotificationModalDecorator],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     let closeButton;
     await waitFor(() => {
+      expect(canvas.getByRole('heading', { name: 'Your notifications' })).toBeVisible();
       expect(canvas.getByText('Your notifications')).toBeInTheDocument();
     });
     closeButton = canvas.getByRole('button', { name: 'Close modal' });

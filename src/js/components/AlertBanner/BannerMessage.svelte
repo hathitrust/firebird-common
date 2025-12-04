@@ -57,14 +57,11 @@
             : 'Alert'}
         role="img"
       ></i>
-      {#if type === 'warning'}
-        {#if !title}
-          <h2 class="visually-hidden sr-only">Informational alert</h2>
-        {/if}
-      {:else if type === 'danger'}
-        {#if !title}
-          <h2 class="visually-hidden sr-only">Warning alert</h2>
-        {/if}
+      {#if !title && type === 'warning'}
+        <h2 class="visually-hidden sr-only">Informational alert</h2>
+      {/if}
+      {#if !title && type === 'danger'}
+        <h2 class="visually-hidden sr-only">Warning alert</h2>
       {/if}
       <div class="py-3 {title.length > 0 ? 'd-flex flex-column gap-2' : ''}">
         {#if title}
