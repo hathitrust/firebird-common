@@ -18,7 +18,14 @@
    */
 
   /** @type {Props} */
-  let { formatData = [], languageData = [], locationData = [], collid = null, collectionName = null } = $props();
+  let {
+    formatData = [],
+    languageData = [],
+    locationData = [],
+    collid = null,
+    collectionName = null,
+    mockSubmit = null,
+  } = $props();
 
   // export let useAnyAll = true;
 
@@ -58,12 +65,10 @@
   let lang = $state([]);
   let format = $state([]);
   let originalLocation = $state('');
-  let modal;
-  // let types = new Array(4); types.fill('ocr');
   let types = $state(['ocr', 'all', 'title', 'author']);
   let lookFors = $state(new Array(4));
   lookFors.fill('');
-  let bools = $state(new Array(3));
+  let bools = $state(new Array(4));
   bools.fill('AND');
   bools[0] = null;
   let anyalls = $state(new Array(4));
@@ -89,7 +94,7 @@
     }
   }
 
-  function submitForm(event) {
+  function buildSearchUrl(event) {
     // which are we targeting?
     errors.lookFors = false;
     errors.yop = false;
@@ -294,7 +299,16 @@
       return;
     }
 
-    location.assign(url.toString());
+    return url.toString();
+  }
+
+  function submitForm(event) {
+    const url = buildSearchUrl(event);
+    if (mockSubmit) {
+      mockSubmit(url);
+    } else {
+      location.assign(url);
+    }
   }
 
   onMount(() => {
@@ -599,7 +613,7 @@
         {/each}
 
         <div class="d-flex mb-3 justify-content-end">
-          <button class="btn btn-primary btn-lg" type="submit">
+          <button data-testid="advanced-search-submit" class="btn btn-primary btn-lg" type="submit">
             <span>Advanced Search</span>
             <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
           </button>
