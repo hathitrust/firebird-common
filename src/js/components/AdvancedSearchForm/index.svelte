@@ -18,7 +18,14 @@
    */
 
   /** @type {Props} */
-  let { formatData = [], languageData = [], locationData = [], collid = null, collectionName = null } = $props();
+  let {
+    formatData = [],
+    languageData = [],
+    locationData = [],
+    collid = null,
+    collectionName = null,
+    mockSubmit = null,
+  } = $props();
 
   // export let useAnyAll = true;
 
@@ -58,13 +65,12 @@
   let lang = $state([]);
   let format = $state([]);
   let originalLocation = $state('');
-  let modal;
-  // let types = new Array(4); types.fill('ocr');
   let types = $state(['ocr', 'all', 'title', 'author']);
   let lookFors = $state(new Array(4));
   lookFors.fill('');
   let bools = $state(new Array(4));
   bools.fill('AND');
+  bools[0] = null;
   let anyalls = $state(new Array(4));
   anyalls.fill('all');
   let isFullView = $state(true);
@@ -88,7 +94,7 @@
     }
   }
 
-  function submitForm(event) {
+  function buildSearchUrl(event) {
     // which are we targeting?
     errors.lookFors = false;
     errors.yop = false;
@@ -200,28 +206,46 @@
         searchParams.set('c', collid);
       }
 
+      const filteredLookFors = [];
+      const filteredTypes = [];
+      const filteredAnyAlls = [];
+      const filteredBools = [];
+
+      for (let i = 0; i < lookFors.length; i++) {
+        if (lookFors[i] !== null && lookFors[i] !== '') {
+          filteredLookFors.push(lookFors[i]);
+          filteredTypes.push(types[i]);
+          filteredAnyAlls.push(anyalls[i]);
+          filteredBools.push(bools[i]);
+        }
+      }
+
       let hasSearchTerms = false;
-      lookFors.forEach((value, idx) => {
+      filteredLookFors.forEach((value, idx) => {
         if (value) {
           searchParams.set(`q${idx + 1}`, value);
           hasSearchTerms = true;
         }
       });
-      types.forEach((value, idx) => {
-        if (value && lookFors[idx]) {
+      filteredTypes.forEach((value, idx) => {
+        if (value && filteredLookFors[idx]) {
           searchParams.set(`field${idx + 1}`, value == 'everything' ? 'ocr' : value);
         }
       });
-      anyalls.forEach((value, idx) => {
-        if (value && lookFors[idx]) {
+      filteredAnyAlls.forEach((value, idx) => {
+        if (value && filteredLookFors[idx]) {
           searchParams.set(`anyall${idx + 1}`, value);
         }
       });
-      bools.forEach((value, idx) => {
-        if (value && lookFors[idx]) {
-          searchParams.set(`op${idx + 1}`, value);
-        }
-      });
+      // if there's only one keyword, we don't need a boolean
+      if (filteredLookFors.length > 1) {
+        filteredBools.slice(1).forEach((value, idx) => {
+          if (value && filteredLookFors[idx]) {
+            //this is messy, op1 doesn't do anything so we start at 2
+            searchParams.set(`op${idx + 2}`, value);
+          }
+        });
+      }
 
       if (!hasSearchTerms) {
         errors.lookFors = true;
@@ -275,7 +299,16 @@
       return;
     }
 
-    location.assign(url.toString());
+    return url.toString();
+  }
+
+  function submitForm(event) {
+    const url = buildSearchUrl(event);
+    if (mockSubmit) {
+      mockSubmit(url);
+    } else {
+      location.assign(url);
+    }
   }
 
   onMount(() => {
@@ -341,6 +374,7 @@
       lookFors[0] = params.get('q1');
       types[0] = params.get('field1') || 'ocr';
       anyalls[0] = params.get('anyall1') || 'all';
+      bools[0] = null;
       lookFors[1] = params.get('q2');
       types[1] = params.get('field2') || 'all';
       anyalls[1] = params.get('anyall2') || 'all';
@@ -352,7 +386,7 @@
       lookFors[3] = params.get('q4');
       types[3] = params.get('field4') || 'author';
       anyalls[3] = params.get('anyall4') || 'all';
-      bools[4] = params.get('op3') || 'AND';
+      bools[3] = params.get('op4') || 'AND';
 
       if (params.get('facet_lang')) {
         params.getAll('facet_lang').forEach((value) => {
@@ -579,7 +613,7 @@
         {/each}
 
         <div class="d-flex mb-3 justify-content-end">
-          <button class="btn btn-primary btn-lg" type="submit">
+          <button data-testid="advanced-search-submit" class="btn btn-primary btn-lg" type="submit">
             <span>Advanced Search</span>
             <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
           </button>
