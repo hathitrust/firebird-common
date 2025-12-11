@@ -112,7 +112,7 @@
                         disabled
                       />
                     </h2>
-                    <div id="collapse1" class="accordion-collapse collapse" aria-labelledby="heading1">
+                    <div id="collapse1" class="accordion-collapse collapse">
                       <div class="accordion-body">
                         <p id="necessary-description">
                           Necessary cookies are required to enable basic website functionality. The website cannot
@@ -147,7 +147,7 @@
                         bind:checked={consent.allowPreferences}
                       />
                     </div>
-                    <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="heading3">
+                    <div id="collapse3" class="accordion-collapse collapse">
                       <div class="accordion-body">
                         <p id="preferences-description">
                           Functional cookies allow us to remember your preferences when you use our website. These
@@ -182,7 +182,7 @@
                         bind:checked={consent.allowTracking}
                       />
                     </div>
-                    <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="heading2">
+                    <div id="collapse2" class="accordion-collapse collapse">
                       <div class="accordion-body">
                         <p id="statistics-description">
                           Statistics cookies help us improve our website through feedback surveys or by analyzing usage
@@ -219,7 +219,7 @@
                         bind:checked={consent.allowMarketing}
                       />
                     </div>
-                    <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="heading4">
+                    <div id="collapse4" class="accordion-collapse collapse">
                       <div class="accordion-body">
                         <p id="marketing-description">Our website enables limited Google marketing cookies.</p>
                       </div>
