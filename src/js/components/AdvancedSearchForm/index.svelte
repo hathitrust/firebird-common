@@ -435,12 +435,7 @@
               Search Help
             </button>
           </h2>
-          <div
-            id="search-ops-collapse"
-            class="accordion-collapse collapse"
-            aria-labelledby="search-ops-heading"
-            data-bs-parent="#search-ops"
-          >
+          <div id="search-ops-collapse" class="accordion-collapse collapse" data-bs-parent="#search-ops">
             <div class="accordion-body">
               <dl>
                 <dt>All of these words</dt>
@@ -495,12 +490,7 @@
               Using the Full Text Index
             </button>
           </h2>
-          <div
-            id="search-index-collapse"
-            class="accordion-collapse collapse"
-            aria-labelledby="search-index-heading"
-            data-bs-parent="#search-ops"
-          >
+          <div id="search-index-collapse" class="accordion-collapse collapse" data-bs-parent="#search-ops">
             <div class="accordion-body">
               <p>
                 Check the <strong>Always use the Full Text Index</strong>

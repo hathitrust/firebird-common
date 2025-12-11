@@ -110,7 +110,7 @@
 {#if hasSwitchableRoles}
   <RoleSwitchModal bind:this={roleSwitchModal} />
 {/if}
-<nav class="navbar navbar-expand-xl bg-white">
+<nav class="navbar navbar-expand-xl bg-white" aria-label="Primary navigation">
   <div class="container-fluid">
     <div class="ht-logo" class:compact>
       <!-- <img src="../assets/HT-logo-mobile-nav.svg" alt="HathiTrust" class="" /> -->
@@ -379,9 +379,9 @@
                     class="account-icon me-n1 d-flex align-items-center justify-content-center border border-neutral-300 rounded-circle bg-neutral-100"
                   >
                     {#if hasActivatedRole}
-                      <i class="fa-solid fa-user-plus text-primary-600"></i>
+                      <i class="fa-solid fa-user-plus text-primary-600" aria-hidden="true"></i>
                     {:else}
-                      <i class="fa-solid fa-user text-neutral-800"></i>
+                      <i class="fa-solid fa-user text-neutral-800" aria-hidden="true"></i>
                     {/if}
                   </span>
                   <span id="my-account-label"
@@ -427,7 +427,6 @@
                       <a
                         class="dropdown-item d-flex flex-row gap-2 align-items-center"
                         href="//{`${HT.service_domain}/cgi/mb?a=listcs&colltype=my-collections`}"
-                        role="button"
                         ><i class="fa-solid fa-list fa-fw" aria-hidden="true"></i><span class="needs-hover-state"
                           >My Collections</span
                         ></a
@@ -455,7 +454,6 @@
                       <a
                         class="dropdown-item d-flex flex-row gap-2 align-items-center"
                         href="//{`${HT.service_domain}/cgi/logout?${encodeURIComponent(window.location.href)}`}"
-                        role="button"
                         ><i class="fa-solid fa-arrow-right-from-bracket fa-fw" aria-hidden="true"></i><span
                           class="needs-hover-state">Log Out</span
                         ></a

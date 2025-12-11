@@ -50,19 +50,18 @@
         class:fa-circle-xmark={type === 'danger'}
         class:fa-triangle-exclamation={type === 'warning'}
         class:fa-bell={type === 'brand'}
+        aria-label={title && type == 'warning'
+          ? 'Informational alert'
+          : title && type == 'danger'
+            ? 'Warning alert'
+            : 'Alert'}
+        role="img"
       ></i>
-      {#if type === 'warning'}
-        {#if title}
-          <span class="visually-hidden sr-only">Informational alert</span>
-        {:else}
-          <h2 class="visually-hidden sr-only">Informational alert</h2>
-        {/if}
-      {:else if type === 'danger'}
-        {#if title}
-          <span class="visually-hidden sr-only">Warning alert</span>
-        {:else}
-          <h2 class="visually-hidden sr-only">Warning alert</h2>
-        {/if}
+      {#if !title && type === 'warning'}
+        <h2 class="visually-hidden sr-only">Informational alert</h2>
+      {/if}
+      {#if !title && type === 'danger'}
+        <h2 class="visually-hidden sr-only">Warning alert</h2>
       {/if}
       <div class="py-3 {title.length > 0 ? 'd-flex flex-column gap-2' : ''}">
         {#if title}
@@ -73,12 +72,10 @@
       </div>
     </div>
     <div class="close-wrapper">
-      <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close" onclick={closeAlert}>
+      <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close banner" onclick={closeAlert}>
         <span class="close-icon">
-          <i class="fa-solid fa-xmark icon-default" aria-hidden="true"></i><span class="fa-sr-only">Close banner</span>
-          <i class="fa-solid fa-circle-xmark fa-2x icon-hover" aria-hidden="true"></i><span class="fa-sr-only"
-            >Close banner</span
-          >
+          <i class="fa-solid fa-xmark icon-default" aria-hidden="true"></i>
+          <i class="fa-solid fa-circle-xmark fa-2x icon-hover" aria-hidden="true"></i>
         </span>
       </button>
     </div>

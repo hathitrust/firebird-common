@@ -303,12 +303,14 @@
       </div>
     {/if}
 
-    <button type="submit" class="btn btn-primary" disabled={loading}>
-      Submit{#if loading}
-        <span class="ms-2 spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        <span class="visually-hidden">Loading...</span>
-      {/if}
-    </button>
+    <div role="status">
+      <button type="submit" class="btn btn-primary" disabled={loading}>
+        Submit<span class={loading ? 'spinner-border spinner-border-sm ms-2' : ''} aria-hidden="true"></span>
+        {#if loading}
+          <span class="visually-hidden">Submitting your feedback</span>
+        {/if}
+      </button>
+    </div>
     <div id="data-message" class="form-text">
       By submitting this form, you agree to send your browser details to help our team track down your issue.
     </div>
