@@ -204,7 +204,6 @@
 
       filteredBools.forEach((value, idx) => {
         if (value && filteredLookFors[idx]) {
-          console.log('bool index has value ' + value + ', lookfor ' + idx, filteredLookFors[idx]);
           searchParams.append('bool[]', value);
         }
       });

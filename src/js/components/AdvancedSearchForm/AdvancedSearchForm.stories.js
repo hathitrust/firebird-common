@@ -65,7 +65,7 @@ export const TwoFieldsWithAnd = {
 
   }
 }
-export const Fields1And4WithOr = {
+export const FullTextFields1And4WithLastOr = {
   globals: {
     viewport: {
       value: 'bsXl',
@@ -92,3 +92,57 @@ export const Fields1And4WithOr = {
   }
 }
 
+export const FullTextFields1And4WithFirstOr = {
+  globals: {
+    viewport: {
+      value: 'bsXl',
+      isRotated: false,
+    },
+  },
+  play: async ({ args, canvas, userEvent }) => {
+
+    await canvas.getByLabelText('Search Term 1').focus();
+    await userEvent.type(canvas.getByLabelText('Search Term 1'), 'elephant');
+    const firstRadioGroupOr = canvas.getAllByRole('radio', { name: 'OR' })[0];
+    await userEvent.click(firstRadioGroupOr);
+    const searchField4 = canvas.getByLabelText('Selected field 4');
+    await userEvent.selectOptions(searchField4, 'Subject');
+    await canvas.getByLabelText('Search Term 4').focus();
+    await userEvent.type(canvas.getByLabelText('Search Term 4'), 'conservation');
+    await userEvent.click(canvas.getByTestId('advanced-search-submit'));
+
+    await waitFor(() => expect(args.mockSubmit).toHaveBeenCalled())
+
+    const calledUrl = args.mockSubmit.mock.calls[0][0];
+    expect(calledUrl).toContain('lmt=ft&a=srchls&adv=1&q1=elephant&q2=conservation&field1=ocr&field2=subject&anyall1=all&anyall2=all&op2=OR')
+
+  }
+}
+export const CatalogFields1And4WithLastOr = {
+  globals: {
+    viewport: {
+      value: 'bsXl',
+      isRotated: false,
+    },
+  },
+  play: async ({ args, canvas, userEvent }) => {
+
+    const searchField1 = canvas.getByLabelText('Selected field 1');
+    await userEvent.selectOptions(searchField1, 'Title');
+    await canvas.getByLabelText('Search Term 1').focus();
+    await userEvent.type(canvas.getByLabelText('Search Term 1'), 'apple');
+    const searchField4 = canvas.getByLabelText('Selected field 4');
+    await userEvent.selectOptions(searchField4, 'Author');
+    await canvas.getByLabelText('Search Term 4').focus();
+    await userEvent.type(canvas.getByLabelText('Search Term 4'), 'orange');
+    const thirdRadioGroupOr = canvas.getAllByRole('radio', { name: 'OR' })[2];
+    await userEvent.click(thirdRadioGroupOr);
+    await userEvent.click(canvas.getByTestId('advanced-search-submit'));
+
+    await waitFor(() => expect(args.mockSubmit).toHaveBeenCalled())
+
+    const calledUrl = args.mockSubmit.mock.calls[0][0];
+    expect(calledUrl).toContain('adv=1&setft=true&ft=ft&lookfor%5B%5D=apple&lookfor%5B%5D=orange&type%5B%5D=title&type%5B%5D=author&bool%5B%5D=OR')
+
+  }
+}

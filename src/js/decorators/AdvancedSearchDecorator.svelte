@@ -3,6 +3,7 @@
 
   const HT = {};
   HT.service_domain = 'babel.hathitrust.org';
+  HT.catalog_domain = 'catalog.hathitrust.org';
 
   globalThis.HT = HT;
 </script>
