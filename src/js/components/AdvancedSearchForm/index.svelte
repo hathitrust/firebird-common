@@ -270,11 +270,11 @@
       url.search = searchParams.toString();
     }
 
-    console.log(url.toString());
-    if (window.xyzzy) {
+    if(errors.yop || errors.lookFors) {
       return;
     }
 
+    console.log(url.toString());
     location.assign(url.toString());
   }
 
