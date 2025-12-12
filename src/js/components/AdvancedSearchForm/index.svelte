@@ -306,8 +306,7 @@
       url.search = searchParams.toString();
     }
 
-    console.log(url.toString());
-    if (window.xyzzy) {
+    if(errors.yop || errors.lookFors) {
       return;
     }
 
@@ -316,7 +315,10 @@
 
   function submitForm(event) {
     const url = buildSearchUrl(event);
-    if (mockSubmit) {
+
+    if(url == null) {
+      return;
+    } else if (mockSubmit) {
       mockSubmit(url);
     } else {
       location.assign(url);
