@@ -109,6 +109,36 @@
         break;
       }
     }
+
+    const filteredLookFors = [];
+    const filteredTypes = [];
+    const filteredAnyAlls = [];
+    const filteredBools = [null]; //first will be null
+
+    let lastValidIndex = null;
+
+    for (let i = 0; i < lookFors.length; i++) {
+      if (lookFors[i] !== null && lookFors[i] !== '') {
+        filteredLookFors.push(lookFors[i]);
+        filteredTypes.push(types[i]);
+        filteredAnyAlls.push(anyalls[i]);
+
+        // use OR if it's the connecting bool between two lines, otherwise use AND
+        if (lastValidIndex !== null) {
+          let connectingBool = 'AND'; //default to AND
+          for (let j = lastValidIndex + 1; j <= i; j++) {
+            if (bools[j] === 'OR') {
+              connectingBool = 'OR';
+              break;
+            }
+          }
+          filteredBools.push(connectingBool);
+        }
+
+        lastValidIndex = i;
+      }
+    }
+
     if (target == 'catalog') {
       url = new URL(`${protocol}//${HT.catalog_domain}/Search/Home`);
       let searchParams = new URLSearchParams();
@@ -172,11 +202,9 @@
         }
       }
 
-      bools.forEach((value, idx) => {
-        if (idx === 0) {
-          return;
-        }
-        if (value && lookFors[idx] && lookFors[idx - 1]) {
+      filteredBools.forEach((value, idx) => {
+        if (value && filteredLookFors[idx]) {
+          console.log('bool index has value ' + value + ', lookfor ' + idx, filteredLookFors[idx]);
           searchParams.append('bool[]', value);
         }
       });
@@ -206,20 +234,6 @@
         searchParams.set('c', collid);
       }
 
-      const filteredLookFors = [];
-      const filteredTypes = [];
-      const filteredAnyAlls = [];
-      const filteredBools = [];
-
-      for (let i = 0; i < lookFors.length; i++) {
-        if (lookFors[i] !== null && lookFors[i] !== '') {
-          filteredLookFors.push(lookFors[i]);
-          filteredTypes.push(types[i]);
-          filteredAnyAlls.push(anyalls[i]);
-          filteredBools.push(bools[i]);
-        }
-      }
-
       let hasSearchTerms = false;
       filteredLookFors.forEach((value, idx) => {
         if (value) {
@@ -239,12 +253,11 @@
       });
       // if there's only one keyword, we don't need a boolean
       if (filteredLookFors.length > 1) {
-        filteredBools.slice(1).forEach((value, idx) => {
-          if (value && filteredLookFors[idx]) {
-            //this is messy, op1 doesn't do anything so we start at 2
-            searchParams.set(`op${idx + 2}`, value);
+        for (let idx = 1; idx < filteredBools.length; idx++) {
+          if (filteredBools[idx] && filteredLookFors[idx]) {
+            searchParams.set(`op${idx + 1}`, filteredBools[idx]);
           }
-        });
+        }
       }
 
       if (!hasSearchTerms) {
