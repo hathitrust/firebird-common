@@ -146,3 +146,40 @@ export const CatalogFields1And4WithLastOr = {
 
   }
 }
+export const InvalidDate = {
+  globals: {
+    viewport: {
+      value: 'bsXl',
+      isRotated: false,
+    },
+  },
+  play: async ({ args, canvas, userEvent }) => {
+    await canvas.getByLabelText('Search Term 1').focus();
+    await userEvent.type(canvas.getByLabelText('Search Term 1'), 'apple');
+
+    await userEvent.type(canvas.getByLabelText('Start Year'), 'not a year');
+    await userEvent.click(canvas.getByTestId('advanced-search-submit'));
+
+    await waitFor(() => {
+      expect(args.mockSubmit).not.toHaveBeenCalled();
+      expect( canvas.getByText( /Publication Year must/)).toBeVisible();
+    });
+  }
+}
+
+export const MissingSearch = {
+  globals: {
+    viewport: {
+      value: 'bsXl',
+      isRotated: false,
+    },
+  },
+  play: async ({ args, canvas, userEvent }) => {
+    await userEvent.click(canvas.getByTestId('advanced-search-submit'));
+
+    await waitFor(() => {
+      expect(args.mockSubmit).not.toHaveBeenCalled();
+      expect( canvas.getByText( /A search term is required/)).toBeVisible();
+    });
+  }
+}
