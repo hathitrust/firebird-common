@@ -93,10 +93,24 @@
     return { status: false };
   }
 
+  function promptRoleSwitch() {
+    if (!loggedIn) {
+      console.log('not logged in, promptRoleSwitch', false);
+      return false;
+    }
+    if (HT.cookieJar.hasItem('HT-role-prompt')) {
+      console.log('HT-role-prompt cookie exists, promptRoleSwitch', false);
+      return false;
+    }
+    console.log('logged in, no role prompt cookie, show modal');
+    return true;
+  }
+
   // $: loginStatus = HT.loginStatus;
   let loggedIn = $derived(HT.loginStatus.logged_in);
   let hasSwitchableRoles = $derived(checkSwitchableRoles(loggedIn).status);
   let hasActivatedRole = $derived(checkSwitchableRoles(loggedIn).activated);
+  let roleSwitchOpen = promptRoleSwitch();
   let role = $derived(checkSwitchableRoles(loggedIn).label);
   $effect(() => {
     if (HT.loginStatus && HT.loginStatus.notificationData) {
@@ -108,7 +122,7 @@
 
 <FeedbackFormModal {form} bind:this={feedbackModal} />
 {#if hasSwitchableRoles}
-  <RoleSwitchModal bind:this={roleSwitchModal} />
+  <RoleSwitchModal bind:this={roleSwitchModal} isOpen={roleSwitchOpen} />
 {/if}
 <nav class="navbar navbar-expand-xl bg-white" aria-label="Primary navigation">
   <div class="container-fluid">

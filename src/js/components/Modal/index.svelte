@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
 
   import dialogPolyfill from 'dialog-polyfill';
+  import docCookies from '../../lib/cookies.svelte';
 
   /**
    * @typedef {Object} Props
@@ -12,6 +13,7 @@
    * @property {boolean} [scrollable]
    * @property {string} [mode]
    * @property {boolean} [modalLarge]
+   * @property {boolean} [setPromptCookie]
    * @property {boolean} [fullscreenOnMobile]
    * @property {boolean} [focusHelpOnClose]
    * @property {boolean} [focusMyAccountOnClose]
@@ -35,6 +37,7 @@
     focusHelpOnClose = false,
     focusMyAccountOnClose = false,
     focusButtonOnClose = false,
+    setPromptCookie = false,
     title,
     body,
     footer,
@@ -77,6 +80,9 @@
     window.removeEventListener('keydown', logKeys);
     console.log('-- dialog is closed');
 
+    if (setPromptCookie) {
+      docCookies.setItem('HT-role-prompt', 'true', 0);
+    }
     if (focusHelpOnClose) {
       document.getElementById('get-help').focus();
     }
