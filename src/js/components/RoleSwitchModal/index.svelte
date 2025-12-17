@@ -51,6 +51,7 @@
   function submit(event) {
     event.preventDefault();
     loading = true;
+    docCookies.setItem('HT-role-prompt', 'true', 0);
     let params = new URLSearchParams();
     params.set('role', role);
     params.set('referer', url);
