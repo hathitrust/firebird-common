@@ -37,7 +37,7 @@ export const docCookies = {
     var expires = new Date();
     expires.setDate(expires.getDate() + duration);
 
-    var sExpires = '; expires=' + expires.toUTCString();
+    const sExpires = duration !== 0 ? '; expires=' + expires.toUTCString() : '';
     document.cookie =
       encodeURIComponent(sKey) +
       '=' +

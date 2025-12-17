@@ -4,6 +4,7 @@
   import ResourceSharing from './ResourceSharing.svelte';
   import TotalAccess from './TotalAccess.svelte';
   import EnhancedTextProxy from './EnhancedTextProxy.svelte';
+  import docCookies from '../../lib/cookies.svelte';
 
   let HT = window.HT || {};
   let switchableRole = Object.keys(HT.login_status.r)[0];
@@ -50,6 +51,7 @@
   function submit(event) {
     event.preventDefault();
     loading = true;
+    docCookies.setItem('HT-role-prompt', 'true', 0);
     let params = new URLSearchParams();
     params.set('role', role);
     params.set('referer', url);
@@ -71,7 +73,7 @@
 </script>
 
 <div class="switch-roles">
-  <Modal bind:this={modal} scrollable modalLarge fullscreenOnMobile focusMyAccountOnClose>
+  <Modal bind:this={modal} scrollable modalLarge fullscreenOnMobile setPromptCookie focusMyAccountOnClose>
     {#snippet title()}
       <div class="align-items-center d-flex gap-2 py-2 settings-heading">
         <img {src} alt="" role="presentation" />
