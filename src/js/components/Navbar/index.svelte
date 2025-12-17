@@ -466,6 +466,7 @@
                     {/if}
                     <li>
                       <a
+                        onclick={() => HT.cookieJar.removeItem('HT-role-prompt')}
                         class="dropdown-item d-flex flex-row gap-2 align-items-center"
                         href="//{`${HT.service_domain}/cgi/logout?${encodeURIComponent(window.location.href)}`}"
                         ><i class="fa-solid fa-arrow-right-from-bracket fa-fw" aria-hidden="true"></i><span
