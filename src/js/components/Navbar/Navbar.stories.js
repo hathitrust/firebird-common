@@ -24,7 +24,7 @@ export const Default = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     //sanity check
-    expect(await canvas.getByTitle('HathiTrust Home')).toBeInTheDocument();
+    expect(canvas.getByTitle('HathiTrust Home')).toBeInTheDocument();
   },
   globals: {
     viewport: {
@@ -44,7 +44,7 @@ export const DesktopDropdownMenuSelected = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const mainMenu = await canvas.getByText(/member libraries/i);
+    const mainMenu = canvas.getByText(/member libraries/i);
     await userEvent.click(mainMenu);
   },
 };

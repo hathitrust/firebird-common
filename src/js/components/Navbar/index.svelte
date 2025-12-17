@@ -94,15 +94,12 @@
   }
 
   function promptRoleSwitch() {
-    if (!loggedIn) {
-      console.log('not logged in, promptRoleSwitch', false);
+    if (!loggedIn || !hasSwitchableRoles) {
       return false;
     }
     if (HT.cookieJar.hasItem('HT-role-prompt')) {
-      console.log('HT-role-prompt cookie exists, promptRoleSwitch', false);
       return false;
     }
-    console.log('logged in, no role prompt cookie, show modal');
     return true;
   }
 

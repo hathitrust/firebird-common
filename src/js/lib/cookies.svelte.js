@@ -11,6 +11,13 @@ export class TestCookieJar {
   setItem(key, value) {
     this.data[key] = value;
   }
+
+  hasItem(key) {
+    if (!key) {
+      return false;
+    }
+    return key in this.data;
+  }
 }
 
 // ported from unicorn days, waiting for https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/cookies/CookieStore
