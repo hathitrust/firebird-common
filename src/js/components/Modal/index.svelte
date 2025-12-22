@@ -35,6 +35,7 @@
     focusHelpOnClose = false,
     focusMyAccountOnClose = false,
     focusButtonOnClose = false,
+    focusDownloadOnClose = false,
     title,
     body,
     footer,
@@ -59,7 +60,7 @@
     }
     isOpen = true;
     dialog.showModal();
-    if (focusHelpOnClose || focusMyAccountOnClose || focusButtonOnClose) {
+    if (focusHelpOnClose || focusMyAccountOnClose || focusButtonOnClose || focusDownloadOnClose) {
       window.addEventListener('keydown', logKeys);
     }
   };
@@ -85,6 +86,9 @@
     }
     if (focusButtonOnClose) {
       document.querySelector('#feedback-form').focus();
+    }
+    if (focusDownloadOnClose) {
+      setTimeout(() => {document.getElementById('submit-download').focus();}, 100)
     }
   };
 
