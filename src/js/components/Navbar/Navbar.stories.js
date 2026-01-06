@@ -99,6 +99,25 @@ export const DesktopLoggedInResourceSharingRole = {
     await userEvent.click(accountButton);
   },
 };
+export const DesktopLoggedInResourceSharingRolePromptDismissed = {
+  parameters: { ...Default.parameters },
+  args: {
+    loggedIn: true,
+  },
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      props: { loggedIn: true, role: 'resourceSharing', hasActivatedRole: false },
+    }),
+  ],
+  play: async ({ canvas }) => {
+    const closeModal = canvas.getByRole('button', { name: 'Cancel' });
+    await userEvent.click(closeModal);
+
+    const accountButton = canvas.getByLabelText(/My Account/);
+    await userEvent.click(accountButton);
+  },
+};
 export const DesktopLoggedInResourceSharingRoleActivated = {
   parameters: { ...Default.parameters },
   args: {
@@ -108,7 +127,14 @@ export const DesktopLoggedInResourceSharingRoleActivated = {
   decorators: [
     () => ({
       Component: PingCallbackDecorator,
-      props: { loggedIn: true, role: 'resourceSharing', hasActivatedRole: true },
+      props: {
+        loggedIn: true,
+        role: 'resourceSharing',
+        hasActivatedRole: true,
+        cookieData: {
+          'HT-role-prompt': 'true',
+        },
+      },
     }),
   ],
   play: async ({ canvasElement }) => {
@@ -139,6 +165,29 @@ export const DesktopLoggedInWithNotifications = {
       },
     }),
   ],
+};
+export const DesktopLoggedInResourceSharingRoleAndNotification = {
+  parameters: { ...Default.parameters },
+  args: {
+    loggedIn: true,
+    hasNotification: true,
+  },
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      props: {
+        loggedIn: true,
+        role: 'resourceSharing',
+        hasActivatedRole: false,
+        cookieData: {},
+        notificationData: [{ title: 'What happens with two modals?', message: 'Hopefully these are not overlapping!' }],
+      },
+    }),
+  ],
+  play: async ({ canvas, userEvent }) => {
+    const rolePromptCancelButton = canvas.getByRole('button', { name: 'Cancel' });
+    await userEvent.click(rolePromptCancelButton);
+  },
 };
 export const Mobile = {
   decorators: [

@@ -11,7 +11,7 @@
    */
 
   /** @type {Props} */
-  let { manager, isOpen = false } = $props();
+  let { manager, isOpen = $bindable(false), autoOpen = true } = $props();
 
   export const show = function () {
     if (!manager.hasNotifications()) {
@@ -28,27 +28,22 @@
     manager.updateTimestamp();
   };
 
-  onMount(() => {
-    if (modal && manager.hasNewNotifications()) {
-      modal.show();
-    }
-  });
-
   $effect(() => {
-    if (modal && manager.hasNewNotifications()) {
+    if (modal && autoOpen && manager.hasNewNotifications() && !isOpen) {
+      isOpen = true;
       show();
     }
   });
-  $effect(() => {
-    if (modal && isOpen) {
-      show();
-    }
-  });
+  // $effect(() => {
+  //   if (modal && isOpen) {
+  //     show();
+  //   }
+  // });
   // $: if ( modal && ! isOpen ) { hide() }
 </script>
 
 {#if manager.hasNotifications()}
-  <Modal bind:this={modal} {onClose} focusMyAccountOnClose>
+  <Modal bind:this={modal} bind:isOpen {onClose} focusMyAccountOnClose>
     {#snippet title()}
       Your notifications
     {/snippet}
