@@ -59,7 +59,9 @@
     roleSwitchModal.show();
   }
   function openNotificationsModal(event) {
-    event.preventDefault();
+    if (event) {
+      event.preventDefault();
+    }
     notificationsModal.show();
   }
   function openFeedback(formLocation, event) {
@@ -138,7 +140,16 @@
 
 <FeedbackFormModal {form} bind:this={feedbackModal} />
 {#if hasSwitchableRoles}
-  <RoleSwitchModal bind:this={roleSwitchModal} bind:isOpen={roleSwitchOpen} />
+  <RoleSwitchModal
+    bind:this={roleSwitchModal}
+    bind:isOpen={roleSwitchOpen}
+    checkForNotifications={() => {
+      console.log('this component event is working');
+      if (notificationsManager.hasNewNotifications()) {
+        openNotificationsModal();
+      }
+    }}
+  />
 {/if}
 <nav class="navbar navbar-expand-xl bg-white" aria-label="Primary navigation">
   <div class="container-fluid">

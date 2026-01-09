@@ -32,6 +32,7 @@
     src = '/common/firebird/dist/hathitrust-icon-orange.svg',
     isOpen = $bindable(false),
     loading = $bindable(false),
+    checkForNotifications,
   } = $props();
 
   export const show = function () {
@@ -170,8 +171,14 @@
     {#snippet footer()}
       <div class="py-3 px-4 m-0">
         <div class="d-flex gap-3" role="status">
-          <button class="btn btn-white border-0 py-2 px-3 m-0" name="action" value="cancel" onclick={() => hide()}
-            >Cancel</button
+          <button
+            class="btn btn-white border-0 py-2 px-3 m-0"
+            name="action"
+            value="cancel"
+            onclick={() => {
+              hide();
+              checkForNotifications();
+            }}>Cancel</button
           >
           <button class="btn btn-primary py-2 px-3 m-0" type="submit" form="ping-switch" disabled={loading}
             >Submit<span class={loading ? 'spinner-border spinner-border-sm ms-2' : ''} aria-hidden="true"

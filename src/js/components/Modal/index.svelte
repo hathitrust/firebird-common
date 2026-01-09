@@ -103,10 +103,6 @@
       console.log('-- polyfilling dialog');
       dialogPolyfill.registerDialog(dialog);
     }
-
-    if (isOpen) {
-      openModal();
-    }
   });
 
   $effect(() => {
