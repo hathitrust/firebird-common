@@ -33,6 +33,7 @@
     isOpen = $bindable(false),
     loading = $bindable(false),
     checkForNotifications,
+    hasNewNotifications,
   } = $props();
 
   export const show = function () {
@@ -74,7 +75,15 @@
 </script>
 
 <div class="switch-roles">
-  <Modal bind:this={modal} scrollable modalLarge fullscreenOnMobile setPromptCookie focusMyAccountOnClose>
+  <Modal
+    bind:this={modal}
+    scrollable
+    modalLarge
+    fullscreenOnMobile
+    setPromptCookie
+    hasNewNotifications
+    focusMyAccountOnClose
+  >
     {#snippet title()}
       <div class="align-items-center d-flex gap-2 py-2 settings-heading">
         <img {src} alt="" role="presentation" />
