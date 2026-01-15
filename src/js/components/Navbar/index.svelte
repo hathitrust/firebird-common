@@ -151,7 +151,7 @@
     bind:this={roleSwitchModal}
     bind:isOpen={roleSwitchOpen}
     checkForNotifications={() => {
-      if (notificationsManager.hasNewNotifications()) {
+      if (hasNotification && notificationsManager.hasNewNotifications()) {
         openNotificationsModal();
       }
     }}
