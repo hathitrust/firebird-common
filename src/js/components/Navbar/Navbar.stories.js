@@ -1,7 +1,7 @@
 import Navbar from './index.svelte';
 import PingCallbackDecorator from '../../decorators/PingCallbackDecorator';
-import { userEvent, within } from 'storybook/test';
-import { expect } from 'storybook/test';
+import { userEvent, within, waitFor, expect } from 'storybook/test';
+// import { expect } from 'storybook/test';
 
 export default {
   title: 'Navbar',
@@ -187,6 +187,38 @@ export const DesktopLoggedInResourceSharingRoleAndNotification = {
   play: async ({ canvas, userEvent }) => {
     const rolePromptCancelButton = canvas.getByRole('button', { name: 'Cancel' });
     await userEvent.click(rolePromptCancelButton);
+  },
+};
+export const DesktopLoggedInRoleSwitchClosed = {
+  parameters: { ...Default.parameters },
+  args: {
+    loggedIn: true,
+    hasNotification: true,
+  },
+  decorators: [
+    () => ({
+      Component: PingCallbackDecorator,
+      props: {
+        loggedIn: true,
+        role: 'resourceSharing',
+        hasActivatedRole: false,
+        cookieData: {},
+        notificationData: [
+          {
+            title: 'Closed role switch modal',
+            message:
+              'User closed role switch modal using the X icon. Cookie was set, notifications should still appear.',
+          },
+        ],
+      },
+    }),
+  ],
+  play: async ({ canvas, userEvent }) => {
+    await waitFor(() => {
+      expect(canvas.getByRole('heading', { name: 'Choose a role' })).toBeVisible();
+    });
+    const rolePromptCloseButton = canvas.getByRole('button', { name: 'Close modal' });
+    await userEvent.click(rolePromptCloseButton);
   },
 };
 export const Mobile = {

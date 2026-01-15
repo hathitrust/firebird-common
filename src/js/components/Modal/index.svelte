@@ -39,6 +39,7 @@
     focusButtonOnClose = false,
     focusDownloadOnClose = false,
     setPromptCookie = false,
+    checkForNotifications, 
     title,
     body,
     footer,
@@ -133,6 +134,9 @@
             data-bs-dismiss="modal"
             onclick={() => {
               hide();
+              if (setPromptCookie) {
+                checkForNotifications()
+              }
             }}
             ><span class="close-icon">
               <i class="fa-solid fa-xmark icon-default" aria-hidden="true"></i><span class="fa-sr-only"

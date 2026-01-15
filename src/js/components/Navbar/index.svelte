@@ -136,6 +136,13 @@
 
     canAutoOpenNotifications = true;
   });
+
+  $effect(() => {
+    console.log(shouldShowRoleSwitch())
+    if (!shouldShowRoleSwitch() && notificationsManager.hasNewNotifications()) {
+     canAutoOpenNotifications = true; 
+    }
+  })
 </script>
 
 <FeedbackFormModal {form} bind:this={feedbackModal} />
@@ -144,7 +151,6 @@
     bind:this={roleSwitchModal}
     bind:isOpen={roleSwitchOpen}
     checkForNotifications={() => {
-      console.log('this component event is working');
       if (notificationsManager.hasNewNotifications()) {
         openNotificationsModal();
       }

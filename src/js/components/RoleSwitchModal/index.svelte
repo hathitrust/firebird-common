@@ -33,7 +33,6 @@
     isOpen = $bindable(false),
     loading = $bindable(false),
     checkForNotifications,
-    hasNewNotifications,
   } = $props();
 
   export const show = function () {
@@ -81,7 +80,7 @@
     modalLarge
     fullscreenOnMobile
     setPromptCookie
-    hasNewNotifications
+    {checkForNotifications}
     focusMyAccountOnClose
   >
     {#snippet title()}
