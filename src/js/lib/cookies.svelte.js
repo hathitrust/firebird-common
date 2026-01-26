@@ -37,12 +37,16 @@ export const docCookies = {
       ) || null
     );
   },
-  setItem: function (sKey, sValue, duration = 365) {
+  setItem: function (sKey, sValue, duration = 365, unit = 'days') {
     if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) {
       return false;
     }
     var expires = new Date();
-    expires.setDate(expires.getDate() + duration);
+    if (unit === 'hours') {
+      expires.setTime(expires.getTime() + duration * 60 * 60 * 1000);
+    } else {
+      expires.setDate(expires.getDate() + duration);
+    }
 
     const sExpires = duration !== 0 ? '; expires=' + expires.toUTCString() : '';
     document.cookie =

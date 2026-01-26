@@ -137,12 +137,6 @@
     canAutoOpenNotifications = true;
   });
 
-  $effect(() => {
-    console.log(shouldShowRoleSwitch())
-    if (!shouldShowRoleSwitch() && notificationsManager.hasNewNotifications()) {
-     canAutoOpenNotifications = true; 
-    }
-  })
 </script>
 
 <FeedbackFormModal {form} bind:this={feedbackModal} />

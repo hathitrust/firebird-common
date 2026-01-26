@@ -83,7 +83,7 @@
     console.log('-- dialog is closed');
 
     if (setPromptCookie) {
-      docCookies.setItem('HT-role-prompt', 'true', 0);
+      docCookies.setItem('HT-role-prompt', 'true', 4, 'hours');
     }
     if (focusHelpOnClose) {
       document.getElementById('get-help').focus();

@@ -34,12 +34,6 @@
       show();
     }
   });
-  // $effect(() => {
-  //   if (modal && isOpen) {
-  //     show();
-  //   }
-  // });
-  // $: if ( modal && ! isOpen ) { hide() }
 </script>
 
 {#if manager.hasNotifications()}
