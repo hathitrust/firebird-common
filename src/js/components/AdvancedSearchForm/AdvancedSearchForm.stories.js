@@ -1,11 +1,16 @@
 import AdvancedSearchForm from './index.svelte';
-import AdvancedSearchDecorator from '../../decorators/AdvancedSearchDecorator.svelte'
+import AdvancedSearchDecorator from '../../decorators/AdvancedSearchDecorator.svelte';
 import { fn, expect, waitFor } from 'storybook/test';
 
 export default {
   title: 'AdvancedSearchForm',
   component: AdvancedSearchForm,
-  decorators: [() => AdvancedSearchDecorator],
+  decorators: [
+    () => ({
+      Component: AdvancedSearchDecorator,
+      props: {},
+    }),
+  ],
   args: {
     mockSubmit: fn(),
   },
@@ -28,17 +33,15 @@ export const DefaultDesktop = {
     },
   },
   play: async ({ args, canvas, userEvent }) => {
-
     await canvas.getByLabelText('Search Term 1').focus();
     await userEvent.type(canvas.getByLabelText('Search Term 1'), 'elephant');
     await userEvent.click(canvas.getByTestId('advanced-search-submit'));
 
-    await waitFor(() => expect(args.mockSubmit).toHaveBeenCalled())
+    await waitFor(() => expect(args.mockSubmit).toHaveBeenCalled());
 
     const calledUrl = args.mockSubmit.mock.calls[0][0];
-    expect(calledUrl).toContain('q1=elephant')
-
-  }
+    expect(calledUrl).toContain('q1=elephant');
+  },
 };
 
 export const TwoFieldsWithAnd = {
@@ -49,7 +52,6 @@ export const TwoFieldsWithAnd = {
     },
   },
   play: async ({ args, canvas, userEvent }) => {
-
     await canvas.getByLabelText('Search Term 1').focus();
     await userEvent.type(canvas.getByLabelText('Search Term 1'), 'elephant');
     const searchField2 = canvas.getByLabelText('Selected field 2');
@@ -58,13 +60,14 @@ export const TwoFieldsWithAnd = {
     await userEvent.type(canvas.getByLabelText('Search Term 2'), 'conservation');
     await userEvent.click(canvas.getByTestId('advanced-search-submit'));
 
-    await waitFor(() => expect(args.mockSubmit).toHaveBeenCalled())
+    await waitFor(() => expect(args.mockSubmit).toHaveBeenCalled());
 
     const calledUrl = args.mockSubmit.mock.calls[0][0];
-    expect(calledUrl).toContain('lmt=ft&a=srchls&adv=1&q1=elephant&q2=conservation&field1=ocr&field2=subject&anyall1=all&anyall2=all&op2=AND')
-
-  }
-}
+    expect(calledUrl).toContain(
+      'lmt=ft&a=srchls&adv=1&q1=elephant&q2=conservation&field1=ocr&field2=subject&anyall1=all&anyall2=all&op2=AND'
+    );
+  },
+};
 export const FullTextFields1And4WithLastOr = {
   globals: {
     viewport: {
@@ -73,7 +76,6 @@ export const FullTextFields1And4WithLastOr = {
     },
   },
   play: async ({ args, canvas, userEvent }) => {
-
     await canvas.getByLabelText('Search Term 1').focus();
     await userEvent.type(canvas.getByLabelText('Search Term 1'), 'elephant');
     const searchField4 = canvas.getByLabelText('Selected field 4');
@@ -84,13 +86,14 @@ export const FullTextFields1And4WithLastOr = {
     await userEvent.click(thirdRadioGroupOr);
     await userEvent.click(canvas.getByTestId('advanced-search-submit'));
 
-    await waitFor(() => expect(args.mockSubmit).toHaveBeenCalled())
+    await waitFor(() => expect(args.mockSubmit).toHaveBeenCalled());
 
     const calledUrl = args.mockSubmit.mock.calls[0][0];
-    expect(calledUrl).toContain('lmt=ft&a=srchls&adv=1&q1=elephant&q2=conservation&field1=ocr&field2=subject&anyall1=all&anyall2=all&op2=OR')
-
-  }
-}
+    expect(calledUrl).toContain(
+      'lmt=ft&a=srchls&adv=1&q1=elephant&q2=conservation&field1=ocr&field2=subject&anyall1=all&anyall2=all&op2=OR'
+    );
+  },
+};
 
 export const FullTextFields1And4WithFirstOr = {
   globals: {
@@ -100,7 +103,6 @@ export const FullTextFields1And4WithFirstOr = {
     },
   },
   play: async ({ args, canvas, userEvent }) => {
-
     await canvas.getByLabelText('Search Term 1').focus();
     await userEvent.type(canvas.getByLabelText('Search Term 1'), 'elephant');
     const firstRadioGroupOr = canvas.getAllByRole('radio', { name: 'OR' })[0];
@@ -111,13 +113,14 @@ export const FullTextFields1And4WithFirstOr = {
     await userEvent.type(canvas.getByLabelText('Search Term 4'), 'conservation');
     await userEvent.click(canvas.getByTestId('advanced-search-submit'));
 
-    await waitFor(() => expect(args.mockSubmit).toHaveBeenCalled())
+    await waitFor(() => expect(args.mockSubmit).toHaveBeenCalled());
 
     const calledUrl = args.mockSubmit.mock.calls[0][0];
-    expect(calledUrl).toContain('lmt=ft&a=srchls&adv=1&q1=elephant&q2=conservation&field1=ocr&field2=subject&anyall1=all&anyall2=all&op2=OR')
-
-  }
-}
+    expect(calledUrl).toContain(
+      'lmt=ft&a=srchls&adv=1&q1=elephant&q2=conservation&field1=ocr&field2=subject&anyall1=all&anyall2=all&op2=OR'
+    );
+  },
+};
 export const CatalogFields1And4WithLastOr = {
   globals: {
     viewport: {
@@ -126,7 +129,6 @@ export const CatalogFields1And4WithLastOr = {
     },
   },
   play: async ({ args, canvas, userEvent }) => {
-
     const searchField1 = canvas.getByLabelText('Selected field 1');
     await userEvent.selectOptions(searchField1, 'Title');
     await canvas.getByLabelText('Search Term 1').focus();
@@ -139,13 +141,14 @@ export const CatalogFields1And4WithLastOr = {
     await userEvent.click(thirdRadioGroupOr);
     await userEvent.click(canvas.getByTestId('advanced-search-submit'));
 
-    await waitFor(() => expect(args.mockSubmit).toHaveBeenCalled())
+    await waitFor(() => expect(args.mockSubmit).toHaveBeenCalled());
 
     const calledUrl = args.mockSubmit.mock.calls[0][0];
-    expect(calledUrl).toContain('adv=1&setft=true&ft=ft&lookfor%5B%5D=apple&lookfor%5B%5D=orange&type%5B%5D=title&type%5B%5D=author&bool%5B%5D=OR')
-
-  }
-}
+    expect(calledUrl).toContain(
+      'adv=1&setft=true&ft=ft&lookfor%5B%5D=apple&lookfor%5B%5D=orange&type%5B%5D=title&type%5B%5D=author&bool%5B%5D=OR'
+    );
+  },
+};
 export const InvalidDate = {
   globals: {
     viewport: {
@@ -162,10 +165,10 @@ export const InvalidDate = {
 
     await waitFor(() => {
       expect(args.mockSubmit).not.toHaveBeenCalled();
-      expect( canvas.getByText( /Publication Year must/)).toBeVisible();
+      expect(canvas.getByText(/Publication Year must/)).toBeVisible();
     });
-  }
-}
+  },
+};
 
 export const MissingSearch = {
   globals: {
@@ -179,7 +182,7 @@ export const MissingSearch = {
 
     await waitFor(() => {
       expect(args.mockSubmit).not.toHaveBeenCalled();
-      expect( canvas.getByText( /A search term is required/)).toBeVisible();
+      expect(canvas.getByText(/A search term is required/)).toBeVisible();
     });
-  }
-}
+  },
+};

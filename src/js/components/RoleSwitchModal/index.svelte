@@ -4,6 +4,7 @@
   import ResourceSharing from './ResourceSharing.svelte';
   import TotalAccess from './TotalAccess.svelte';
   import EnhancedTextProxy from './EnhancedTextProxy.svelte';
+  import docCookies from '../../lib/cookies.svelte';
 
   let HT = window.HT || {};
   let switchableRole = Object.keys(HT.login_status.r)[0];
@@ -31,6 +32,7 @@
     src = '/common/firebird/dist/hathitrust-icon-orange.svg',
     isOpen = $bindable(false),
     loading = $bindable(false),
+    checkForNotifications,
   } = $props();
 
   export const show = function () {
@@ -50,6 +52,7 @@
   function submit(event) {
     event.preventDefault();
     loading = true;
+    docCookies.setItem('HT-role-prompt', 'true', 4, 'hours');
     let params = new URLSearchParams();
     params.set('role', role);
     params.set('referer', url);
@@ -71,7 +74,15 @@
 </script>
 
 <div class="switch-roles">
-  <Modal bind:this={modal} scrollable modalLarge fullscreenOnMobile focusMyAccountOnClose>
+  <Modal
+    bind:this={modal}
+    scrollable
+    modalLarge
+    fullscreenOnMobile
+    setPromptCookie
+    {checkForNotifications}
+    focusMyAccountOnClose
+  >
     {#snippet title()}
       <div class="align-items-center d-flex gap-2 py-2 settings-heading">
         <img {src} alt="" role="presentation" />
@@ -168,8 +179,14 @@
     {#snippet footer()}
       <div class="py-3 px-4 m-0">
         <div class="d-flex gap-3" role="status">
-          <button class="btn btn-white border-0 py-2 px-3 m-0" name="action" value="cancel" onclick={() => hide()}
-            >Cancel</button
+          <button
+            class="btn btn-white border-0 py-2 px-3 m-0"
+            name="action"
+            value="cancel"
+            onclick={() => {
+              hide();
+              checkForNotifications();
+            }}>Cancel</button
           >
           <button class="btn btn-primary py-2 px-3 m-0" type="submit" form="ping-switch" disabled={loading}
             >Submit<span class={loading ? 'spinner-border spinner-border-sm ms-2' : ''} aria-hidden="true"

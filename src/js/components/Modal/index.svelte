@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
 
   import dialogPolyfill from 'dialog-polyfill';
+  import docCookies from '../../lib/cookies.svelte';
 
   /**
    * @typedef {Object} Props
@@ -12,6 +13,7 @@
    * @property {boolean} [scrollable]
    * @property {string} [mode]
    * @property {boolean} [modalLarge]
+   * @property {boolean} [setPromptCookie]
    * @property {boolean} [fullscreenOnMobile]
    * @property {boolean} [focusHelpOnClose]
    * @property {boolean} [focusMyAccountOnClose]
@@ -36,6 +38,8 @@
     focusMyAccountOnClose = false,
     focusButtonOnClose = false,
     focusDownloadOnClose = false,
+    setPromptCookie = false,
+    checkForNotifications, 
     title,
     body,
     footer,
@@ -78,6 +82,9 @@
     window.removeEventListener('keydown', logKeys);
     console.log('-- dialog is closed');
 
+    if (setPromptCookie) {
+      docCookies.setItem('HT-role-prompt', 'true', 4, 'hours');
+    }
     if (focusHelpOnClose) {
       document.getElementById('get-help').focus();
     }
@@ -96,10 +103,6 @@
     if (!globalThis.HTMLDialogElement) {
       console.log('-- polyfilling dialog');
       dialogPolyfill.registerDialog(dialog);
-    }
-
-    if (isOpen) {
-      openModal();
     }
   });
 
@@ -131,6 +134,9 @@
             data-bs-dismiss="modal"
             onclick={() => {
               hide();
+              if (setPromptCookie) {
+                checkForNotifications()
+              }
             }}
             ><span class="close-icon">
               <i class="fa-solid fa-xmark icon-default" aria-hidden="true"></i><span class="fa-sr-only"

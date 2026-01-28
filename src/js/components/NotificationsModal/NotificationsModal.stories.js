@@ -1,6 +1,6 @@
 import NotificationsModal from './index.svelte';
 import PingCallbackDecorator from '../../decorators/PingCallbackDecorator';
-import NotificationModalDecorator from '../../decorators/NotificationModalDecorator.svelte'
+import NotificationModalDecorator from '../../decorators/NotificationModalDecorator.svelte';
 import { userEvent, within, waitFor } from 'storybook/test';
 import { action } from 'storybook/actions';
 
@@ -76,7 +76,11 @@ export const HasNewNotifications = {
     manager: newManager,
     isOpen: true,
   },
-  decorators: [() => NotificationModalDecorator],
+  decorators: [
+    () => ({
+      Component: NotificationModalDecorator,
+    }),
+  ],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     let closeButton;
