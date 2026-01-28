@@ -59,7 +59,9 @@
     roleSwitchModal.show();
   }
   function openNotificationsModal(event) {
-    event.preventDefault();
+    if (event) {
+      event.preventDefault();
+    }
     notificationsModal.show();
   }
   function openFeedback(formLocation, event) {
@@ -93,22 +95,61 @@
     return { status: false };
   }
 
+  let roleSwitchOpen = $state(false);
+  let notificationsOpen = $state(false);
+  let canAutoOpenNotifications = $state(false);
+
+  function shouldShowRoleSwitch() {
+    if (!loggedIn || !hasSwitchableRoles) {
+      return false;
+    }
+    if (HT.cookieJar.hasItem('HT-role-prompt')) {
+      return false;
+    }
+    return true;
+  }
+
   // $: loginStatus = HT.loginStatus;
   let loggedIn = $derived(HT.loginStatus.logged_in);
   let hasSwitchableRoles = $derived(checkSwitchableRoles(loggedIn).status);
   let hasActivatedRole = $derived(checkSwitchableRoles(loggedIn).activated);
   let role = $derived(checkSwitchableRoles(loggedIn).label);
+
   $effect(() => {
     if (HT.loginStatus && HT.loginStatus.notificationData) {
       notificationsManager.update(HT.loginStatus.notificationData);
       hasNotification = notificationsManager.hasNotifications();
     }
   });
+
+  $effect(() => {
+    if (shouldShowRoleSwitch() && !roleSwitchOpen) {
+      roleSwitchOpen = true;
+    }
+  });
+
+  $effect(() => {
+    if (shouldShowRoleSwitch() && roleSwitchOpen) {
+      canAutoOpenNotifications = false;
+      return;
+    }
+
+    canAutoOpenNotifications = true;
+  });
+
 </script>
 
 <FeedbackFormModal {form} bind:this={feedbackModal} />
 {#if hasSwitchableRoles}
-  <RoleSwitchModal bind:this={roleSwitchModal} />
+  <RoleSwitchModal
+    bind:this={roleSwitchModal}
+    bind:isOpen={roleSwitchOpen}
+    checkForNotifications={() => {
+      if (hasNotification && notificationsManager.hasNewNotifications()) {
+        openNotificationsModal();
+      }
+    }}
+  />
 {/if}
 <nav class="navbar navbar-expand-xl bg-white" aria-label="Primary navigation">
   <div class="container-fluid">
@@ -452,6 +493,7 @@
                     {/if}
                     <li>
                       <a
+                        onclick={() => HT.cookieJar.removeItem('HT-role-prompt')}
                         class="dropdown-item d-flex flex-row gap-2 align-items-center"
                         href="//{`${HT.service_domain}/cgi/logout?${encodeURIComponent(window.location.href)}`}"
                         ><i class="fa-solid fa-arrow-right-from-bracket fa-fw" aria-hidden="true"></i><span
@@ -482,7 +524,12 @@
   </div>
 </nav>
 {#if hasNotification}
-  <NotificationsModal manager={notificationsManager} bind:this={notificationsModal} />
+  <NotificationsModal
+    manager={notificationsManager}
+    bind:this={notificationsModal}
+    bind:isOpen={notificationsOpen}
+    autoOpen={canAutoOpenNotifications}
+  />
 {/if}
 
 <style lang="scss">
