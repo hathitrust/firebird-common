@@ -414,11 +414,18 @@ main.error {
     font-size: var(--ht-text-xl);
     font-weight: 400;
     line-height: 2.125rem;
+    margin-bottom: 0;
   }
   .help-links p {
     font-size: var(--ht-text-md);
     color: var(--color-neutral-800);
     margin: 0;
+  }
+  .help-links a:visited {
+    color: var(--color-primary-600);
+    &:hover {
+      color: var(--color-primary-700);
+    }
   }
 }
 
