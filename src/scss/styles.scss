@@ -7,7 +7,6 @@
 @import 'fontawesome/brands';
 @import 'fontawesome/regular';
 
-
 // Toggle global options
 $enable-gradients: false;
 $enable-shadows: true;
@@ -69,23 +68,24 @@ $h4-font-size: $font-size-base * 1;
 $h5-font-size: $font-size-base * 1;
 $h6-font-size: $font-size-base * 1;
 $ht-text-sm: $font-size-base * 0.875;
+$ht-text-md: $font-size-base * 1.125;
 $ht-text-lg: $font-size-base;
+$ht-text-xl: $font-size-base * 1.75;
+$ht-text-3xl: $font-size-base * 2.25;
 
 $body-font-weight: 500;
 $headings-font-weight: 700;
 $btn-font-weight: 800;
 $form-label-font-weight: 400;
- 
 
-$ht-focus-border-color: #086AB4;
+$ht-focus-border-color: #086ab4;
 $ht-focus-box-shadow: 0 0 0 6px #fff;
-
 
 // $ht-focus-box-shadow: inset 0 1px 2px #00000013,0 0 0 .25rem #c3540040;
 // $ht-focus-outline: 0;
 
 :focus-visible {
-  outline: 3px solid #086AB4 !important;
+  outline: 3px solid #086ab4 !important;
   box-shadow: 0 0 0 6px #fff;
   outline-offset: 4px;
   z-index: 3;
@@ -134,7 +134,7 @@ $list-group-action-color: $list-group-color;
 @import 'bootstrap/scss/progress';
 @import 'bootstrap/scss/list-group';
 @import 'bootstrap/scss/close';
-@import "bootstrap/scss/toasts";
+@import 'bootstrap/scss/toasts';
 @import 'bootstrap/scss/modal'; // Requires transitions
 @import 'bootstrap/scss/tooltip';
 @import 'bootstrap/scss/popover';
@@ -157,8 +157,7 @@ $utilities: map-merge(
       local-vars: (
         'text-opacity': 1,
       ),
-      values:
-        map-merge(
+      values: map-merge(
           $utilities-text-colors,
           (
             'neutral-100': $ht-color-neutral-100,
@@ -181,7 +180,7 @@ $utilities: map-merge(
           )
         ),
     ),
-    "font-weight": (
+    'font-weight': (
       property: font-weight,
       class: fw,
       values: (
@@ -192,7 +191,7 @@ $utilities: map-merge(
         semibold: $font-weight-semibold,
         bolder: $font-weight-bolder,
         exbold: 800,
-      )
+      ),
     ),
     'background-color': (
       property: background-color,
@@ -200,8 +199,7 @@ $utilities: map-merge(
       local-vars: (
         'bg-opacity': 1,
       ),
-      values:
-        map-merge(
+      values: map-merge(
           $utilities-bg-colors,
           (
             'neutral-50': $ht-color-neutral-50,
@@ -209,21 +207,9 @@ $utilities: map-merge(
             'neutral-200': $ht-color-neutral-200,
             'neutral-500': $ht-color-neutral-500,
             'transparent': transparent,
-            'body-secondary':
-              rgba(
-                var(--#{$prefix}secondary-bg-rgb),
-                var(--#{$prefix}bg-opacity)
-              ),
-            'body-tertiary':
-              rgba(
-                var(--#{$prefix}tertiary-bg-rgb),
-                var(--#{$prefix}bg-opacity)
-              ),
-            'body-emphasis':
-              rgba(
-                var(--#{$prefix}emphasis-bg-rgb),
-                var(--#{$prefix}bg-opacity)
-              ),
+            'body-secondary': rgba(var(--#{$prefix}secondary-bg-rgb), var(--#{$prefix}bg-opacity)),
+            'body-tertiary': rgba(var(--#{$prefix}tertiary-bg-rgb), var(--#{$prefix}bg-opacity)),
+            'body-emphasis': rgba(var(--#{$prefix}emphasis-bg-rgb), var(--#{$prefix}bg-opacity)),
           )
         ),
     ),
@@ -233,8 +219,7 @@ $utilities: map-merge(
       local-vars: (
         'border-opacity': 1,
       ),
-      values:
-        map-merge(
+      values: map-merge(
           $utilities-border-colors,
           (
             'neutral-200': $ht-color-neutral-200,
@@ -249,8 +234,7 @@ $utilities: map-merge(
 $utilities: map-merge(
   $utilities,
   (
-    'width':
-      map-merge(
+    'width': map-merge(
         map-get($utilities, 'width'),
         (
           responsive: true,
@@ -297,7 +281,10 @@ $utilities: map-merge(
   --color-shades-100: #{$ht-color-shades-100};
 
   --ht-text-sm: #{$ht-text-sm};
+  --ht-text-md: #{$ht-text-md};
   --ht-text-lg: #{$ht-text-lg};
+  --ht-text-xl: #{$ht-text-xl};
+  --ht-text-3xl: #{$ht-text-3xl};
 
   --headings-font-weight: #{$headings-font-weight};
   --form-label-font-weight: #{$form-label-font-weight};
@@ -306,7 +293,7 @@ $utilities: map-merge(
   --bs-font-sans-serif: Mulish, Helvetica, Arial, system-ui;
   --bs-body-font-weight: #{$body-font-weight};
   --bs-link-color: var(--color-primary-600);
-  --ht-visited-link-color: #006FC3;
+  --ht-visited-link-color: #006fc3;
 
   --ht-focus-border-color: #{$ht-focus-border-color};
   --ht-focus-box-shadow: #{$ht-focus-box-shadow};
@@ -322,7 +309,6 @@ body[data-initialized='true'] {
 
 .btn {
   letter-spacing: -0.01rem;
-  
 }
 // bootstrap's contrast functions pair black text on our primary background
 .btn-primary {
@@ -361,30 +347,41 @@ body[data-initialized='true'] {
 }
 
 // FOCUS STYLES
-.btn, .btn.active, .nav-link, .accordion .accordion-button, select.form-select, input.form-control, textarea.form-control, input.form-check-input, :is(.was-validated) :is(.form-control, .form-select, .form-check-input) {
+.btn,
+.btn.active,
+.nav-link,
+.accordion .accordion-button,
+select.form-select,
+input.form-control,
+textarea.form-control,
+input.form-check-input,
+:is(.was-validated) :is(.form-control, .form-select, .form-check-input) {
   &:focus-visible {
-      outline: 3px solid #086AB4 !important;
-      outline-offset: 4px;
-      box-shadow: 0 0 0 6px white;
-      z-index: 3 !important;
-      transition: unset;
-    }
-    &:focus {
-      outline: 3px solid transparent;
-    }
+    outline: 3px solid #086ab4 !important;
+    outline-offset: 4px;
+    box-shadow: 0 0 0 6px white;
+    z-index: 3 !important;
+    transition: unset;
+  }
+  &:focus {
+    outline: 3px solid transparent;
+  }
 }
 a:focus-visible {
   border-radius: 6px;
 }
 
-.bg-secondary button:not(.dropdown-item):focus-visible, .bg-secondary .form-select:focus-visible, .bg-dark .form-control:focus-visible {
-  outline-offset:0;
+.bg-secondary button:not(.dropdown-item):focus-visible,
+.bg-secondary .form-select:focus-visible,
+.bg-dark .form-control:focus-visible {
+  outline-offset: 0;
 }
 
-
-.form-check-input, .form-control, .form-select {
+.form-check-input,
+.form-control,
+.form-select {
   &:focus {
-  border: 1px solid var(--color-neutral-500);
+    border: 1px solid var(--color-neutral-500);
   }
 }
 input.form-control[type],
@@ -403,40 +400,47 @@ textarea.form-control {
   border-bottom-left-radius: var(--bs-border-radius) !important;
 }
 
-
-.was-validated .form-control:valid, .form-control.is-valid {
-  border-color:  var(--color-neutral-500);
+.was-validated .form-control:valid,
+.form-control.is-valid {
+  border-color: var(--color-neutral-500);
   background-image: none;
 }
-.was-validated .form-check-input:valid~.form-check-label, .form-check-input.is-valid~.form-check-label {
+.was-validated .form-check-input:valid ~ .form-check-label,
+.form-check-input.is-valid ~ .form-check-label {
   color: inherit;
 }
-.was-validated .form-check-input:valid, .form-check-input.is-valid {
-  border-color:  var(--color-neutral-500);
+.was-validated .form-check-input:valid,
+.form-check-input.is-valid {
+  border-color: var(--color-neutral-500);
 }
-.was-validated .form-check-input:valid:checked, .form-check-input.is-valid:checked, .was-validated .form-check-input:valid:checked, .form-check-input.is-valid:checked {
+.was-validated .form-check-input:valid:checked,
+.form-check-input.is-valid:checked,
+.was-validated .form-check-input:valid:checked,
+.form-check-input.is-valid:checked {
   background-color: var(--color-primary-600);
 }
-.was-validated .form-control:valid:focus, .form-control.is-valid:focus {
-  border-color:  var(--color-neutral-500);
+.was-validated .form-control:valid:focus,
+.form-control.is-valid:focus {
+  border-color: var(--color-neutral-500);
   box-shadow: var(--ht-focus-box-shadow);
 }
-.was-validated .form-check-input:valid:focus, .form-check-input.is-valid:focus {
+.was-validated .form-check-input:valid:focus,
+.form-check-input.is-valid:focus {
   box-shadow: none;
 }
 
 .advanced-search-list li.form-check:focus-within {
-    border: 4px dashed var(--ht-focus-border-color);
-    & > label {
-      border:4px solid #fff;
-    }
+  border: 4px dashed var(--ht-focus-border-color);
+  & > label {
+    border: 4px solid #fff;
+  }
 }
 .advanced-search-list li.form-check:not(:focus-within) > label {
-   padding: 16px 24px !important;
-   border:none !important;
+  padding: 16px 24px !important;
+  border: none !important;
 }
 
-a:not(.btn,.list-group-item):has(i[aria-hidden]) {
+a:not(.btn, .list-group-item):has(i[aria-hidden]) {
   display: inline-flex;
   gap: 0.25rem;
   align-items: center;
@@ -485,29 +489,29 @@ a:not(.btn,.list-group-item):has(i[aria-hidden]) {
   overflow: hidden;
 }
 .cookie-settings dialog {
-   max-inline-size: min(90vw,70ch);
+  max-inline-size: min(90vw, 70ch);
 }
 
 //close icon
 button.close {
   &:focus-visible {
     outline: 4px solid rgba(51, 51, 51, 0.4);
-    border-radius: 50%; 
+    border-radius: 50%;
     .close-icon .icon-default {
-     opacity:0;
-      color:transparent; 
+      opacity: 0;
+      color: transparent;
     }
     .close-icon .icon-hover {
       opacity: 1;
     }
   }
   .close-icon {
-  padding: 0.625rem;
-  border-radius: 50%;
-  width: 2rem;
-  height: 2rem;
-  display: block;
-  position: relative;
+    padding: 0.625rem;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    display: block;
+    position: relative;
     i {
       color: var(--color-neutral-600);
       position: absolute;
@@ -524,23 +528,20 @@ button.close {
     }
     &:hover .icon-default,
     &:focus .icon-default {
-      opacity:0;
-      color:transparent;
+      opacity: 0;
+      color: transparent;
     }
     &:hover .icon-hover,
     &:focus .icon-hover {
       opacity: 1;
     }
-  
   }
-  
 }
 
 .px-modal {
   padding-left: var(--bs-modal-padding-width) !important;
   padding-right: var(--bs-modal-padding-width) !important;
 }
-
 
 .accordion {
   --bs-accordion-active-bg: transparent;
@@ -566,15 +567,18 @@ button.close {
 a {
   // what effect does this have with padding?
   // padding: 2px 4px;
-  transition: outline 0.3s ease, border-radius 0.3s ease, z-index 0.3s ease;
+  transition:
+    outline 0.3s ease,
+    border-radius 0.3s ease,
+    z-index 0.3s ease;
   // &:focus-visible {
-    // outline: 0.25rem solid transparent;
-    // box-shadow: 0 0 0 4px rgba(236,114,23,0.5);
-    // box-shadow: 0 0 0 4px rgb(51, 51, 51, 0.4);
-    // outline: 3px solid #086AB4;
-    // border-radius: 6px;
-    // outline-offset: 4px;
-    // z-index: 1;
+  // outline: 0.25rem solid transparent;
+  // box-shadow: 0 0 0 4px rgba(236,114,23,0.5);
+  // box-shadow: 0 0 0 4px rgb(51, 51, 51, 0.4);
+  // outline: 3px solid #086AB4;
+  // border-radius: 6px;
+  // outline-offset: 4px;
+  // z-index: 1;
   // }
 }
 
