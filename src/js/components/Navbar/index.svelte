@@ -288,7 +288,7 @@
               {#each menuData.collection as menuItem}
                 <li class="px-3">
                   {#if menuItem.title === 'Featured Collections'}
-                    <a class="dropdown-item px-0" href="//{HT.service_domain}/cgi/mb?colltype=featured"
+                    <a class="dropdown-item px-0" href="//{HT.service_domain}/cgi/mb?a=listcs&colltype=featured"
                       >{menuItem.title}</a
                     >
                   {:else}
