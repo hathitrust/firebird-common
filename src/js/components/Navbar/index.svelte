@@ -36,17 +36,15 @@
     console.log('AHOY searchOpen', searchOpen);
   }
 
+  //calculate login target
+  const windowLocation = window.location.href;
+  let target = windowLocation.indexOf('babel.hathitrust') < 0 ? HT.get_pong_target(windowLocation) : windowLocation;  
+
   function openLogin(event) {
     event && event.preventDefault();
     //check viewport size to see if LoginFormModal will fit
     if (window.innerHeight <= 670 || HT.loginStatus.idp_list.length == 0) {
       //if not, redirect user
-      //calculate login target
-      let target = window.location.href;
-      if (target.indexOf('babel.hathitrust') < 0) {
-        // not a babel app, need to route through ping/pong
-        target = HT.get_pong_target(target);
-      }
       window.location.assign(`//${HT.service_domain}/cgi/wayf?target=${encodeURIComponent(target)}`);
     } else {
       //else, open LoginFormModal
@@ -506,7 +504,7 @@
               </ul>
             </li>
           {:else}
-            <LoginFormModal bind:this={loginModal} />
+            <LoginFormModal {target} bind:this={loginModal} />
             <li class="nav-item">
               <a
                 id="log-in"

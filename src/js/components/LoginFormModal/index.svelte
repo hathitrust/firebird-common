@@ -13,14 +13,6 @@
   let filterText = $state('');
   let modal;
 
-  if (!target) {
-    target = window.location.href;
-    if (target.indexOf('babel.hathitrust') < 0) {
-      // not a babel app, need to route through ping/pong
-      target = HT.get_pong_target(target);
-    }
-  }
-
   export const show = function () {
     if (!HT.loginStatus.idp_list.length) {
       console.log('idp_list is empty, dont show modal');
