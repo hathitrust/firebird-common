@@ -23,13 +23,12 @@
     id = 1,
   } = $props();
 
-  let isVisible = $state(true);
+  let alertDismissed = $derived(cookieJar.getItem(`HT-alert-${id}`) === 'dismissed');
 
   export function closeAlert() {
     //if user has functional/preference cookies enabled, set a 14-day cookie to remember dismissed preference
     if (consent.preferencesConsent === 'true') {
       cookieJar.setItem(`HT-alert-${id}`, 'dismissed', 14);
-      isVisible = false;
     }
     //reset focus to the main element once the banner is removed from the DOM
     if (document.querySelector('main')) {
@@ -37,12 +36,9 @@
     }
   }
 
-  if (cookieJar.getItem(`HT-alert-${id}`) === 'dismissed') {
-    isVisible = false;
-  }
 </script>
 
-{#if isVisible}
+{#if !alertDismissed}
   <section class="alert alert-dismissible d-flex mx-3 justify-content-between fade show alert-{type}" id="alert-{id}">
     <div class="d-flex gap-2">
       <i
