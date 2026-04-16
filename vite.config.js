@@ -3,6 +3,7 @@ import { defineConfig } from 'vite';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 import { sveltePreprocess } from 'svelte-preprocess';
 import path from 'node:path';
+import fs from 'node:fs';
 
 //storybook additions
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
@@ -32,6 +33,20 @@ export default defineConfig({
         scss: {},
       }),
     }),
+    //custom vite plugin to rewrite the name of the CSS key in manifest.json
+    //from 'style.css' (the name of our scss file) to 'index.css' (all of our apps expect that key)
+    {
+      name: 'postbuild-commands',
+      writeBundle: () => {
+        const path = 'dist/manifest.json';
+        const manifest = JSON.parse(fs.readFileSync(path).toString());
+        if (manifest['style.css']) {
+          manifest['index.css'] = manifest['style.css'];
+          delete manifest['style.css'];
+          fs.writeFileSync(path, JSON.stringify(manifest, null, 2));
+        }
+      },
+    },
     removeStylesheet(),
   ],
   root: path.resolve(import.meta.dirname, 'src'),
