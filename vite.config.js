@@ -137,9 +137,6 @@ export default defineConfig({
           },
           setupFiles: ['./.storybook/vitest.setup.js'],
         },
-        // optimizeDeps: {
-        //   include: ['@storybook/svelte-vite', 'bootstrap', '@storybook/test'],
-        // },
       },
     ],
   },
