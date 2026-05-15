@@ -258,15 +258,15 @@
             <span>About</span>
           </button>
           <div>
-            <ul class="dropdown-menu">
-              <div class="d-flex flex-column gap-4">
+            <div class="dropdown-menu">
+              <ul class="d-flex flex-column gap-4 list-unstyled">
                 {#each menuData.about as menuItem}
                   <li class="px-3">
                     <a class="dropdown-item px-0" href="//{HT.www_domain}/{menuItem.link}">{menuItem.title}</a>
                   </li>
                 {/each}
-              </div>
-            </ul>
+              </ul>
+            </div>
           </div>
         </li>
         <li class="nav-item dropdown">
@@ -277,8 +277,8 @@
           >
             <span>The Collection</span>
           </button>
-          <ul class="dropdown-menu">
-            <div class="d-flex flex-column gap-4">
+          <div class="dropdown-menu">
+            <ul class="d-flex flex-column gap-4 list-unstyled">
               {#each menuData.collection as menuItem}
                 <li class="px-3">
                   {#if menuItem.title === 'Featured Collections'}
@@ -290,8 +290,8 @@
                   {/if}
                 </li>
               {/each}
-            </div>
-          </ul>
+            </ul>
+          </div>
         </li>
         <li class="nav-item dropdown">
           <button
@@ -301,15 +301,15 @@
           >
             <span>Member Libraries</span>
           </button>
-          <ul class="dropdown-menu">
-            <div class="d-flex flex-column gap-4">
+          <div class="dropdown-menu">
+            <ul class="d-flex flex-column gap-4 list-unstyled">
               {#each menuData.memberLibraries as menuItem}
                 <li class="px-3">
                   <a class="dropdown-item px-0" href="//{HT.www_domain}/{menuItem.link}">{menuItem.title}</a>
                 </li>
               {/each}
-            </div>
-          </ul>
+            </ul>
+          </div>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="//{HT.www_domain}/join/">Join</a>
@@ -322,15 +322,15 @@
           >
             <span>News &amp; Events</span>
           </button>
-          <ul class="dropdown-menu">
-            <div class="d-flex flex-column gap-4">
+          <div class="dropdown-menu">
+            <ul class="d-flex flex-column gap-4 list-unstyled">
               {#each menuData.newsEvents as menuItem}
                 <li class="px-3">
                   <a class="dropdown-item px-0" href="//{HT.www_domain}/{menuItem.link}">{menuItem.title}</a>
                 </li>
               {/each}
-            </div>
-          </ul>
+            </ul>
+          </div>
         </li>
       </ul>
       <ul class="navbar-nav action-links">
@@ -352,8 +352,8 @@
             data-bs-toggle="dropdown"
             ><span>Get Help</span>
           </button>
-          <ul class="dropdown-menu dropdown-menu-end p-0">
-            <div class="d-flex flex-column gap-1 p-2">
+          <div class="dropdown-menu dropdown-menu-end p-0">
+            <ul class="d-flex flex-column gap-1 p-2 list-unstyled">
               <li>
                 <a
                   href="https://hathitrust.atlassian.net/servicedesk/customer/portals"
@@ -384,15 +384,14 @@
                   <i class="fa-solid fa-bug fa-fw text-neutral-500" aria-hidden="true"></i><span>Report a Problem</span>
                 </button>
               </li>
-            </div>
-          </ul>
+            </ul>
+          </div>
         </li>
         {#if userNavigation}
           {#if loggedIn}
             <li id="my-account" class="nav-item dropdown">
               <button
                 class="nav-link dropdown-toggle d-flex flex-row justify-content-between align-items-center text-black-hover text-black-focus"
-                role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
                 aria-labelledby="my-account-label role-heading role-active"
@@ -415,8 +414,8 @@
                   >
                 </div>
               </button>
-              <ul class="dropdown-menu dropdown-menu-end p-0" class:accountDropdown={!hasSwitchableRoles}>
-                <div class="d-flex flex-column">
+              <div class="dropdown-menu dropdown-menu-end p-0" class:accountDropdown={!hasSwitchableRoles}>
+                <ul class="d-flex flex-column list-unstyled">
                   {#if hasSwitchableRoles}
                     <li class="d-flex p-3 current-role align-items-center border-bottom border-neutral-300">
                       <span
@@ -434,7 +433,8 @@
                       </div>
                     </li>
                   {/if}
-                  <div class="d-flex flex-column p-2 gap-1 border-bottom border-neutral-300">
+                  <li class="d-flex flex-column p-2 gap-1 border-bottom border-neutral-300">
+                  <ul class="list-unstyled">
                     <li>
                       <button
                         class="dropdown-item d-flex flex-row gap-2 align-items-center"
@@ -456,8 +456,10 @@
                         ></a
                       >
                     </li>
-                  </div>
-                  <div class="p-2 gap-1 d-flex flex-column">
+                    </ul>
+                  </li>
+                  <li class="p-2 gap-1 d-flex flex-column">
+                  <ul class="list-unstyled">
                     {#if hasSwitchableRoles}
                       <li>
                         <button
@@ -482,9 +484,10 @@
                         ></a
                       >
                     </li>
-                  </div>
-                </div>
-              </ul>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
             </li>
           {:else}
             <LoginFormModal {target} bind:this={loginModal} />
@@ -567,6 +570,13 @@
       gap: 0.5rem;
     }
   }
+  .navbar-nav .nav-item {
+    display: flex;
+    flex-direction: column;
+    @media (min-width: 1200px) {
+      display: block;
+    }
+  }
   .navbar-nav.action-links {
     @media (min-width: 1200px) {
       padding-right: 1rem;
@@ -591,7 +601,7 @@
           gap: 0.75rem;
         }
       }
-      ul.dropdown-menu {
+      .dropdown-menu {
         background: var(--color-shades-0);
         a:hover,
         a:active {
@@ -607,7 +617,7 @@
         border-radius: 0;
       }
     }
-    button.nav-link, a.nav-link {
+    button.nav-link {
       font-weight: 800;
       &.search-active {
         color: var(--color-primary-600);
@@ -619,7 +629,7 @@
     i {
       color: var(--color-primary-600);
     }
-    #my-account ul.dropdown-menu li:not(.current-role) i {
+    #my-account .dropdown-menu li:not(.current-role) i {
       color: var(--color-neutral-500);
     }
     .needs-hover-state:hover {
@@ -656,10 +666,10 @@
   .role {
     gap: 0.125rem;
   }
-  #my-account a.nav-link div {
-    text-decoration: none;
-  }
-  #my-account a.switch-roles {
+  // #my-account a.nav-link div {
+  //   text-decoration: none;
+  // }
+  #my-account .switch-roles {
     max-width: 13rem;
     white-space: pre-wrap;
   }
@@ -700,7 +710,7 @@
     #my-account .dropdown-menu {
       width: 14rem;
     }
-    #my-account ul.accountDropdown {
+    #my-account .accountDropdown {
       width: 11rem;
     }
   }
