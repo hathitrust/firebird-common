@@ -576,6 +576,9 @@
     @media (min-width: 1200px) {
       display: block;
     }
+    .nav-link:focus-visible {
+      z-index: 1003 !important;
+    }
   }
   .navbar-nav.action-links {
     @media (min-width: 1200px) {
@@ -666,9 +669,6 @@
   .role {
     gap: 0.125rem;
   }
-  // #my-account a.nav-link div {
-  //   text-decoration: none;
-  // }
   #my-account .switch-roles {
     max-width: 13rem;
     white-space: pre-wrap;
@@ -699,7 +699,7 @@
       left: 27px;
     }
   }
-  button.dropdown-toggle {
+  button.dropdown-toggle, button#log-in {
     border-radius: 6px;
   }
   .dropdown-toggle::after {
