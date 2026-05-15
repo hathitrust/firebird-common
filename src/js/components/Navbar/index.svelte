@@ -250,15 +250,13 @@
     <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
       <ul class="navbar-nav menu-links">
         <li class="nav-item dropdown">
-          <a
+          <button
             class="nav-link dropdown-toggle d-flex flex-row justify-content-between align-items-center"
-            href="#"
-            role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
             <span>About</span>
-          </a>
+          </button>
           <div>
             <ul class="dropdown-menu">
               <div class="d-flex flex-column gap-4">
@@ -272,15 +270,13 @@
           </div>
         </li>
         <li class="nav-item dropdown">
-          <a
+          <button
             class="nav-link dropdown-toggle d-flex flex-row justify-content-between align-items-center"
-            href="#"
-            role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
             <span>The Collection</span>
-          </a>
+          </button>
           <ul class="dropdown-menu">
             <div class="d-flex flex-column gap-4">
               {#each menuData.collection as menuItem}
@@ -298,15 +294,13 @@
           </ul>
         </li>
         <li class="nav-item dropdown">
-          <a
+          <button
             class="nav-link dropdown-toggle d-flex flex-row justify-content-between align-items-center"
-            href="#"
-            role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
             <span>Member Libraries</span>
-          </a>
+          </button>
           <ul class="dropdown-menu">
             <div class="d-flex flex-column gap-4">
               {#each menuData.memberLibraries as menuItem}
@@ -321,15 +315,13 @@
           <a class="nav-link" href="//{HT.www_domain}/join/">Join</a>
         </li>
         <li class="nav-item dropdown">
-          <a
+          <button
             class="nav-link dropdown-toggle d-flex flex-row justify-content-between align-items-center"
-            href="#"
-            role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
             <span>News &amp; Events</span>
-          </a>
+          </button>
           <ul class="dropdown-menu">
             <div class="d-flex flex-column gap-4">
               {#each menuData.newsEvents as menuItem}
@@ -344,26 +336,22 @@
       <ul class="navbar-nav action-links">
         {#if searchState != 'none'}
           <li class="nav-item d-none d-xl-block">
-            <a
+            <button
               class="nav-link text-uppercase d-flex flex-row justify-content-between align-items-center"
               class:search-active={searchOpen}
-              href="#"
-              role="button"
               aria-expanded={searchOpen}
-              onclick={toggleSearch}>Search <i class="fa-solid fa-magnifying-glass fa-fw"></i></a
+              onclick={toggleSearch}>Search <i class="fa-solid fa-magnifying-glass fa-fw"></i></button
             >
           </li>
         {/if}
         <li class="nav-item dropdown">
-          <a
-            href="#"
-            role="button"
+          <button
             id="get-help"
             aria-expanded="false"
             class="nav-link dropdown-toggle text-uppercase d-flex flex-row justify-content-between align-items-center gap-2"
             data-bs-toggle="dropdown"
             ><span>Get Help</span>
-          </a>
+          </button>
           <ul class="dropdown-menu dropdown-menu-end p-0">
             <div class="d-flex flex-column gap-1 p-2">
               <li>
@@ -377,8 +365,7 @@
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
+                <button
                   id="ask-a-question"
                   class="dropdown-item d-flex flex-row align-items-center gap-2"
                   onclick={() => openFeedback('questions')}
@@ -386,17 +373,16 @@
                   <i class="fa-solid fa-circle-question fa-fw text-neutral-500" aria-hidden="true"></i><span
                     >Ask a Question</span
                   >
-                </a>
+                </button>
               </li>
               <li>
-                <a
-                  href="#"
+                <button
                   id="report-a-problem"
                   class="dropdown-item d-flex flex-row align-items-center gap-2"
                   onclick={() => openFeedback(location)}
                 >
                   <i class="fa-solid fa-bug fa-fw text-neutral-500" aria-hidden="true"></i><span>Report a Problem</span>
-                </a>
+                </button>
               </li>
             </div>
           </ul>
@@ -404,9 +390,8 @@
         {#if userNavigation}
           {#if loggedIn}
             <li id="my-account" class="nav-item dropdown">
-              <a
+              <button
                 class="nav-link dropdown-toggle d-flex flex-row justify-content-between align-items-center text-black-hover text-black-focus"
-                href="#"
                 role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
@@ -429,7 +414,7 @@
                     ></span
                   >
                 </div>
-              </a>
+              </button>
               <ul class="dropdown-menu dropdown-menu-end p-0" class:accountDropdown={!hasSwitchableRoles}>
                 <div class="d-flex flex-column">
                   {#if hasSwitchableRoles}
@@ -475,17 +460,15 @@
                   <div class="p-2 gap-1 d-flex flex-column">
                     {#if hasSwitchableRoles}
                       <li>
-                        <a
+                        <button
                           class="dropdown-item d-flex flex-row gap-2 align-items-center switch-roles"
-                          href="#"
-                          role="button"
                           id="switch"
                           onclick={openRoleSwitchModal}
                           ><i class="fa-solid fa-user-group fa-fw" aria-hidden="true"></i><span
                             class="needs-hover-state"
                           >
                             Switch Role
-                          </span></a
+                          </span></button
                         >
                       </li>
                     {/if}
@@ -506,13 +489,11 @@
           {:else}
             <LoginFormModal {target} bind:this={loginModal} />
             <li class="nav-item">
-              <a
+              <button
                 id="log-in"
                 class="nav-link text-uppercase d-flex align-items-center gap-2"
-                href="#"
-                role="button"
                 data-testid="login-button"
-                onclick={openLogin}><i class="fa-solid fa-user fa-fw" aria-hidden="true"></i>Log In</a
+                onclick={openLogin}><i class="fa-solid fa-user fa-fw" aria-hidden="true"></i>Log In</button
               >
             </li>
           {/if}
@@ -581,7 +562,7 @@
     padding-right: 1rem;
     gap: 1.5rem;
   }
-  .navbar-nav.menu-links .nav-item a {
+  .navbar-nav.menu-links .nav-item button {
     @media (min-width: 1200px) {
       gap: 0.5rem;
     }
@@ -605,7 +586,7 @@
         }
       }
 
-      a {
+      button {
         @media (min-width: 1200px) {
           gap: 0.75rem;
         }
@@ -626,7 +607,7 @@
         border-radius: 0;
       }
     }
-    a.nav-link {
+    button.nav-link, a.nav-link {
       font-weight: 800;
       &.search-active {
         color: var(--color-primary-600);
@@ -708,6 +689,9 @@
       left: 27px;
     }
   }
+  button.dropdown-toggle {
+    border-radius: 6px;
+  }
   .dropdown-toggle::after {
     font-size: 1.1em;
   }
@@ -740,7 +724,7 @@
         padding-top: 0;
       }
     }
-    a {
+    a, button span {
       line-height: 1.125rem;
       letter-spacing: -0.00875rem;
       &:hover {
