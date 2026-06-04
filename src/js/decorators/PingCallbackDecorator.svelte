@@ -1,5 +1,5 @@
 <script>
-  import { untrack } from 'svelte'
+  import { untrack } from 'svelte';
   import { TestCookieJar } from '../lib/cookies.svelte.js';
 
   function fakeIdpUrl(sdrinst) {
@@ -86,7 +86,7 @@
     //so I added the new getter/setter definiton from main.svelte.js here
     HT.loginStatus = HT.login_status;
     globalThis.HT = HT;
-  })
+  });
 
   $effect(() => {
     console.log('LoginStatusDecorator', loggedIn, prefs, notificationData);

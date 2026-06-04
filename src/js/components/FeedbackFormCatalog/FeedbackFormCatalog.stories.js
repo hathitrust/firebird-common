@@ -23,8 +23,8 @@ export const Default = {
   globals: {
     viewport: {
       value: 'bsXl',
-      isRotated: false
-    }
+      isRotated: false,
+    },
   },
 };
 
@@ -129,7 +129,7 @@ export const DefaultMobile = {
   globals: {
     viewport: {
       value: 'bsXs',
-      isRotated: false
-    }
+      isRotated: false,
+    },
   },
 };

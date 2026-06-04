@@ -1,6 +1,6 @@
 import Header from './index.svelte';
 import PingCallbackDecorator from '../../decorators/PingCallbackDecorator';
-import { userEvent, within } from "storybook/test";
+import { userEvent, within } from 'storybook/test';
 
 export default {
   title: 'Header',
@@ -20,8 +20,8 @@ export const MobileDefault = {
   globals: {
     viewport: {
       value: 'bsXs',
-      isRotated: false
-    }
+      isRotated: false,
+    },
   },
 };
 
@@ -32,7 +32,7 @@ export const DefaultDesktop = {
   globals: {
     viewport: {
       value: 'bsXl',
-      isRotated: false
-    }
+      isRotated: false,
+    },
   },
 };
