@@ -170,8 +170,8 @@
 </script>
 
 <div>
-  <div class="search-form-wrapper" bind:this={_root}>
-    <form onsubmit={_submitSearch} role="search" aria-label="Search HathiTrust">
+  <search class="search-form-wrapper" bind:this={_root} aria-label="Search HathiTrust">
+    <form onsubmit={_submitSearch}>
       <div id="searchbar-form" class="input-group d-flex">
         <div class="search-input">
           <input
@@ -246,7 +246,7 @@
         >
       </div>
     </div>
-  </div>
+  </search>
 </div>
 
 <style lang="scss">
