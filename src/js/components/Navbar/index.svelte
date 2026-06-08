@@ -38,7 +38,7 @@
 
   //calculate login target
   const windowLocation = window.location.href;
-  let target = windowLocation.indexOf('babel.hathitrust') < 0 ? HT.get_pong_target(windowLocation) : windowLocation;  
+  let target = windowLocation.indexOf('babel.hathitrust') < 0 ? HT.get_pong_target(windowLocation) : windowLocation;
 
   function openLogin(event) {
     event && event.preventDefault();
@@ -134,7 +134,6 @@
 
     canAutoOpenNotifications = true;
   });
-
 </script>
 
 <FeedbackFormModal {form} bind:this={feedbackModal} />
@@ -434,56 +433,56 @@
                     </li>
                   {/if}
                   <li class="d-flex flex-column p-2 gap-1 border-bottom border-neutral-300">
-                  <ul class="list-unstyled">
-                    <li>
-                      <button
-                        class="dropdown-item d-flex flex-row gap-2 align-items-center"
-                        data-disabled={!hasNotification}
-                        disabled={!hasNotification ? true : null}
-                        onclick={openNotificationsModal}
-                        ><i class="fa-solid fa-bell fa-fw" aria-hidden="true" class:opacity-25={!hasNotification}
-                        ></i><span class="needs-hover-state"
-                          >Notifications {#if hasNotification}({notificationsManager.count()}){/if}</span
+                    <ul class="list-unstyled">
+                      <li>
+                        <button
+                          class="dropdown-item d-flex flex-row gap-2 align-items-center"
+                          data-disabled={!hasNotification}
+                          disabled={!hasNotification ? true : null}
+                          onclick={openNotificationsModal}
+                          ><i class="fa-solid fa-bell fa-fw" aria-hidden="true" class:opacity-25={!hasNotification}
+                          ></i><span class="needs-hover-state"
+                            >Notifications {#if hasNotification}({notificationsManager.count()}){/if}</span
+                          >
+                        </button>
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item d-flex flex-row gap-2 align-items-center"
+                          href="//{`${HT.service_domain}/cgi/mb?a=listcs&colltype=my-collections`}"
+                          ><i class="fa-solid fa-list fa-fw" aria-hidden="true"></i><span class="needs-hover-state"
+                            >My Collections</span
+                          ></a
                         >
-                      </button>
-                    </li>
-                    <li>
-                      <a
-                        class="dropdown-item d-flex flex-row gap-2 align-items-center"
-                        href="//{`${HT.service_domain}/cgi/mb?a=listcs&colltype=my-collections`}"
-                        ><i class="fa-solid fa-list fa-fw" aria-hidden="true"></i><span class="needs-hover-state"
-                          >My Collections</span
-                        ></a
-                      >
-                    </li>
+                      </li>
                     </ul>
                   </li>
                   <li class="p-2 gap-1 d-flex flex-column">
-                  <ul class="list-unstyled">
-                    {#if hasSwitchableRoles}
-                      <li>
-                        <button
-                          class="dropdown-item d-flex flex-row gap-2 align-items-center switch-roles"
-                          id="switch"
-                          onclick={openRoleSwitchModal}
-                          ><i class="fa-solid fa-user-group fa-fw" aria-hidden="true"></i><span
-                            class="needs-hover-state"
+                    <ul class="list-unstyled">
+                      {#if hasSwitchableRoles}
+                        <li>
+                          <button
+                            class="dropdown-item d-flex flex-row gap-2 align-items-center switch-roles"
+                            id="switch"
+                            onclick={openRoleSwitchModal}
+                            ><i class="fa-solid fa-user-group fa-fw" aria-hidden="true"></i><span
+                              class="needs-hover-state"
+                            >
+                              Switch Role
+                            </span></button
                           >
-                            Switch Role
-                          </span></button
+                        </li>
+                      {/if}
+                      <li>
+                        <a
+                          onclick={() => HT.cookieJar.removeItem('HT-role-prompt')}
+                          class="dropdown-item d-flex flex-row gap-2 align-items-center"
+                          href="//{`${HT.service_domain}/cgi/logout?${encodeURIComponent(window.location.href)}`}"
+                          ><i class="fa-solid fa-arrow-right-from-bracket fa-fw" aria-hidden="true"></i><span
+                            class="needs-hover-state">Log Out</span
+                          ></a
                         >
                       </li>
-                    {/if}
-                    <li>
-                      <a
-                        onclick={() => HT.cookieJar.removeItem('HT-role-prompt')}
-                        class="dropdown-item d-flex flex-row gap-2 align-items-center"
-                        href="//{`${HT.service_domain}/cgi/logout?${encodeURIComponent(window.location.href)}`}"
-                        ><i class="fa-solid fa-arrow-right-from-bracket fa-fw" aria-hidden="true"></i><span
-                          class="needs-hover-state">Log Out</span
-                        ></a
-                      >
-                    </li>
                     </ul>
                   </li>
                 </ul>
@@ -699,7 +698,8 @@
       left: 27px;
     }
   }
-  button.dropdown-toggle, button#log-in {
+  button.dropdown-toggle,
+  button#log-in {
     border-radius: 6px;
   }
   .dropdown-toggle::after {
@@ -734,7 +734,8 @@
         padding-top: 0;
       }
     }
-    a, button span {
+    a,
+    button span {
       line-height: 1.125rem;
       letter-spacing: -0.00875rem;
       &:hover {

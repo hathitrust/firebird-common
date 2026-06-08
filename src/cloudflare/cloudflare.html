@@ -5,48 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Error - Blocked from HathiTrust</title>
     <style>
-        @font-face {
-            font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-            font-family: 'Mulish';
-            font-style: normal;
-            font-weight: 400;
-            src: url('/common/firebird/dist/fonts/mulish-v12-cyrillic_cyrillic-ext_latin_latin-ext_vietnamese-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-        }
-        body {
-            height: 100vh;
-            width: 100vw;
-            padding-inline-start:1rem;
-            font-family: 'Mulish', sans-serif;
-        }
-        h1 {
-            font-size: 2rem;
-            line-height: 1.19
-        }
-        h2 {
-            font-size: 1.75rem;
-            line-height: 1.21
-        }
-        h3 {
-            font-size: 1.125rem;
-            line-height: 1.31
-        }
-        img {
-            height: 4.5rem;
-            width: auto; 
-            padding-block-start: 1em;
-        }
-        .col {
-            max-width: 600px;
-            margin-inline-end: 2rem;
-            margin-top: 1.5rem;
-            /* padding:.5rem 1rem 1rem 1rem;
+      @font-face {
+        font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+        font-family: 'Mulish';
+        font-style: normal;
+        font-weight: 400;
+        src: url('/common/firebird/dist/fonts/mulish-v12-cyrillic_cyrillic-ext_latin_latin-ext_vietnamese-regular.woff2')
+          format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+      }
+      body {
+        height: 100vh;
+        width: 100vw;
+        padding-inline-start: 1rem;
+        font-family: 'Mulish', sans-serif;
+      }
+      h1 {
+        font-size: 2rem;
+        line-height: 1.19;
+      }
+      h2 {
+        font-size: 1.75rem;
+        line-height: 1.21;
+      }
+      h3 {
+        font-size: 1.125rem;
+        line-height: 1.31;
+      }
+      img {
+        height: 4.5rem;
+        width: auto;
+        padding-block-start: 1em;
+      }
+      .col {
+        max-width: 600px;
+        margin-inline-end: 2rem;
+        margin-top: 1.5rem;
+        /* padding:.5rem 1rem 1rem 1rem;
             border: 1px solid #e4e4e4;
             border-radius: .5rem;
             background: #f8f8f8; */
-        }
-        p {
-            text-wrap: balance;
-        }
+      }
+      p {
+        text-wrap: balance;
+      }
     </style>
   </head>
   <body>
@@ -54,24 +55,31 @@
     <h1>Page Blocked</h1>
     <h2>Sorry, your attempt to access HathiTrust has been blocked.</h2>
     <div class="col">
-        <h3>Why did HathiTrust block my access to this web page?</h3>
-        <p>
-        You may have been blocked due to one of several possible reasons:
-        </p>
-        <ul>
+      <h3>Why did HathiTrust block my access to this web page?</h3>
+      <p>You may have been blocked due to one of several possible reasons:</p>
+      <ul>
         <li>Because of your IP address' reputation or location</li>
         <li>Some data you submitted may have been flagged as suspicious</li>
-        <li>If accessing HathiTrust through a proxy or VPN: There may have been abusive activity from others using the same proxy server or VPN</li>
-        </ul>
-        <p>These blocks may be due to federal and state regulations and laws, or organizational policies and mandates. </p>
+        <li>
+          If accessing HathiTrust through a proxy or VPN: There may have been abusive activity from others using the
+          same proxy server or VPN
+        </li>
+      </ul>
+      <p>These blocks may be due to federal and state regulations and laws, or organizational policies and mandates.</p>
     </div>
     <div class="col">
-        <h3>What can I do to resolve this?</h3>
-        <p>You may be able to access the page by using a different device. If you are attempting to access HathiTrust via a proxy server or VPN, please try connecting without the use of the proxy or VPN. If that doesn't resolve the issue, you can email HathiTrust support at <a href="mailto:support@hathitrust.org">support@hathitrust.org</a>. Please include what you were doing when this page came up and provide these details:<p>
-        <ul>
-            <li>IP address: ::CLIENT_IP::</li>
-            <li>Cloudflare Ray ID: ::RAY_ID::</li>
-        </ul>
+      <h3>What can I do to resolve this?</h3>
+      <p>
+        You may be able to access the page by using a different device. If you are attempting to access HathiTrust via a
+        proxy server or VPN, please try connecting without the use of the proxy or VPN. If that doesn't resolve the
+        issue, you can email HathiTrust support at <a href="mailto:support@hathitrust.org">support@hathitrust.org</a>.
+        Please include what you were doing when this page came up and provide these details:
+      </p>
+      <p></p>
+      <ul>
+        <li>IP address: ::CLIENT_IP::</li>
+        <li>Cloudflare Ray ID: ::RAY_ID::</li>
+      </ul>
     </div>
   </body>
 </html>

@@ -1,6 +1,6 @@
 import SearchBar from './index.svelte';
 import PingCallbackDecorator from '../../decorators/PingCallbackDecorator';
-import { userEvent, within } from "storybook/test";
+import { userEvent, within } from 'storybook/test';
 
 export default {
   title: 'Search Bar',
@@ -17,8 +17,8 @@ export const Mobile = {
   globals: {
     viewport: {
       value: 'bsXs',
-      isRotated: false
-    }
+      isRotated: false,
+    },
   },
 };
 export const Desktop = {
@@ -28,7 +28,7 @@ export const Desktop = {
   globals: {
     viewport: {
       value: 'bsXl',
-      isRotated: false
-    }
+      isRotated: false,
+    },
   },
 };

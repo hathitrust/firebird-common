@@ -24,7 +24,7 @@
   HathiTrust will immediately terminate a registered user’s ability to employ Collection Administration Access if we
   determine that a disallowed use has occurred or is occurring. Individuals with Collection Administration Access must
   notify HathiTrust staff at
-  <a href="mailto:support@hathitrust.org">support@hathitrust.org</a> if they believe their credentials have been used by
-  someone else to gain inappropriate access to copyrighted materials; if they have any questions about appropriate uses of
-  this service; or if their role has changed (including departure from the organization) and they no longer need this service.
+  <a href="mailto:support@hathitrust.org">support@hathitrust.org</a> if they believe their credentials have been used by someone
+  else to gain inappropriate access to copyrighted materials; if they have any questions about appropriate uses of this service;
+  or if their role has changed (including departure from the organization) and they no longer need this service.
 </p>

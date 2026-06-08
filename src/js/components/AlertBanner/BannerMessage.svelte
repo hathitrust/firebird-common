@@ -35,7 +35,6 @@
       document.querySelector('main').focus();
     }
   }
-
 </script>
 
 {#if !alertDismissed}

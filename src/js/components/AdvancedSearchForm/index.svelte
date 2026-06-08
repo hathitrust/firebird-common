@@ -306,7 +306,7 @@
       url.search = searchParams.toString();
     }
 
-    if(errors.yop || errors.lookFors) {
+    if (errors.yop || errors.lookFors) {
       return;
     }
 
@@ -316,7 +316,7 @@
   function submitForm(event) {
     const url = buildSearchUrl(event);
 
-    if(url == null) {
+    if (url == null) {
       return;
     } else if (mockSubmit) {
       mockSubmit(url);

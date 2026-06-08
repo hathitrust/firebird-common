@@ -1,7 +1,7 @@
 import CookieConsentBanner from './index.svelte';
 import PingCallbackDecorator from '../../decorators/PingCallbackDecorator';
-import { userEvent, within } from "storybook/test";
-import { expect } from "storybook/test";
+import { userEvent, within } from 'storybook/test';
+import { expect } from 'storybook/test';
 
 export default {
   title: 'Cookie Consent Banner',
@@ -9,18 +9,18 @@ export default {
   argTypes: { confirm: { action: 'banner confirmed' } },
   args: {
     lgSrc: '/src/public/hathitrust-logo-stacked-orange-gray.png',
-    smSrc: '/src/public/hathitrust-icon-orange.png'
-  }
+    smSrc: '/src/public/hathitrust-icon-orange.png',
+  },
 };
 
 export const Default = {
   parameters: {
     layout: 'fullscreen',
 
-    design:{
-      type:'figma', 
-      url: 'https://www.figma.com/file/Ju55vvmsCEFHHTjfyysGyJ/HathiTrust---Design-Explorations?type=design&node-id=1095-14949&mode=design&t=afnXdsdlpCz3QKPV-4'
-    }
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/file/Ju55vvmsCEFHHTjfyysGyJ/HathiTrust---Design-Explorations?type=design&node-id=1095-14949&mode=design&t=afnXdsdlpCz3QKPV-4',
+    },
   },
 
   decorators: [
@@ -44,9 +44,9 @@ export const Default = {
   globals: {
     viewport: {
       value: 'bsXl',
-      isRotated: false
-    }
-  }
+      isRotated: false,
+    },
+  },
 };
 export const MobileDefault = {
   decorators: [
@@ -58,8 +58,8 @@ export const MobileDefault = {
   globals: {
     viewport: {
       value: 'bsXs',
-      isRotated: false
-    }
+      isRotated: false,
+    },
   },
 };
 
