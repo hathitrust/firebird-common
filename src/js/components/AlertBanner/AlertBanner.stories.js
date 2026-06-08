@@ -2,7 +2,6 @@ import BannerMessage from './BannerMessage.svelte';
 import PingCallbackDecorator from '../../decorators/PingCallbackDecorator';
 import { expect } from 'storybook/test';
 
-
 export default {
   title: 'Alert Banner',
   component: BannerMessage,

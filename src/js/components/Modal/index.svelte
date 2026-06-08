@@ -39,7 +39,7 @@
     focusButtonOnClose = false,
     focusDownloadOnClose = false,
     setPromptCookie = false,
-    checkForNotifications, 
+    checkForNotifications,
     title,
     body,
     footer,
@@ -95,7 +95,9 @@
       document.querySelector('#feedback-form').focus();
     }
     if (focusDownloadOnClose) {
-      setTimeout(() => {document.getElementById('submit-download').focus();}, 100)
+      setTimeout(() => {
+        document.getElementById('submit-download').focus();
+      }, 100);
     }
   };
 
@@ -135,7 +137,7 @@
             onclick={() => {
               hide();
               if (setPromptCookie) {
-                checkForNotifications()
+                checkForNotifications();
               }
             }}
             ><span class="close-icon">

@@ -14,9 +14,9 @@ function mungeLink(href) {
     href = tmp[0].replace('//hdl.handle.net/2027/', '//' + HT.service_domain + '/cgi/pt?id=');
     if (tmp[1]) {
       if (tmp[1].includes('urlappend=')) {
-        let querystring = tmp[1].replaceAll('%3B', ';')
-        querystring = querystring.replace('urlappend=', '')
-        href += querystring
+        let querystring = tmp[1].replaceAll('%3B', ';');
+        querystring = querystring.replace('urlappend=', '');
+        href += querystring;
       } else {
         var tmp2 = tmp[1].split('=');
         href += ';seq=' + tmp2[2];

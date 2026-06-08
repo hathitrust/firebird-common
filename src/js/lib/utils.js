@@ -35,7 +35,7 @@ function setDomains() {
   if (HT.is_dev) {
     var prefix = hostname.split('.')[0];
     console.log('-- main setting hostname', prefix, hostname);
-    HT.secure_cookies = (location.protocol == 'https');
+    HT.secure_cookies = location.protocol == 'https';
     // no dots in hostname -- e.g. localhost or docker container
     if (hostname == prefix) {
       if (location.port) {
