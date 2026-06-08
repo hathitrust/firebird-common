@@ -108,7 +108,7 @@
     // find current configuration
     let _searchtypeValue = 'everything';
     let _selectValue = 'library';
-    let _inputValue = '';
+    let _inputValue = _input?.value ?? '';
     if (location && location.href) {
       let searchParams = new URLSearchParams(location.search.replace(/;/g, '&'));
 
@@ -147,7 +147,6 @@
         } else if (dropdownSelected == true && index == 'library') {
           _selectValue = 'library';
           index = 'library';
-          _inputValue = '';
         } else {
           _selectValue = 'website';
           index = 'website';
