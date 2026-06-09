@@ -44,12 +44,14 @@
     <ul class="list-unstyled d-flex gap-2 m-0">
       <li>
         {#if !hasPreviousItem}
-          <span
+          <button
             aria-hidden="true"
+            aria-disabled="true"
             class="btn btn-outline-secondary disabled d-inline-flex align-items-center gap-1 text-decoration-none"
+            disabled
           >
             <i aria-hidden="true" class="fa-solid fa-chevron-left"></i><span>Previous</span>
-          </span>
+          </button>
         {:else}
           <a
             role={!hasPreviousItem ? 'link' : undefined}
@@ -61,12 +63,14 @@
       </li>
       <li>
         {#if !hasNextItem}
-          <span
+          <button
             aria-hidden="true"
+            aria-disabled="true"
             class="btn btn-outline-secondary disabled d-inline-flex align-items-center gap-1 text-decoration-none"
+            disabled
           >
             <span>Next</span><i aria-hidden="true" class="fa-solid fa-chevron-right"></i>
-          </span>
+          </button>
         {:else}
           <a
             role={!hasNextItem ? 'link' : undefined}
