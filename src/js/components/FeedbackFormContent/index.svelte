@@ -151,15 +151,7 @@
   <form {onsubmit} class:hidden class="needs-validation mb-3" name="feedback" novalidate {id}>
     <div class="mb-3">
       <label for="name" class="form-label">Name <span class="required" aria-hidden="true">(required)</span></label>
-      <input
-        aria-describedby="name-error"
-        type="name"
-        autocomplete="name"
-        class="form-control"
-        id="name"
-        name="name"
-        required
-      />
+      <input aria-describedby="name-error" autocomplete="name" class="form-control" id="name" name="name" required />
       <div class="invalid-feedback" id="name-error">
         {#if nameError}<span>Error: Please provide your name.</span>{/if}
       </div>
