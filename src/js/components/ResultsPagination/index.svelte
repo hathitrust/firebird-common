@@ -45,7 +45,6 @@
       <li>
         {#if !hasPreviousItem}
           <button
-            aria-hidden="true"
             aria-disabled="true"
             class="btn btn-outline-secondary disabled d-inline-flex align-items-center gap-1 text-decoration-none"
             disabled
@@ -64,7 +63,6 @@
       <li>
         {#if !hasNextItem}
           <button
-            aria-hidden="true"
             aria-disabled="true"
             class="btn btn-outline-secondary disabled d-inline-flex align-items-center gap-1 text-decoration-none"
             disabled
