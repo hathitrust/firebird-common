@@ -147,7 +147,6 @@
       </label>
       <input
         aria-describedby="{id}-name-error"
-        type="name"
         class="form-control"
         id="{id}-name"
         name="name"

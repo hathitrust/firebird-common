@@ -43,28 +43,40 @@
   <div>
     <ul class="list-unstyled d-flex gap-2 m-0">
       <li>
-        <a
-          aria-hidden={!hasPreviousItem}
-          aria-disabled={!hasPreviousItem}
-          role={!hasPreviousItem ? 'link' : undefined}
-          disabled={!hasPreviousItem}
-          class:disabled={!hasPreviousItem}
-          href={hasPreviousItem ? prevHref : undefined}
-          class="btn btn-outline-secondary d-inline-flex align-items-center gap-1 text-decoration-none"
-          ><i aria-hidden="true" class="fa-solid fa-chevron-left"></i><span>Previous</span></a
-        >
+        {#if !hasPreviousItem}
+          <button
+            aria-disabled="true"
+            class="btn btn-outline-secondary disabled d-inline-flex align-items-center gap-1 text-decoration-none"
+            disabled
+          >
+            <i aria-hidden="true" class="fa-solid fa-chevron-left"></i><span>Previous</span>
+          </button>
+        {:else}
+          <a
+            role={!hasPreviousItem ? 'link' : undefined}
+            href={hasPreviousItem ? prevHref : undefined}
+            class="btn btn-outline-secondary d-inline-flex align-items-center gap-1 text-decoration-none"
+            ><i aria-hidden="true" class="fa-solid fa-chevron-left"></i><span>Previous</span></a
+          >
+        {/if}
       </li>
       <li>
-        <a
-          aria-hidden={!hasNextItem}
-          aria-disabled={!hasNextItem}
-          role={!hasNextItem ? 'link' : undefined}
-          disabled={!hasNextItem}
-          class:disabled={!hasNextItem}
-          href={hasNextItem ? nextHref : undefined}
-          class="btn btn-outline-secondary d-inline-flex align-items-center gap-1 text-decoration-none"
-          ><span>Next</span><i aria-hidden="true" class="fa-solid fa-chevron-right"></i></a
-        >
+        {#if !hasNextItem}
+          <button
+            aria-disabled="true"
+            class="btn btn-outline-secondary disabled d-inline-flex align-items-center gap-1 text-decoration-none"
+            disabled
+          >
+            <span>Next</span><i aria-hidden="true" class="fa-solid fa-chevron-right"></i>
+          </button>
+        {:else}
+          <a
+            role={!hasNextItem ? 'link' : undefined}
+            href={hasNextItem ? nextHref : undefined}
+            class="btn btn-outline-secondary d-inline-flex align-items-center gap-1 text-decoration-none"
+            ><span>Next</span><i aria-hidden="true" class="fa-solid fa-chevron-right"></i></a
+          >
+        {/if}
       </li>
     </ul>
   </div>
