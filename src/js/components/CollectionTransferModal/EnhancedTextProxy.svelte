@@ -1,0 +1,18 @@
+<p>Download copyrighted books, in order to provide them to eligible patrons with print disabilities.</p>
+<p>
+  The following terms of use apply when accessing books as an ATRS provider. Per the agreement you signed to become an
+  ATRS provider, you must confirm with eligible patrons that they understand:
+</p>
+<ul>
+  <li>The copyrighted nature of the content</li>
+  <li>Why they are being granted special access to the work</li>
+  <li>That the cover sheet indicating the copyright status and terms of use must remain with the work at all times</li>
+  <li>
+    That the accessible copies are for personal use only and may not be reproduced, distributed, or made available to
+    anyone else other than to facilitate the Eligible Patron’s personal use
+  </li>
+  <li>
+    That if the Eligible Patrons have any questions about proper use of the material or suspect unauthorized access to
+    the material, they should contact the DSP immediately
+  </li>
+</ul>

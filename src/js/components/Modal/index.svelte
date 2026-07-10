@@ -29,6 +29,7 @@
     isOpen = $bindable(false),
     id = `id${new Date().getTime()}-${Math.floor(Math.random() * Date.now())}`,
     onClose = function () {},
+    onCancel = () => true,
     height = 'auto',
     scrollable = false,
     mode = 'alert',
@@ -50,10 +51,15 @@
 
   let dialog = $state();
 
+  function handleCancel(e) {
+    const shouldClose = onCancel();
+    if (!shouldClose) e.preventDefault();
+  }
+
   function logKeys(e) {
     // console.log(`Key "${e.key}" was pressed`);
     if (e.key === 'Escape') {
-      hide();
+      if (hasTooltip) hide();
       window.removeEventListener('keydown', logKeys);
     }
   }
@@ -121,6 +127,7 @@
   data-polyfilled={!globalThis.HTMLDialogElement}
   class={fullscreenOnMobile ? 'fullscreen-sm-down' : ''}
   aria-labelledby="{id}-label"
+  oncancel={handleCancel}
 >
   <div class="modal show" style="display: block;">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered {modalLarge ? 'modal-lg' : ''}">

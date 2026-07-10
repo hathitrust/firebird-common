@@ -21,6 +21,7 @@ import AdvancedSearchForm from './components/AdvancedSearchForm';
 import FeedbackFormModal from './components/FeedbackFormModal';
 import CookieConsentBanner from './components/CookieConsentBanner';
 import AlertBanner from './components/AlertBanner';
+import CollectionTransferModal from './components/CollectionTransferModal';
 
 const toCamel = (s) => {
   return s.replace(/([-_][a-z])/gi, ($1) => {
@@ -56,6 +57,7 @@ apps['hathi-advanced-search-form'] = AdvancedSearchForm;
 apps['hathi-feedback-form-modal'] = FeedbackFormModal;
 apps['hathi-cookie-consent-banner'] = CookieConsentBanner;
 apps['hathi-alert-banner'] = AlertBanner;
+apps['hathi-collection-transfer-modal'] = CollectionTransferModal;
 
 // configure the HT global
 setupHTEnv();
