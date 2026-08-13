@@ -128,7 +128,6 @@
 
   button.copycode {
     color: var(--color-shades-0);
-    // anchor-name: --copycode-button;
   }
 
   figure.snippet {

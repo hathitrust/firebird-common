@@ -1,5 +1,4 @@
 import CopySnippet from './index.svelte';
-// import PingCallbackDecorator from '../../decorators/PingCallbackDecorator.svelte';
 import { userEvent, within, expect } from 'storybook/test';
 import { action } from 'storybook/actions';
 import CopySnippetDecorator from '../../decorators/CopySnippetDecorator.svelte';
