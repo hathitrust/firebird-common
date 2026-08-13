@@ -13,25 +13,29 @@
       '<span aria-live="polite">Copied</span> <i class="fa-solid fa-circle-check" aria-hidden="true"></i>';
   }
 
+  function handleEsc(event) {
+    const tooltips = document.querySelectorAll('tool-tip');
+    if (event.key === 'Escape') {
+      tooltips.forEach((tooltip) => {
+        if (window.getComputedStyle(tooltip).getPropertyValue('visibility') === 'visible') {
+          tooltip.style.visibility = 'hidden';
+        }
+      });
+    }
+  }
+
   function onmouseleave(e) {
     e.target.lastElementChild.innerText = 'Copy';
     tooltip.removeAttribute('style');
   }
+
   function onblur(e) {
     e.target.lastElementChild.innerText = 'Copy';
     tooltip.removeAttribute('style');
   }
-
-  function onCancel() {
-    if (tooltipOpen) {
-      tooltip.style.visibility = 'hidden';
-      tooltipOpen = false;
-      return false;
-    }
-    return true;
-  }
 </script>
 
+<svelte:window onkeydown={handleEsc} />
 <div class="d-flex gap-3">
   <figure class="snippet">
     <div class="d-flex">
