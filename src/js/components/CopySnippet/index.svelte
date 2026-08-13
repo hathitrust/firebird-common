@@ -65,7 +65,6 @@
     opacity: 0;
     visibility: hidden;
     z-index: 1;
-    transform: translate(var(-50%, 0)) translateY(var(3px, 0));
     transition:
       opacity 0.2s ease,
       transform 0.2s ease;
