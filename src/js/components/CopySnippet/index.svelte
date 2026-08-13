@@ -115,7 +115,7 @@
   }
 
   tool-tip:before {
-    content: '; Has tooltip: ';
+    content: 'Has tooltip: ';
     clip: rect(1px, 1px, 1px, 1px);
     clip-path: inset(50%);
     height: 1px;
