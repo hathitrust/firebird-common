@@ -367,6 +367,15 @@ body {
       border-bottom-right-radius: 0.375rem;
     }
   }
+  article:has(.viewability-table) {
+    container: catalog-record-main / inline-size;
+  }
+  @container catalog-record-main (max-width: 600px) {
+    table.viewability-table a {
+      display: block;
+    }
+  }
+
   #toolbar-seq.form-control:focus {
     border-color: #fff;
   }
