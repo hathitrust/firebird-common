@@ -10,38 +10,38 @@
       <tbody>
         <tr>
           <td>
-            <a href="http://localhost:8080/cgi/pt?id=mdp.39015026662174" referrerpolicy="unsafe-url" class="item-link gap-2">
-              <i aria-hidden="true" class="fa-solid fa-lock"></i> 
+            <a
+              href="http://localhost:8080/cgi/pt?id=mdp.39015026662174"
+              referrerpolicy="unsafe-url"
+              class="item-link gap-2"
+            >
+              <i aria-hidden="true" class="fa-solid fa-lock"></i>
               <span class="text-decoration-underline">Limited (search only)</span>
             </a>
           </td>
-          <td>
-            University of Michigan
-          </td>
+          <td> University of Michigan </td>
         </tr>
         <tr>
           <td>
             <a href="//dev-3.babel.hathitrust.org/cgi/pt?id=coo.31924065537270" referrerpolicy="unsafe-url">
-              <i class="fa-regular fa-file-lines" aria-hidden="true"></i> 
+              <i class="fa-regular fa-file-lines" aria-hidden="true"></i>
               <span class="text-decoration-underline">Full view</span>
               <span class="IndItem">v.45 1875:Oct./1876:Mar.</span>
             </a>
           </td>
-          <td>
-            Cornell University
-          </td>
+          <td> Cornell University </td>
         </tr>
         <tr>
           <td>
             <a href="//dev-3.babel.hathitrust.org/cgi/pt?id=mdp.39015082905814" referrerpolicy="unsafe-url">
-                <i class="fa-regular fa-file-lines" aria-hidden="true"></i> 
-                <span class="text-decoration-underline">Full view</span>
-                <span class="IndItem">v.54 BIBLE O.T. ARAMAIC. SELECTIONS. 1852 - BIBLE O.T. PSALMS. LATIN. PARAPHRASES. 1567 BUCHANAN</span>
+              <i class="fa-regular fa-file-lines" aria-hidden="true"></i>
+              <span class="text-decoration-underline">Full view</span>
+              <span class="IndItem"
+                >v.54 BIBLE O.T. ARAMAIC. SELECTIONS. 1852 - BIBLE O.T. PSALMS. LATIN. PARAPHRASES. 1567 BUCHANAN</span
+              >
             </a>
           </td>
-          <td>
-            University of Michigan
-          </td>
+          <td> University of Michigan </td>
         </tr>
         <tr>
           <td>
