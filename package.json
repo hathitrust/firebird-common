@@ -17,6 +17,7 @@
     "chromatic": "chromatic --exit-zero-on-changes",
     "babel": "vite build --watch --minify false",
     "format:check": "prettier --check src/",
+    "format": "prettier --write src/",
     "prepare": "[ \"${HUSKY}\" = \"0\" ] || husky"
   },
   "lint-staged": {
