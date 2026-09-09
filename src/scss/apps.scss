@@ -389,7 +389,7 @@ span.query-term {
 main.error {
   position: relative;
   section {
-    width: 27.75rem;
+    max-width: 27.75rem;
     gap: 3rem;
     margin-top: 3rem;
   }
@@ -427,6 +427,9 @@ main.error {
       color: var(--color-primary-700);
     }
   }
+  .help-links ul {
+    flex-wrap: wrap;
+  }
 }
 
 main.error .error-wrapper {
@@ -444,6 +447,16 @@ main.error .error-wrapper {
   main.error .error-wrapper {
     background-size: 21.33rem;
     min-height: 42rem;
+  }
+}
+@media (max-width: 365px) {
+  main.error .error-wrapper {
+    background-size: 15.33rem;
+  }
+}
+@media (max-width: 280px) {
+  main.error .error-wrapper {
+    background-size: 12.33rem;
   }
 }
 
