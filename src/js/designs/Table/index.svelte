@@ -1,4 +1,4 @@
-<main class="apps p-3 mb-3">
+<main class="apps">
   <article>
     <table class="table-branded viewability-table">
       <thead>
@@ -10,11 +10,7 @@
       <tbody>
         <tr>
           <td>
-            <a
-              href="http://localhost:8080/cgi/pt?id=mdp.39015026662174"
-              referrerpolicy="unsafe-url"
-              class="item-link gap-2"
-            >
+            <a href="http://localhost:8080/cgi/pt?id=mdp.39015026662174" referrerpolicy="unsafe-url">
               <i aria-hidden="true" class="fa-solid fa-lock"></i>
               <span class="text-decoration-underline">Limited (search only)</span>
             </a>
