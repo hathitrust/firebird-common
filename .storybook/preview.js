@@ -5,7 +5,7 @@ const BOOTSTRAP_VIEWPORTS = {
   bsXs: {
     name: 'XS: <576px',
     styles: {
-      width: '400px',
+      width: '336px',
       height: '800px',
     },
   },
