@@ -471,6 +471,18 @@ a:not(.btn, .list-group-item):has(i[aria-hidden]) {
   }
 }
 
+//alert styles
+.alert {
+  color: var(--color-neutral-900);
+  > i {
+    color: var(--bs-alert-color);
+  }
+  a {
+    color: var(--color-neutral-900);
+    text-decoration: underline;
+  }
+}
+
 //modal styles
 .modal {
   --bs-modal-width: 34rem;
