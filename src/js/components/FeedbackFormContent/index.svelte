@@ -373,7 +373,7 @@
                 <strong>Thank you!&nbsp;</strong>Your feedback has been submitted.
               </div>
               <button type="button" class="btn btn-success" onclick={startOver} onkeypress={startOver}
-                >Start over <i class="fa-solid fa-arrow-rotate-left fa-lg ms-2 text-white"></i></button
+                >Start over <i class="fa-solid fa-arrow-rotate-left fa-lg ms-2"></i></button
               >
             </div>
           </div>
