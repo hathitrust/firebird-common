@@ -477,7 +477,7 @@ a:not(.btn, .list-group-item):has(i[aria-hidden]) {
   > i {
     color: var(--bs-alert-color);
   }
-  a {
+  a:not(.btn) {
     color: var(--color-neutral-900);
     text-decoration: underline;
   }
