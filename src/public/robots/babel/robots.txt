@@ -6,6 +6,7 @@ User-agent: slurp
 User-agent: msnbot
 User-agent: bingbot
 User-agent: teoma
+# TODO: askjeeves bot defunct May 2026
 User-agent: askjeeves
 User-agent: yandex
 User-agent: baiduspider
